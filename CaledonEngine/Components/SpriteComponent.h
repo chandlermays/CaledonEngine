@@ -3,8 +3,13 @@
 
 namespace CE
 {
-	class SpriteComponent : public CE::Component
+	class SpriteComponent : public Component
 	{
+	private:
+
+
+	public:
+
 
 	};
 }

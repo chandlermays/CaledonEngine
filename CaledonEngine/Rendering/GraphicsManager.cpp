@@ -1,4 +1,4 @@
-#include "CaledonEngine/Rendering/GraphicsManager.h"
+#include "GraphicsManager.h"
 #include "CaledonEngine/Engine/LoggingManager.h"
 #include "SDL.h"
 

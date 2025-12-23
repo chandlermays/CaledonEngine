@@ -1,5 +1,5 @@
-#include "CaledonEngine/Engine/EngineManager.h"
-#include "CaledonEngine/Engine/LoggingManager.h"
+#include "EngineManager.h"
+#include "LoggingManager.h"
 #include "CaledonEngine/Rendering/GraphicsManager.h"
 #include "CaledonEngine/Input/InputManager.h"
 #include "CaledonEngine/Physics/CollisionManager.h"

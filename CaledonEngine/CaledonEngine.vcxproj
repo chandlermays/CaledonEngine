@@ -74,6 +74,7 @@
     <ClInclude Include="Input\InputManager.h" />
     <ClInclude Include="Physics\CollisionManager.h" />
     <ClInclude Include="Rendering\GraphicsManager.h" />
+    <ClInclude Include="Utilities\Math\Vector2.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

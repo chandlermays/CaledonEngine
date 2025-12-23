@@ -1,4 +1,4 @@
-#include "CaledonEngine/Engine/LoggingManager.h"
+#include "LoggingManager.h"
 #include <iostream>
 
 /*-----------------------------------
