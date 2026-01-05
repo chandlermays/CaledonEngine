@@ -1,9 +1,12 @@
 #pragma once
 #include <string>
+#include <vector>
+#include "GameObject.h"
 
 namespace CE
 {
 	class GameObject;
+	class Transform;
 
 	class Component
 	{
@@ -25,7 +28,7 @@ namespace CE
 		Component(Component&&) = delete;
 		Component& operator=(Component&&) = delete;
 
-		virtual bool Initialize() { return true; };
+		virtual bool Initialize() {};
 		virtual void Update(float) {};
 		virtual void Render() {};
 
@@ -37,5 +40,29 @@ namespace CE
 
 		bool IsActive() const { return m_isActive; }
 		void SetActive(bool isActive) { m_isActive = isActive; }
+
+		// Gets a reference to a component of type T attached to the same GameObject
+		template<typename T>
+		T* GetComponent() const;
+
+		// Gets a reference to a component of type T attached to same GameObject, or any of its children
+		template<typename T>
+		T* GetComponentInChildren() const;
+
+		// Gets a reference to a component of type T attached to same GameObject, or any of its parents
+		template<typename T>
+		T* GetComponentInParent() const;
+
+		// Gets references to all components of type T attached to the same GameObject
+		template<typename T>
+		std::vector<T*> GetComponents() const;
+
+		// Gets references to all components of type T attached to same GameObject, or any of its children
+		template<typename T>
+		std::vector<T*> GetComponentsInChildren() const;
+
+		// Gets references to all components of type T attached to same GameObject, or any of its parents
+		template<typename T>
+		std::vector<T*> GetComponentsInParent() const;
 	};
 }
