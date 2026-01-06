@@ -1,5 +1,5 @@
-#include "../CaledonEngine/Engine/EngineManager.h"
-#include <Core/GameObject.h>
+#include "CaledonEngine/Engine/EngineManager.h"
+#include "CaledonEngine/Core/GameObject.h"
 
 /*----------------------------------------------
 | --- Main: Entry point of the application --- |
