@@ -24,7 +24,7 @@ CE::Transform::Transform(const VectorFloat& position, float rotation, const Vect
 /*---------------------------------------------------------
 | --- GetPosition: Returns the position of the object --- |
 ---------------------------------------------------------*/
-const VectorFloat& CE::Transform::GetPosition() const
+const CE::VectorFloat& CE::Transform::GetPosition() const
 {
 	return m_position;
 }
@@ -56,7 +56,7 @@ void CE::Transform::SetRotation(float rotation)
 /*---------------------------------------------------
 | --- GetScale: Returns the scale of the object --- |
 ---------------------------------------------------*/
-const VectorFloat& CE::Transform::GetScale() const
+const CE::VectorFloat& CE::Transform::GetScale() const
 {
 	return m_scale;
 }

@@ -61,6 +61,7 @@
     <ClCompile Include="Input\InputManager.cpp" />
     <ClCompile Include="Physics\CollisionManager.cpp" />
     <ClCompile Include="Rendering\GraphicsManager.cpp" />
+    <ClCompile Include="Scene\SceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\SpriteComponent.h" />
@@ -74,6 +75,7 @@
     <ClInclude Include="Input\InputManager.h" />
     <ClInclude Include="Physics\CollisionManager.h" />
     <ClInclude Include="Rendering\GraphicsManager.h" />
+    <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Utilities\Math\Vector2.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

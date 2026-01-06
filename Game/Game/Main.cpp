@@ -1,6 +1,5 @@
 #include "../CaledonEngine/Engine/EngineManager.h"
 #include <Core/GameObject.h>
-#include <Components/SpriteComponent.h>
 
 /*----------------------------------------------
 | --- Main: Entry point of the application --- |
@@ -15,7 +14,6 @@ int main()
 	engineManager.Run();
 
 	CE::GameObject testObject;
-	testObject.GetComponent<CE::SpriteComponent>();
 
 	return 0;
 }

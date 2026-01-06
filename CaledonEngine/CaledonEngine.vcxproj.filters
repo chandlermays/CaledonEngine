@@ -29,6 +29,9 @@
     <Filter Include="Source Files\Utilities\Math">
       <UniqueIdentifier>{53e5a6d8-4fa3-461e-8fe8-5be82f355b03}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Scene">
+      <UniqueIdentifier>{1a0ccc5b-5628-45fb-85ff-275c5f6044a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Components\SpriteComponent.cpp">
@@ -60,6 +63,9 @@
     </ClCompile>
     <ClCompile Include="Rendering\GraphicsManager.cpp">
       <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneManager.cpp">
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +104,9 @@
     </ClInclude>
     <ClInclude Include="Utilities\Math\Vector2.h">
       <Filter>Source Files\Utilities\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneManager.h">
+      <Filter>Source Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

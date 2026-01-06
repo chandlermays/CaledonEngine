@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "GameObject.h"
 
 namespace CE
 {
@@ -11,35 +10,30 @@ namespace CE
 	class Component
 	{
 	protected:
-		GameObject* m_pOwner;
-		std::string m_id;
-		bool m_isActive;
+		GameObject* m_pOwner;																// Pointer to the owning GameObject
+		std::string m_id;																	// The unique identifier of the Component
+		bool m_isActive;																	// Whether the Component is active or not
 
 	public:
-		Component()
-			: m_pOwner{ nullptr }
-			, m_id{ "" }
-			, m_isActive{ true }
-		{}
+		Component();																		// Constructor
+		virtual ~Component() {};															// Destructor
+		Component(const Component&) = delete;												// Prevent copy-construction
+		Component& operator=(const Component&) = delete;									// Prevent copy-assignment
+		Component(Component&&) = delete;													// Prevent move-construction
+		Component& operator=(Component&&) = delete;											// Prevent move-assignment
 
-		virtual ~Component() {};
-		Component(const Component&) = delete;
-		Component& operator=(const Component&) = delete;
-		Component(Component&&) = delete;
-		Component& operator=(Component&&) = delete;
+		virtual bool Initialize() { return true; }											// Initializes the Component
+		virtual void Update(float) {};														// Updates the Component, if applicable
+		virtual void Render() {};															// Renders the Component, if applicable
 
-		virtual bool Initialize() {};
-		virtual void Update(float) {};
-		virtual void Render() {};
+		GameObject* GetOwner() const;														// Gets a pointer to the owning GameObject
+		void SetOwner(GameObject* owner);													// Sets the owning GameObject
 
-		GameObject* GetOwner() const { return m_pOwner; }
-		void SetOwner(GameObject* owner) { m_pOwner = owner; }
+		const std::string& GetID() const;													// Gets the unique identifier of the Component
+		void SetID(const std::string& id);													// Sets the unique identifier of the Component
 
-		const std::string& GetID() const { return m_id; }
-		void SetID(const std::string& id) { m_id = id; }
-
-		bool IsActive() const { return m_isActive; }
-		void SetActive(bool isActive) { m_isActive = isActive; }
+		bool IsActive() const;																// Gets whether the Component is active or not
+		void SetActive(bool isActive);														// Sets whether the Component is active or not
 
 		// Gets a reference to a component of type T attached to the same GameObject
 		template<typename T>
@@ -65,4 +59,58 @@ namespace CE
 		template<typename T>
 		std::vector<T*> GetComponentsInParent() const;
 	};
+
+	/*-------------------------------------------------------------------------------------------------
+	| --- GetComponent: Gets a reference to a component of type T attached to the same GameObject --- |
+	-------------------------------------------------------------------------------------------------*/
+	template<typename T>
+	inline T* Component::GetComponent() const
+	{
+		//...
+	}
+
+	/*-------------------------------------------------------------------------------------------------------------------------------
+	| --- GetComponentInChildren: Gets a reference to a component of type T attached to same GameObject, or any of its children --- |
+	-------------------------------------------------------------------------------------------------------------------------------*/
+	template<typename T>
+	inline T* Component::GetComponentInChildren() const
+	{
+		//...
+	}
+
+	/*----------------------------------------------------------------------------------------------------------------------------
+	| --- GetComponentInParent: Gets a reference to a component of type T attached to same GameObject, or any of its parents --- |
+	----------------------------------------------------------------------------------------------------------------------------*/
+	template<typename T>
+	inline T* Component::GetComponentInParent() const
+	{
+		//...
+	}
+
+	/*----------------------------------------------------------------------------------------------------
+	| --- GetComponents: Gets references to all components of type T attached to the same GameObject --- |
+	----------------------------------------------------------------------------------------------------*/
+	template<typename T>
+	inline std::vector<T*> Component::GetComponents() const
+	{
+		//...
+	}
+
+	/*---------------------------------------------------------------------------------------------------------------------------
+	| --- GetComponentsInChildren: Gets references to all components of type T attached to same GameObject and its children --- |
+	---------------------------------------------------------------------------------------------------------------------------*/
+	template<typename T>
+	inline std::vector<T*> Component::GetComponentsInChildren() const
+	{
+		//...
+	}
+
+	/*------------------------------------------------------------------------------------------------------------------------
+	| --- GetComponentsInParent: Gets references to all components of type T attached to same GameObject and its parents --- |
+	------------------------------------------------------------------------------------------------------------------------*/
+	template<typename T>
+	inline std::vector<T*> Component::GetComponentsInParent() const
+	{
+		//...
+	}
 }

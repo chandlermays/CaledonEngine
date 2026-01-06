@@ -10,15 +10,15 @@ namespace CE
 	class GameObject
 	{
 	private:
-		GameObject* m_pParent;															// Pointer to the parent GameObject
-		std::vector<GameObject*> m_children;											// Vector of pointers to child GameObjects
+		GameObject* m_pParent;															// Pointer to this GameObject's parent
+		std::vector<GameObject*> m_children;											// Vector of pointers to this GameObject's children
 		
-		std::string m_name;																// The name of the GameObject
-		std::string m_tag;																// The tag of the GameObject
-		bool m_isActive;																// Whether the GameObject is active or not
+		std::string m_name;																// The name of this GameObject
+		std::string m_tag;																// The tag of this GameObject
+		bool m_isActive;																// Whether this GameObject is active or not
 
-		Transform m_transform;															// The Transform of the GameObject
-		std::vector<Component*> m_components;											// Vector of pointers to Components attached to the GameObject
+		Transform m_transform;															// The Transform of this GameObject
+		std::vector<Component*> m_components;											// Vector of pointers to Components attached to this GameObject
 
 	public:
 		GameObject();																	// Constructor
@@ -28,27 +28,27 @@ namespace CE
 		GameObject(GameObject&&) = delete;												// Prevent move-construction
 		GameObject& operator=(GameObject&&) = delete;									// Prevent move-assignment
 
-		bool Initialize();																// Initializes the GameObject and its components
-		void Update(float);																// Updates the GameObject and its components
-		void Render();																	// Renders the GameObject and its components
+		bool Initialize();																// Initializes this GameObject and its components
+		void Update(float);																// Updates this GameObject and its components
+		void Render();																	// Renders this GameObject and its components
 
-		GameObject* GetParent() const;													// Gets a pointer to the parent GameObject
-		void SetParent(GameObject* parent);												// Sets the parent GameObject
+		GameObject* GetParent() const;													// Gets a pointer to this GameObject's parent
+		void SetParent(GameObject* parent);												// Sets the parent of this GameObject
 
-		const std::vector<GameObject*>& GetChildren() const;							// Gets a vector of pointers to child GameObjects
-		void AddChild(GameObject* child);												// Adds a child GameObject
-		void RemoveChild(GameObject* child);											// Removes a child GameObject
+		const std::vector<GameObject*>& GetChildren() const;							// Gets a vector of pointers to this GameObject's children
+		void AddChild(GameObject* child);												// Adds a child to this GameObject
+		void RemoveChild(GameObject* child);											// Removes a child from this GameObject
 
-		const std::string& GetName() const;												// Gets the name of the GameObject
-		void SetName(const std::string& name);											// Sets the name of the GameObject
+		const std::string& GetName() const;												// Gets the name of this GameObject
+		void SetName(const std::string& name);											// Sets the name of this GameObject
 
-		const std::string& GetTag() const;												// Gets the tag of the GameObject
-		void SetTag(const std::string& tag);											// Sets the tag of the GameObject
+		const std::string& GetTag() const;												// Gets the tag of this GameObject
+		void SetTag(const std::string& tag);											// Sets the tag of this GameObject
 
-		bool IsActive() const;															// Gets whether the GameObject is active or not
-		void SetActive(bool isActive);													// Sets whether the GameObject is active or not
+		bool IsActive() const;															// Gets whether this GameObject is active or not
+		void SetActive(bool isActive);													// Sets whether this GameObject is active or not
 
-		const Transform& GetTransform() const;											// Gets the Transform of the GameObject
+		const Transform& GetTransform() const;											// Gets the Transform of this GameObject
 
 		// Gets a reference to a component of type T attached to this GameObject
 		template<typename T>
@@ -74,10 +74,10 @@ namespace CE
 		template<typename T>
 		std::vector<T*> GetComponentsInParent() const;
 
-		void AddComponent(Component* component);										// Adds a component to the GameObject
-		void RemoveComponent(Component* component);										// Removes a component from the GameObject
+		void AddComponent(Component* pComponent);										// Adds a component to this GameObject
+		void RemoveComponent(Component* pComponent);									// Removes a component from this GameObject
 
-		void Destroy();																	// Destroys the GameObject and its components
+		void Destroy();																	// Destroys this GameObject and its components
 	};
 
 	/*---------------------------------------------------------------------------------------------
