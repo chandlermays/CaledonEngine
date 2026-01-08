@@ -24,5 +24,7 @@ namespace CE
 		void Update(float deltaTime) override;									// Update the graphics manager
 		void Render() override;													// Render the current frame
 		void Shutdown() override;												// Shutdown the graphics manager
+		
+		SDL_Renderer* GetRenderer() const;										// Get the SDL Renderer
 	};
 }

@@ -34,5 +34,11 @@ namespace CE
 		void SetActive(bool isActive);											// Sets whether this Scene is active or not
 
 		bool IsValid() const;													// Checks if this Scene is valid
+
+		void AddGameObject(GameObject* pGameObject);							// Adds a GameObject to this Scene
+		void RemoveGameObject(GameObject* pGameObject);							// Removes a GameObject from this Scene
+		const std::vector<GameObject*>& GetGameObjects() const;					// Gets the GameObjects in this Scene
+
+		void Clear();															// Clears all GameObjects from this Scene
 	};
 }

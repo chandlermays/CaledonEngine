@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "CaledonEngine/Core/GameObject.h"
 
 /*---------------------
 | --- Constructor --- |
@@ -13,6 +14,7 @@ CE::Scene::Scene()
 --------------------*/
 CE::Scene::~Scene()
 {
+	Clear();
 }
 
 /*----------------------------------------------------------------
@@ -28,6 +30,13 @@ bool CE::Scene::Initialize()
 --------------------------------------------------------*/
 void CE::Scene::Update(float deltaTime)
 {
+	for (GameObject* pObject : m_gameObjects)
+	{
+		if (pObject->IsActive())
+		{
+			pObject->Update(deltaTime);
+		}
+	}
 }
 
 /*--------------------------------------------------------
@@ -35,6 +44,13 @@ void CE::Scene::Update(float deltaTime)
 --------------------------------------------------------*/
 void CE::Scene::Render()
 {
+	for (GameObject* pObject : m_gameObjects)
+	{
+		if (pObject->IsActive())
+		{
+			pObject->Render();
+		}
+	}
 }
 
 /*----------------------------------------------
@@ -75,4 +91,45 @@ void CE::Scene::SetActive(bool isActive)
 bool CE::Scene::IsValid() const
 {
 	return false;
+}
+
+/*--------------------------------------------------------
+| --- AddGameObject: Adds a GameObject to this Scene --- |
+--------------------------------------------------------*/
+void CE::Scene::AddGameObject(GameObject* pGameObject)
+{
+	m_gameObjects.emplace_back(pGameObject);
+}
+
+/*----------------------------------------------------------------
+| --- RemoveGameObject: Removes a GameObject from this Scene --- |
+----------------------------------------------------------------*/
+void CE::Scene::RemoveGameObject(GameObject* pGameObject)
+{
+	auto it = std::find(m_gameObjects.begin(), m_gameObjects.end(), pGameObject);
+	if (it != m_gameObjects.end())
+	{
+		m_gameObjects.erase(it);
+	}
+}
+
+/*------------------------------------------------------------
+| --- GetGameObjects: Gets the GameObjects in this Scene --- |
+------------------------------------------------------------*/
+const std::vector<CE::GameObject*>& CE::Scene::GetGameObjects() const
+{
+	return m_gameObjects;
+}
+
+/*-------------------------------------------------------
+| --- Clear: Clears all GameObjects from this Scene --- |
+-------------------------------------------------------*/
+void CE::Scene::Clear()
+{
+	for (GameObject* pObject : m_gameObjects)
+	{
+		delete pObject;
+		pObject = nullptr;
+	}
+	m_gameObjects.clear();
 }

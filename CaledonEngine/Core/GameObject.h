@@ -33,11 +33,11 @@ namespace CE
 		void Render();																	// Renders this GameObject and its components
 
 		GameObject* GetParent() const;													// Gets a pointer to this GameObject's parent
-		void SetParent(GameObject* parent);												// Sets the parent of this GameObject
+		void SetParent(GameObject* pParent);											// Sets the parent of this GameObject
 
 		const std::vector<GameObject*>& GetChildren() const;							// Gets a vector of pointers to this GameObject's children
-		void AddChild(GameObject* child);												// Adds a child to this GameObject
-		void RemoveChild(GameObject* child);											// Removes a child from this GameObject
+		void AddChild(GameObject* pChild);												// Adds a child to this GameObject
+		void RemoveChild(GameObject* pChild);											// Removes a child from this GameObject
 
 		const std::string& GetName() const;												// Gets the name of this GameObject
 		void SetName(const std::string& name);											// Sets the name of this GameObject

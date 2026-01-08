@@ -3,6 +3,7 @@
 #include "CaledonEngine/Rendering/GraphicsManager.h"
 #include "CaledonEngine/Input/InputManager.h"
 #include "CaledonEngine/Physics/CollisionManager.h"
+#include "CaledonEngine/Scene/SceneManager.h"
 
 /*-----------------------------------
 | --- Public Method Definitions --- |
@@ -21,6 +22,18 @@ CE::EngineManager::EngineManager()
 
 	m_pCollisionManager = new CollisionManager();
 	m_pManagers.emplace_back(m_pCollisionManager);
+
+	m_pSceneManager = new SceneManager();
+	m_pManagers.emplace_back(m_pSceneManager);
+}
+
+/*-----------------------------------------------------------------------
+| --- GetInstance: Gets the singleton instance of the EngineManager --- |
+-----------------------------------------------------------------------*/
+CE::EngineManager& CE::EngineManager::GetInstance()
+{
+	static EngineManager instance;
+	return instance;
 }
 
 /*----------------------------------------------------------------------------
@@ -85,6 +98,38 @@ void CE::EngineManager::Shutdown()
 	m_pManagers.clear();
 
 	LoggingManager::GetInstance().Shutdown();
+}
+
+/*----------------------------------------------------------------
+| --- GetGraphicsManager: Gets access to the GraphicsManager --- |
+----------------------------------------------------------------*/
+CE::GraphicsManager* CE::EngineManager::GetGraphicsManager() const
+{
+	return m_pGraphicsManager;
+}
+
+/*----------------------------------------------------------
+| --- GetInputManager: Gets access to the InputManager --- |
+----------------------------------------------------------*/
+CE::InputManager* CE::EngineManager::GetInputManager() const
+{
+	return m_pInputManager;
+}
+
+/*------------------------------------------------------------------
+| --- GetCollisionManager: Gets access to the CollisionManager --- |
+------------------------------------------------------------------*/
+CE::CollisionManager* CE::EngineManager::GetCollisionManager() const
+{
+	return m_pCollisionManager;
+}
+
+/*----------------------------------------------------------
+| --- GetSceneManager: Gets access to the SceneManager --- |
+----------------------------------------------------------*/
+CE::SceneManager* CE::EngineManager::GetSceneManager() const
+{
+	return m_pSceneManager;
 }
 
 

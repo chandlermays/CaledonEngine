@@ -332,7 +332,7 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>sdl2.lib;sdl2main.lib;sdl2_image.lib;sdl2_ttf.lib;sdl2_mixer.lib;freetype.lib;winmm.lib;gdi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>sdl2.lib;sdl2main.lib;sdl2_image.lib;sdl2_ttf.lib;sdl2_mixer.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -436,7 +436,7 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL2_mixer.dll" "$(SolutionDir
 xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
     </PostBuildEvent>
     <Lib>
-      <AdditionalDependencies>sdl2.lib;sdl2main.lib;sdl2_image.lib;sdl2_ttf.lib;sdl2_mixer.lib;freetype.lib;winmm.lib;gdi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>sdl2.lib;sdl2main.lib;sdl2_image.lib;sdl2_ttf.lib;sdl2_mixer.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -508,7 +508,7 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>sdl2.lib;sdl2main.lib;sdl2_image.lib;sdl2_ttf.lib;sdl2_mixer.lib;freetype.lib;winmm.lib;gdi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>sdl2.lib;sdl2main.lib;sdl2_image.lib;sdl2_ttf.lib;sdl2_mixer.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -604,7 +604,7 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>sdl2.lib;sdl2main.lib;sdl2_image.lib;sdl2_ttf.lib;sdl2_mixer.lib;freetype.lib;winmm.lib;gdi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>sdl2.lib;sdl2main.lib;sdl2_image.lib;sdl2_ttf.lib;sdl2_mixer.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

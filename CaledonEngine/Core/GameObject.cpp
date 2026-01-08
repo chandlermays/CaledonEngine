@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "CaledonEngine/Core/Component.h"
 
 /*---------------------
 | --- Constructor --- |
@@ -23,7 +24,16 @@ CE::GameObject::~GameObject()
 --------------------------------------------------------------------*/
 bool CE::GameObject::Initialize()
 {
-	return false;
+	bool success = true;
+	for (Component* pComponent : m_components)
+	{
+		if (pComponent != nullptr && !pComponent->Initialize())
+		{
+			success = false;
+			break;
+		}
+	}
+	return success;
 }
 
 /*------------------------------------------------------------
@@ -31,6 +41,24 @@ bool CE::GameObject::Initialize()
 ------------------------------------------------------------*/
 void CE::GameObject::Update(float deltaTime)
 {
+	if (!m_isActive)
+		return;
+
+	for (Component* pComponent : m_components)
+	{
+		if (pComponent != nullptr && pComponent->IsActive())
+		{
+			pComponent->Update(deltaTime);
+		}
+	}
+
+	for (GameObject* child : m_children)
+	{
+		if (child != nullptr && child->IsActive())
+		{
+			child->Update(deltaTime);
+		}
+	}
 }
 
 /*------------------------------------------------------------
@@ -38,6 +66,23 @@ void CE::GameObject::Update(float deltaTime)
 ------------------------------------------------------------*/
 void CE::GameObject::Render()
 {
+	if (!m_isActive)
+		return;
+
+	for (Component* pComponent : m_components)
+	{
+		if (pComponent != nullptr && pComponent->IsActive())
+		{
+			pComponent->Render();
+		}
+	}
+	for (GameObject* child : m_children)
+	{
+		if (child != nullptr && child->IsActive())
+		{
+			child->Render();
+		}
+	}
 }
 
 /*---------------------------------------------------------------
@@ -51,9 +96,9 @@ CE::GameObject* CE::GameObject::GetParent() const
 /*-------------------------------------------------------
 | --- SetParent: Sets the parent of this GameObject --- |
 -------------------------------------------------------*/
-void CE::GameObject::SetParent(GameObject* parent)
+void CE::GameObject::SetParent(GameObject* pParent)
 {
-    m_pParent = parent;
+    m_pParent = pParent;
 }
 
 /*------------------------------------------------------------------------------
@@ -67,15 +112,26 @@ const std::vector<CE::GameObject*>& CE::GameObject::GetChildren() const
 /*---------------------------------------------------
 | --- AddChild: Adds a child to this GameObject --- |
 ---------------------------------------------------*/
-void CE::GameObject::AddChild(GameObject* child)
+void CE::GameObject::AddChild(GameObject* pChild)
 {
+	if (pChild != nullptr)
+	{
+		m_children.emplace_back(pChild);
+		pChild->SetParent(this);
+	}
 }
 
 /*-----------------------------------------------------------
 | --- RemoveChild: Removes a child from this GameObject --- |
 -----------------------------------------------------------*/
-void CE::GameObject::RemoveChild(GameObject* child)
+void CE::GameObject::RemoveChild(GameObject* pChild)
 {
+	auto it = std::find(m_children.begin(), m_children.end(), pChild);
+	if (it != m_children.end())
+	{
+		(*it)->SetParent(nullptr);
+		m_children.erase(it);
+	}
 }
 
 /*---------------------------------------------------
@@ -137,15 +193,26 @@ const CE::Transform& CE::GameObject::GetTransform() const
 /*-----------------------------------------------------------
 | --- AddComponent: Adds a component to this GameObject --- |
 -----------------------------------------------------------*/
-void CE::GameObject::AddComponent(CE::Component* component)
+void CE::GameObject::AddComponent(CE::Component* pComponent)
 {
+	if (pComponent != nullptr)
+	{
+		m_components.emplace_back(pComponent);
+		pComponent->SetOwner(this);
+	}
 }
 
 /*-------------------------------------------------------------------
 | --- RemoveComponent: Removes a component from this GameObject --- |
 -------------------------------------------------------------------*/
-void CE::GameObject::RemoveComponent(CE::Component* component)
+void CE::GameObject::RemoveComponent(CE::Component* pComponent)
 {
+	auto it = std::find(m_components.begin(), m_components.end(), pComponent);
+	if (it != m_components.end())
+	{
+		(*it)->SetOwner(nullptr);
+		m_components.erase(it);
+	}
 }
 
 /*--------------------------------------------------------------
@@ -153,4 +220,17 @@ void CE::GameObject::RemoveComponent(CE::Component* component)
 --------------------------------------------------------------*/
 void CE::GameObject::Destroy()
 {
+	for (Component* pComponent : m_components)
+	{
+		delete pComponent;
+		pComponent = nullptr;
+	}
+	m_components.clear();
+
+	for (GameObject* child : m_children)
+	{
+		delete child;
+		child = nullptr;
+	}
+	m_children.clear();
 }
