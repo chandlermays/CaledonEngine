@@ -190,6 +190,14 @@ const CE::Transform& CE::GameObject::GetTransform() const
 	return m_transform;
 }
 
+/*-------------------------------------------------------------
+| --- GetTransform: Gets the Transform of this GameObject --- |
+-------------------------------------------------------------*/
+CE::Transform& CE::GameObject::GetTransform()
+{
+	return m_transform;
+}
+
 /*-----------------------------------------------------------
 | --- AddComponent: Adds a component to this GameObject --- |
 -----------------------------------------------------------*/

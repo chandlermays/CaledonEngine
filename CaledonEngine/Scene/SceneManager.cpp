@@ -21,7 +21,8 @@ CE::SceneManager::~SceneManager()
 -------------------------------------------------*/
 bool CE::SceneManager::Initialize()
 {
-	return false;
+	// initialize something here
+	return true;
 }
 
 /*---------------------------------------------------------------

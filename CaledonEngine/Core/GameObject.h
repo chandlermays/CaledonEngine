@@ -49,6 +49,7 @@ namespace CE
 		void SetActive(bool isActive);													// Sets whether this GameObject is active or not
 
 		const Transform& GetTransform() const;											// Gets the Transform of this GameObject
+		Transform& GetTransform();														// Gets the Transform of this GameObject
 
 		// Gets a reference to a component of type T attached to this GameObject
 		template<typename T>

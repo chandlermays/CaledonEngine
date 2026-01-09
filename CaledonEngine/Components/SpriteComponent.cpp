@@ -1,8 +1,8 @@
 #include "SpriteComponent.h"
-#include "../Rendering/GraphicsManager.h"
-#include "../Engine/EngineManager.h"
-#include "../Core/GameObject.h"
-#include "../Core/Transform.h"
+#include "CaledonEngine/Rendering/GraphicsManager.h"
+#include "CaledonEngine/Engine/EngineManager.h"
+#include "CaledonEngine/Core/GameObject.h"
+#include "CaledonEngine/Core/Transform.h"
 #include "SDL.h"
 
 CE::SpriteComponent::SpriteComponent()
