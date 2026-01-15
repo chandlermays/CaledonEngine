@@ -3,7 +3,6 @@
 namespace CE
 {
 	class EngineManager;
-	class Scene;
 }
 
 class Game

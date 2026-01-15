@@ -3,6 +3,8 @@
 #include "CaledonEngine/Scene/SceneManager.h"
 #include "CaledonEngine/Core/Scene.h"
 #include "CaledonEngine/Core/GameObject.h"
+#include "CaledonEngine/Core/Transform.h"
+#include "CaledonEngine/Components/SpriteComponent.h"
 
 /*-----------------------------------
 | --- Public Method Definitions --- |
@@ -64,6 +66,11 @@ void Game::CreateScenes()
 	CE::GameObject* pPlayer = new CE::GameObject();
 	pPlayer->SetName("Player");
 	pPlayer->SetTag("Player");
+
+	pPlayer->GetTransform().SetPosition(CE::VectorFloat(100.0f, 100.0f));
+
+	CE::SpriteComponent* pSpriteComponent = new CE::SpriteComponent();
+	pPlayer->AddComponent(pSpriteComponent);
 
 	pMainScene->AddGameObject(pPlayer);
 
