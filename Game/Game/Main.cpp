@@ -1,17 +1,18 @@
-#include "CaledonEngine/Engine/EngineManager.h"
+#include "Game.h"
 
 /*----------------------------------------------
 | --- Main: Entry point of the application --- |
 ----------------------------------------------*/
 int main()
 {
-	CE::EngineManager& engineManager = CE::EngineManager::GetInstance();
-	if (!engineManager.Initialize())
+	Game game;
+
+	if (!game.Initialize())
 	{
 		return -1;
 	}
 
-	engineManager.Run();
+	game.Run();
 
 	return 0;
 }
