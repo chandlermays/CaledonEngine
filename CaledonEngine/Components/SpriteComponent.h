@@ -1,5 +1,5 @@
 #pragma once
-#include "../Core/Component.h"
+#include "CaledonEngine/Core/Component.h"
 
 class SDL_Renderer;
 class SDL_Color;
@@ -11,6 +11,8 @@ namespace CE
 	private:
 		SDL_Renderer* m_pRenderer;
 		SDL_Color* m_pColor;
+		int m_width;
+		int m_height;
 
 	public:
 		SpriteComponent();
@@ -25,5 +27,8 @@ namespace CE
 
 		const SDL_Color* GetColor() const;
 		void SetColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+
+		void GetSize(int& width, int& height) const;
+		void SetSize(int width, int height);
 	};
 }

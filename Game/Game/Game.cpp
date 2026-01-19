@@ -70,12 +70,16 @@ void Game::CreateScenes()
 	pPlayer->GetTransform().SetPosition(CE::VectorFloat(100.0f, 100.0f));
 
 	CE::SpriteComponent* pSpriteComponent = new CE::SpriteComponent();
+	pSpriteComponent->SetColor(255, 0, 0, 255);	// Red color
+	pSpriteComponent->SetSize(50, 50);			// 50x50 size
 	pPlayer->AddComponent(pSpriteComponent);
 
 	pMainScene->AddGameObject(pPlayer);
 
 	pSceneManager->AddScene(pMainScene);
 	pSceneManager->SetCurrentScene(pMainScene);
+
+	pMainScene->Initialize();
 }
 
 void Game::Shutdown()

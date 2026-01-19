@@ -22,7 +22,14 @@ CE::Scene::~Scene()
 ----------------------------------------------------------------*/
 bool CE::Scene::Initialize()
 {
-	return false;
+	for (GameObject* pObject : m_gameObjects)
+	{
+		if (pObject != nullptr && !pObject->Initialize())
+		{
+			return false;
+		}
+	}
+	return true;
 }
 
 /*--------------------------------------------------------

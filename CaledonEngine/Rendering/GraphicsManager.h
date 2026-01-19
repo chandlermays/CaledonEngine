@@ -25,6 +25,6 @@ namespace CE
 		void Render() override;													// Render the current frame
 		void Shutdown() override;												// Shutdown the graphics manager
 		
-		SDL_Renderer* GetRenderer() const;										// Get the SDL Renderer
+		SDL_Renderer* GetRenderer() const { return m_pRenderer; }				// Get the SDL Renderer
 	};
 }

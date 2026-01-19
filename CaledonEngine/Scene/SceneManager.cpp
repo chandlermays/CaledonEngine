@@ -21,7 +21,13 @@ CE::SceneManager::~SceneManager()
 -------------------------------------------------*/
 bool CE::SceneManager::Initialize()
 {
-	// initialize something here
+	if (m_pCurrentScene != nullptr)
+	{
+		if (!m_pCurrentScene->Initialize())
+		{
+			return false;
+		}
+	}
 	return true;
 }
 

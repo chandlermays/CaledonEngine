@@ -77,10 +77,12 @@ void CE::GraphicsManager::Render()
 {
 	// Clear the screen with a blue color
 	SDL_SetRenderDrawColor(m_pRenderer, 0, 156, 255, 255);
-	SDL_RenderClear(m_pRenderer);
 
 	// Present the rendered frame
 	SDL_RenderPresent(m_pRenderer);
+
+	// Clear the renderer for the next frame
+	SDL_RenderClear(m_pRenderer);
 }
 
 /*---------------------------------------------------
@@ -104,12 +106,4 @@ void CE::GraphicsManager::Shutdown()
 
 	// Quit SDL subsystems
 	SDL_Quit();
-}
-
-/*--------------------------------------------
-| --- GetRenderer: Gets the SDL Renderer --- |
---------------------------------------------*/
-SDL_Renderer* CE::GraphicsManager::GetRenderer() const
-{
-	return m_pRenderer;
 }
