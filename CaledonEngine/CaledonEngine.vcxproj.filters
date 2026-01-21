@@ -11,26 +11,38 @@
     <Filter Include="Source Files\Components">
       <UniqueIdentifier>{a6fbcb11-c25d-4a4f-9494-47950ed81313}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Engine">
-      <UniqueIdentifier>{b45b1358-367e-4463-af30-05ae0f7c14fb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Input">
-      <UniqueIdentifier>{d6eb9412-062a-4e51-bb3d-e3d5c2bdb9ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Physics">
-      <UniqueIdentifier>{8f9978ed-15f3-42f7-b11d-5a8cc4778a84}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Rendering">
-      <UniqueIdentifier>{80de5060-b966-4fb9-b295-aa43b506aaa9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Utilities">
       <UniqueIdentifier>{9c45ee2f-70aa-4414-be7e-54bc4ed2e02d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Utilities\Math">
       <UniqueIdentifier>{53e5a6d8-4fa3-461e-8fe8-5be82f355b03}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Scene">
+    <Filter Include="Source Files\Systems">
+      <UniqueIdentifier>{28ba1afc-fa1c-477f-ad3d-52e862b25113}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Systems\Engine">
+      <UniqueIdentifier>{b45b1358-367e-4463-af30-05ae0f7c14fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Systems\Input">
+      <UniqueIdentifier>{d6eb9412-062a-4e51-bb3d-e3d5c2bdb9ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Systems\Physics">
+      <UniqueIdentifier>{8f9978ed-15f3-42f7-b11d-5a8cc4778a84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Systems\Rendering">
+      <UniqueIdentifier>{80de5060-b966-4fb9-b295-aa43b506aaa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Systems\Scene">
       <UniqueIdentifier>{1a0ccc5b-5628-45fb-85ff-275c5f6044a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\API">
+      <UniqueIdentifier>{b3bcf487-504a-4521-94a5-5960f7caa47a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\API\Base">
+      <UniqueIdentifier>{f68b64c7-e206-46a7-b6fa-31607f03eafd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\API\SDL">
+      <UniqueIdentifier>{ab4089fc-2576-4dd3-b5ed-8b26518095e3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -49,26 +61,29 @@
     <ClCompile Include="Core\Transform.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\EngineManager.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\LoggingManager.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Input\InputManager.cpp">
-      <Filter>Source Files\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\CollisionManager.cpp">
-      <Filter>Source Files\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\SceneManager.cpp">
-      <Filter>Source Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Rendering\GraphicsManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Components\InputComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Engine\EngineManager.cpp">
+      <Filter>Source Files\Systems\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Engine\LoggingManager.cpp">
+      <Filter>Source Files\Systems\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Input\InputManager.cpp">
+      <Filter>Source Files\Systems\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Physics\CollisionManager.cpp">
+      <Filter>Source Files\Systems\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Rendering\GraphicsManager.cpp">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Scene\SceneManager.cpp">
+      <Filter>Source Files\Systems\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="API\Base\Input.cpp">
+      <Filter>Source Files\API\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -87,30 +102,35 @@
     <ClInclude Include="Core\Transform.h">
       <Filter>Source Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\EngineManager.h">
-      <Filter>Source Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\LoggingManager.h">
-      <Filter>Source Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Manager.h">
-      <Filter>Source Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Input\InputManager.h">
-      <Filter>Source Files\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\CollisionManager.h">
-      <Filter>Source Files\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Rendering\GraphicsManager.h">
-      <Filter>Source Files\Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities\Math\Vector2.h">
       <Filter>Source Files\Utilities\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\SceneManager.h">
-      <Filter>Source Files\Scene</Filter>
+    <ClInclude Include="Components\InputComponent.h">
+      <Filter>Source Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Components\InputComponent.h" />
+    <ClInclude Include="Systems\Engine\EngineManager.h">
+      <Filter>Source Files\Systems\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Engine\LoggingManager.h">
+      <Filter>Source Files\Systems\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Engine\Manager.h">
+      <Filter>Source Files\Systems\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Input\InputManager.h">
+      <Filter>Source Files\Systems\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Physics\CollisionManager.h">
+      <Filter>Source Files\Systems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\GraphicsManager.h">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Scene\SceneManager.h">
+      <Filter>Source Files\Systems\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="API\Base\Input.h">
+      <Filter>Source Files\API\Base</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

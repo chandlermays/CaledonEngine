@@ -1,17 +1,20 @@
 #include "Scene.h"
 #include "CaledonEngine/Core/GameObject.h"
 
-/*---------------------
-| --- Constructor --- |
----------------------*/
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
+/*---------------------------------------------------------------
+| --- Constructor: Constructs the Scene with default values --- |
+---------------------------------------------------------------*/
 CE::Scene::Scene()
 	: m_name{ "Scene" }
 	, m_isActive{ true }
 {}
 
-/*--------------------
-| --- Destructor --- |
---------------------*/
+/*-------------------------------------------------------
+| --- Destructor: Cleans up any allocated resources --- |
+-------------------------------------------------------*/
 CE::Scene::~Scene()
 {
 	Clear();

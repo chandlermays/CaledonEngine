@@ -51,33 +51,35 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="API\Base\Input.cpp" />
     <ClCompile Include="Components\InputComponent.cpp" />
     <ClCompile Include="Components\SpriteComponent.cpp" />
     <ClCompile Include="Core\Component.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Scene.cpp" />
     <ClCompile Include="Core\Transform.cpp" />
-    <ClCompile Include="Engine\EngineManager.cpp" />
-    <ClCompile Include="Engine\LoggingManager.cpp" />
-    <ClCompile Include="Input\InputManager.cpp" />
-    <ClCompile Include="Physics\CollisionManager.cpp" />
-    <ClCompile Include="Rendering\GraphicsManager.cpp" />
-    <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="Systems\Engine\EngineManager.cpp" />
+    <ClCompile Include="Systems\Engine\LoggingManager.cpp" />
+    <ClCompile Include="Systems\Input\InputManager.cpp" />
+    <ClCompile Include="Systems\Physics\CollisionManager.cpp" />
+    <ClCompile Include="Systems\Rendering\GraphicsManager.cpp" />
+    <ClCompile Include="Systems\Scene\SceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="API\Base\Input.h" />
     <ClInclude Include="Components\InputComponent.h" />
     <ClInclude Include="Components\SpriteComponent.h" />
     <ClInclude Include="Core\Component.h" />
     <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\Scene.h" />
     <ClInclude Include="Core\Transform.h" />
-    <ClInclude Include="Engine\EngineManager.h" />
-    <ClInclude Include="Engine\LoggingManager.h" />
-    <ClInclude Include="Engine\Manager.h" />
-    <ClInclude Include="Input\InputManager.h" />
-    <ClInclude Include="Physics\CollisionManager.h" />
-    <ClInclude Include="Rendering\GraphicsManager.h" />
-    <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="Systems\Engine\EngineManager.h" />
+    <ClInclude Include="Systems\Engine\LoggingManager.h" />
+    <ClInclude Include="Systems\Engine\Manager.h" />
+    <ClInclude Include="Systems\Input\InputManager.h" />
+    <ClInclude Include="Systems\Physics\CollisionManager.h" />
+    <ClInclude Include="Systems\Rendering\GraphicsManager.h" />
+    <ClInclude Include="Systems\Scene\SceneManager.h" />
     <ClInclude Include="Utilities\Math\Vector2.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

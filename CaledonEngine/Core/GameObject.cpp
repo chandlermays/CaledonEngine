@@ -1,9 +1,12 @@
 #include "GameObject.h"
 #include "CaledonEngine/Core/Component.h"
 
-/*---------------------
-| --- Constructor --- |
----------------------*/
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
+/*--------------------------------------------------------------------
+| --- Constructor: Constructs the GameObject with default values --- |
+--------------------------------------------------------------------*/
 CE::GameObject::GameObject()
 	: m_pParent{ nullptr }
 	, m_name{ "GameObject" }
@@ -11,9 +14,9 @@ CE::GameObject::GameObject()
 	, m_isActive{ true }
 {}
 
-/*--------------------
-| --- Destructor --- |
---------------------*/
+/*-------------------------------------------------------
+| --- Destructor: Cleans up any allocated resources --- |
+-------------------------------------------------------*/
 CE::GameObject::~GameObject()
 {
 	Destroy();

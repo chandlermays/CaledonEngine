@@ -1,6 +1,6 @@
 #include "Game.h"
-#include "CaledonEngine/Engine/EngineManager.h"
-#include "CaledonEngine/Scene/SceneManager.h"
+#include "CaledonEngine/Systems/Engine/EngineManager.h"
+#include "CaledonEngine/Systems/Scene/SceneManager.h"
 #include "CaledonEngine/Core/Scene.h"
 #include "CaledonEngine/Core/GameObject.h"
 #include "CaledonEngine/Core/Transform.h"
@@ -9,24 +9,24 @@
 /*-----------------------------------
 | --- Public Method Definitions --- |
 -----------------------------------*/
-/*------------------------------------------------------
-| --- Constructor: 
-------------------------------------------------------*/
+/*-----------------------------------------------------------------------
+| --- Constructor: Constructs the Game instance with default values --- |
+-----------------------------------------------------------------------*/
 Game::Game()
 	: m_pEngineManager{ nullptr }
 {}
 
-/*--------------------------------------------------
-| --- Destructor: 
---------------------------------------------------*/
+/*-------------------------------------------------------
+| --- Destructor: Cleans up any allocated resources --- |
+-------------------------------------------------------*/
 Game::~Game()
 {
 	Shutdown();
 }
 
-/*--------------------------------------------------
-| --- Initialize: 
---------------------------------------------------*/
+/*----------------------------------------------------------------
+| --- Initialize: Prepares the game by booting up the engine --- |
+----------------------------------------------------------------*/
 bool Game::Initialize()
 {
 	m_pEngineManager = &CE::EngineManager::GetInstance();
@@ -39,9 +39,9 @@ bool Game::Initialize()
 	return true;
 }
 
-/*--------------------------------------------------
-| --- Run:
---------------------------------------------------*/
+/*----------------------------------------
+| --- Run: Starts the main game loop --- |
+----------------------------------------*/
 void Game::Run()
 {
 	CreateScenes();
@@ -53,9 +53,9 @@ void Game::Run()
 /*------------------------------------
 | --- Private Method Definitions --- |
 ------------------------------------*/
-/*------------------------------------------------------
-| --- CreateScenes:
-------------------------------------------------------*/
+/*-----------------------------------------------------------------------------
+| --- CreateScenes: Constructs and configures all game scenes and objects --- |
+-----------------------------------------------------------------------------*/
 void Game::CreateScenes()
 {
 	CE::SceneManager* pSceneManager = m_pEngineManager->GetSceneManager();
@@ -82,6 +82,9 @@ void Game::CreateScenes()
 	pMainScene->Initialize();
 }
 
+/*-----------------------------------------------------------------
+| --- Shutdown: Shuts down the game and engine, and cleans up --- |
+-----------------------------------------------------------------*/
 void Game::Shutdown()
 {
 	if (m_pEngineManager)

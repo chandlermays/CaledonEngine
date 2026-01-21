@@ -1,5 +1,11 @@
 #include "InputComponent.h"
 
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
+/*------------------------------------------------------------------------
+| --- Constructor: Constructs the InputComponent with default values --- |
+------------------------------------------------------------------------*/
 CE::InputComponent::InputComponent()
 {
 }
