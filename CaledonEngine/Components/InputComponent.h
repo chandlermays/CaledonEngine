@@ -17,6 +17,5 @@ namespace CE
 		InputComponent& operator=(InputComponent&&) = delete;
 
 		bool Initialize() override;
-		void Update(float deltaTime) override;
 	};
 }

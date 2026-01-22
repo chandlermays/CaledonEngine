@@ -38,9 +38,6 @@
     <Filter Include="Source Files\API">
       <UniqueIdentifier>{b3bcf487-504a-4521-94a5-5960f7caa47a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\API\Base">
-      <UniqueIdentifier>{f68b64c7-e206-46a7-b6fa-31607f03eafd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\API\SDL">
       <UniqueIdentifier>{ab4089fc-2576-4dd3-b5ed-8b26518095e3}</UniqueIdentifier>
     </Filter>
@@ -82,8 +79,11 @@
     <ClCompile Include="Systems\Scene\SceneManager.cpp">
       <Filter>Source Files\Systems\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="API\Base\Input.cpp">
-      <Filter>Source Files\API\Base</Filter>
+    <ClCompile Include="API\SDL\SDLInput.cpp">
+      <Filter>Source Files\API\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Input\Input.cpp">
+      <Filter>Source Files\Systems\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -129,8 +129,20 @@
     <ClInclude Include="Systems\Scene\SceneManager.h">
       <Filter>Source Files\Systems\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="API\Base\Input.h">
-      <Filter>Source Files\API\Base</Filter>
+    <ClInclude Include="API\SDL\SDLInput.h">
+      <Filter>Source Files\API\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\APIConfig.h">
+      <Filter>Source Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Input\Input.h">
+      <Filter>Source Files\Systems\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Input\InputAction.h">
+      <Filter>Source Files\Systems\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Input\InputActionMap.h">
+      <Filter>Source Files\Systems\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

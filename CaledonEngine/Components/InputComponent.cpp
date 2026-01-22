@@ -10,15 +10,17 @@ CE::InputComponent::InputComponent()
 {
 }
 
+/*-------------------------------------------------------
+| --- Destructor: Cleans up any allocated resources --- |
+-------------------------------------------------------*/
 CE::InputComponent::~InputComponent()
 {
 }
 
+/*---------------------------------------------------------
+| --- Initialize: Prepares the InputComponent for use --- |
+---------------------------------------------------------*/
 bool CE::InputComponent::Initialize()
 {
     return false;
-}
-
-void CE::InputComponent::Update(float deltaTime)
-{
 }
