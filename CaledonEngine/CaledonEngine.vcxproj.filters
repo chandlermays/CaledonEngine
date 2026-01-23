@@ -58,9 +58,6 @@
     <ClCompile Include="Core\Transform.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Components\InputComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Systems\Engine\EngineManager.cpp">
       <Filter>Source Files\Systems\Engine</Filter>
     </ClCompile>
@@ -85,6 +82,15 @@
     <ClCompile Include="Systems\Input\Input.cpp">
       <Filter>Source Files\Systems\Input</Filter>
     </ClCompile>
+    <ClCompile Include="Systems\Input\InputActionMap.cpp">
+      <Filter>Source Files\Systems\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Input\InputAction.cpp">
+      <Filter>Source Files\Systems\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Input\InputActions.cpp">
+      <Filter>Source Files\Systems\Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\SpriteComponent.h">
@@ -104,9 +110,6 @@
     </ClInclude>
     <ClInclude Include="Utilities\Math\Vector2.h">
       <Filter>Source Files\Utilities\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\InputComponent.h">
-      <Filter>Source Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Systems\Engine\EngineManager.h">
       <Filter>Source Files\Systems\Engine</Filter>
@@ -142,6 +145,9 @@
       <Filter>Source Files\Systems\Input</Filter>
     </ClInclude>
     <ClInclude Include="Systems\Input\InputActionMap.h">
+      <Filter>Source Files\Systems\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Input\InputActions.h">
       <Filter>Source Files\Systems\Input</Filter>
     </ClInclude>
   </ItemGroup>

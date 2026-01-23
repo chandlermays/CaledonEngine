@@ -12,18 +12,18 @@ namespace CE
 	class EngineManager : public Manager
 	{
 	private:
-		bool m_isRunning;													// Flag to indicate if the engine is running
-
 		std::vector<Manager*> m_pManagers;									// Vector of pointers to managers
 		GraphicsManager* m_pGraphicsManager;								// Pointer to the graphics manager
 		InputManager* m_pInputManager;										// Pointer to the input manager
 		CollisionManager* m_pCollisionManager;								// Pointer to the collision manager
 		SceneManager* m_pSceneManager;										// Pointer to the scene manager
 
-		void Update(float deltaTime) override;								// Updates all engine subsystem managers
-		void Render() override;												// Renders all engine subsystem managers
+		bool m_isRunning;													// Flag to indicate if the engine is running
 
 		EngineManager();													// Constructor
+
+		void Update(float deltaTime) override;								// Updates all engine subsystem managers
+		void Render() override;												// Renders all engine subsystem managers
 
 	public:
 		~EngineManager();													// Destructor

@@ -1,4 +1,5 @@
 #pragma once
+#include "Game/Input/GameInputActions.h"
 
 namespace CE
 {
@@ -8,7 +9,8 @@ namespace CE
 class Game
 {
 private:
-	CE::EngineManager* m_pEngineManager;							// Pointer to the engine manager
+	CE::EngineManager* m_pEngineManager;							// Pointer to the Engine Manager
+	GameInputActions* m_pInputActions;								// Pointer to the Game Input Actions
 
 	void CreateScenes();											// Create all game scenes
 

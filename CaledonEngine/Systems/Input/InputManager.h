@@ -1,6 +1,7 @@
 #pragma once
 #include "CaledonEngine/Systems/Engine/Manager.h"
 #include "CaledonEngine/Systems/Input/Input.h"
+#include "CaledonEngine/Systems/Input/InputActions.h"
 
 #include <memory>
 
@@ -9,7 +10,12 @@ namespace CE
 	class InputManager : public Manager
 	{
 	private:
-		std::unique_ptr<Input> m_inputAPI;										// Pointer to the Input API
+		std::unique_ptr<Input> m_pInputAPI;										// Pointer to the Input's API
+		InputActions* m_pInputActions;											// Pointer to the Input Actions
+
+		void ProcessInputActions();
+		void ProcessAction(InputAction* pAction);
+		float CalculateAxisValue(InputAction* pAction);
 
 	public:
 		InputManager();															// Constructor
@@ -21,5 +27,10 @@ namespace CE
 
 		bool Initialize() override;												// Initialize the input manager
 		void Shutdown() override;												// Shutdown the input manager
+
+		bool ProcessEvents();													// Process input events
+
+		void SetInputActions(InputActions* pInputActions);
+		InputActions* GetInputActions() const;
 	};
 }

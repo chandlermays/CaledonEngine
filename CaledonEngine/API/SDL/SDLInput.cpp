@@ -1,6 +1,12 @@
 #include "SDLInput.h"
 #include "SDL.h"
 
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
+/*------------------------------------------------------
+| --- Initialize: Initializes the SDL Input System --- |
+------------------------------------------------------*/
 bool CE::SDLInput::Initialize()
 {
 	// Initialize the Key Mappings
@@ -16,11 +22,17 @@ bool CE::SDLInput::Initialize()
 	return (!m_keyMapping.empty() && !m_mouseMapping.empty()) ? true : false;
 }
 
+/*-----------------------------------------------------------------
+| --- Shutdown: Shuts down and cleans up the SDL Input System --- |
+-----------------------------------------------------------------*/
 void CE::SDLInput::Shutdown()
 {
     // Clean up if needed.
 }
 
+/*-------------------------------------------------------------------------
+| --- ProcessEvents: Processes input events from the SDL Input System --- |
+-------------------------------------------------------------------------*/
 bool CE::SDLInput::ProcessEvents()
 {
 	m_prevKeyStates = m_keyStates;
@@ -79,7 +91,9 @@ bool CE::SDLInput::ProcessEvents()
 			break;
 		}
 
-		return false;
+		// More events, if any
+		default:
+			break;
 		}
 	}
 

@@ -15,6 +15,7 @@ CE::LoggingManager::LoggingManager()
 -------------------------------------------------------*/
 CE::LoggingManager::~LoggingManager()
 {
+	CE_LOG("LoggingManager::~LoggingManager - Shutting down LoggingManager.");
 	Shutdown();
 }
 
@@ -54,7 +55,9 @@ bool CE::LoggingManager::Initialize()
 void CE::LoggingManager::Shutdown()
 {
 #if _DEBUG
-	std::lock_guard<std::mutex> lock(m_mutex);
+	if (!m_logFile.is_open())
+		return;
+
 	if (m_logFile.is_open())
 	{
 		m_logFile.close();
@@ -68,8 +71,6 @@ void CE::LoggingManager::Shutdown()
 void CE::LoggingManager::Log(const std::string& message, bool newLine)
 {
 #if _DEBUG
-	std::lock_guard<std::mutex> lock(m_mutex);
-
 	std::cout << message;
 	if (newLine) std::cout << '\n';
 

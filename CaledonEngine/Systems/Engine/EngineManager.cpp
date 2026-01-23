@@ -8,30 +8,12 @@
 /*-----------------------------------
 | --- Public Method Definitions --- |
 -----------------------------------*/
-/*-----------------------------------------------------------------------------
-| --- Constructor: Constructs and registers all engine subsystem managers --- |
------------------------------------------------------------------------------*/
-CE::EngineManager::EngineManager()
-	: m_isRunning{ true }
-{ 
-	m_pGraphicsManager = new GraphicsManager();
-	m_pManagers.emplace_back(m_pGraphicsManager);
-
-	m_pInputManager = new InputManager();
-	m_pManagers.emplace_back(m_pInputManager);
-
-	m_pCollisionManager = new CollisionManager();
-	m_pManagers.emplace_back(m_pCollisionManager);
-
-	m_pSceneManager = new SceneManager();
-	m_pManagers.emplace_back(m_pSceneManager);
-}
-
 /*-------------------------------------------------------
 | --- Destructor: Cleans up any allocated resources --- |
 -------------------------------------------------------*/
 CE::EngineManager::~EngineManager()
 {
+	CE_LOG("EngineManager::~EngineManager - Shutting down EngineManager.");
 	Shutdown();
 }
 
@@ -51,7 +33,6 @@ bool CE::EngineManager::Initialize()
 {
 	if (!LoggingManager::GetInstance().Initialize())
 	{
-		CE_LOG("EngineManager::Initialize - Failed to initialize LoggingManager.");
 		return false;
 	}
 
@@ -77,6 +58,12 @@ void CE::EngineManager::Run()
 
 	while (m_isRunning)
 	{
+		if (m_pInputManager->ProcessEvents())
+		{
+			m_isRunning = false;
+			break;
+		}
+
 		Update(deltaTime);
 		Render();
 	}
@@ -87,6 +74,9 @@ void CE::EngineManager::Run()
 --------------------------------------------------------------------------*/
 void CE::EngineManager::Shutdown()
 {
+	if (m_pManagers.empty())
+		return;
+
 	for (auto it = m_pManagers.rbegin(); it != m_pManagers.rend(); ++it)
 	{
 		auto manager = *it;
@@ -136,6 +126,25 @@ CE::SceneManager* CE::EngineManager::GetSceneManager() const
 /*------------------------------------
 | --- Private Method Definitions --- |
 ------------------------------------*/
+/*-----------------------------------------------------------------------------
+| --- Constructor: Constructs and registers all engine subsystem managers --- |
+-----------------------------------------------------------------------------*/
+CE::EngineManager::EngineManager()
+	: m_isRunning{ true }
+{
+	m_pGraphicsManager = new GraphicsManager();
+	m_pManagers.emplace_back(m_pGraphicsManager);
+
+	m_pInputManager = new InputManager();
+	m_pManagers.emplace_back(m_pInputManager);
+
+	m_pCollisionManager = new CollisionManager();
+	m_pManagers.emplace_back(m_pCollisionManager);
+
+	m_pSceneManager = new SceneManager();
+	m_pManagers.emplace_back(m_pSceneManager);
+}
+
 /*-------------------------------------------------------
 | --- Update: Updates all engine subsystem managers --- |
 -------------------------------------------------------*/

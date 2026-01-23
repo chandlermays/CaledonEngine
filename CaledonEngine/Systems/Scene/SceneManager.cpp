@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 #include "CaledonEngine/Core/Scene.h"
+#include <CaledonEngine/Systems/Engine/LoggingManager.h>
 
 /*----------------------------------------------------------------------
 | --- Constructor: Constructs the SceneManager with default values --- |
@@ -13,6 +14,7 @@ CE::SceneManager::SceneManager()
 -------------------------------------------------------*/
 CE::SceneManager::~SceneManager()
 {
+	CE_LOG("SceneManager::~SceneManager - Shutting down SceneManager.");
 	Shutdown();
 }
 

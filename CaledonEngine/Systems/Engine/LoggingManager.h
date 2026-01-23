@@ -2,7 +2,6 @@
 #include "Manager.h"
 #include <string>
 #include <fstream>
-#include <mutex>
 
 namespace CE
 {
@@ -12,7 +11,6 @@ namespace CE
     {
     private:
         std::ofstream m_logFile;                                                            // The output log for debugging
-        std::mutex m_mutex;                                                                 // A mutex lock for thread-safety
 
         LoggingManager();                                                                   // Constructor
 

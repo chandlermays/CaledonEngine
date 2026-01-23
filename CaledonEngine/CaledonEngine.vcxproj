@@ -52,7 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API\SDL\SDLInput.cpp" />
-    <ClCompile Include="Components\InputComponent.cpp" />
     <ClCompile Include="Components\SpriteComponent.cpp" />
     <ClCompile Include="Core\Component.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
@@ -61,6 +60,9 @@
     <ClCompile Include="Systems\Engine\EngineManager.cpp" />
     <ClCompile Include="Systems\Engine\LoggingManager.cpp" />
     <ClCompile Include="Systems\Input\Input.cpp" />
+    <ClCompile Include="Systems\Input\InputAction.cpp" />
+    <ClCompile Include="Systems\Input\InputActionMap.cpp" />
+    <ClCompile Include="Systems\Input\InputActions.cpp" />
     <ClCompile Include="Systems\Input\InputManager.cpp" />
     <ClCompile Include="Systems\Physics\CollisionManager.cpp" />
     <ClCompile Include="Systems\Rendering\GraphicsManager.cpp" />
@@ -68,7 +70,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="API\SDL\SDLInput.h" />
-    <ClInclude Include="Components\InputComponent.h" />
     <ClInclude Include="Components\SpriteComponent.h" />
     <ClInclude Include="Core\Component.h" />
     <ClInclude Include="Core\GameObject.h" />
@@ -80,6 +81,7 @@
     <ClInclude Include="Systems\Input\Input.h" />
     <ClInclude Include="Systems\Input\InputAction.h" />
     <ClInclude Include="Systems\Input\InputActionMap.h" />
+    <ClInclude Include="Systems\Input\InputActions.h" />
     <ClInclude Include="Systems\Input\InputManager.h" />
     <ClInclude Include="Systems\Physics\CollisionManager.h" />
     <ClInclude Include="Systems\Rendering\GraphicsManager.h" />

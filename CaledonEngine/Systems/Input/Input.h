@@ -55,6 +55,7 @@ namespace CE
 
 	enum class MouseCode : uint8_t
 	{
+		kNone,
 		kMouseLeft,
 		kMouseRight,
 		kMouseMiddle,
