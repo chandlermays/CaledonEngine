@@ -24,7 +24,7 @@ PlayerController::PlayerController()
     : CE::Component()
     , m_pInputActions{ nullptr }
     , m_pGameplayActionMap{ nullptr }
-    , m_moveSpeed{ 10.0f }
+    , m_moveSpeed{ 100.0f }
     , m_horizontalInput{ 0.0f }
 	, m_verticalInput{ 0.0f }
 { }

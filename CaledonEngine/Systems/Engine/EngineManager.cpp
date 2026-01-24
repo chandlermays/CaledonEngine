@@ -4,6 +4,7 @@
 #include "CaledonEngine/Systems/Input/InputManager.h"
 #include "CaledonEngine/Systems/Physics/CollisionManager.h"
 #include "CaledonEngine/Systems/Scene/SceneManager.h"
+#include <chrono>
 
 /*-----------------------------------
 | --- Public Method Definitions --- |
@@ -54,10 +55,15 @@ bool CE::EngineManager::Initialize()
 -------------------------------------------------------------------------------*/
 void CE::EngineManager::Run()
 {
-	float deltaTime = 0.0f;
+	auto lastFrameTime = std::chrono::high_resolution_clock::now();
 
 	while (m_isRunning)
 	{
+		auto thisFrameTime = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<float> frameDuration = thisFrameTime - lastFrameTime;
+		float deltaTime = frameDuration.count();
+		lastFrameTime = thisFrameTime;
+
 		if (m_pInputManager->ProcessEvents())
 		{
 			m_isRunning = false;

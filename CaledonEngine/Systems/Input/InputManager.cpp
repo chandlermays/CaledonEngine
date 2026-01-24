@@ -47,7 +47,7 @@ bool CE::InputManager::ProcessEvents()
 	if (m_pInputAPI)
 	{
 		bool result = m_pInputAPI->ProcessEvents();
-		if (!result)	// If the program is being shut down, break out now.
+		if (result)	// If the program is being shut down, break out now.
 			return false;
 
 		ProcessInputActions();
@@ -100,7 +100,49 @@ void CE::InputManager::ProcessInputActions()
 ------------------------------------------------------------------*/
 void CE::InputManager::ProcessAction(InputAction* pAction)
 {
+	if (!pAction || !pAction->IsEnabled())
+		return;
 
+	ActionType type = pAction->GetActionType();
+
+	if (type == ActionType::kValue)
+	{
+		float value = CalculateAxisValue(pAction);
+		pAction->InvokeValueCallbacks(value);
+	}
+	else if (type == ActionType::kButton)
+	{
+		bool isPressed = false;
+
+		const auto& bindings = pAction->GetInputBindings();
+		for (const auto& binding : bindings)
+		{
+			if (binding.m_isMouseButton)
+			{
+				if (m_pInputAPI->IsMouseButtonPressed(binding.m_mouseCode))
+				{
+					isPressed = true;
+					break;
+				}
+			}
+			else
+			{
+				if (m_pInputAPI->IsKeyPressed(binding.m_keyCode))
+				{
+					isPressed = true;
+					break;
+				}
+			}
+		}
+
+		if (isPressed)
+		{
+			pAction->InvokeStartedCallbacks();
+			pAction->InvokePerformedCallbacks();
+		}
+
+		// Additional logic for released state should be added here for Canceled callbacks
+	}
 }
 
 /*------------------------------------------------------------------
@@ -108,5 +150,87 @@ void CE::InputManager::ProcessAction(InputAction* pAction)
 ------------------------------------------------------------------*/
 float CE::InputManager::CalculateAxisValue(InputAction* pAction)
 {
-	return 0.0f;
+	if (!pAction || !m_pInputAPI)
+		return 0.0f;
+
+	float value = 0.0f;
+
+	const auto& compositeBindings = pAction->GetCompositeBindings();
+
+	if (!compositeBindings.empty())
+	{
+		const CompositeBinding& composite = compositeBindings[0];
+
+		// Check positive bindings
+		for (const auto& binding : composite.m_positiveBindings)
+		{
+			if (binding.m_isMouseButton)
+			{
+				if (m_pInputAPI->IsMouseButtonHeld(binding.m_mouseCode))
+				{
+					value += 1.0f;
+					break;
+				}
+			}
+			else
+			{
+				if (m_pInputAPI->IsKeyHeld(binding.m_keyCode))
+				{
+					value += 1.0f;
+					break;
+				}
+			}
+		}
+
+		// Check negative bindings
+		for (const auto& binding : composite.m_negativeBindings)
+		{
+			if (binding.m_isMouseButton)
+			{
+				if (m_pInputAPI->IsMouseButtonHeld(binding.m_mouseCode))
+				{
+					value -= 1.0f;
+					break;
+				}
+			}
+			else
+			{
+				if (m_pInputAPI->IsKeyHeld(binding.m_keyCode))
+				{
+					value -= 1.0f;
+					break;
+				}
+			}
+		}
+	}
+	else
+	{
+		// Otherwise, check regular bindings
+		const auto& bindings = pAction->GetInputBindings();
+		for (const auto& binding : bindings)
+		{
+			if (binding.m_isMouseButton)
+			{
+				if (m_pInputAPI->IsMouseButtonHeld(binding.m_mouseCode))
+				{
+					value += 1.0f;
+					break;
+				}
+			}
+			else
+			{
+				if (m_pInputAPI->IsKeyHeld(binding.m_keyCode))
+				{
+					value += 1.0f;
+					break;
+				}
+			}
+		}
+	}
+
+	// Clamp the value to [-1, 1] range
+	if (value > 1.0f) value = 1.0f;
+	if (value < -1.0f) value = -1.0f;
+
+	return value;
 }

@@ -95,6 +95,11 @@ namespace CE
 		void OnCanceled(std::function<void()> callback);
 		void OnValue(std::function<void(float)> callback);
 
+		void InvokeStartedCallbacks();
+		void InvokePerformedCallbacks();
+		void InvokeCanceledCallbacks();
+		void InvokeValueCallbacks(float value);
+
 		const std::string& GetName() const;
 		ActionType GetActionType() const;
 		ControlType GetControlType() const;

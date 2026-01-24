@@ -129,6 +129,43 @@ void CE::InputAction::OnValue(std::function<void(float)> callback)
     m_onValueCallbacks.emplace_back(callback);
 }
 
+void CE::InputAction::InvokeStartedCallbacks()
+{
+    for (const auto& callback : m_onStartedCallbacks)
+    {
+        callback();
+    }
+}
+
+void CE::InputAction::InvokePerformedCallbacks()
+{
+    for (const auto& callback : m_onPerformedCallbacks)
+    {
+        callback();
+	}
+}
+
+void CE::InputAction::InvokeCanceledCallbacks()
+{
+    for (const auto& callback : m_onCanceledCallbacks)
+    {
+        callback();
+	}
+}
+
+void CE::InputAction::InvokeValueCallbacks(float value)
+{
+    for (const auto& callback : m_onValueCallbacks)
+    {
+        callback(value);
+	}
+}
+
+const std::string& CE::InputAction::GetName() const
+{
+    return m_name;
+}
+
 CE::ActionType CE::InputAction::GetActionType() const
 {
     return m_actionType;
@@ -144,12 +181,17 @@ bool CE::InputAction::GetInitialStateCheck() const
     return m_initialStateCheck;
 }
 
-const std::vector<InputBinding>& CE::InputAction::GetInputBindings() const
+bool CE::InputAction::IsEnabled() const
 {
-    // TODO: insert return statement here
+    return m_isEnabled;
 }
 
-const std::vector<CompositeBinding>& CE::InputAction::GetCompositeBindings() const
+const std::vector<CE::InputBinding>& CE::InputAction::GetInputBindings() const
 {
-    // TODO: insert return statement here
+	return m_inputBindings;
+}
+
+const std::vector<CE::CompositeBinding>& CE::InputAction::GetCompositeBindings() const
+{
+	return m_compositeBindings;
 }
