@@ -1,25 +1,12 @@
 #include "PlayerController.h"
 #include "CaledonEngine/Core/GameObject.h"
 
-void PlayerController::ConfigureInputBindings()
-{
-    if (!m_pGameplayActionMap)
-        return;
-
-    CE::InputAction* pMoveHorizontal = m_pGameplayActionMap->GetActionByName("MoveHorizontal");
-    CE::InputAction* pMoveVertical = m_pGameplayActionMap->GetActionByName("MoveVertical");
-
-    if (pMoveHorizontal)
-    {
-        pMoveHorizontal->OnValue([this](float value) { OnMoveHorizontal(value); });
-    }
-
-    if (pMoveVertical)
-    {
-        pMoveVertical->OnValue([this](float value) { OnMoveVertical(value); });
-    }
-}
-
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
+/*--------------------------------------------------------------------------
+| --- Constructor: Constructs the PlayerController with default values --- |
+--------------------------------------------------------------------------*/
 PlayerController::PlayerController()
     : CE::Component()
     , m_pInputActions{ nullptr }
@@ -29,6 +16,9 @@ PlayerController::PlayerController()
 	, m_verticalInput{ 0.0f }
 { }
 
+/*-----------------------------------------------------------
+| --- Initialize: Prepares the PlayerController for use --- |
+-----------------------------------------------------------*/
 bool PlayerController::Initialize()
 {
     if (m_pInputActions)
@@ -41,6 +31,9 @@ bool PlayerController::Initialize()
     return false;
 }
 
+/*------------------------------------------------------------------------
+| --- Update: Updates the PlayerController each frame based on input --- |
+------------------------------------------------------------------------*/
 void PlayerController::Update(float deltaTime)
 {
     if (!m_pOwner)
@@ -61,17 +54,52 @@ void PlayerController::Update(float deltaTime)
     }
 }
 
+/*-------------------------------------------------------------------------------
+| --- SetInputActions: Assigns the GameInputActions to the PlayerController --- |
+-------------------------------------------------------------------------------*/
 void PlayerController::SetInputActions(GameInputActions* pInputActions)
 {
     m_pInputActions = pInputActions;
 }
 
+/*-------------------------------------------------------------
+| --- OnMoveHorizontal: Handles horizontal movement input --- |
+-------------------------------------------------------------*/
 void PlayerController::OnMoveHorizontal(float value)
 {
     m_horizontalInput = value;
 }
 
+/*---------------------------------------------------------
+| --- OnMoveVertical: Handles vertical movement input --- |
+---------------------------------------------------------*/
 void PlayerController::OnMoveVertical(float value)
 {
     m_verticalInput = value;
+}
+
+
+/*------------------------------------
+| --- Private Method Definitions --- |
+------------------------------------*/
+/*------------------------------------------------------------------------------
+| --- ConfigureInputBindings: Sets up input action bindings for the player --- |
+------------------------------------------------------------------------------*/
+void PlayerController::ConfigureInputBindings()
+{
+    if (!m_pGameplayActionMap)
+        return;
+
+    CE::InputAction* pMoveHorizontal = m_pGameplayActionMap->GetActionByName("MoveHorizontal");
+    CE::InputAction* pMoveVertical = m_pGameplayActionMap->GetActionByName("MoveVertical");
+
+    if (pMoveHorizontal)
+    {
+        pMoveHorizontal->OnValue([this](float value) { OnMoveHorizontal(value); });
+    }
+
+    if (pMoveVertical)
+    {
+        pMoveVertical->OnValue([this](float value) { OnMoveVertical(value); });
+    }
 }

@@ -1,16 +1,16 @@
 #pragma once
 #include "CaledonEngine/Systems/Engine/Manager.h"
-
-struct SDL_Window;
-struct SDL_Renderer;
+#include "CaledonEngine/Systems/Rendering/Window.h"
+#include "CaledonEngine/Systems/Rendering/Renderer.h"
+#include <memory>
 
 namespace CE
 {
 	class GraphicsManager : public Manager
 	{
 	private:
-		SDL_Window* m_pWindow;													// Pointer to the SDL Window
-		SDL_Renderer* m_pRenderer;												// Pointer to the SDL Renderer
+		std::unique_ptr<Window> m_pWindowAPI;									// Pointer to the Window's API
+		std::unique_ptr<Renderer> m_pRendererAPI;								// Pointer to the Renderer's API
 
 	public:
 		GraphicsManager();														// Constructor
@@ -20,10 +20,11 @@ namespace CE
 		GraphicsManager(GraphicsManager&&) = delete;							// Prevent move-construction
 		GraphicsManager& operator=(GraphicsManager&&) = delete;					// Prevent move-assignment
 
-		bool Initialize() override;												// Sets up the system's graphcs and window
+		bool Initialize() override;												// Prepares the GraphicsManager for use
 		void Render() override;													// Presents the current frame to the screen
 		void Shutdown() override;												// Cleans up and shuts down the graphics system
-		
-		SDL_Renderer* GetRenderer() const { return m_pRenderer; }				// Get the SDL Renderer
+
+		Window* GetWindow() const;												// Retrieves the Window API
+		Renderer* GetRenderer() const;											// Retrieves the Renderer API
 	};
 }

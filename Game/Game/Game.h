@@ -12,9 +12,9 @@ private:
 	CE::EngineManager* m_pEngineManager;							// Pointer to the Engine Manager
 	GameInputActions* m_pInputActions;								// Pointer to the Game Input Actions
 
-	void CreateScenes();											// Create all game scenes
+	void CreateScenes();											// Constructs and configures all game scenes and objects
 
-	void Shutdown();												// Shutdown the game
+	void Shutdown();												// Shuts down the game and engine, and cleans up
 
 public:
 	Game();															// Constructor
@@ -24,6 +24,6 @@ public:
 	Game(Game&&) = delete;											// Prevent move-construction
 	Game& operator=(Game&&) = delete;								// Prevent move-assignment
 
-	bool Initialize();												// Initialize the game
-	void Run();														// Run the game loop
+	bool Initialize();												// Prepares the game by booting up the engine
+	void Run();														// Starts the main game loop
 };

@@ -1,5 +1,39 @@
 #include "GameInputActions.h"
 
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
+/*--------------------------------------------------------------------------
+| --- Constructor: Constructs the PlayerController with default values --- |
+--------------------------------------------------------------------------*/
+GameInputActions::GameInputActions()
+	: CE::InputActions("GameInputActions")
+	, m_gameplayActionMap{ nullptr }
+{}
+
+/*-------------------------------------------------------------
+| --- Initialize: Prepares the Game Input Actions for use --- |
+-------------------------------------------------------------*/
+void GameInputActions::Initialize()
+{
+	ConfigureGameplayMap();
+}
+
+/*----------------------------------------------------------------------------
+| --- GetGameplayActionMap: Returns a pointer to the Gameplay action map --- |
+----------------------------------------------------------------------------*/
+CE::InputActionMap* GameInputActions::GetGameplayActionMap() const
+{
+	return m_gameplayActionMap;
+}
+
+
+/*------------------------------------
+| --- Private Method Definitions --- |
+------------------------------------*/
+/*----------------------------------------------------------------------------
+| --- ConfigureGameplay: Sets up the Gameplay action map and its actions --- |
+----------------------------------------------------------------------------*/
 void GameInputActions::ConfigureGameplayMap()
 {
 	AddActionMap("Gameplay");
@@ -36,19 +70,4 @@ void GameInputActions::ConfigureGameplayMap()
 	}
 
 	m_gameplayActionMap->Enable();
-}
-
-GameInputActions::GameInputActions()
-	: CE::InputActions("GameInputActions")
-	, m_gameplayActionMap{ nullptr }
-{}
-
-void GameInputActions::Initialize()
-{
-	ConfigureGameplayMap();
-}
-
-CE::InputActionMap* GameInputActions::GetGameplayActionMap() const
-{
-	return m_gameplayActionMap;
 }

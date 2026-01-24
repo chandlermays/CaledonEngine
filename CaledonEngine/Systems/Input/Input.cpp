@@ -26,6 +26,9 @@ CE::Input::Input()
 	}
 }
 
+/*-----------------------------------------------------------------------------
+| --- IsKeyHeld: Returns true if the specified key is currently held down --- |
+-----------------------------------------------------------------------------*/
 bool CE::Input::IsKeyHeld(KeyCode key) const
 {
 	auto it = m_keyStates.find(key);
@@ -36,6 +39,9 @@ bool CE::Input::IsKeyHeld(KeyCode key) const
 	return false;
 }
 
+/*--------------------------------------------------------------------------------
+| --- IsKeyPressed: Returns true if the specified key was pressed this frame --- |
+--------------------------------------------------------------------------------*/
 bool CE::Input::IsKeyPressed(KeyCode key) const
 {
 	auto currentIt = m_keyStates.find(key);
@@ -48,6 +54,9 @@ bool CE::Input::IsKeyPressed(KeyCode key) const
 	return false;
 }
 
+/*----------------------------------------------------------------------------------
+| --- IsKeyReleased: Returns true if the specified key was released this frame --- |
+----------------------------------------------------------------------------------*/
 bool CE::Input::IsKeyReleased(KeyCode key) const
 {
     auto currentIt = m_keyStates.find(key);
@@ -60,6 +69,9 @@ bool CE::Input::IsKeyReleased(KeyCode key) const
 	return false;
 }
 
+/*----------------------------------------------------------------------------------------------
+| --- IsMouseButtonHeld: Returns true if the specified mouse button is currently held down --- |
+----------------------------------------------------------------------------------------------*/
 bool CE::Input::IsMouseButtonHeld(MouseCode button) const
 {
 	auto it = m_mouseStates.find(button);
@@ -70,6 +82,9 @@ bool CE::Input::IsMouseButtonHeld(MouseCode button) const
 	return false;
 }
 
+/*-------------------------------------------------------------------------------------------------
+| --- IsMouseButtonPressed: Returns true if the specified mouse button was pressed this frame --- |
+-------------------------------------------------------------------------------------------------*/
 bool CE::Input::IsMouseButtonPressed(MouseCode button) const
 {
 	auto currentIt = m_mouseStates.find(button);
@@ -82,6 +97,9 @@ bool CE::Input::IsMouseButtonPressed(MouseCode button) const
 	return false;
 }
 
+/*---------------------------------------------------------------------------------------------------
+| --- IsMouseButtonReleased: Returns true if the specified mouse button was released this frame --- |
+---------------------------------------------------------------------------------------------------*/
 bool CE::Input::IsMouseButtonReleased(MouseCode button) const
 {
     auto currentIt = m_mouseStates.find(button);
@@ -94,12 +112,18 @@ bool CE::Input::IsMouseButtonReleased(MouseCode button) const
 	return false;
 }
 
+/*----------------------------------------------------------------
+| --- GetMousePosition: Retrieves the current mouse position --- |
+----------------------------------------------------------------*/
 void CE::Input::GetMousePosition(int& x, int& y) const
 {
     x = m_mousePositionX;
 	y = m_mousePositionY;
 }
 
+/*------------------------------------------------------------------------------
+| --- GetMouseWheelDelta: Retrieves the mouse wheel delta since last frame --- |
+------------------------------------------------------------------------------*/
 int CE::Input::GetMouseWheelDelta() const
 {
 	return m_mouseWheelDelta;

@@ -84,9 +84,9 @@ namespace CE
 		Input(Input&&) = delete;											// Prevent move-construction
 		Input& operator=(Input&&) = delete;									// Prevent move-assignment
 
-		virtual bool Initialize() = 0;										// Initialize the Input States
-		virtual void Shutdown() = 0;										// Shutdown the Input System
-		virtual bool ProcessEvents() = 0;									// Process Input Events
+		virtual bool Initialize() = 0;										// Prepares the Input System for use
+		virtual void Shutdown() = 0;										// Shuts down the Input System
+		virtual bool ProcessEvents() = 0;									// Processes Input Events
 
 		virtual bool IsKeyHeld(KeyCode key) const;							// Returns true if the specified key is currently held down
 		virtual bool IsKeyPressed(KeyCode key) const;						// Returns true if the specified key was pressed this frame

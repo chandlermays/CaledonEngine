@@ -5,7 +5,7 @@
 #include "CaledonEngine/Core/Scene.h"
 #include "CaledonEngine/Core/GameObject.h"
 #include "CaledonEngine/Core/Transform.h"
-#include "CaledonEngine/Components/SpriteComponent.h"
+#include "CaledonEngine/Systems/Rendering/SpriteComponent.h"
 #include "Game/Controllers/PlayerController.h"
 
 /*-----------------------------------

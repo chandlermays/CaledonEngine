@@ -8,19 +8,19 @@ class GameInputActions : public CE::InputActions
 	// i.e. GameplayMap -> Move, Jump, Shoot, etc.
 
 private:
-	CE::InputActionMap* m_gameplayActionMap;
+	CE::InputActionMap* m_gameplayActionMap;										// Pointer to the Gameplay action map
 
-	void ConfigureGameplayMap();
+	void ConfigureGameplayMap();													// Sets up the Gameplay action map and its actions
 
 public:
-	GameInputActions();
-	~GameInputActions() = default;
-	GameInputActions(const GameInputActions&) = delete;
-	GameInputActions& operator=(const GameInputActions&) = delete;
-	GameInputActions(GameInputActions&&) = delete;
-	GameInputActions& operator=(GameInputActions&&) = delete;
+	GameInputActions();																// Constructor
+	~GameInputActions() = default;													// Destructor
+	GameInputActions(const GameInputActions&) = delete;								// Prevent copy-construction
+	GameInputActions& operator=(const GameInputActions&) = delete;					// Prevent copy-assignment
+	GameInputActions(GameInputActions&&) = delete;									// Prevent move-construction
+	GameInputActions& operator=(GameInputActions&&) = delete;						// Prevent move-assignment
 
-	void Initialize();
+	void Initialize();																// Prepares the Game Input Actions for use
 
-	CE::InputActionMap* GetGameplayActionMap() const;
+	CE::InputActionMap* GetGameplayActionMap() const;								// Returns a pointer to the Gameplay action map
 };

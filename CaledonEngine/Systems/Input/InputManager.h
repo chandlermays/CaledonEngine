@@ -10,12 +10,12 @@ namespace CE
 	class InputManager : public Manager
 	{
 	private:
-		std::unique_ptr<Input> m_pInputAPI;										// Pointer to the Input's API
+		std::unique_ptr<Input> m_pInputAPI;										// Pointer to the Input's API configuration
 		InputActions* m_pInputActions;											// Pointer to the Input Actions
 
-		void ProcessInputActions();
-		void ProcessAction(InputAction* pAction);
-		float CalculateAxisValue(InputAction* pAction);
+		void ProcessInputActions();												// Processes all input actions
+		void ProcessAction(InputAction* pAction);								// Processes a single input action
+		float CalculateAxisValue(InputAction* pAction);							// Calculates the axis value for a Value type input action
 
 	public:
 		InputManager();															// Constructor
@@ -25,12 +25,12 @@ namespace CE
 		InputManager(InputManager&&) = delete;									// Prevent move-construction
 		InputManager& operator=(InputManager&&) = delete;						// Prevent move-assignment
 
-		bool Initialize() override;												// Initialize the input manager
-		void Shutdown() override;												// Shutdown the input manager
+		bool Initialize() override;												// Prepares the Input Manager for use
+		void Shutdown() override;												// Cleans up and shuts down the input system
 
-		bool ProcessEvents();													// Process input events
+		bool ProcessEvents();													// Processes input events from the input API
 
-		void SetInputActions(InputActions* pInputActions);
-		InputActions* GetInputActions() const;
+		void SetInputActions(InputActions* pInputActions);						// Assigns the Input Actions to the Input Manager
+		InputActions* GetInputActions() const;									// Retrieves the assigned Input Actions
 	};
 }

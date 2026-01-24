@@ -18,9 +18,9 @@ CE::SceneManager::~SceneManager()
 	Shutdown();
 }
 
-/*---------------------------------------------------------------
-| --- Initialize: Initialize the current scene if it exists --- |
----------------------------------------------------------------*/
+/*-------------------------------------------------------
+| --- Initialize: Prepares the SceneManager for use --- |
+-------------------------------------------------------*/
 bool CE::SceneManager::Initialize()
 {
 	if (m_pCurrentScene != nullptr)
@@ -86,9 +86,9 @@ void CE::SceneManager::AddScene(Scene* pScene)
 	}
 }
 
-/*----------------------------------------------------------------------
-| --- SetActiveScene: Sets the provided scene as the current scene --- |
-----------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------
+| --- SetCurrentScene: Sets the provided scene as the current scene --- |
+-----------------------------------------------------------------------*/
 void CE::SceneManager::SetCurrentScene(Scene* pScene)
 {
 	if (pScene != nullptr)
@@ -97,9 +97,9 @@ void CE::SceneManager::SetCurrentScene(Scene* pScene)
 	}
 }
 
-/*----------------------------------------------------------
-| --- GetActiveScene: Returns the current active scene --- |
-----------------------------------------------------------*/
+/*----------------------------------------------------
+| --- GetCurrentScene: Returns the current scene --- |
+----------------------------------------------------*/
 CE::Scene* CE::SceneManager::GetCurrentScene() const
 {
 	return m_pCurrentScene;

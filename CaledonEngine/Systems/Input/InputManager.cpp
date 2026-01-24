@@ -4,17 +4,17 @@
 /*-----------------------------------
 | --- Public Method Definitions --- |
 -----------------------------------*/
-/*----------------------------------------------------------------------
-| --- Constructor: Constructs the InputManager with default values --- |
-----------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------
+| --- Constructor: Constructs the Input Manager with default values --- |
+-----------------------------------------------------------------------*/
 CE::InputManager::InputManager()
 	: m_pInputAPI{ nullptr }
 	, m_pInputActions{ nullptr }
 {}
 
-/*---------------------------------------------------
-| --- Initialize: Initializes the API for Input --- |
----------------------------------------------------*/
+/*--------------------------------------------------------
+| --- Initialize: Prepares the Input Manager for use --- |
+--------------------------------------------------------*/
 bool CE::InputManager::Initialize()
 {
 	m_pInputAPI = std::make_unique<CEInput>();
@@ -26,7 +26,7 @@ bool CE::InputManager::Initialize()
 }
 
 /*-------------------------------------------------------------
-| --- Shutdown: Shuts down and cleans up the InputManager --- |
+| --- Shutdown: Cleans up and shuts down the input system --- |
 -------------------------------------------------------------*/
 void CE::InputManager::Shutdown()
 {
@@ -58,11 +58,17 @@ bool CE::InputManager::ProcessEvents()
 	return false;
 }
 
+/*-------------------------------------------------------------------------
+| --- SetInputActions: Assigns the Input Actions to the Input Manager --- |
+-------------------------------------------------------------------------*/
 void CE::InputManager::SetInputActions(InputActions* pInputActions)
 {
 	m_pInputActions = pInputActions;
 }
 
+/*---------------------------------------------------------------
+| --- GetInputActions: Retrieves the assigned Input Actions --- |
+---------------------------------------------------------------*/
 CE::InputActions* CE::InputManager::GetInputActions() const
 {
 	return m_pInputActions;
@@ -72,9 +78,9 @@ CE::InputActions* CE::InputManager::GetInputActions() const
 /*------------------------------------
 | --- Private Method Definitions --- |
 ------------------------------------*/
-/*------------------------------------------------------------------
-| --- ProcessInputActions: 
-------------------------------------------------------------------*/
+/*----------------------------------------------------------
+| --- ProcessInputActions: Processes all input actions --- |
+----------------------------------------------------------*/
 void CE::InputManager::ProcessInputActions()
 {
 	if (!m_pInputActions || !m_pInputActions->IsEnabled())
@@ -95,9 +101,9 @@ void CE::InputManager::ProcessInputActions()
 	}
 }
 
-/*------------------------------------------------------------------
-| --- ProcessAction:
-------------------------------------------------------------------*/
+/*--------------------------------------------------------
+| --- ProcessAction: Processes a single input action --- |
+--------------------------------------------------------*/
 void CE::InputManager::ProcessAction(InputAction* pAction)
 {
 	if (!pAction || !pAction->IsEnabled())
@@ -145,9 +151,9 @@ void CE::InputManager::ProcessAction(InputAction* pAction)
 	}
 }
 
-/*------------------------------------------------------------------
-| --- CalculateAxisValue:
-------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------------------
+| --- CalculateAxisValue: Calculates the axis value for a Value type input action --- |
+-------------------------------------------------------------------------------------*/
 float CE::InputManager::CalculateAxisValue(InputAction* pAction)
 {
 	if (!pAction || !m_pInputAPI)

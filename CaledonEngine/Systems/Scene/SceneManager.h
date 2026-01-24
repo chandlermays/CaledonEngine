@@ -9,7 +9,7 @@ namespace CE
 	class SceneManager : public Manager
 	{
 	private:
-		std::vector<Scene*> m_pScenes;										// Vector of pointers to scenes
+		std::vector<Scene*> m_pScenes;										// The list of scenes
 		Scene* m_pCurrentScene;												// Pointer to the current scene
 
 	public:
@@ -20,14 +20,14 @@ namespace CE
 		SceneManager(SceneManager&&) = delete;								// Prevent move-construction
 		SceneManager& operator=(SceneManager&&) = delete;					// Prevent move-assignment
 
-		bool Initialize() override;											// Initialize the scene manager
-		void Update(float deltaTime) override;								// Update the scene manager
-		void Render() override;												// Render the current frame
-		void Shutdown() override;											// Shutdown the scene manager
+		bool Initialize() override;											// Prepares the SceneManager for use
+		void Update(float deltaTime) override;								// Update the current scene
+		void Render() override;												// Render the current scene
+		void Shutdown() override;											// Shutdown the SceneManager and clean up resources
 	
-		void AddScene(Scene* pScene);										// Add a scene to the manager
-		void SetCurrentScene(Scene* pScene);								// Set the current scene
-		Scene* GetCurrentScene() const;										// Get the current scene
-		int GetSceneIndex(Scene* pScene) const;								// Get the index of a scene
+		void AddScene(Scene* pScene);										// Add a scene to the list of scenes
+		void SetCurrentScene(Scene* pScene);								// Sets the provided scene as the current scene
+		Scene* GetCurrentScene() const;										// Returns the current scene
+		int GetSceneIndex(Scene* pScene) const;								// Returns the index of the provided scene
 	};
 }

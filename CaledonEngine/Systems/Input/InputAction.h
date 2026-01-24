@@ -5,7 +5,7 @@
 
 // This class represents the individual input actions and their action properties (action type, interactions, processors, etc.)
 
-// An InputAction has three types...
+// An InputAction has two types...
 // 1. Action Type: A Value action will start and perform when a control moves from its default value and then perform on every value change.
 // It will cancel when controls go back to default value. Also, when enabled, a Value action will respond right away to a control's current value.
 // It has a Control Type (any, axis, analog, integer, ...)
@@ -15,9 +15,6 @@
 // It has an Initial State Check flag (what this does is check controls bound to the action and if they are already actuated (ie. at non-default value),
 // the action will immediately be started and performed.)
 
-// 3. Action Type: A Pass-Through action will not explicitly start and will never cancel. Instead, for every value change on any bound control, the action will perform.
-// It has a Control Type (any, axis, analog, integer, ...) AND an Initial State Check flag.
-
 // Methods to add...
 // AddInteraction() - adds an interaction to the action (eg. Hold, Tap, etc.).
 
@@ -25,87 +22,93 @@ namespace CE
 {
 	enum class ActionType
 	{
-		kValue,
-		kButton,
+		kValue,																		// Responds to value changes
+		kButton,																	// Responds to button presses/releases
 		//...
 	};
 
 	enum class ControlType
 	{
-		kAny,
-		kAxis,
-		kVector2
+		kAny,																		// Responds to any control type
+		kAxis,																		// Responds to axis controls
+		kVector2																	// Responds to 2D vector controls
 		//...
 	};
 
 	struct InputBinding
 	{
-		KeyCode m_keyCode;
-		MouseCode m_mouseCode;
-		bool m_isMouseButton;
+		KeyCode m_keyCode;															// Key code for keyboard input
+		MouseCode m_mouseCode;														// Mouse code for mouse input
+		bool m_isMouseButton;														// Flag to indicate if this binding is for a mouse button
 
-		InputBinding(KeyCode key);
-		InputBinding(MouseCode mouse);
+		InputBinding(KeyCode key);													// KeyCode Constructor
+		InputBinding(MouseCode mouse);												// MouseCode Constructor
 	};
 
 	struct CompositeBinding
 	{
-		std::vector<InputBinding> m_positiveBindings;		// Bindings for positive direction
-		std::vector<InputBinding> m_negativeBindings;		// Bindings for negative direction
+		std::vector<InputBinding> m_positiveBindings;								// Bindings for positive direction
+		std::vector<InputBinding> m_negativeBindings;								// Bindings for negative direction
 	};
 
 	class InputAction
 	{
 	private:
-		std::string m_name;
-		ActionType m_actionType;
-		ControlType m_controlType;
-		bool m_initialStateCheck;
-		bool m_isEnabled;
+		std::string m_name;															// The name of the input action
+		ActionType m_actionType;													// The action type of the input action
+		ControlType m_controlType;													// The control type for the input action
+		bool m_initialStateCheck;													// Flag for initial state check (for button actions)
+		bool m_isEnabled;															// Flag to indicate if the action is enabled
 		
-		std::vector<InputBinding> m_inputBindings;
-		std::vector<CompositeBinding> m_compositeBindings;
+		std::vector<InputBinding> m_inputBindings;									// The list of input bindings
+		std::vector<CompositeBinding> m_compositeBindings;							// The list of composite bindings
 
-		std::vector<std::function<void()>> m_onStartedCallbacks;
-		std::vector<std::function<void()>> m_onPerformedCallbacks;
-		std::vector<std::function<void()>> m_onCanceledCallbacks;
-		std::vector<std::function<void(float)>> m_onValueCallbacks;
+		std::vector<std::function<void()>> m_onStartedCallbacks;					// Callbacks for when the action starts
+		std::vector<std::function<void()>> m_onPerformedCallbacks;					// Callbacks for when the action performs
+		std::vector<std::function<void()>> m_onCanceledCallbacks;					// Callbacks for when the action cancels
+		std::vector<std::function<void(float)>> m_onValueCallbacks;					// Callbacks for when the action value changes
 
 	public:
-		InputAction(const std::string& name, ActionType type = ActionType::kButton);
-		~InputAction() = default;
+		InputAction(const std::string& name,
+			ActionType type = ActionType::kButton);									// Constructor
 
-		void SetActionType(ActionType type);
-		void SetControlType(ControlType type);
-		void SetInitialStateCheck(bool flag);
+		~InputAction() = default;													// Destructor
+		InputAction(const InputAction&) = delete;									// Prevent copy-construction
+		InputAction& operator=(const InputAction&) = delete;						// Prevent copy-assignment
+		InputAction(InputAction&&) = delete;										// Prevent move-construction
+		InputAction& operator=(InputAction&&) = delete;								// Prevent move-assignment
 
-		void AddBinding(KeyCode key);
-		void AddBinding(MouseCode mouse);
-		void RemoveBinding(KeyCode key);
-		void RemoveBinding(MouseCode mouse);
-		void ClearBindings();
+		void SetActionType(ActionType type);										// Sets the action type of an input action
+		void SetControlType(ControlType type);										// Sets the control type of an input action
+		void SetInitialStateCheck(bool flag);										// Sets the initial state check flag
 
-		void AddPositiveBinding(KeyCode key);
-		void AddPositiveBinding(MouseCode mouse);
-		void AddNegativeBinding(KeyCode key);
-		void AddNegativeBinding(MouseCode mouse);
+		void AddBinding(KeyCode key);												// Adds an input binding to a keyboard input action
+		void AddBinding(MouseCode mouse);											// Adds an input binding to a mouse input action
+		void RemoveBinding(KeyCode key);											// Removes an input binding from a keyboard input action
+		void RemoveBinding(MouseCode mouse);										// Removes an input binding from a mouse input action
+		void ClearBindings();														// Clears all input bindings from the action
 
-		void OnStarted(std::function<void()> callback);
-		void OnPerformed(std::function<void()> callback);
-		void OnCanceled(std::function<void()> callback);
-		void OnValue(std::function<void(float)> callback);
+		void AddPositiveBinding(KeyCode key);										// Adds a positive binding to a composite binding for a keyboard input action
+		void AddNegativeBinding(KeyCode key);										// Adds a negative binding to a composite binding for a keyboard input action
+		void AddPositiveBinding(MouseCode mouse);									// Adds a positive binding to a composite binding for a mouse input action
+		void AddNegativeBinding(MouseCode mouse);									// Adds a negative binding to a composite binding for a mouse input action
 
-		void InvokeStartedCallbacks();
-		void InvokePerformedCallbacks();
-		void InvokeCanceledCallbacks();
-		void InvokeValueCallbacks(float value);
+		void OnStarted(std::function<void()> callback);								// Registers a callback for when the action starts
+		void OnPerformed(std::function<void()> callback);							// Registers a callback for when the action performs
+		void OnCanceled(std::function<void()> callback);							// Registers a callback for when the action cancels
+		void OnValue(std::function<void(float)> callback);							// Registers a callback for when the action value changes
 
-		const std::string& GetName() const;
-		ActionType GetActionType() const;
-		ControlType GetControlType() const;
-		bool GetInitialStateCheck() const;
-		bool IsEnabled() const;
-		const std::vector<InputBinding>& GetInputBindings() const;
-		const std::vector<CompositeBinding>& GetCompositeBindings() const;
+		void InvokeStartedCallbacks();												// Invokes all registered started callbacks
+		void InvokePerformedCallbacks();											// Invokes all registered performed callbacks
+		void InvokeCanceledCallbacks();												// Invokes all registered canceled callbacks
+		void InvokeValueCallbacks(float value);										// Invokes all registered value callbacks
+
+		const std::string& GetName() const;											// Returns the name of the input action
+		ActionType GetActionType() const;											// Returns the action type of the input action
+		ControlType GetControlType() const;											// Returns the control type of the input action
+		bool GetInitialStateCheck() const;											// Returns the initial state check flag
+		bool IsEnabled() const;														// Returns whether the action is enabled
+		const std::vector<InputBinding>& GetInputBindings() const;					// Returns the input bindings
+		const std::vector<CompositeBinding>& GetCompositeBindings() const;			// Returns the composite bindings
 	};
 }

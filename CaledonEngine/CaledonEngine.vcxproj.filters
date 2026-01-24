@@ -8,9 +8,6 @@
     <Filter Include="Source Files\Core">
       <UniqueIdentifier>{4c62a099-0e5c-4120-a8a6-548f354cc628}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Components">
-      <UniqueIdentifier>{a6fbcb11-c25d-4a4f-9494-47950ed81313}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Utilities">
       <UniqueIdentifier>{9c45ee2f-70aa-4414-be7e-54bc4ed2e02d}</UniqueIdentifier>
     </Filter>
@@ -43,9 +40,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Components\SpriteComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Component.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
@@ -91,11 +85,20 @@
     <ClCompile Include="Systems\Input\InputActions.cpp">
       <Filter>Source Files\Systems\Input</Filter>
     </ClCompile>
+    <ClCompile Include="Systems\Rendering\SpriteComponent.cpp">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="API\SDL\SDLRenderer.cpp">
+      <Filter>Source Files\API\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="API\SDL\SDLWindow.cpp">
+      <Filter>Source Files\API\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Rendering\Window.cpp">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Components\SpriteComponent.h">
-      <Filter>Source Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Core\GameObject.h">
       <Filter>Source Files\Core</Filter>
     </ClInclude>
@@ -149,6 +152,21 @@
     </ClInclude>
     <ClInclude Include="Systems\Input\InputActions.h">
       <Filter>Source Files\Systems\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\SpriteComponent.h">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="API\SDL\SDLRenderer.h">
+      <Filter>Source Files\API\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="API\SDL\SDLWindow.h">
+      <Filter>Source Files\API\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Renderer.h">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Window.h">
+      <Filter>Source Files\Systems\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

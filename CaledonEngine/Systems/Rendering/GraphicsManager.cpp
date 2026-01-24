@@ -1,19 +1,16 @@
 #include "GraphicsManager.h"
 #include "CaledonEngine/Systems/Engine/LoggingManager.h"
-#include "SDL.h"
-
-static constexpr int s_kWindowWidth = 1080;
-static constexpr int s_kWindowHeight = 720;
+#include "CaledonEngine/Utilities/APIConfig.h"
 
 /*-----------------------------------
 | --- Public Method Definitions --- |
 -----------------------------------*/
-/*------------------------------------------------------
-| --- Constructor: Sets initial values for members --- |
-------------------------------------------------------*/
+/*-------------------------------------------------------------------------
+| --- Constructor: Constructs the GraphicsManager with default values --- |
+-------------------------------------------------------------------------*/
 CE::GraphicsManager::GraphicsManager()
-	: m_pWindow{ nullptr }
-	, m_pRenderer{ nullptr }
+	: m_pWindowAPI{ nullptr }
+	, m_pRendererAPI{ nullptr }
 { }
 
 /*-------------------------------------------------------
@@ -25,38 +22,21 @@ CE::GraphicsManager::~GraphicsManager()
 	Shutdown();
 }
 
-/*-------------------------------------------------------------
-| --- Initialize: Sets up the system's graphcs and window --- |
--------------------------------------------------------------*/
+/*----------------------------------------------------------
+| --- Initialize: Prepares the GraphicsManager for use --- |
+----------------------------------------------------------*/
 bool CE::GraphicsManager::Initialize()
 {
-	// Initialize SDL
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	m_pWindowAPI = std::make_unique<CEWindow>();
+	if (m_pWindowAPI)
 	{
-		CE_LOG("SDL could not initialize! SDL_Error: " + std::string(SDL_GetError()));
-		return false;
+		m_pWindowAPI->Initialize();
 	}
 
-	// Create window
-	m_pWindow = SDL_CreateWindow("Caledon Engine",	SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, s_kWindowWidth, s_kWindowHeight, 0);
-
-	if (m_pWindow == nullptr)
+	m_pRendererAPI = std::make_unique<CERenderer>();
+	if (m_pRendererAPI)
 	{
-		CE_LOG("Window could not be created! SDL_Error: " + std::string(SDL_GetError()));
-		SDL_Quit();
-		return false;
-	}
-
-	// Create renderer
-	m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
-
-	if (m_pRenderer == nullptr)
-	{
-		CE_LOG("Renderer could not be created! SDL_Error: " + std::string(SDL_GetError()));
-		SDL_DestroyWindow(m_pWindow);
-		m_pWindow = nullptr;
-		SDL_Quit();
-		return false;
+		m_pRendererAPI->Initialize(m_pWindowAPI.get());
 	}
 
 	return true;
@@ -67,35 +47,38 @@ bool CE::GraphicsManager::Initialize()
 ----------------------------------------------------------*/
 void CE::GraphicsManager::Render()
 {
-	// Clear the screen with a blue color
-	SDL_SetRenderDrawColor(m_pRenderer, 0, 156, 255, 255);
-
-	// Present the rendered frame
-	SDL_RenderPresent(m_pRenderer);
-
-	// Clear the renderer for the next frame
-	SDL_RenderClear(m_pRenderer);
+	m_pRendererAPI->Render();
 }
 
-/*-------------------------------------------------------------------------------------
-| --- Shutdown: Destroys the renderer, window, and closes the graphics subsystems --- |
--------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------
+| --- Shutdown: Cleans up and shuts down the graphics system --- |
+----------------------------------------------------------------*/
 void CE::GraphicsManager::Shutdown()
 {
-	// Destroy renderer
-	if (m_pRenderer != nullptr)
+	if (m_pRendererAPI)
 	{
-		SDL_DestroyRenderer(m_pRenderer);
-		m_pRenderer = nullptr;
+		m_pRendererAPI->Shutdown();
+		m_pRendererAPI.reset();
 	}
-
-	// Destroy window
-	if (m_pWindow != nullptr)
+	if (m_pWindowAPI)
 	{
-		SDL_DestroyWindow(m_pWindow);
-		m_pWindow = nullptr;
+		m_pWindowAPI->Shutdown();
+		m_pWindowAPI.reset();
 	}
+}
 
-	// Quit SDL subsystems
-	SDL_Quit();
+/*---------------------------------------------
+| --- GetWindow: Retrieves the Window API --- |
+---------------------------------------------*/
+CE::Window* CE::GraphicsManager::GetWindow() const
+{
+	return m_pWindowAPI.get();
+}
+
+/*-------------------------------------------------
+| --- GetRenderer: Retrieves the Renderer API --- |
+-------------------------------------------------*/
+CE::Renderer* CE::GraphicsManager::GetRenderer() const
+{
+	return m_pRendererAPI.get();
 }
