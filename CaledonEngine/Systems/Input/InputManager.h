@@ -27,10 +27,11 @@ namespace CE
 
 		bool Initialize() override;												// Prepares the Input Manager for use
 		void Shutdown() override;												// Cleans up and shuts down the input system
-
 		bool ProcessEvents();													// Processes input events from the input API
 
 		void SetInputActions(InputActions* pInputActions);						// Assigns the Input Actions to the Input Manager
-		InputActions* GetInputActions() const;									// Retrieves the assigned Input Actions
+
+		Input* GetInputAPI() const;												// Returns a pointer to the Input's API
+		InputActions* GetInputActions() const;									// Returns the assigned Input Actions
 	};
 }

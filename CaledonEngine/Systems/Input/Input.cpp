@@ -112,18 +112,18 @@ bool CE::Input::IsMouseButtonReleased(MouseCode button) const
 	return false;
 }
 
-/*----------------------------------------------------------------
-| --- GetMousePosition: Retrieves the current mouse position --- |
-----------------------------------------------------------------*/
+/*--------------------------------------------------------------
+| --- GetMousePosition: Returns the current mouse position --- |
+--------------------------------------------------------------*/
 void CE::Input::GetMousePosition(int& x, int& y) const
 {
     x = m_mousePositionX;
 	y = m_mousePositionY;
 }
 
-/*------------------------------------------------------------------------------
-| --- GetMouseWheelDelta: Retrieves the mouse wheel delta since last frame --- |
-------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------
+| --- GetMouseWheelDelta: Returns the mouse wheel delta since last frame --- |
+----------------------------------------------------------------------------*/
 int CE::Input::GetMouseWheelDelta() const
 {
 	return m_mouseWheelDelta;

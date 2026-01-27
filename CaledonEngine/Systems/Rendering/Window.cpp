@@ -16,7 +16,7 @@ CE::Window::Window(const std::string& title, int width, int height, bool isFulls
 { }
 
 /*-----------------------------------------------------
-| --- GetTitle: Retrieves the title of the window --- |
+| --- GetTitle: Returns the title of the window --- |
 -----------------------------------------------------*/
 const std::string& CE::Window::GetTitle() const
 {
@@ -24,7 +24,7 @@ const std::string& CE::Window::GetTitle() const
 }
 
 /*-----------------------------------------------------
-| --- GetWidth: Retrieves the width of the window --- |
+| --- GetWidth: Returns the width of the window --- |
 -----------------------------------------------------*/
 int CE::Window::GetWidth() const
 {
@@ -32,7 +32,7 @@ int CE::Window::GetWidth() const
 }
 
 /*-------------------------------------------------------
-| --- GetHeight: Retrieves the height of the window --- |
+| --- GetHeight: Returns the height of the window --- |
 -------------------------------------------------------*/
 int CE::Window::GetHeight() const
 {

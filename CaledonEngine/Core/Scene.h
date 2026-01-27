@@ -27,17 +27,17 @@ namespace CE
 		void Update(float);														// Updates this Scene and its GameObjects
 		void Render();															// Renders this Scene and its GameObjects
 
-		const std::string& GetName() const;										// Gets the name of this Scene
+		const std::string& GetName() const;										// Returns the name of this Scene
 		void SetName(const std::string& name);									// Sets the name of this Scene
 
-		bool IsActive() const;													// Gets whether this Scene is active or not
+		bool IsActive() const;													// Returns whether this Scene is active or not
 		void SetActive(bool isActive);											// Sets whether this Scene is active or not
 
 		bool IsValid() const;													// Checks if this Scene is valid
 
 		void AddGameObject(GameObject* pGameObject);							// Adds a GameObject to this Scene
 		void RemoveGameObject(GameObject* pGameObject);							// Removes a GameObject from this Scene
-		const std::vector<GameObject*>& GetGameObjects() const;					// Gets the GameObjects in this Scene
+		const std::vector<GameObject*>& GetGameObjects() const;					// Returns the GameObjects in this Scene
 
 		void Clear();															// Clears all GameObjects from this Scene
 	};

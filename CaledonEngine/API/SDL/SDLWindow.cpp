@@ -2,11 +2,27 @@
 #include "CaledonEngine/Systems/Engine/LoggingManager.h"
 #include "SDL.h"
 
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
+/*----------------------------------------------------------------------
+| --- Constructor: Constructs the 'SDL' Window with default values --- |
+----------------------------------------------------------------------*/
+CE::SDLWindow::SDLWindow()
+	: m_pWindow{ nullptr }
+{ }
+
+/*-------------------------------------------------------
+| --- Destructor: Cleans up any allocated resources --- |
+-------------------------------------------------------*/
 CE::SDLWindow::~SDLWindow()
 {
 	Shutdown();
 }
 
+/*-------------------------------------------------------
+| --- Initialize: Prepares the 'SDL' Window for use --- |
+------------------------------------------------------*/
 bool CE::SDLWindow::Initialize()
 {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -32,6 +48,9 @@ bool CE::SDLWindow::Initialize()
 	return true;
 }
 
+/*-------------------------------------------------------------
+| --- Shutdown: Cleans up and shuts down the 'SDL' Window --- |
+-------------------------------------------------------------*/
 void CE::SDLWindow::Shutdown()
 {
 	if (m_pWindow != nullptr)
@@ -41,6 +60,9 @@ void CE::SDLWindow::Shutdown()
 	}
 }
 
+/*------------------------------------------------
+| --- SetTitle: Sets the title of the window --- |
+------------------------------------------------*/
 void CE::SDLWindow::SetTitle(const std::string& title)
 {
 	m_title = title;
@@ -51,6 +73,9 @@ void CE::SDLWindow::SetTitle(const std::string& title)
 	}
 }
 
+/*----------------------------------------------
+| --- SetSize: Sets the size of the window --- |
+----------------------------------------------*/
 void CE::SDLWindow::SetSize(int width, int height)
 {
     m_width = width;
@@ -62,6 +87,9 @@ void CE::SDLWindow::SetSize(int width, int height)
 	}
 }
 
+/*--------------------------------------------------
+| --- SetFullscreen: Sets the fullscreen state --- |
+--------------------------------------------------*/
 void CE::SDLWindow::SetFullscreen(bool isFullscreen)
 {
 	m_isFullscreen = isFullscreen;
@@ -75,6 +103,9 @@ void CE::SDLWindow::SetFullscreen(bool isFullscreen)
 	}
 }
 
+/*--------------------------------
+| --- Show: Shows the window --- |
+--------------------------------*/
 void CE::SDLWindow::Show()
 {
 	if (m_pWindow)
@@ -85,6 +116,9 @@ void CE::SDLWindow::Show()
 	}
 }
 
+/*--------------------------------
+| --- Hide: Hides the window --- |
+--------------------------------*/
 void CE::SDLWindow::Hide()
 {
 	if (m_pWindow)
@@ -95,6 +129,9 @@ void CE::SDLWindow::Hide()
 	}
 }
 
+/*-----------------------------------------------------------
+| --- GetNativeHandle: Returns the native window handle --- |
+-----------------------------------------------------------*/
 void* CE::SDLWindow::GetNativeHandle() const
 {
 	return static_cast<void*>(m_pWindow);

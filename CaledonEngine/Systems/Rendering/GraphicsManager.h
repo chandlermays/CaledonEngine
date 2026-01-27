@@ -24,7 +24,7 @@ namespace CE
 		void Render() override;													// Presents the current frame to the screen
 		void Shutdown() override;												// Cleans up and shuts down the graphics system
 
-		Window* GetWindow() const;												// Retrieves the Window API
-		Renderer* GetRenderer() const;											// Retrieves the Renderer API
+		Window* GetWindow() const;												// Returns a pointer to the Window's API
+		Renderer* GetRenderer() const;											// Returns a pointer to the Renderer's API
 	};
 }

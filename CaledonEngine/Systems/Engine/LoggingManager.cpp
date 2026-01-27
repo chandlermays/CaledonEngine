@@ -19,9 +19,9 @@ CE::LoggingManager::~LoggingManager()
 	Shutdown();
 }
 
-/*----------------------------------------------------------
-| --- GetInstance: Accessor for the singleton instance --- |
-----------------------------------------------------------*/
+/*---------------------------------------------------------------------------
+| --- GetInstance: Returns the singleton instance of the LoggingManager --- |
+---------------------------------------------------------------------------*/
 CE::LoggingManager& CE::LoggingManager::GetInstance()
 {
 	static LoggingManager instance;

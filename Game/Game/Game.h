@@ -9,6 +9,8 @@ namespace CE
 class Game
 {
 private:
+	// Consider using a smart pointer for GameInputActions
+
 	CE::EngineManager* m_pEngineManager;							// Pointer to the Engine Manager
 	GameInputActions* m_pInputActions;								// Pointer to the Game Input Actions
 

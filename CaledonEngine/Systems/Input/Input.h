@@ -96,7 +96,7 @@ namespace CE
 		virtual bool IsMouseButtonPressed(MouseCode button) const;			// Returns true if the specified mouse button was pressed this frame
 		virtual bool IsMouseButtonReleased(MouseCode button) const;			// Returns true if the specified mouse button was released this frame
 
-		virtual void GetMousePosition(int& x, int& y) const;				// Retrieves the current mouse position
-		virtual int GetMouseWheelDelta() const;								// Retrieves the mouse wheel delta since last frame
+		virtual void GetMousePosition(int& x, int& y) const;				// Returns the current mouse position
+		virtual int GetMouseWheelDelta() const;								// Returns the mouse wheel delta since last frame
 	};
 }

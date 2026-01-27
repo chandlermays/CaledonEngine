@@ -29,9 +29,9 @@ namespace CE
 		void Disable();																					// Disables the action map
 		bool Contains(const std::string& name) const;													// Checks if the action map contains an action by name
 
-		const std::unordered_map<std::string, InputAction*>& GetInputActions() const;					// Retrieves the map of input actions
-		InputAction* GetActionByName(const std::string& name) const;									// Retrieves an input action by name
-		const std::string& GetName() const;																// Retrieves the name of the action map
+		const std::unordered_map<std::string, InputAction*>& GetInputActions() const;					// Returns the map of input actions
+		InputAction* GetActionByName(const std::string& name) const;									// Returns an input action by name
+		const std::string& GetName() const;																// Returns the name of the action map
 		bool IsEnabled() const;																			// Checks if the action map is enabled
 	};
 }

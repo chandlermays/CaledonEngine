@@ -21,7 +21,7 @@ namespace CE
         LoggingManager(LoggingManager&&) = delete;                                          // Prevent move-construction
         LoggingManager& operator=(LoggingManager&&) = delete;                               // Prevent move-assignment
 
-        static LoggingManager& GetInstance();                                               // Singleton accessor
+		static LoggingManager& GetInstance();                                               // Returns the singleton instance of the LoggingManager
 
         bool Initialize() override;                                                         // Initialize the logging manager
         void Shutdown() override;                                                           // Shutdown the logging manager

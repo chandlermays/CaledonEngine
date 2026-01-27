@@ -1,7 +1,6 @@
 #pragma once
 #include "CaledonEngine/Core/Component.h"
-
-class SDL_Color;
+#include "CaledonEngine/Systems/Rendering/Color.h"
 
 namespace CE
 {
@@ -11,13 +10,13 @@ namespace CE
 	{
 	private:
 		Renderer* m_pRenderer;																		// Pointer to the Renderer
-		SDL_Color* m_pColor;																		// Pointer to the color of the sprite
+		Color m_color;																				// Color of the sprite
 		int m_width;																				// Width of the sprite
 		int m_height;																				// Height of the sprite
 
 	public:
 		SpriteComponent();																			// Constructor
-		~SpriteComponent();																			// Destructor
+		~SpriteComponent() = default;																// Destructor
 		SpriteComponent(const SpriteComponent&) = delete;											// Prevent copy-construction
 		SpriteComponent& operator=(const SpriteComponent&) = delete;								// Prevent copy-assignment
 		SpriteComponent(SpriteComponent&&) = delete;												// Prevent move-construction
@@ -26,7 +25,7 @@ namespace CE
 		virtual bool Initialize() override;															// Prepares the SpriteComponent for use
 		virtual void Render() override;																// Draws the sprite to the screen
 
-		const SDL_Color* GetColor() const;															// Returns the color of the sprite
+		const Color& GetColor() const;																// Returns the color of the sprite
 		void SetColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);			// Sets the color of the sprite
 
 		void GetSize(int& width, int& height) const;												// Returns the size of the sprite

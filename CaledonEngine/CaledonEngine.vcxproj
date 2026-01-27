@@ -53,6 +53,7 @@
   <ItemGroup>
     <ClCompile Include="API\SDL\SDLInput.cpp" />
     <ClCompile Include="API\SDL\SDLRenderer.cpp" />
+    <ClCompile Include="API\SDL\SDLTexture.cpp" />
     <ClCompile Include="API\SDL\SDLWindow.cpp" />
     <ClCompile Include="Core\Component.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
@@ -74,6 +75,7 @@
   <ItemGroup>
     <ClInclude Include="API\SDL\SDLInput.h" />
     <ClInclude Include="API\SDL\SDLRenderer.h" />
+    <ClInclude Include="API\SDL\SDLTexture.h" />
     <ClInclude Include="API\SDL\SDLWindow.h" />
     <ClInclude Include="Core\Component.h" />
     <ClInclude Include="Core\GameObject.h" />
@@ -88,12 +90,16 @@
     <ClInclude Include="Systems\Input\InputActions.h" />
     <ClInclude Include="Systems\Input\InputManager.h" />
     <ClInclude Include="Systems\Physics\CollisionManager.h" />
+    <ClInclude Include="Systems\Rendering\Color.h" />
     <ClInclude Include="Systems\Rendering\GraphicsManager.h" />
     <ClInclude Include="Systems\Rendering\Renderer.h" />
+    <ClInclude Include="Systems\Rendering\Shape.h" />
     <ClInclude Include="Systems\Rendering\SpriteComponent.h" />
+    <ClInclude Include="Systems\Rendering\Texture.h" />
     <ClInclude Include="Systems\Rendering\Window.h" />
     <ClInclude Include="Systems\Scene\SceneManager.h" />
     <ClInclude Include="Utilities\APIConfig.h" />
+    <ClInclude Include="Utilities\Math\Rect.h" />
     <ClInclude Include="Utilities\Math\Vector2.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

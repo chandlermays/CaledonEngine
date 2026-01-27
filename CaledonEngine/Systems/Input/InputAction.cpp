@@ -233,57 +233,57 @@ void CE::InputAction::InvokeValueCallbacks(float value)
 	}
 }
 
-/*---------------------------------------------------------
-| --- GetName: Retrieves the name of the input action --- |
----------------------------------------------------------*/
+/*-------------------------------------------------------
+| --- GetName: Returns the name of the input action --- |
+-------------------------------------------------------*/
 const std::string& CE::InputAction::GetName() const
 {
     return m_name;
 }
 
-/*----------------------------------------------------------------------
-| --- GetActionType: Retrieves the action type of the input action --- |
-----------------------------------------------------------------------*/
+/*--------------------------------------------------------------------
+| --- GetActionType: Returns the action type of the input action --- |
+--------------------------------------------------------------------*/
 CE::ActionType CE::InputAction::GetActionType() const
 {
     return m_actionType;
 }
 
-/*------------------------------------------------------------------------
-| --- GetControlType: Retrieves the control type of the input action --- |
-------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------
+| --- GetControlType: Returns the control type of the input action --- |
+----------------------------------------------------------------------*/
 CE::ControlType CE::InputAction::GetControlType() const
 {
     return m_controlType;
 }
 
-/*----------------------------------------------------------------------
-| --- GetInitialStateCheck: Retrieves the initial state check flag --- |
-----------------------------------------------------------------------*/
+/*--------------------------------------------------------------------
+| --- GetInitialStateCheck: Returns the initial state check flag --- |
+--------------------------------------------------------------------*/
 bool CE::InputAction::GetInitialStateCheck() const
 {
     return m_initialStateCheck;
 }
 
-/*--------------------------------------------------------------------
-| --- IsEnabled: Retrieves the enabled state of the input action --- |
---------------------------------------------------------------------*/
+/*------------------------------------------------------------------
+| --- IsEnabled: Returns the enabled state of the input action --- |
+------------------------------------------------------------------*/
 bool CE::InputAction::IsEnabled() const
 {
     return m_isEnabled;
 }
 
-/*----------------------------------------------------------------------
-| --- GetInputBindings: Retrieves the input bindings of the action --- |
-----------------------------------------------------------------------*/
+/*--------------------------------------------------------------------
+| --- GetInputBindings: Returns the input bindings of the action --- |
+--------------------------------------------------------------------*/
 const std::vector<CE::InputBinding>& CE::InputAction::GetInputBindings() const
 {
 	return m_inputBindings;
 }
 
-/*------------------------------------------------------------------------------
-| --- GetCompositeBindings: Retrieves the composite bindings of the action --- |
-------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------
+| --- GetCompositeBindings: Returns the composite bindings of the action --- |
+----------------------------------------------------------------------------*/
 const std::vector<CE::CompositeBinding>& CE::InputAction::GetCompositeBindings() const
 {
 	return m_compositeBindings;

@@ -67,17 +67,17 @@ void CE::GraphicsManager::Shutdown()
 	}
 }
 
-/*---------------------------------------------
-| --- GetWindow: Retrieves the Window API --- |
----------------------------------------------*/
+/*----------------------------------------------------------
+| --- GetWindow: Returns a pointer to the Window's API --- |
+----------------------------------------------------------*/
 CE::Window* CE::GraphicsManager::GetWindow() const
 {
 	return m_pWindowAPI.get();
 }
 
-/*-------------------------------------------------
-| --- GetRenderer: Retrieves the Renderer API --- |
--------------------------------------------------*/
+/*--------------------------------------------------------------
+| --- GetRenderer: Returns a pointer to the Renderer's API --- |
+--------------------------------------------------------------*/
 CE::Renderer* CE::GraphicsManager::GetRenderer() const
 {
 	return m_pRendererAPI.get();

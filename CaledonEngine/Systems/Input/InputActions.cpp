@@ -58,17 +58,17 @@ bool CE::InputActions::Contains(InputAction* action) const
 	return false;
 }
 
-/*--------------------------------------------------------------------
-| --- GetInputActionMaps: Retrieves the map of input action maps --- |
---------------------------------------------------------------------*/
+/*------------------------------------------------------------------
+| --- GetInputActionMaps: Returns the map of input action maps --- |
+------------------------------------------------------------------*/
 const std::unordered_map<std::string, CE::InputActionMap*>& CE::InputActions::GetInputActionMaps() const
 {
 	return m_actionMaps;
 }
 
-/*----------------------------------------------------------------
-| --- GetActionByName: Retrieves an input action map by name --- |
-----------------------------------------------------------------*/
+/*--------------------------------------------------------------
+| --- GetActionByName: Returns an input action map by name --- |
+--------------------------------------------------------------*/
 const CE::InputActionMap* CE::InputActions::GetActionMapByName(const std::string& name) const
 {
 	auto it = m_actionMaps.find(name);
@@ -79,9 +79,9 @@ const CE::InputActionMap* CE::InputActions::GetActionMapByName(const std::string
 	return nullptr;
 }
 
-/*------------------------------------------------------------
-| --- GetActionByName: Retrieves an input action by name --- |
-------------------------------------------------------------*/
+/*----------------------------------------------------------
+| --- GetActionByName: Returns an input action by name --- |
+----------------------------------------------------------*/
 CE::InputAction* CE::InputActions::GetActionByName(const std::string& name) const
 {
 	for (const auto& [mapName, actionMap] : m_actionMaps)

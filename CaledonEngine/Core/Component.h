@@ -26,88 +26,88 @@ namespace CE
 		virtual void Update(float) {};														// Updates the Component, if applicable
 		virtual void Render() {};															// Renders the Component, if applicable
 
-		GameObject* GetOwner() const;														// Gets a pointer to the owning GameObject
+		GameObject* GetOwner() const;														// Returns a pointer to the owning GameObject
 		void SetOwner(GameObject* owner);													// Sets the owning GameObject
 
-		const std::string& GetID() const;													// Gets the unique identifier of the Component
+		const std::string& GetID() const;													// Returns the unique identifier of the Component
 		void SetID(const std::string& id);													// Sets the unique identifier of the Component
 
-		bool IsActive() const;																// Gets whether the Component is active or not
+		bool IsActive() const;																// Returns whether the Component is active or not
 		void SetActive(bool isActive);														// Sets whether the Component is active or not
 
-		// Gets a reference to a component of type T attached to the same GameObject
+		// Returns a reference to a component of type T attached to the same GameObject
 		template<typename T>
 		T* GetComponent() const;
 
-		// Gets a reference to a component of type T attached to same GameObject, or any of its children
+		// Returns a reference to a component of type T attached to same GameObject, or any of its children
 		template<typename T>
 		T* GetComponentInChildren() const;
 
-		// Gets a reference to a component of type T attached to same GameObject, or any of its parents
+		// Returns a reference to a component of type T attached to same GameObject, or any of its parents
 		template<typename T>
 		T* GetComponentInParent() const;
 
-		// Gets references to all components of type T attached to the same GameObject
+		// Returns references to all components of type T attached to the same GameObject
 		template<typename T>
 		std::vector<T*> GetComponents() const;
 
-		// Gets references to all components of type T attached to same GameObject, or any of its children
+		// Returns references to all components of type T attached to same GameObject, or any of its children
 		template<typename T>
 		std::vector<T*> GetComponentsInChildren() const;
 
-		// Gets references to all components of type T attached to same GameObject, or any of its parents
+		// Returns references to all components of type T attached to same GameObject, or any of its parents
 		template<typename T>
 		std::vector<T*> GetComponentsInParent() const;
 	};
 
-	/*-------------------------------------------------------------------------------------------------
-	| --- GetComponent: Gets a reference to a component of type T attached to the same GameObject --- |
-	-------------------------------------------------------------------------------------------------*/
+	/*----------------------------------------------------------------------------------------------------
+	| --- GetComponent: Returns a reference to a component of type T attached to the same GameObject --- |
+	----------------------------------------------------------------------------------------------------*/
 	template<typename T>
 	inline T* Component::GetComponent() const
 	{
 		//...
 	}
 
-	/*-------------------------------------------------------------------------------------------------------------------------------
-	| --- GetComponentInChildren: Gets a reference to a component of type T attached to same GameObject, or any of its children --- |
-	-------------------------------------------------------------------------------------------------------------------------------*/
+	/*----------------------------------------------------------------------------------------------------------------------------------
+	| --- GetComponentInChildren: Returns a reference to a component of type T attached to same GameObject, or any of its children --- |
+	----------------------------------------------------------------------------------------------------------------------------------*/
 	template<typename T>
 	inline T* Component::GetComponentInChildren() const
 	{
 		//...
 	}
 
-	/*----------------------------------------------------------------------------------------------------------------------------
-	| --- GetComponentInParent: Gets a reference to a component of type T attached to same GameObject, or any of its parents --- |
-	----------------------------------------------------------------------------------------------------------------------------*/
+	/*-------------------------------------------------------------------------------------------------------------------------------
+	| --- GetComponentInParent: Returns a reference to a component of type T attached to same GameObject, or any of its parents --- |
+	-------------------------------------------------------------------------------------------------------------------------------*/
 	template<typename T>
 	inline T* Component::GetComponentInParent() const
 	{
 		//...
 	}
 
-	/*----------------------------------------------------------------------------------------------------
-	| --- GetComponents: Gets references to all components of type T attached to the same GameObject --- |
-	----------------------------------------------------------------------------------------------------*/
+	/*-------------------------------------------------------------------------------------------------------
+	| --- GetComponents: Returns references to all components of type T attached to the same GameObject --- |
+	-------------------------------------------------------------------------------------------------------*/
 	template<typename T>
 	inline std::vector<T*> Component::GetComponents() const
 	{
 		//...
 	}
 
-	/*---------------------------------------------------------------------------------------------------------------------------
-	| --- GetComponentsInChildren: Gets references to all components of type T attached to same GameObject and its children --- |
-	---------------------------------------------------------------------------------------------------------------------------*/
+	/*------------------------------------------------------------------------------------------------------------------------------
+	| --- GetComponentsInChildren: Returns references to all components of type T attached to same GameObject and its children --- |
+	------------------------------------------------------------------------------------------------------------------------------*/
 	template<typename T>
 	inline std::vector<T*> Component::GetComponentsInChildren() const
 	{
 		//...
 	}
 
-	/*------------------------------------------------------------------------------------------------------------------------
-	| --- GetComponentsInParent: Gets references to all components of type T attached to same GameObject and its parents --- |
-	------------------------------------------------------------------------------------------------------------------------*/
+	/*---------------------------------------------------------------------------------------------------------------------------
+	| --- GetComponentsInParent: Returns references to all components of type T attached to same GameObject and its parents --- |
+	---------------------------------------------------------------------------------------------------------------------------*/
 	template<typename T>
 	inline std::vector<T*> Component::GetComponentsInParent() const
 	{

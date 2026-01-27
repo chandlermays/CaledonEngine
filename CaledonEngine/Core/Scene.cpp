@@ -63,9 +63,9 @@ void CE::Scene::Render()
 	}
 }
 
-/*----------------------------------------------
-| --- GetName: Gets the name of this Scene --- |
-----------------------------------------------*/
+/*-------------------------------------------------
+| --- GetName: Returns the name of this Scene --- |
+-------------------------------------------------*/
 const std::string& CE::Scene::GetName() const
 {
 	return m_name;
@@ -79,9 +79,9 @@ void CE::Scene::SetName(const std::string& name)
 	m_name = name;
 }
 
-/*------------------------------------------------------------
-| --- IsActive: Gets whether this Scene is active or not --- |
-------------------------------------------------------------*/
+/*---------------------------------------------------------------
+| --- IsActive: Returns whether this Scene is active or not --- |
+---------------------------------------------------------------*/
 bool CE::Scene::IsActive() const
 {
 	return m_isActive;
@@ -123,9 +123,9 @@ void CE::Scene::RemoveGameObject(GameObject* pGameObject)
 	}
 }
 
-/*------------------------------------------------------------
-| --- GetGameObjects: Gets the GameObjects in this Scene --- |
-------------------------------------------------------------*/
+/*---------------------------------------------------------------
+| --- GetGameObjects: Returns the GameObjects in this Scene --- |
+---------------------------------------------------------------*/
 const std::vector<CE::GameObject*>& CE::Scene::GetGameObjects() const
 {
 	return m_gameObjects;

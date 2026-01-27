@@ -18,9 +18,9 @@ CE::EngineManager::~EngineManager()
 	Shutdown();
 }
 
-/*-----------------------------------------------------------------------
-| --- GetInstance: Gets the singleton instance of the EngineManager --- |
------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------
+| --- GetInstance: Returns the singleton instance of the EngineManager --- |
+--------------------------------------------------------------------------*/
 CE::EngineManager& CE::EngineManager::GetInstance()
 {
 	static EngineManager instance;
@@ -96,33 +96,33 @@ void CE::EngineManager::Shutdown()
 	LoggingManager::GetInstance().Shutdown();
 }
 
-/*----------------------------------------------------------------
-| --- GetGraphicsManager: Gets access to the GraphicsManager --- |
-----------------------------------------------------------------*/
+/*----------------------------------------------------------------------
+| --- GetGraphicsManager: Returns a pointer to the GraphicsManager --- |
+----------------------------------------------------------------------*/
 CE::GraphicsManager* CE::EngineManager::GetGraphicsManager() const
 {
 	return m_pGraphicsManager;
 }
 
-/*----------------------------------------------------------
-| --- GetInputManager: Gets access to the InputManager --- |
-----------------------------------------------------------*/
+/*----------------------------------------------------------------
+| --- GetInputManager: Returns a pointer to the InputManager --- |
+----------------------------------------------------------------*/
 CE::InputManager* CE::EngineManager::GetInputManager() const
 {
 	return m_pInputManager;
 }
 
-/*------------------------------------------------------------------
-| --- GetCollisionManager: Gets access to the CollisionManager --- |
-------------------------------------------------------------------*/
+/*------------------------------------------------------------------------
+| --- GetCollisionManager: Returns a pointer to the CollisionManager --- |
+------------------------------------------------------------------------*/
 CE::CollisionManager* CE::EngineManager::GetCollisionManager() const
 {
 	return m_pCollisionManager;
 }
 
-/*----------------------------------------------------------
-| --- GetSceneManager: Gets access to the SceneManager --- |
-----------------------------------------------------------*/
+/*----------------------------------------------------------------
+| --- GetSceneManager: Returns a pointer to the SceneManager --- |
+----------------------------------------------------------------*/
 CE::SceneManager* CE::EngineManager::GetSceneManager() const
 {
 	return m_pSceneManager;

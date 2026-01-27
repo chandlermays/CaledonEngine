@@ -3,7 +3,6 @@
 #include "CaledonEngine/Systems/Engine/EngineManager.h"
 #include "CaledonEngine/Core/GameObject.h"
 #include "CaledonEngine/Core/Transform.h"
-#include "SDL.h"
 
 /*-----------------------------------
 | --- Public Method Definitions --- |
@@ -14,22 +13,10 @@
 CE::SpriteComponent::SpriteComponent()
 	: Component()
 	, m_pRenderer{ nullptr }
-	, m_pColor{ nullptr }
+	, m_color{ 255, 255, 255, 255 }
 	, m_width{ 100 }
 	, m_height{ 100 }
-{
-	// Default to a White color
-	m_pColor = new SDL_Color{ 255, 255, 255, 255 };
-}
-
-/*-------------------------------------------------------
-| --- Destructor: Cleans up any allocated resources --- |
--------------------------------------------------------*/
-CE::SpriteComponent::~SpriteComponent()
-{
-	delete m_pColor;
-	m_pColor = nullptr;
-}
+{}
 
 /*----------------------------------------------------------
 | --- Initialize: Prepares the SpriteComponent for use --- |
@@ -51,6 +38,8 @@ bool CE::SpriteComponent::Initialize()
 ------------------------------------------------*/
 void CE::SpriteComponent::Render()
 {
+	// Add error logging if this Render method breaks early (with an explanation).
+
 	if (!m_isActive || !m_pOwner || !m_pRenderer)
 		return;
 
@@ -62,25 +51,26 @@ void CE::SpriteComponent::Render()
 	const float sx = transform.GetScale().m_x;
 	const float sy = transform.GetScale().m_y;
 
-	SDL_Rect rect;
-	rect.x = x;
-	rect.y = y;
-
 	const float scaleX = (sx != 0.0f ? sx : 1.0f);
 	const float scaleY = (sy != 0.0f ? sy : 1.0f);
-	rect.w = static_cast<int>(static_cast<float>(m_width) * scaleX);
-	rect.h = static_cast<int>(static_cast<float>(m_height) * scaleY);
 
-	SDL_SetRenderDrawColor(m_pRenderer, m_pColor->r, m_pColor->g, m_pColor->b, m_pColor->a);
-	SDL_RenderFillRect(m_pRenderer, &rect);
+	Rect rect
+	{
+		x,
+		y,
+		static_cast<int>(m_width * scaleX),
+		static_cast<int>(m_height * scaleY)
+	};
+
+	m_pRenderer->DrawRect(rect, m_color);
 }
 
 /*---------------------------------------------------
 | --- GetColor: Returns the color of the sprite --- |
 ---------------------------------------------------*/
-const SDL_Color* CE::SpriteComponent::GetColor() const
+const CE::Color& CE::SpriteComponent::GetColor() const
 {
-	return m_pColor;
+	return m_color;
 }
 
 /*-------------------------------------------------
@@ -88,13 +78,10 @@ const SDL_Color* CE::SpriteComponent::GetColor() const
 -------------------------------------------------*/
 void CE::SpriteComponent::SetColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
-	if (m_pColor != nullptr)
-	{
-		m_pColor->r = r;
-		m_pColor->g = g;
-		m_pColor->b = b;
-		m_pColor->a = a;
-	}
+	m_color.m_r = r;
+	m_color.m_g = g;
+	m_color.m_b = b;
+	m_color.m_a = a;
 }
 
 /*-------------------------------------------------

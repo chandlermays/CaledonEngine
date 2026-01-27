@@ -66,9 +66,17 @@ void CE::InputManager::SetInputActions(InputActions* pInputActions)
 	m_pInputActions = pInputActions;
 }
 
-/*---------------------------------------------------------------
-| --- GetInputActions: Retrieves the assigned Input Actions --- |
----------------------------------------------------------------*/
+/*-----------------------------------------------------------
+| --- GetInputAPI: Returns a pointer to the Input's API --- |
+-----------------------------------------------------------*/
+CE::Input* CE::InputManager::GetInputAPI() const
+{
+	return m_pInputAPI.get();
+}
+
+/*-------------------------------------------------------------
+| --- GetInputActions: Returns the assigned Input Actions --- |
+-------------------------------------------------------------*/
 CE::InputActions* CE::InputManager::GetInputActions() const
 {
 	return m_pInputActions;

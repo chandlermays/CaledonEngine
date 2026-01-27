@@ -97,6 +97,9 @@
     <ClCompile Include="Systems\Rendering\Window.cpp">
       <Filter>Source Files\Systems\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="API\SDL\SDLTexture.cpp">
+      <Filter>Source Files\API\SDL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\GameObject.h">
@@ -166,6 +169,21 @@
       <Filter>Source Files\Systems\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Systems\Rendering\Window.h">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Color.h">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Texture.h">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Math\Rect.h">
+      <Filter>Source Files\Utilities\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="API\SDL\SDLTexture.h">
+      <Filter>Source Files\API\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Shape.h">
       <Filter>Source Files\Systems\Rendering</Filter>
     </ClInclude>
   </ItemGroup>

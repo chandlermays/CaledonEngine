@@ -32,15 +32,15 @@ namespace CE
 		EngineManager(EngineManager&&) = delete;							// Prevent move-construction
 		EngineManager& operator=(EngineManager&&) = delete;					// Prevent move-assignment
 
-		static EngineManager& GetInstance();								// Gets the singleton instance of the EngineManager
+		static EngineManager& GetInstance();								// Returns the singleton instance of the EngineManager
 
 		bool Initialize() override;											// Initializes all engine subsystem managers
 		void Run();															// Main loop that updates and renders all engine subsystem managers
 		void Shutdown() override;											// Shuts down and cleans up all engine subsystem managers
 	
-		GraphicsManager* GetGraphicsManager() const;						// Gets access to the GraphicsManager
-		InputManager* GetInputManager() const;								// Gets access to the InputManager
-		CollisionManager* GetCollisionManager() const;						// Gets access to the CollisionManager
-		SceneManager* GetSceneManager() const;								// Gets access to the SceneManager
+		GraphicsManager* GetGraphicsManager() const;						// Returns a pointer to the GraphicsManager
+		InputManager* GetInputManager() const;								// Returns a pointer to the InputManager
+		CollisionManager* GetCollisionManager() const;						// Returns a pointer to the CollisionManager
+		SceneManager* GetSceneManager() const;								// Returns a pointer to the SceneManager
 	};
 }
