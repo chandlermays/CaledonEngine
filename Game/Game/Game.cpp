@@ -6,6 +6,13 @@
 #include "CaledonEngine/Core/GameObject.h"
 #include "CaledonEngine/Core/Transform.h"
 #include "CaledonEngine/Systems/Rendering/SpriteComponent.h"
+#include "CaledonEngine/Systems/Rendering/Shape.h"
+#include "CaledonEngine/Systems/Rendering/Sprite.h"
+#include "CaledonEngine/Systems/Rendering/Square.h"
+#include "CaledonEngine/Systems/Rendering/Circle.h"
+#include "CaledonEngine/Systems/Rendering/Triangle.h"
+#include "CaledonEngine/Systems/Rendering/Capsule.h"
+#include "CaledonEngine/Systems/Rendering/Color.h"
 #include "Game/Controllers/PlayerController.h"
 
 /*-----------------------------------
@@ -72,26 +79,52 @@ void Game::CreateScenes()
 	CE::Scene* pMainScene = new CE::Scene();
 	pMainScene->SetName("MainScene");
 
-	// Create the GameObject
-	CE::GameObject* pPlayer = new CE::GameObject();
-	pPlayer->SetName("Player");
-	pPlayer->SetTag("Player");
+	// Create a Square
+	CE::GameObject* pSquare = new CE::GameObject();
+	pSquare->GetTransform().SetPosition(CE::VectorFloat(100.0f, 100.0f));
+	CE::SpriteComponent* pSpriteCmp1 = new CE::SpriteComponent();
+	auto pSquareShape = std::make_unique<CE::Square>(CE::Color::Red(), 100, true);
+	auto pSprite1 = CE::Sprite::CreateFromShape(std::move(pSquareShape), 100);
+	pSpriteCmp1->SetSprite(std::move(pSprite1));
+	pSquare->AddComponent(pSpriteCmp1);
 
-	pPlayer->GetTransform().SetPosition(CE::VectorFloat(100.0f, 100.0f));
+	// Create a Circle
+	CE::GameObject* pCircle = new CE::GameObject();
+	pCircle->GetTransform().SetPosition(CE::VectorFloat(600.0f, 100.0f));
+	CE::SpriteComponent* pSpriteCmp2 = new CE::SpriteComponent();
+	auto pCircleShape = std::make_unique<CE::Circle>(CE::Color::Green(), 50, true, 32);
+	auto pSprite2 = CE::Sprite::CreateFromShape(std::move(pCircleShape), 100);
+	pSpriteCmp2->SetSprite(std::move(pSprite2));
+	pCircle->AddComponent(pSpriteCmp2);
 
-	// Create & Attach the SpriteComponent
-	CE::SpriteComponent* pSpriteComponent = new CE::SpriteComponent();
-	pSpriteComponent->SetColor(255, 0, 0, 255);	// Red color
-	pSpriteComponent->SetSize(50, 50);			// 50x50 size
-	pPlayer->AddComponent(pSpriteComponent);
+	// Create a Triangle
+	CE::GameObject* pTriangle = new CE::GameObject();
+	pTriangle->GetTransform().SetPosition(CE::VectorFloat(100.0f, 600.0f));
+	CE::SpriteComponent* pSpriteCmp3 = new CE::SpriteComponent();
+	auto pTriangleShape = std::make_unique<CE::Triangle>(CE::Color::Magenta(), 100, 100, true);
+	auto pSprite3 = CE::Sprite::CreateFromShape(std::move(pTriangleShape), 100);
+	pSpriteCmp3->SetSprite(std::move(pSprite3));
+	pTriangle->AddComponent(pSpriteCmp3);
+
+	// Create a Capsule
+	CE::GameObject* pCapsule = new CE::GameObject();
+	pCapsule->GetTransform().SetPosition(CE::VectorFloat(600.0f, 600.0f));
+	CE::SpriteComponent* pSpriteCmp4 = new CE::SpriteComponent();
+	auto pCapsuleShape = std::make_unique<CE::Capsule>(CE::Color::Yellow(), 100, 200, true, 16);
+	auto pSprite4 = CE::Sprite::CreateFromShape(std::move(pCapsuleShape), 100);
+	pSpriteCmp4->SetSprite(std::move(pSprite4));
+	pCapsule->AddComponent(pSpriteCmp4);
 
 	// Create & Attach the PlayerController
 	PlayerController* pPlayerController = new PlayerController();
 	pPlayerController->SetInputActions(m_pInputActions);
-	pPlayer->AddComponent(pPlayerController);
+	pSquare->AddComponent(pPlayerController);
 
 	// Add it all together!
-	pMainScene->AddGameObject(pPlayer);
+	pMainScene->AddGameObject(pSquare);
+	pMainScene->AddGameObject(pCircle);
+	pMainScene->AddGameObject(pTriangle);
+	pMainScene->AddGameObject(pCapsule);
 
 	pSceneManager->AddScene(pMainScene);
 	pSceneManager->SetCurrentScene(pMainScene);

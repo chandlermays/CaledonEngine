@@ -100,6 +100,24 @@
     <ClCompile Include="API\SDL\SDLTexture.cpp">
       <Filter>Source Files\API\SDL</Filter>
     </ClCompile>
+    <ClCompile Include="Systems\Rendering\Shape.cpp">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Rendering\Sprite.cpp">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Rendering\Triangle.cpp">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Rendering\Circle.cpp">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Rendering\Square.cpp">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Rendering\Capsule.cpp">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\GameObject.h">
@@ -184,6 +202,21 @@
       <Filter>Source Files\API\SDL</Filter>
     </ClInclude>
     <ClInclude Include="Systems\Rendering\Shape.h">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Sprite.h">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Square.h">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Circle.h">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Triangle.h">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Capsule.h">
       <Filter>Source Files\Systems\Rendering</Filter>
     </ClInclude>
   </ItemGroup>

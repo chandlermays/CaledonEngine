@@ -1,6 +1,8 @@
 #include "SpriteComponent.h"
 #include "CaledonEngine/Systems/Rendering/GraphicsManager.h"
 #include "CaledonEngine/Systems/Engine/EngineManager.h"
+#include "CaledonEngine/Systems/Rendering/Sprite.h"
+#include "CaledonEngine/Systems/Rendering/Shape.h"
 #include "CaledonEngine/Core/GameObject.h"
 #include "CaledonEngine/Core/Transform.h"
 
@@ -13,9 +15,8 @@
 CE::SpriteComponent::SpriteComponent()
 	: Component()
 	, m_pRenderer{ nullptr }
+	, m_pSprite{ nullptr }
 	, m_color{ 255, 255, 255, 255 }
-	, m_width{ 100 }
-	, m_height{ 100 }
 {}
 
 /*----------------------------------------------------------
@@ -40,7 +41,7 @@ void CE::SpriteComponent::Render()
 {
 	// Add error logging if this Render method breaks early (with an explanation).
 
-	if (!m_isActive || !m_pOwner || !m_pRenderer)
+	if (!m_isActive || !m_pOwner || !m_pRenderer || !m_pSprite)
 		return;
 
 	const Transform& transform = m_pOwner->GetTransform();
@@ -54,23 +55,83 @@ void CE::SpriteComponent::Render()
 	const float scaleX = (sx != 0.0f ? sx : 1.0f);
 	const float scaleY = (sy != 0.0f ? sy : 1.0f);
 
-	Rect rect
+	const VectorFloat& spriteSize = m_pSprite->GetSize();
+	const VectorFloat& pivot = m_pSprite->GetPivot();
+
+	int pixelWidth = static_cast<int>(m_pSprite->GetPixelWidth() * scaleX);
+	int pixelHeight = static_cast<int>(m_pSprite->GetPixelHeight() * scaleY);
+
+	int offsetX = static_cast<int>(-pivot.m_x * pixelWidth);
+	int offsetY = static_cast<int>(-pivot.m_y * pixelHeight);
+
+	Rect destRect
 	{
-		x,
-		y,
-		static_cast<int>(m_width * scaleX),
-		static_cast<int>(m_height * scaleY)
+		x + offsetX,
+		y + offsetY,
+		pixelWidth,
+		pixelHeight
 	};
 
-	m_pRenderer->DrawRect(rect, m_color);
+	if (m_pSprite->GetType() == SpriteType::kTexture)
+	{
+		Texture* pTexture = m_pSprite->GetTexture();
+		if (pTexture)
+		{
+			Rect srcRect = m_pSprite->GetTextureRect();
+
+			if (m_color != Color::White())
+			{
+				m_pRenderer->SetTextureColorMod(pTexture, m_color.m_r, m_color.m_g, m_color.m_b);
+				m_pRenderer->SetTextureAlphaMod(pTexture, m_color.m_a);
+			}
+
+			m_pRenderer->RenderCopy(pTexture, &srcRect, &destRect);
+
+			if (m_color != Color::White())
+			{
+				m_pRenderer->SetTextureColorMod(pTexture, 255, 255, 255);
+				m_pRenderer->SetTextureAlphaMod(pTexture, 255);
+			}
+		}
+	}
+	else if (m_pSprite->GetType() == SpriteType::kPrimitive)
+	{
+		Shape* pShape = m_pSprite->GetShape();
+		if (pShape)
+		{
+			Color renderColor = pShape->GetColor();
+			if (m_color != Color::White())
+			{
+				renderColor.m_r = static_cast<unsigned char>((renderColor.m_r * m_color.m_r) / 255);
+				renderColor.m_g = static_cast<unsigned char>((renderColor.m_g * m_color.m_g) / 255);
+				renderColor.m_b = static_cast<unsigned char>((renderColor.m_b * m_color.m_b) / 255);
+				renderColor.m_a = static_cast<unsigned char>((renderColor.m_a * m_color.m_a) / 255);
+			}
+
+			Color originalColor = pShape->GetColor();
+			const_cast<Shape*>(pShape)->SetColor(renderColor);
+
+			pShape->Render(m_pRenderer, destRect);
+
+			const_cast<Shape*>(pShape)->SetColor(originalColor);
+		}
+	}
 }
 
 /*---------------------------------------------------
-| --- GetColor: Returns the color of the sprite --- |
+| --- SetSprite: Sets the sprite to be rendered --- |
 ---------------------------------------------------*/
-const CE::Color& CE::SpriteComponent::GetColor() const
+void CE::SpriteComponent::SetSprite(std::unique_ptr<Sprite> pSprite)
 {
-	return m_color;
+	m_pSprite = std::move(pSprite);
+}
+
+/*-------------------------------------------------
+| --- SetColor: Sets the color of the sprite  --- |
+-------------------------------------------------*/
+void CE::SpriteComponent::SetColor(const Color& color)
+{
+	m_color = color;
 }
 
 /*-------------------------------------------------
@@ -84,20 +145,18 @@ void CE::SpriteComponent::SetColor(unsigned char r, unsigned char g, unsigned ch
 	m_color.m_a = a;
 }
 
-/*-------------------------------------------------
-| --- GetSize: Returns the size of the sprite --- |
--------------------------------------------------*/
-void CE::SpriteComponent::GetSize(int& width, int& height) const
+/*----------------------------------------------------
+| --- GetSprite: Returns a pointer to the sprite --- |
+----------------------------------------------------*/
+CE::Sprite* CE::SpriteComponent::GetSprite() const
 {
-	width = m_width;
-	height = m_height;
+	return m_pSprite.get();
 }
 
-/*-----------------------------------------------
-| --- SetSize: Sets the size of the sprite  --- |
------------------------------------------------*/
-void CE::SpriteComponent::SetSize(int width, int height)
+/*---------------------------------------------------
+| --- GetColor: Returns the color of the sprite --- |
+---------------------------------------------------*/
+const CE::Color& CE::SpriteComponent::GetColor() const
 {
-	m_width = width;
-	m_height = height;
+	return m_color;
 }

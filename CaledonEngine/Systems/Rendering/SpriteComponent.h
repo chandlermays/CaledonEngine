@@ -1,18 +1,19 @@
 #pragma once
 #include "CaledonEngine/Core/Component.h"
 #include "CaledonEngine/Systems/Rendering/Color.h"
+#include <memory>
 
 namespace CE
 {
 	class Renderer;
+	class Sprite;
 
 	class SpriteComponent : public Component
 	{
 	private:
 		Renderer* m_pRenderer;																		// Pointer to the Renderer
+		std::unique_ptr<Sprite> m_pSprite;															// Pointer to the Sprite
 		Color m_color;																				// Color of the sprite
-		int m_width;																				// Width of the sprite
-		int m_height;																				// Height of the sprite
 
 	public:
 		SpriteComponent();																			// Constructor
@@ -25,10 +26,11 @@ namespace CE
 		virtual bool Initialize() override;															// Prepares the SpriteComponent for use
 		virtual void Render() override;																// Draws the sprite to the screen
 
-		const Color& GetColor() const;																// Returns the color of the sprite
+		void SetSprite(std::unique_ptr<Sprite> pSprite);											// Sets the sprite to be rendered
+		void SetColor(const Color& color);															// Sets the color of the sprite
 		void SetColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);			// Sets the color of the sprite
 
-		void GetSize(int& width, int& height) const;												// Returns the size of the sprite
-		void SetSize(int width, int height);														// Sets the size of the sprite
+		Sprite* GetSprite() const;																	// Returns a pointer to the sprite
+		const Color& GetColor() const;																// Returns the color of the sprite
 	};
 }

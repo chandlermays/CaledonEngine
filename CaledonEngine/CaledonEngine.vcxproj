@@ -67,8 +67,14 @@
     <ClCompile Include="Systems\Input\InputActions.cpp" />
     <ClCompile Include="Systems\Input\InputManager.cpp" />
     <ClCompile Include="Systems\Physics\CollisionManager.cpp" />
+    <ClCompile Include="Systems\Rendering\Capsule.cpp" />
+    <ClCompile Include="Systems\Rendering\Circle.cpp" />
     <ClCompile Include="Systems\Rendering\GraphicsManager.cpp" />
+    <ClCompile Include="Systems\Rendering\Shape.cpp" />
+    <ClCompile Include="Systems\Rendering\Sprite.cpp" />
     <ClCompile Include="Systems\Rendering\SpriteComponent.cpp" />
+    <ClCompile Include="Systems\Rendering\Square.cpp" />
+    <ClCompile Include="Systems\Rendering\Triangle.cpp" />
     <ClCompile Include="Systems\Rendering\Window.cpp" />
     <ClCompile Include="Systems\Scene\SceneManager.cpp" />
   </ItemGroup>
@@ -90,12 +96,17 @@
     <ClInclude Include="Systems\Input\InputActions.h" />
     <ClInclude Include="Systems\Input\InputManager.h" />
     <ClInclude Include="Systems\Physics\CollisionManager.h" />
+    <ClInclude Include="Systems\Rendering\Capsule.h" />
+    <ClInclude Include="Systems\Rendering\Circle.h" />
     <ClInclude Include="Systems\Rendering\Color.h" />
     <ClInclude Include="Systems\Rendering\GraphicsManager.h" />
     <ClInclude Include="Systems\Rendering\Renderer.h" />
     <ClInclude Include="Systems\Rendering\Shape.h" />
+    <ClInclude Include="Systems\Rendering\Sprite.h" />
     <ClInclude Include="Systems\Rendering\SpriteComponent.h" />
+    <ClInclude Include="Systems\Rendering\Square.h" />
     <ClInclude Include="Systems\Rendering\Texture.h" />
+    <ClInclude Include="Systems\Rendering\Triangle.h" />
     <ClInclude Include="Systems\Rendering\Window.h" />
     <ClInclude Include="Systems\Scene\SceneManager.h" />
     <ClInclude Include="Utilities\APIConfig.h" />
