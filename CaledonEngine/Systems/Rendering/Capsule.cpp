@@ -17,12 +17,5 @@ void CE::Capsule::Render(Renderer* pRenderer, const Rect& destRect) const
 	int centerX = destRect.m_x + destRect.m_width / 2;
 	int centerY = destRect.m_y + destRect.m_height / 2;
 
-	if (m_isFilled)
-	{
-		pRenderer->DrawFilledCapsule(centerX, centerY, destRect.m_width, destRect.m_height, m_color);
-	}
-	else
-	{
-		pRenderer->DrawCapsule(centerX, centerY, destRect.m_width, destRect.m_height, m_color);
-	}
+	pRenderer->DrawCapsule(centerX, centerY, destRect.m_width, destRect.m_height, m_color, m_isFilled);
 }

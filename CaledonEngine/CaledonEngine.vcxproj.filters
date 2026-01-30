@@ -38,6 +38,12 @@
     <Filter Include="Source Files\API\SDL">
       <UniqueIdentifier>{ab4089fc-2576-4dd3-b5ed-8b26518095e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Utilities\ImGUI">
+      <UniqueIdentifier>{80885ef5-bd62-459e-b05b-601b94d41bde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Systems\Tools">
+      <UniqueIdentifier>{1a9739c0-f551-46e1-a9c9-7d346f611656}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Component.cpp">
@@ -117,6 +123,27 @@
     </ClCompile>
     <ClCompile Include="Systems\Rendering\Capsule.cpp">
       <Filter>Source Files\Systems\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\ImGUI\imgui.cpp">
+      <Filter>Source Files\Utilities\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\ImGUI\imgui_demo.cpp">
+      <Filter>Source Files\Utilities\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\ImGUI\imgui_draw.cpp">
+      <Filter>Source Files\Utilities\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\ImGUI\imgui_tables.cpp">
+      <Filter>Source Files\Utilities\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\ImGUI\imgui_widgets.cpp">
+      <Filter>Source Files\Utilities\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Tools\DebugOverlay.cpp">
+      <Filter>Source Files\Systems\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Tools\ToolsManager.cpp">
+      <Filter>Source Files\Systems\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -218,6 +245,12 @@
     </ClInclude>
     <ClInclude Include="Systems\Rendering\Capsule.h">
       <Filter>Source Files\Systems\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Tools\DebugOverlay.h">
+      <Filter>Source Files\Systems\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Tools\ToolsManager.h">
+      <Filter>Source Files\Systems\Tools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

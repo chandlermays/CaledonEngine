@@ -4,6 +4,7 @@
 #include "CaledonEngine/Systems/Input/InputManager.h"
 #include "CaledonEngine/Systems/Physics/CollisionManager.h"
 #include "CaledonEngine/Systems/Scene/SceneManager.h"
+#include "CaledonEngine/Systems/Tools/ToolsManager.h"
 #include <chrono>
 
 /*-----------------------------------
@@ -128,6 +129,14 @@ CE::SceneManager* CE::EngineManager::GetSceneManager() const
 	return m_pSceneManager;
 }
 
+/*----------------------------------------------------------------
+| --- GetToolsManager: Returns a pointer to the ToolsManager --- |
+----------------------------------------------------------------*/
+CE::ToolsManager* CE::EngineManager::GetToolsManager() const
+{
+	return m_pToolsManager;
+}
+
 
 /*------------------------------------
 | --- Private Method Definitions --- |
@@ -149,6 +158,9 @@ CE::EngineManager::EngineManager()
 
 	m_pSceneManager = new SceneManager();
 	m_pManagers.emplace_back(m_pSceneManager);
+
+	m_pToolsManager = new ToolsManager();
+	m_pManagers.emplace_back(m_pToolsManager);
 }
 
 /*-------------------------------------------------------

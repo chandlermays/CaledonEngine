@@ -77,6 +77,13 @@
     <ClCompile Include="Systems\Rendering\Triangle.cpp" />
     <ClCompile Include="Systems\Rendering\Window.cpp" />
     <ClCompile Include="Systems\Scene\SceneManager.cpp" />
+    <ClCompile Include="Systems\Tools\DebugOverlay.cpp" />
+    <ClCompile Include="Systems\Tools\ToolsManager.cpp" />
+    <ClCompile Include="Utilities\ImGUI\imgui.cpp" />
+    <ClCompile Include="Utilities\ImGUI\imgui_demo.cpp" />
+    <ClCompile Include="Utilities\ImGUI\imgui_draw.cpp" />
+    <ClCompile Include="Utilities\ImGUI\imgui_tables.cpp" />
+    <ClCompile Include="Utilities\ImGUI\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="API\SDL\SDLInput.h" />
@@ -109,6 +116,8 @@
     <ClInclude Include="Systems\Rendering\Triangle.h" />
     <ClInclude Include="Systems\Rendering\Window.h" />
     <ClInclude Include="Systems\Scene\SceneManager.h" />
+    <ClInclude Include="Systems\Tools\DebugOverlay.h" />
+    <ClInclude Include="Systems\Tools\ToolsManager.h" />
     <ClInclude Include="Utilities\APIConfig.h" />
     <ClInclude Include="Utilities\Math\Rect.h" />
     <ClInclude Include="Utilities\Math\Vector2.h" />
@@ -308,7 +317,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -332,7 +341,7 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -360,7 +369,7 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -392,7 +401,7 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -420,7 +429,7 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -452,7 +461,7 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -482,7 +491,7 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -506,7 +515,7 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;SFML_STATIC;SFML_DEBUG_CE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -536,7 +545,7 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;SDL_DEBUG_CE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -568,7 +577,7 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -596,7 +605,7 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;SFML_STATIC;SFML_NDEBUG_CE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -630,7 +639,7 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;SDL_NDEBUG_CE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

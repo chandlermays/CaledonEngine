@@ -10,12 +10,5 @@ void CE::Square::Render(Renderer* pRenderer, const Rect& destRect) const
 	if (!pRenderer)
 		return;
 
-	if (m_isFilled)
-	{
-		pRenderer->DrawFilledRect(destRect, m_color);
-	}
-	else
-	{
-		pRenderer->DrawRect(destRect, m_color);
-	}
+	pRenderer->DrawRect(destRect, m_color, m_isFilled);
 }

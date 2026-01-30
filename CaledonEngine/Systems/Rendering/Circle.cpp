@@ -28,23 +28,14 @@ void CE::Circle::Render(Renderer* pRenderer, const Rect& destRect) const
 	int centerY = destRect.m_y + destRect.m_height / 2;
 
 	// Calculate the radius based on the destination rectangle
-	// Use the smaller of width/height to ensure the circle fits
 	int scaledRadius = (destRect.m_width < destRect.m_height ? destRect.m_width : destRect.m_height) / 2;
 
-	// Draw the circle using the renderer
-	if (m_isFilled)
-	{
-		pRenderer->DrawFilledCircle(centerX, centerY, scaledRadius, m_color);
-	}
-	else
-	{
-		pRenderer->DrawCircle(centerX, centerY, scaledRadius, m_color);
-	}
+	pRenderer->DrawCircle(centerX, centerY, scaledRadius, m_color, m_isFilled);
 }
 
-/*-------------------------------------------------
+/*--------------------------------------------------
 | --- SetRadius: Sets the radius of the circle --- |
--------------------------------------------------*/
+--------------------------------------------------*/
 void CE::Circle::SetRadius(int radius)
 {
 	m_radius = radius;
@@ -53,9 +44,9 @@ void CE::Circle::SetRadius(int radius)
 	m_bounds = Rect{ m_bounds.m_x, m_bounds.m_y, radius * 2, radius * 2 };
 }
 
-/*---------------------------------------------------
+/*-----------------------------------------------------
 | --- GetRadius: Returns the radius of the circle --- |
----------------------------------------------------*/
+-----------------------------------------------------*/
 int CE::Circle::GetRadius() const
 {
 	return m_radius;

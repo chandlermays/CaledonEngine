@@ -28,23 +28,16 @@ namespace CE
 
 		virtual void SetTextureAlphaMod(Texture* pTexture, unsigned char a) = 0;				// Sets the alpha modulation for a texture
 
-		virtual void DrawRect(const Rect& rect, const Color& color) = 0;						// Draws an outlined rectangle
-		virtual void DrawFilledRect(const Rect& rect, const Color& color) = 0;					// Draws a filled rectangle
+		virtual void DrawRect(const Rect& rect, const Color& color, bool filled) = 0;			// Draws an outlined rectangle
 
 		virtual void DrawCircle(int centerX, int centerY, int radius,
-			const Color& color) = 0;															// Draws an outlined circle
-		virtual void DrawFilledCircle(int centerX, int centerY, int radius,
-			const Color& color) = 0;															// Draws a filled circle
+			const Color& color, bool filled) = 0;												// Draws an outlined circle
 
 		virtual void DrawTriangle(const VectorInt& v1, const VectorInt& v2,
-			const VectorInt& v3, const Color& color) = 0;										// Draws an outlined triangle
-		virtual void DrawFilledTriangle(const VectorInt& v1, const VectorInt& v2,
-			const VectorInt& v3, const Color& color) = 0;										// Draws a filled triangle
+			const VectorInt& v3, const Color& color, bool filled) = 0;							// Draws an outlined triangle
 
 		virtual void DrawCapsule(int centerX, int centerY, int width, int height,
-			const Color& color) = 0;															// Draws an outlined capsule
-		virtual void DrawFilledCapsule(int centerX, int centerY, int width, int height,
-			const Color& color) = 0;															// Draws a filled capsule
+			const Color& color, bool filled) = 0;												// Draws an outlined capsule
 
 		virtual void* GetNativeHandle() const = 0;												// Returns the native Renderer handle
 	};

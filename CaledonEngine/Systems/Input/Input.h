@@ -10,7 +10,6 @@ namespace CE
 		kDown,
 		kLeft,
 		kRight,
-		kInteract,
 		kEscape,
 		kPageUp,
 		kPageDown,

@@ -25,23 +25,16 @@ namespace CE
 
 		virtual void SetTextureAlphaMod(Texture* pTexture, unsigned char a) override;				// Sets the alpha modulation for a texture
 
-		virtual void DrawRect(const Rect& rect, const Color& color) override;						// Draws an outlined rectangle
-		virtual void DrawFilledRect(const Rect& rect, const Color& color) override;					// Draws a filled rectangle
+		virtual void DrawRect(const Rect& rect, const Color& color, bool filled) override;			// Draws a rectangle to the screen
 
 		virtual void DrawCircle(int centerX, int centerY, int radius,
-			const Color& color) override;															// Draws an outlined circle
-		virtual void DrawFilledCircle(int centerX, int centerY, int radius,
-			const Color& color) override;															// Draws a filled circle
+			const Color& color, bool filled) override;												// Draws a circle to the screen
 
 		virtual void DrawTriangle(const VectorInt& v1, const VectorInt& v2,
-			const VectorInt& v3, const Color& color) override;										// Draws an outlined triangle
-		virtual void DrawFilledTriangle(const VectorInt& v1, const VectorInt& v2,
-			const VectorInt& v3, const Color& color) override;										// Draws a filled triangle
+			const VectorInt& v3, const Color& color, bool filled) override;							// Draws a triangle to the screen
 
 		virtual void DrawCapsule(int centerX, int centerY, int width, int height,
-			const Color& color) override;															// Draws an outlined capsule
-		virtual void DrawFilledCapsule(int centerX, int centerY, int width, int height,
-			const Color& color) override;															// Draws a filled capsule
+			const Color& color, bool filled) override;												// Draws a capsule to the screen
 
 		void* GetNativeHandle() const override;														// Returns the native renderer handle
 	};
