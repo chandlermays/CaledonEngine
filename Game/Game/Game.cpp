@@ -92,7 +92,7 @@ void Game::CreateScenes()
 	CE::GameObject* pCircle = new CE::GameObject();
 	pCircle->GetTransform().SetPosition(CE::VectorFloat(600.0f, 100.0f));
 	CE::SpriteComponent* pSpriteCmp2 = new CE::SpriteComponent();
-	auto pCircleShape = std::make_unique<CE::Circle>(CE::Color::Green(), 50, true, 32);
+	auto pCircleShape = std::make_unique<CE::Circle>(CE::Color::Green(), 50, true);
 	auto pSprite2 = CE::Sprite::CreateFromShape(std::move(pCircleShape), 100);
 	pSpriteCmp2->SetSprite(std::move(pSprite2));
 	pCircle->AddComponent(pSpriteCmp2);
@@ -110,7 +110,7 @@ void Game::CreateScenes()
 	CE::GameObject* pCapsule = new CE::GameObject();
 	pCapsule->GetTransform().SetPosition(CE::VectorFloat(600.0f, 600.0f));
 	CE::SpriteComponent* pSpriteCmp4 = new CE::SpriteComponent();
-	auto pCapsuleShape = std::make_unique<CE::Capsule>(CE::Color::Yellow(), 100, 200, true, 16);
+	auto pCapsuleShape = std::make_unique<CE::Capsule>(CE::Color::Yellow(), 100, 200, true);
 	auto pSprite4 = CE::Sprite::CreateFromShape(std::move(pCapsuleShape), 100);
 	pSpriteCmp4->SetSprite(std::move(pSprite4));
 	pCapsule->AddComponent(pSpriteCmp4);

@@ -161,54 +161,76 @@ void CE::SDLRenderer::DrawFilledRect(const Rect& rect, const Color& color)
 /*----------------------------------------------
 | --- DrawCircle: Draws an outlined circle --- |
 -----------------------------------------------*/
-void CE::SDLRenderer::DrawCircle(int centerX, int centerY, int radiusX, int radiusY, const Color& color, int segments)
+void CE::SDLRenderer::DrawCircle(int centerX, int centerY, int radius, const Color& color)
 {
     if (!m_pRenderer)
-		return;
+        return;
 
-	SDL_SetRenderDrawColor(m_pRenderer, color.m_r, color.m_g, color.m_b, color.m_a);
+    SDL_SetRenderDrawColor(m_pRenderer, color.m_r, color.m_g, color.m_b, color.m_a);
 
-    float angleStep = 2.0f * 3.14159265f / segments;
+    int x = radius;
+    int y = 0;
+    int err = 0;
 
-    for (int i = 0; i < segments; ++i)
+    while (x >= y)
     {
-        float angle1 = i * angleStep;
-        float angle2 = (i + 1) * angleStep;
+        // Draw 8 symmetric points
+        SDL_RenderDrawPoint(m_pRenderer, centerX + x, centerY + y);
+        SDL_RenderDrawPoint(m_pRenderer, centerX + y, centerY + x);
+        SDL_RenderDrawPoint(m_pRenderer, centerX - y, centerY + x);
+        SDL_RenderDrawPoint(m_pRenderer, centerX - x, centerY + y);
+        SDL_RenderDrawPoint(m_pRenderer, centerX - x, centerY - y);
+        SDL_RenderDrawPoint(m_pRenderer, centerX - y, centerY - x);
+        SDL_RenderDrawPoint(m_pRenderer, centerX + y, centerY - x);
+        SDL_RenderDrawPoint(m_pRenderer, centerX + x, centerY - y);
 
-        int x1 = centerX + static_cast<int>(radiusX + std::cos(angle1));
-        int y1 = centerY + static_cast<int>(radiusY + std::sin(angle1));
-        int x2 = centerX + static_cast<int>(radiusX + std::cos(angle2));
-        int y2 = centerY + static_cast<int>(radiusY + std::sin(angle2));
+        if (err <= 0)
+        {
+            y += 1;
+            err += 2 * y + 1;
+        }
 
-        SDL_RenderDrawLine(m_pRenderer, x1, y1, x2, y2);
+        if (err > 0)
+        {
+            x -= 1;
+            err -= 2 * x + 1;
+        }
     }
 }
 
 /*-------------------------------------------------
 | --- DrawFilledCircle: Draws a filled circle --- |
 -------------------------------------------------*/
-void CE::SDLRenderer::DrawFilledCircle(int centerX, int centerY, int radiusX, int radiusY, const Color& color, int segments)
+void CE::SDLRenderer::DrawFilledCircle(int centerX, int centerY, int radius, const Color& color)
 {
     if (!m_pRenderer)
         return;
 
-	SDL_SetRenderDrawColor(m_pRenderer, color.m_r, color.m_g, color.m_b, color.m_a);
+    SDL_SetRenderDrawColor(m_pRenderer, color.m_r, color.m_g, color.m_b, color.m_a);
 
-	float angleStep = 2.0f * 3.14159265f / segments;
+    int x = radius;
+    int y = 0;
+    int err = 0;
 
-    for (int i = 0; i < segments; ++i)
+    while (x >= y)
     {
-        float angle1 = i * angleStep;
-		float angle2 = (i + 1) * angleStep;
+        // Draw horizontal lines to fill the circle
+        SDL_RenderDrawLine(m_pRenderer, centerX - x, centerY + y, centerX + x, centerY + y);
+        SDL_RenderDrawLine(m_pRenderer, centerX - y, centerY + x, centerX + y, centerY + x);
+        SDL_RenderDrawLine(m_pRenderer, centerX - x, centerY - y, centerX + x, centerY - y);
+        SDL_RenderDrawLine(m_pRenderer, centerX - y, centerY - x, centerX + y, centerY - x);
 
-        int x1 = centerX + static_cast<int>(radiusX + std::cos(angle1));
-        int y1 = centerY + static_cast<int>(radiusY + std::sin(angle1));
-        int x2 = centerX + static_cast<int>(radiusX + std::cos(angle2));
-        int y2 = centerY + static_cast<int>(radiusY + std::sin(angle2));
+        if (err <= 0)
+        {
+            y += 1;
+            err += 2 * y + 1;
+        }
 
-        SDL_RenderDrawLine(m_pRenderer, centerX, centerY, x1, y1);
-        SDL_RenderDrawLine(m_pRenderer, x1, y1, x2, y2);
-		SDL_RenderDrawLine(m_pRenderer, x2, y2, centerX, centerY);
+        if (err > 0)
+        {
+            x -= 1;
+            err -= 2 * x + 1;
+        }
     }
 }
 
@@ -249,9 +271,12 @@ void CE::SDLRenderer::DrawFilledTriangle(const VectorInt& v1, const VectorInt& v
             {
                 if ((p1.m_y <= y && p2.m_y >= y) || (p2.m_y <= y && p1.m_y >= y))
                 {
-                    int x = p1.m_x + (y - p1.m_y) * (p2.m_x - p1.m_x) / (p2.m_y - p1.m_y);
-                    minX = std::min(minX, x);
-                    maxX = std::max(maxX, x);
+                    if (p2.m_y != p1.m_y)
+                    {
+                        int x = p1.m_x + (y - p1.m_y) * (p2.m_x - p1.m_x) / (p2.m_y - p1.m_y);
+                        minX = std::min(minX, x);
+                        maxX = std::max(maxX, x);
+                    }
                 }
             };
 
@@ -269,88 +294,104 @@ void CE::SDLRenderer::DrawFilledTriangle(const VectorInt& v1, const VectorInt& v
 /*------------------------------------------------
 | --- DrawCapsule: Draws an outlined capsule --- |
 ------------------------------------------------*/
-void CE::SDLRenderer::DrawCapsule(int centerX, int centerY, int width, int height, const Color& color, int segments)
+void CE::SDLRenderer::DrawCapsule(int centerX, int centerY, int width, int height, const Color& color)
 {
     if (!m_pRenderer)
         return;
 
-	SDL_SetRenderDrawColor(m_pRenderer, color.m_r, color.m_g, color.m_b, color.m_a);
+    SDL_SetRenderDrawColor(m_pRenderer, color.m_r, color.m_g, color.m_b, color.m_a);
 
-	bool isVertical = height > width;
+    bool isVertical = height > width;
 
     if (isVertical)
     {
+        // Vertical capsule
         int radius = width / 2;
         int rectHeight = height - width;
 
+        // Top semicircle
         int topY = centerY - rectHeight / 2;
-        DrawCircle(centerX, topY, radius, radius, color, segments / 2);
+        DrawCircle(centerX, topY, radius, color);
 
-		int rectTop = topY;
-		int rectBottom = topY + rectHeight;
-		SDL_RenderDrawLine(m_pRenderer, centerX - radius, rectTop, centerX - radius, rectBottom);
+        // Side lines
+        int rectTop = topY;
+        int rectBottom = topY + rectHeight;
+        SDL_RenderDrawLine(m_pRenderer, centerX - radius, rectTop, centerX - radius, rectBottom);
         SDL_RenderDrawLine(m_pRenderer, centerX + radius, rectTop, centerX + radius, rectBottom);
-        
-		int bottomY = centerY + rectHeight / 2;
-        DrawCircle(centerX, bottomY, radius, radius, color, segments / 2);
+
+        // Bottom semicircle
+        int bottomY = centerY + rectHeight / 2;
+        DrawCircle(centerX, bottomY, radius, color);
     }
     else
     {
+        // Horizontal capsule
         int radius = height / 2;
         int rectWidth = width - height;
 
+        // Left semicircle
         int leftX = centerX - rectWidth / 2;
-		DrawCircle(leftX, centerY, radius, radius, color, segments / 2);
+        DrawCircle(leftX, centerY, radius, color);
 
-		int rectLeft = leftX;
-		int rectRight = leftX + rectWidth;
+        // Top and bottom lines
+        int rectLeft = leftX;
+        int rectRight = leftX + rectWidth;
         SDL_RenderDrawLine(m_pRenderer, rectLeft, centerY - radius, rectRight, centerY - radius);
-		SDL_RenderDrawLine(m_pRenderer, rectLeft, centerY + radius, rectRight, centerY + radius);
+        SDL_RenderDrawLine(m_pRenderer, rectLeft, centerY + radius, rectRight, centerY + radius);
 
+        // Right semicircle
         int rightX = centerX + rectWidth / 2;
-		DrawCircle(rightX, centerY, radius, radius, color, segments / 2);
+        DrawCircle(rightX, centerY, radius, color);
     }
 }
 
 /*---------------------------------------------------
 | --- DrawFilledCapsule: Draws a filled capsule --- |
 ---------------------------------------------------*/
-void CE::SDLRenderer::DrawFilledCapsule(int centerX, int centerY, int width, int height, const Color& color, int segments)
+void CE::SDLRenderer::DrawFilledCapsule(int centerX, int centerY, int width, int height, const Color& color)
 {
     if (!m_pRenderer)
         return;
 
-	SDL_SetRenderDrawColor(m_pRenderer, color.m_r, color.m_g, color.m_b, color.m_a);
+    SDL_SetRenderDrawColor(m_pRenderer, color.m_r, color.m_g, color.m_b, color.m_a);
 
-	bool isVertical = height > width;
+    bool isVertical = height > width;
 
     if (isVertical)
     {
+        // Vertical capsule
         int radius = width / 2;
         int rectHeight = height - width;
 
-		int topY = centerY - rectHeight / 2;
-		DrawCircle(centerX, topY, radius, radius, color, segments / 2);
+        // Top semicircle
+        int topY = centerY - rectHeight / 2;
+        DrawFilledCircle(centerX, topY, radius, color);
 
-		Rect middleRect(centerX - radius, topY, width, rectHeight);
-		DrawFilledRect(middleRect, color);
+        // Middle rectangle
+        Rect middleRect(centerX - radius, topY, width, rectHeight);
+        DrawFilledRect(middleRect, color);
 
+        // Bottom semicircle
         int bottomY = centerY + rectHeight / 2;
-		DrawCircle(centerX, bottomY, radius, radius, color, segments / 2);
+        DrawFilledCircle(centerX, bottomY, radius, color);
     }
     else
     {
+        // Horizontal capsule
         int radius = height / 2;
-		int rectWidth = width - height;
+        int rectWidth = width - height;
 
-		int leftX = centerX - rectWidth / 2;
-		DrawCircle(leftX, centerY, radius, radius, color, segments / 2);
+        // Left semicircle
+        int leftX = centerX - rectWidth / 2;
+        DrawFilledCircle(leftX, centerY, radius, color);
 
+        // Middle rectangle
         Rect middleRect(leftX, centerY - radius, rectWidth, height);
-		DrawFilledRect(middleRect, color);
+        DrawFilledRect(middleRect, color);
 
-		int rightX = centerX + rectWidth / 2;
-		DrawCircle(rightX, centerY, radius, radius, color, segments / 2);
+        // Right semicircle
+        int rightX = centerX + rectWidth / 2;
+        DrawFilledCircle(rightX, centerY, radius, color);
     }
 }
 

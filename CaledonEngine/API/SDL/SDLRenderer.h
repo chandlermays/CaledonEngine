@@ -28,10 +28,10 @@ namespace CE
 		virtual void DrawRect(const Rect& rect, const Color& color) override;						// Draws an outlined rectangle
 		virtual void DrawFilledRect(const Rect& rect, const Color& color) override;					// Draws a filled rectangle
 
-		virtual void DrawCircle(int centerX, int centerY, int radiusX, int radiusY,
-			const Color& color, int segments) override;												// Draws an outlined circle
-		virtual void DrawFilledCircle(int centerX, int centerY, int radiusX, int radiusY,
-			const Color& color, int segments) override;												// Draws a filled circle
+		virtual void DrawCircle(int centerX, int centerY, int radius,
+			const Color& color) override;															// Draws an outlined circle
+		virtual void DrawFilledCircle(int centerX, int centerY, int radius,
+			const Color& color) override;															// Draws a filled circle
 
 		virtual void DrawTriangle(const VectorInt& v1, const VectorInt& v2,
 			const VectorInt& v3, const Color& color) override;										// Draws an outlined triangle
@@ -39,9 +39,9 @@ namespace CE
 			const VectorInt& v3, const Color& color) override;										// Draws a filled triangle
 
 		virtual void DrawCapsule(int centerX, int centerY, int width, int height,
-			const Color& color, int segments) override;												// Draws an outlined capsule
+			const Color& color) override;															// Draws an outlined capsule
 		virtual void DrawFilledCapsule(int centerX, int centerY, int width, int height,
-			const Color& color, int segments) override;												// Draws a filled capsule
+			const Color& color) override;															// Draws a filled capsule
 
 		void* GetNativeHandle() const override;														// Returns the native renderer handle
 	};

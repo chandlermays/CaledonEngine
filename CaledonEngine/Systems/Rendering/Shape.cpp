@@ -71,6 +71,14 @@ CE::ShapeType CE::Shape::GetShapeType() const
 	return m_shapeType;
 }
 
+/*----------------------------------------------------------------
+| --- GetBounds: Returns the bounding rectangle of the shape --- |
+----------------------------------------------------------------*/
+CE::Rect CE::Shape::GetBounds() const
+{
+	return m_bounds;
+}
+
 /*--------------------------------------------------
 | --- GetColor: Returns the color of the shape --- |
 --------------------------------------------------*/

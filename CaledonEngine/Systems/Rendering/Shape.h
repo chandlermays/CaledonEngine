@@ -1,10 +1,10 @@
 #pragma once
 #include "CaledonEngine/Systems/Rendering/Color.h"
+#include "CaledonEngine/Utilities/Math/Rect.h"
 
 namespace CE
 {
 	class Renderer;
-	struct Rect;
 
 	enum class ShapeType
 	{
@@ -18,6 +18,7 @@ namespace CE
 	{
 	protected:
 		ShapeType m_shapeType;																			// The type of the shape
+		Rect m_bounds;																					// The bounding rectangle of the shape
 		Color m_color;																					// The color of the shape
 		int m_width;																					// The width of the shape
 		int m_height;																					// The height of the shape
@@ -43,6 +44,7 @@ namespace CE
 		void SetFilled(bool isFilled);																	// Sets whether the shape is filled or just an outline
 
 		ShapeType GetShapeType() const;																	// Returns the type of the shape
+		Rect GetBounds() const;																			// Returns the bounding rectangle of the shape
 		const Color& GetColor() const;																	// Returns the color of the shape
 		int GetWidth() const;																			// Returns the width of the shape
 		int GetHeight() const;																			// Returns the height of the shape

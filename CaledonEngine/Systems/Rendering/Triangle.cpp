@@ -18,10 +18,10 @@ void CE::Triangle::Render(Renderer* pRenderer, const Rect& destRect) const
 
 	if (m_isFilled)
 	{
-		pRenderer->DrawTriangle(v1, v2, v3, m_color);
+		pRenderer->DrawFilledTriangle(v1, v2, v3, m_color);
 	}
 	else
 	{
-		pRenderer->DrawFilledTriangle(v1, v2, v3, m_color);
+		pRenderer->DrawTriangle(v1, v2, v3, m_color);
 	}
 }

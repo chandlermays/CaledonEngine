@@ -31,10 +31,10 @@ namespace CE
 		virtual void DrawRect(const Rect& rect, const Color& color) = 0;						// Draws an outlined rectangle
 		virtual void DrawFilledRect(const Rect& rect, const Color& color) = 0;					// Draws a filled rectangle
 
-		virtual void DrawCircle(int centerX, int centerY, int radiusX, int radiusY,
-			const Color& color, int segments) = 0;												// Draws an outlined circle
-		virtual void DrawFilledCircle(int centerX, int centerY, int radiusX, int radiusY,
-			const Color& color, int segments) = 0;												// Draws a filled circle
+		virtual void DrawCircle(int centerX, int centerY, int radius,
+			const Color& color) = 0;															// Draws an outlined circle
+		virtual void DrawFilledCircle(int centerX, int centerY, int radius,
+			const Color& color) = 0;															// Draws a filled circle
 
 		virtual void DrawTriangle(const VectorInt& v1, const VectorInt& v2,
 			const VectorInt& v3, const Color& color) = 0;										// Draws an outlined triangle
@@ -42,9 +42,9 @@ namespace CE
 			const VectorInt& v3, const Color& color) = 0;										// Draws a filled triangle
 
 		virtual void DrawCapsule(int centerX, int centerY, int width, int height,
-			const Color& color, int segments) = 0;												// Draws an outlined capsule
+			const Color& color) = 0;															// Draws an outlined capsule
 		virtual void DrawFilledCapsule(int centerX, int centerY, int width, int height,
-			const Color& color, int segments) = 0;												// Draws a filled capsule
+			const Color& color) = 0;															// Draws a filled capsule
 
 		virtual void* GetNativeHandle() const = 0;												// Returns the native Renderer handle
 	};

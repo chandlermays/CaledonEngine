@@ -2,10 +2,12 @@
 #include "CaledonEngine/Systems/Rendering/Renderer.h"
 #include "CaledonEngine/Utilities/Math/Rect.h"
 
-CE::Capsule::Capsule(const Color& color, int width, int height, bool isFilled, int segments)
+CE::Capsule::Capsule(const Color& color, int width, int height, bool isFilled)
 	: Shape{ ShapeType::kCapsule, color, width, height, isFilled }
-	, m_segments{ segments }
-{ }
+{
+	// Update bounds to reflect the capsule's dimensions
+	m_bounds = Rect{ 0, 0, width, height };
+}
 
 void CE::Capsule::Render(Renderer* pRenderer, const Rect& destRect) const
 {
@@ -17,23 +19,10 @@ void CE::Capsule::Render(Renderer* pRenderer, const Rect& destRect) const
 
 	if (m_isFilled)
 	{
-		pRenderer->DrawCapsule(centerX, centerY, destRect.m_width, destRect.m_height, m_color, m_segments);
+		pRenderer->DrawFilledCapsule(centerX, centerY, destRect.m_width, destRect.m_height, m_color);
 	}
 	else
 	{
-		pRenderer->DrawFilledCapsule(centerX, centerY, destRect.m_width, destRect.m_height, m_color, m_segments);
+		pRenderer->DrawCapsule(centerX, centerY, destRect.m_width, destRect.m_height, m_color);
 	}
-}
-
-void CE::Capsule::SetSegments(int segments)
-{
-	if (segments >= 3)
-	{
-		m_segments = segments;
-	}
-}
-
-int CE::Capsule::GetSegments() const
-{
-	return m_segments;
 }

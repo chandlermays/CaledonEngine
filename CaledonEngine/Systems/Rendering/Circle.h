@@ -3,19 +3,20 @@
 
 namespace CE
 {
+	class Renderer;
+
 	class Circle : public Shape
 	{
 	private:
-		int m_segments;																	// The number of segments to approximate the circle
+		int m_radius;																// The radius of the circle
 
 	public:
 		Circle(const Color& color = Color::White(),
-			int radius = 50, bool isFilled = true, int segments = 32);					// Constructor
-		~Circle() override = default;													// Destructor
+			int radius = 50, bool isFilled = true);									// Constructor
 
-		void Render(Renderer* pRenderer, const Rect& destRect) const override;			// Draws the circle onto the screen
+		void Render(Renderer* pRenderer, const Rect& destRect) const override;		// Draws the circle onto the screen
 
-		void SetSegments(int segments);													// Sets the number of segments
-		int GetSegments() const;														// Returns the number of segments
+		void SetRadius(int radius);													// Sets the radius of the circle
+		int GetRadius() const;														// Returns the radius of the circle
 	};
 }

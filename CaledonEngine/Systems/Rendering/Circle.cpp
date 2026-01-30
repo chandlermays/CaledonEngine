@@ -1,41 +1,62 @@
 #include "Circle.h"
 #include "CaledonEngine/Systems/Rendering/Renderer.h"
-#include "CaledonEngine/Utilities/Math/Rect.h"
 
-CE::Circle::Circle(const Color& color, int radius, bool isFilled, int segments)
-	: Shape{ ShapeType::kCircle, color, radius * 2, radius * 2, isFilled }
-	, m_segments{ segments }
-{ }
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
+/*----------------------------------------------------------------
+| --- Constructor: Constructs the Circle with default values --- |
+----------------------------------------------------------------*/
+CE::Circle::Circle(const Color& color, int radius, bool isFilled)
+	: Shape(ShapeType::kCircle, color, radius * 2, radius * 2, isFilled)
+	, m_radius{ radius }
+{
+	// Update bounds to reflect the circle's dimensions
+	m_bounds = Rect{ 0, 0, radius * 2, radius * 2 };
+}
 
+/*--------------------------------------------------
+| --- Render: Draws the circle onto the screen --- |
+--------------------------------------------------*/
 void CE::Circle::Render(Renderer* pRenderer, const Rect& destRect) const
 {
-	if (!pRenderer)
+	if (pRenderer == nullptr)
 		return;
 
+	// Calculate the center position of the circle
 	int centerX = destRect.m_x + destRect.m_width / 2;
 	int centerY = destRect.m_y + destRect.m_height / 2;
-	int radiusX = destRect.m_width / 2;
-	int radiusY = destRect.m_height / 2;
 
+	// Calculate the radius based on the destination rectangle
+	// Use the smaller of width/height to ensure the circle fits
+	int scaledRadius = (destRect.m_width < destRect.m_height ? destRect.m_width : destRect.m_height) / 2;
+
+	// Draw the circle using the renderer
 	if (m_isFilled)
 	{
-		pRenderer->DrawCircle(centerX, centerY, radiusX, radiusY, m_color, m_segments);
+		pRenderer->DrawFilledCircle(centerX, centerY, scaledRadius, m_color);
 	}
 	else
 	{
-		pRenderer->DrawFilledCircle(centerX, centerY, radiusX, radiusY, m_color, m_segments);
+		pRenderer->DrawCircle(centerX, centerY, scaledRadius, m_color);
 	}
 }
 
-void CE::Circle::SetSegments(int segments)
+/*-------------------------------------------------
+| --- SetRadius: Sets the radius of the circle --- |
+-------------------------------------------------*/
+void CE::Circle::SetRadius(int radius)
 {
-	if (segments >= 3)
-	{
-		m_segments = segments;
-	}
+	m_radius = radius;
+	m_width = radius * 2;
+	m_height = radius * 2;
+	m_bounds = Rect{ m_bounds.m_x, m_bounds.m_y, radius * 2, radius * 2 };
 }
 
-int CE::Circle::GetSegments() const
+/*---------------------------------------------------
+| --- GetRadius: Returns the radius of the circle --- |
+---------------------------------------------------*/
+int CE::Circle::GetRadius() const
 {
-	return m_segments;
+	return m_radius;
 }
