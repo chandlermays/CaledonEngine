@@ -145,6 +145,9 @@
     <ClCompile Include="Systems\Tools\ToolsManager.cpp">
       <Filter>Source Files\Systems\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Systems\Physics\ColliderComponent.cpp">
+      <Filter>Source Files\Systems\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\GameObject.h">
@@ -251,6 +254,9 @@
     </ClInclude>
     <ClInclude Include="Systems\Tools\ToolsManager.h">
       <Filter>Source Files\Systems\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Physics\ColliderComponent.h">
+      <Filter>Source Files\Systems\Physics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

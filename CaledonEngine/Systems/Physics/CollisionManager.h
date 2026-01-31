@@ -18,7 +18,6 @@ namespace CE
 
 		bool Initialize() override;												// Initialize the collision manager
 		void Update(float deltaTime) override;									// Update the collision manager
-		void Render() override;													// Render the current frame
 		void Shutdown() override;												// Shutdown the collision manager
 	};
 }

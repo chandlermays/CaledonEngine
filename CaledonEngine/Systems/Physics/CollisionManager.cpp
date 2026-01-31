@@ -20,10 +20,6 @@ void CE::CollisionManager::Update(float deltaTime)
 {
 }
 
-void CE::CollisionManager::Render()
-{
-}
-
 void CE::CollisionManager::Shutdown()
 {
 }

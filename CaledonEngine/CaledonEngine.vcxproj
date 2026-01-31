@@ -66,6 +66,7 @@
     <ClCompile Include="Systems\Input\InputActionMap.cpp" />
     <ClCompile Include="Systems\Input\InputActions.cpp" />
     <ClCompile Include="Systems\Input\InputManager.cpp" />
+    <ClCompile Include="Systems\Physics\ColliderComponent.cpp" />
     <ClCompile Include="Systems\Physics\CollisionManager.cpp" />
     <ClCompile Include="Systems\Rendering\Capsule.cpp" />
     <ClCompile Include="Systems\Rendering\Circle.cpp" />
@@ -102,6 +103,7 @@
     <ClInclude Include="Systems\Input\InputActionMap.h" />
     <ClInclude Include="Systems\Input\InputActions.h" />
     <ClInclude Include="Systems\Input\InputManager.h" />
+    <ClInclude Include="Systems\Physics\ColliderComponent.h" />
     <ClInclude Include="Systems\Physics\CollisionManager.h" />
     <ClInclude Include="Systems\Rendering\Capsule.h" />
     <ClInclude Include="Systems\Rendering\Circle.h" />
