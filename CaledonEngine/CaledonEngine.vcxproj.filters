@@ -148,6 +148,9 @@
     <ClCompile Include="Systems\Physics\ColliderComponent.cpp">
       <Filter>Source Files\Systems\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Systems\Physics\BoxCollider2D.cpp">
+      <Filter>Source Files\Systems\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\GameObject.h">
@@ -256,6 +259,9 @@
       <Filter>Source Files\Systems\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Systems\Physics\ColliderComponent.h">
+      <Filter>Source Files\Systems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Physics\BoxCollider2D.h">
       <Filter>Source Files\Systems\Physics</Filter>
     </ClInclude>
   </ItemGroup>

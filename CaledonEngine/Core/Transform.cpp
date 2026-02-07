@@ -15,7 +15,7 @@ CE::Transform::Transform()
 /*------------------------------------------------------------------------------------------
 | --- Parameterized Constructor: Sets initial values for position, rotation, and scale --- |
 ------------------------------------------------------------------------------------------*/
-CE::Transform::Transform(const VectorFloat& position, float rotation, const VectorFloat& scale)
+CE::Transform::Transform(const Vector2f& position, float rotation, const Vector2f& scale)
 	: m_position{ position }
 	, m_rotation{ rotation }
 	, m_scale{ scale }
@@ -24,7 +24,7 @@ CE::Transform::Transform(const VectorFloat& position, float rotation, const Vect
 /*---------------------------------------------------------
 | --- GetPosition: Returns the position of the object --- |
 ---------------------------------------------------------*/
-const CE::VectorFloat& CE::Transform::GetPosition() const
+const CE::Vector2f& CE::Transform::GetPosition() const
 {
 	return m_position;
 }
@@ -32,7 +32,7 @@ const CE::VectorFloat& CE::Transform::GetPosition() const
 /*------------------------------------------------------
 | --- SetPosition: Sets the position of the object --- |
 ------------------------------------------------------*/
-void CE::Transform::SetPosition(const VectorFloat& position)
+void CE::Transform::SetPosition(const Vector2f& position)
 {
 	m_position = position;
 }
@@ -56,7 +56,7 @@ void CE::Transform::SetRotation(float rotation)
 /*---------------------------------------------------
 | --- GetScale: Returns the scale of the object --- |
 ---------------------------------------------------*/
-const CE::VectorFloat& CE::Transform::GetScale() const
+const CE::Vector2f& CE::Transform::GetScale() const
 {
 	return m_scale;
 }
@@ -64,7 +64,7 @@ const CE::VectorFloat& CE::Transform::GetScale() const
 /*------------------------------------------------
 | --- SetScale: Sets the scale of the object --- |
 ------------------------------------------------*/
-void CE::Transform::SetScale(const VectorFloat& scale)
+void CE::Transform::SetScale(const Vector2f& scale)
 {
 	m_scale = scale;
 }

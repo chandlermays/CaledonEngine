@@ -16,13 +16,13 @@ namespace CE
 			, m_height{ h }
 		{ }
 
-		int Left() const	{ return m_x; }
-		int Right() const	{ return m_x + m_width; }
-		int Top() const		{ return m_y; }
-		int Bottom() const	{ return m_y + m_height; }
+		int Left() const		{ return m_x; }
+		int Right() const		{ return m_x + m_width; }
+		int Top() const			{ return m_y; }
+		int Bottom() const		{ return m_y + m_height; }
 
-		int CenterX() const	{ return m_x + m_width / 2; }
-		int CenterY() const	{ return m_y + m_height / 2; }
+		int CenterX() const		{ return m_x + m_width / 2; }
+		int CenterY() const		{ return m_y + m_height / 2; }
 
 		bool Contains(int pointX, int pointY) const
 		{

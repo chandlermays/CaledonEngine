@@ -12,9 +12,9 @@ void CE::Triangle::Render(Renderer* pRenderer, const Rect& destRect) const
 	if (!pRenderer)
 		return;
 
-	VectorInt v1(destRect.m_x + destRect.m_width / 2, destRect.m_y);
-	VectorInt v2(destRect.m_x, destRect.m_y + destRect.m_height);
-	VectorInt v3(destRect.m_x + destRect.m_width, destRect.m_y + destRect.m_height);
+	Vector2i v1(destRect.m_x + destRect.m_width / 2, destRect.m_y);
+	Vector2i v2(destRect.m_x, destRect.m_y + destRect.m_height);
+	Vector2i v3(destRect.m_x + destRect.m_width, destRect.m_y + destRect.m_height);
 
 	pRenderer->DrawTriangle(v1, v2, v3, m_color, m_isFilled);
 }

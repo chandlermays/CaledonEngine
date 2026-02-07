@@ -17,8 +17,8 @@ namespace CE
 	{
 		GameObject* m_pOtherObject;															// Pointer to the other GameObject involved in the collision
 		ColliderComponent* m_pOtherCollider;												// Pointer to the other ColliderComponent involved in the collision
-		VectorFloat m_contactPoint;															// The point of contact between the colliders
-		VectorFloat m_contactNormal;														// The normal vector at the point of contact
+		Vector2f m_contactPoint;															// The point of contact between the colliders
+		Vector2f m_contactNormal;															// The normal vector at the point of contact
 		float m_penetrationDepth;															// The depth of penetration between the colliders
 	};
 
@@ -30,7 +30,7 @@ namespace CE
 	protected:
 		ColliderType m_colliderType;														// The type of the collider
 		Rect m_bounds;																		// The world space bounding area of the collider
-		VectorFloat m_offset;																// The local offset of the collider geometry
+		Vector2f m_offset;																	// The local offset of the collider geometry
 		bool m_isTrigger;																	// Whether the collider is a trigger or not
 
 		std::vector<ColliderComponent*> m_overlappingColliders;								// List of colliders currently overlapping with this collider
@@ -52,6 +52,7 @@ namespace CE
 		ColliderComponent& operator=(ColliderComponent&&) = delete;							// Prevent move-assignment
 
 		virtual bool Initialize() override;													// Initializes the ColliderComponent
+		virtual void Update(float deltaTime) override;										// Updates the collider bounds based on owner's position
 
 		virtual void OnCollisionEnter(const CollisionInfo& info);							// Called when this collider has begun touching another collider
 		virtual void OnCollisionUpdate(const CollisionInfo& info);							// Called once per frame for every collider that is touching this collider
@@ -62,17 +63,25 @@ namespace CE
 
 		std::vector<ColliderComponent*> Overlap() const;									// Returns a list of all colliders that overlap this collider
 		bool IsTouching(const ColliderComponent* pOther) const;								// Returns whether this collider is touching the collider or not
-		virtual bool ContainsPoint(const VectorFloat& point) const = 0;						// Returns whether the given point is inside the collider or not
-		virtual VectorFloat ClosestPoint(const VectorFloat& point) const = 0;				// Returns the closest point on the collider to the given point
+		virtual bool ContainsPoint(const Vector2f& point) const = 0;						// Returns whether the given point is inside the collider or not
+		virtual Vector2f ClosestPoint(const Vector2f& point) const = 0;						// Returns the closest point on the collider to the given point
 
 		virtual void SetBounds(const Rect& bounds);											// Sets the world space bounding area of the collider
-		virtual void SetOffset(const VectorFloat& offset);									// Sets the local offset of the collider geometry
+		virtual void SetOffset(const Vector2f& offset);										// Sets the local offset of the collider geometry
 		virtual void SetTrigger(bool isTrigger);											// Sets whether the collider is a trigger or not
+		virtual void UpdateBounds();														// Updates the world space bounding area of the collider based on the owner's position and local offset
 
 		virtual ColliderType GetColliderType() const;										// Returns the type of the collider
 		virtual Rect GetBounds() const;														// Returns the world space bounding area of the collider
-		virtual VectorFloat GetOffset() const;												// Returns the local offset of the collider geometry
+		virtual Vector2f GetOffset() const;													// Returns the local offset of the collider geometry
 		virtual bool IsTrigger() const;														// Returns whether the collider is a trigger or not
+
+		void SetOnCollisionEnterCallback(CollisionCallback callback);						// Sets the callback for collision enter event
+		void SetOnCollisionUpdateCallback(CollisionCallback callback);						// Sets the callback for collision update event
+		void SetOnCollisionExitCallback(CollisionCallback callback);						// Sets the callback for collision exit event
+		void SetOnTriggerEnterCallback(CollisionCallback callback);							// Sets the callback for trigger enter event
+		void SetOnTriggerUpdateCallback(CollisionCallback callback);						// Sets the callback for trigger update event
+		void SetOnTriggerExitCallback(CollisionCallback callback);							// Sets the callback for trigger exit event
 
 		virtual void DebugDraw() const;														// Renders debug information for the collider
 	};

@@ -30,8 +30,8 @@ namespace CE
 		virtual void DrawCircle(int centerX, int centerY, int radius,
 			const Color& color, bool filled) override;												// Draws a circle to the screen
 
-		virtual void DrawTriangle(const VectorInt& v1, const VectorInt& v2,
-			const VectorInt& v3, const Color& color, bool filled) override;							// Draws a triangle to the screen
+		virtual void DrawTriangle(const Vector2i& v1, const Vector2i& v2,
+			const Vector2i& v3, const Color& color, bool filled) override;							// Draws a triangle to the screen
 
 		virtual void DrawCapsule(int centerX, int centerY, int width, int height,
 			const Color& color, bool filled) override;												// Draws a capsule to the screen

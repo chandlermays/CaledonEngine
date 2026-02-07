@@ -216,7 +216,7 @@ void CE::SDLRenderer::DrawCircle(int centerX, int centerY, int radius, const Col
 /*------------------------------------------------------
 | --- DrawTriangle: Draws a triangle to the screen --- |
 ------------------------------------------------------*/
-void CE::SDLRenderer::DrawTriangle(const VectorInt& v1, const VectorInt& v2, const VectorInt& v3, const Color& color, bool filled)
+void CE::SDLRenderer::DrawTriangle(const Vector2i& v1, const Vector2i& v2, const Vector2i& v3, const Color& color, bool filled)
 {
 	if (!m_pRenderer)
 		return;
@@ -226,21 +226,21 @@ void CE::SDLRenderer::DrawTriangle(const VectorInt& v1, const VectorInt& v2, con
 	if (filled)
 	{
 		// Draw filled triangle
-		int minY = std::min(std::min(v1.m_y, v2.m_y), v3.m_y);
-		int maxY = std::max(std::max(v1.m_y, v2.m_y), v3.m_y);
+		int minY = std::min(std::min(v1.y, v2.y), v3.y);
+		int maxY = std::max(std::max(v1.y, v2.y), v3.y);
 
 		for (int y = minY; y <= maxY; ++y)
 		{
 			int minX = INT_MAX;
 			int maxX = INT_MIN;
 
-			auto checkEdge = [&](const VectorInt& p1, const VectorInt& p2)
+			auto checkEdge = [&](const Vector2i& p1, const Vector2i& p2)
 				{
-					if ((p1.m_y <= y && p2.m_y >= y) || (p2.m_y <= y && p1.m_y >= y))
+					if ((p1.y <= y && p2.y >= y) || (p2.y <= y && p1.y >= y))
 					{
-						if (p2.m_y != p1.m_y)
+						if (p2.y != p1.y)
 						{
-							int x = p1.m_x + (y - p1.m_y) * (p2.m_x - p1.m_x) / (p2.m_y - p1.m_y);
+							int x = p1.x + (y - p1.y) * (p2.x - p1.x) / (p2.y - p1.y);
 							minX = std::min(minX, x);
 							maxX = std::max(maxX, x);
 						}
@@ -260,9 +260,9 @@ void CE::SDLRenderer::DrawTriangle(const VectorInt& v1, const VectorInt& v2, con
 	else
 	{
 		// Draw outlined triangle
-		SDL_RenderDrawLine(m_pRenderer, v1.m_x, v1.m_y, v2.m_x, v2.m_y);
-		SDL_RenderDrawLine(m_pRenderer, v2.m_x, v2.m_y, v3.m_x, v3.m_y);
-		SDL_RenderDrawLine(m_pRenderer, v3.m_x, v3.m_y, v1.m_x, v1.m_y);
+		SDL_RenderDrawLine(m_pRenderer, v1.x, v1.y, v2.x, v2.y);
+		SDL_RenderDrawLine(m_pRenderer, v2.x, v2.y, v3.x, v3.y);
+		SDL_RenderDrawLine(m_pRenderer, v3.x, v3.y, v1.x, v1.y);
 	}
 }
 

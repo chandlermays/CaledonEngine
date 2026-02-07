@@ -36,13 +36,17 @@ bool CE::ColliderComponent::Initialize()
     if (!m_pOwner)
         return false;
 
-    const Transform& transform = m_pOwner->GetTransform();
-	const VectorFloat& position = transform.GetPosition();
-
-    m_bounds.m_x = static_cast<int>(position.m_x + m_offset.m_x);
-    m_bounds.m_y = static_cast<int>(position.m_y + m_offset.m_y);
+    UpdateBounds();
 
 	return true;
+}
+
+/*-----------------------------------------------------------------------
+| --- Update: Updates the collider bounds based on owner's position --- |
+-----------------------------------------------------------------------*/
+void CE::ColliderComponent::Update(float deltaTime)
+{
+    UpdateBounds();
 }
 
 /*-----------------------------------------------------------------------------------------
@@ -51,8 +55,17 @@ bool CE::ColliderComponent::Initialize()
 void CE::ColliderComponent::OnCollisionEnter(const CollisionInfo& info)
 {
     // Add to the container of overlapping colliders if not already present
+	auto it = std::find(m_overlappingColliders.begin(), m_overlappingColliders.end(), info.m_pOtherCollider);
+    if (it == m_overlappingColliders.end())
+    {
+        m_overlappingColliders.emplace_back(info.m_pOtherCollider);
+	}
 
     // Invoke the callback
+    if (m_onCollisionEnter)
+    {
+        m_onCollisionEnter(info.m_pOtherCollider);
+	}
 }
 
 /*----------------------------------------------------------------------------------------------------
@@ -61,6 +74,10 @@ void CE::ColliderComponent::OnCollisionEnter(const CollisionInfo& info)
 void CE::ColliderComponent::OnCollisionUpdate(const CollisionInfo& info)
 {
     // Invoke the callback
+    if (m_onCollisionUpdate)
+    {
+        m_onCollisionUpdate(info.m_pOtherCollider);
+    }
 }
 
 /*------------------------------------------------------------------------------------------
@@ -69,8 +86,17 @@ void CE::ColliderComponent::OnCollisionUpdate(const CollisionInfo& info)
 void CE::ColliderComponent::OnCollisionExit(const CollisionInfo& info)
 {
     // Remove from the container of overlappoing colliders
+	auto it = std::find(m_overlappingColliders.begin(), m_overlappingColliders.end(), info.m_pOtherCollider);
+    if (it != m_overlappingColliders.end())
+    {
+        m_overlappingColliders.erase(it);
+	}
 
 	// Invoke the callback
+    if (m_onCollisionExit)
+    {
+        m_onCollisionExit(info.m_pOtherCollider);
+	}
 }
 
 /*------------------------------------------------------------------------------------------------------
@@ -79,8 +105,17 @@ void CE::ColliderComponent::OnCollisionExit(const CollisionInfo& info)
 void CE::ColliderComponent::OnTriggerEnter(const CollisionInfo& info)
 {
     // Add to the container of overlapping colliders if not already present
+	auto it = std::find(m_overlappingColliders.begin(), m_overlappingColliders.end(), info.m_pOtherCollider);
+    if (it == m_overlappingColliders.end())
+    {
+        m_overlappingColliders.emplace_back(info.m_pOtherCollider);
+    }
 
     // Invoke the callback
+    if (m_onTriggerEnter)
+    {
+        m_onTriggerEnter(info.m_pOtherCollider);
+	}
 }
 
 /*------------------------------------------------------------------------------------------------
@@ -89,6 +124,10 @@ void CE::ColliderComponent::OnTriggerEnter(const CollisionInfo& info)
 void CE::ColliderComponent::OnTriggerUpdate(const CollisionInfo& info)
 {
 	// Invoke the callback
+    if (m_onTriggerUpdate)
+    {
+        m_onTriggerUpdate(info.m_pOtherCollider);
+	}
 }
 
 /*----------------------------------------------------------------------------------------
@@ -97,8 +136,17 @@ void CE::ColliderComponent::OnTriggerUpdate(const CollisionInfo& info)
 void CE::ColliderComponent::OnTriggerExit(const CollisionInfo& info)
 {
     // Remove from the container of overlappoing colliders
-    // 
+	auto it = std::find(m_overlappingColliders.begin(), m_overlappingColliders.end(), info.m_pOtherCollider);
+    if (it != m_overlappingColliders.end())
+    {
+        m_overlappingColliders.erase(it);
+	}
+    
 	// Invoke the callback
+    if (m_onTriggerExit)
+    {
+        m_onTriggerExit(info.m_pOtherCollider);
+	}
 }
 
 /*-----------------------------------------------------------------------------
@@ -106,7 +154,7 @@ void CE::ColliderComponent::OnTriggerExit(const CollisionInfo& info)
 -----------------------------------------------------------------------------*/
 std::vector<CE::ColliderComponent*> CE::ColliderComponent::Overlap() const
 {
-    return std::vector<ColliderComponent*>();
+	return m_overlappingColliders;
 }
 
 /*-----------------------------------------------------------------------------------
@@ -118,6 +166,8 @@ bool CE::ColliderComponent::IsTouching(const ColliderComponent* pOther) const
         return false;
 
 	// check if the other collider is in the overlapping colliders list
+    auto it = std::find(m_overlappingColliders.begin(), m_overlappingColliders.end(), pOther);
+	return it != m_overlappingColliders.end();
 }
 
 /*-----------------------------------------------------------------------
@@ -131,18 +181,11 @@ void CE::ColliderComponent::SetBounds(const Rect& bounds)
 /*-------------------------------------------------------------------
 | --- SetOffset: Sets the local offset of the collider geometry --- |
 -------------------------------------------------------------------*/
-void CE::ColliderComponent::SetOffset(const VectorFloat& offset)
+void CE::ColliderComponent::SetOffset(const Vector2f& offset)
 {
 	m_offset = offset;
 
-    if (m_pOwner != nullptr)
-    {
-		const Transform& transform = m_pOwner->GetTransform();
-        const VectorFloat& position = transform.GetPosition();
-
-        m_bounds.m_x = static_cast<int>(position.m_x + m_offset.m_x);
-		m_bounds.m_y = static_cast<int>(position.m_y + m_offset.m_y);
-    }
+    UpdateBounds();
 }
 
 /*-------------------------------------------------------------------
@@ -151,6 +194,20 @@ void CE::ColliderComponent::SetOffset(const VectorFloat& offset)
 void CE::ColliderComponent::SetTrigger(bool isTrigger)
 {
 	m_isTrigger = isTrigger;
+}
+
+/*-------------------------------------------------------------------------------------------------------
+| --- UpdateBounds: Updates the world space bounding area of the collider based on owner's position --- |
+-------------------------------------------------------------------------------------------------------*/
+void CE::ColliderComponent::UpdateBounds()
+{
+    if (!m_pOwner)
+        return;
+
+    const Vector2f& position = m_pOwner->GetTransform().GetPosition();
+
+	m_bounds.m_x = static_cast<int>(position.x + m_offset.x);
+	m_bounds.m_y = static_cast<int>(position.y + m_offset.y);
 }
 
 /*-----------------------------------------------------------
@@ -172,7 +229,7 @@ CE::Rect CE::ColliderComponent::GetBounds() const
 /*----------------------------------------------------------------------
 | --- GetOffset: Returns the local offset of the collider geometry --- |
 ----------------------------------------------------------------------*/
-CE::VectorFloat CE::ColliderComponent::GetOffset() const
+CE::Vector2f CE::ColliderComponent::GetOffset() const
 {
 	return m_offset;
 }
@@ -183,6 +240,54 @@ CE::VectorFloat CE::ColliderComponent::GetOffset() const
 bool CE::ColliderComponent::IsTrigger() const
 {
 	return m_isTrigger;
+}
+
+/*--------------------------------------------------------------------------------------------
+| --- SetOnCollisionEnterCallback: Sets the callback function for collision enter events --- |
+--------------------------------------------------------------------------------------------*/
+void CE::ColliderComponent::SetOnCollisionEnterCallback(CollisionCallback callback)
+{
+	m_onCollisionEnter = callback;
+}
+
+/*----------------------------------------------------------------------------------------------
+| --- SetOnCollisionUpdateCallback: Sets the callback function for collision update events --- |
+----------------------------------------------------------------------------------------------*/
+void CE::ColliderComponent::SetOnCollisionUpdateCallback(CollisionCallback callback)
+{
+	m_onCollisionUpdate = callback;
+}
+
+/*------------------------------------------------------------------------------------------
+| --- SetOnCollisionExitCallback: Sets the callback function for collision exit events --- |
+------------------------------------------------------------------------------------------*/
+void CE::ColliderComponent::SetOnCollisionExitCallback(CollisionCallback callback)
+{
+	m_onCollisionExit = callback;
+}
+
+/*----------------------------------------------------------------------------------------
+| --- SetOnTriggerEnterCallback: Sets the callback function for trigger enter events --- |
+----------------------------------------------------------------------------------------*/
+void CE::ColliderComponent::SetOnTriggerEnterCallback(CollisionCallback callback)
+{
+	m_onTriggerEnter = callback;
+}
+
+/*------------------------------------------------------------------------------------------
+| --- SetOnTriggerUpdateCallback: Sets the callback function for trigger update events --- |
+------------------------------------------------------------------------------------------*/
+void CE::ColliderComponent::SetOnTriggerUpdateCallback(CollisionCallback callback)
+{
+	m_onTriggerUpdate = callback;
+}
+
+/*--------------------------------------------------------------------------------------
+| --- SetOnTriggerExitCallback: Sets the callback function for trigger exit events --- |
+--------------------------------------------------------------------------------------*/
+void CE::ColliderComponent::SetOnTriggerExitCallback(CollisionCallback callback)
+{
+	m_onTriggerExit = callback;
 }
 
 /*---------------------------------------------------------------
