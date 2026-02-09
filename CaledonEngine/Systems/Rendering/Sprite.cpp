@@ -21,7 +21,7 @@ CE::Sprite::Sprite()
 /*------------------------------------------------------------
 | --- CreateFromTexture: Creates a sprite from a texture --- |
 ------------------------------------------------------------*/
-std::unique_ptr<CE::Sprite> CE::Sprite::CreateFromTexture(std::shared_ptr<Texture> pTexture, const Rect& textureRect, const VectorFloat& pivot, int pixelsPerUnit)
+std::unique_ptr<CE::Sprite> CE::Sprite::CreateFromTexture(std::shared_ptr<Texture> pTexture, const Rect& textureRect, const Vector2f& pivot, int pixelsPerUnit)
 {
     std::unique_ptr<Sprite> sprite = std::make_unique<Sprite>();
 	sprite->m_type = SpriteType::kTexture;
@@ -40,8 +40,8 @@ std::unique_ptr<CE::Sprite> CE::Sprite::CreateFromTexture(std::shared_ptr<Textur
 			sprite->m_textureRect = textureRect;
         }
 
-        sprite->m_size.m_x = static_cast<float>(sprite->m_textureRect.m_width) / pixelsPerUnit;
-		sprite->m_size.m_y = static_cast<float>(sprite->m_textureRect.m_height) / pixelsPerUnit;
+        sprite->m_size.x = static_cast<float>(sprite->m_textureRect.m_width) / pixelsPerUnit;
+		sprite->m_size.y = static_cast<float>(sprite->m_textureRect.m_height) / pixelsPerUnit;
     }
 
 	return sprite;
@@ -55,13 +55,13 @@ std::unique_ptr<CE::Sprite> CE::Sprite::CreateFromShape(std::unique_ptr<Shape> p
     std::unique_ptr<Sprite> sprite = std::make_unique<Sprite>();
     sprite->m_type = SpriteType::kPrimitive;
     sprite->m_pShape = std::move(pShape);
-	sprite->m_pivot = VectorFloat(0.5f, 0.5f);
+	sprite->m_pivot = Vector2f(0.5f, 0.5f);
     sprite->m_pixelsPerUnit = pixelsPerUnit;
 
     if (sprite->m_pShape)
     {
-        sprite->m_size.m_x = static_cast<float>(sprite->m_pShape->GetWidth()) / pixelsPerUnit;
-        sprite->m_size.m_y = static_cast<float>(sprite->m_pShape->GetHeight()) / pixelsPerUnit;
+        sprite->m_size.x = static_cast<float>(sprite->m_pShape->GetWidth()) / pixelsPerUnit;
+        sprite->m_size.y = static_cast<float>(sprite->m_pShape->GetHeight()) / pixelsPerUnit;
     }
 
 	return sprite;
@@ -70,7 +70,7 @@ std::unique_ptr<CE::Sprite> CE::Sprite::CreateFromShape(std::unique_ptr<Shape> p
 /*------------------------------------------------------
 | --- SetPivot: Sets the pivot point of the sprite --- |
 ------------------------------------------------------*/
-void CE::Sprite::SetPivot(const VectorFloat& pivot)
+void CE::Sprite::SetPivot(const Vector2f& pivot)
 {
 	m_pivot = pivot;
 }
@@ -86,13 +86,13 @@ void CE::Sprite::SetPixelsPerUnit(int pixelsPerUnit)
 
         if (m_type == SpriteType::kTexture)
         {
-			m_size.m_x = static_cast<float>(m_textureRect.m_width) / pixelsPerUnit;
-            m_size.m_y = static_cast<float>(m_textureRect.m_height) / pixelsPerUnit;
+			m_size.x = static_cast<float>(m_textureRect.m_width) / pixelsPerUnit;
+            m_size.y = static_cast<float>(m_textureRect.m_height) / pixelsPerUnit;
         }
         else if (m_pShape)
         {
-            m_size.m_x = static_cast<float>(m_pShape->GetWidth()) / pixelsPerUnit;
-			m_size.m_y = static_cast<float>(m_pShape->GetHeight()) / pixelsPerUnit;
+            m_size.x = static_cast<float>(m_pShape->GetWidth()) / pixelsPerUnit;
+			m_size.y = static_cast<float>(m_pShape->GetHeight()) / pixelsPerUnit;
         }
     }
 }
@@ -124,18 +124,18 @@ const CE::Rect& CE::Sprite::GetTextureRect() const
 /*---------------------------------------------------------------------------
 | --- GetTextureRectOffset: Returns the offset of the texture rectangle --- |
 ---------------------------------------------------------------------------*/
-CE::VectorFloat CE::Sprite::GetTextureRectOffset() const
+CE::Vector2f CE::Sprite::GetTextureRectOffset() const
 {
-    VectorFloat offset;
-	offset.m_x = -m_pivot.m_x * m_textureRect.m_width;
-	offset.m_y = -m_pivot.m_y * m_textureRect.m_height;
+    Vector2f offset;
+	offset.x = -m_pivot.x * m_textureRect.m_width;
+	offset.y = -m_pivot.y * m_textureRect.m_height;
 	return offset;
 }
 
 /*---------------------------------------------------------
 | --- GetPivot: Returns the pivot point of the sprite --- |
 ---------------------------------------------------------*/
-const CE::VectorFloat& CE::Sprite::GetPivot() const
+const CE::Vector2f& CE::Sprite::GetPivot() const
 {
 	return m_pivot;
 }
@@ -159,7 +159,7 @@ int CE::Sprite::GetPixelsPerUnit() const
 /*----------------------------------------------------------------
 | --- GetSize: Returns the size of the sprite in world units --- |
 ----------------------------------------------------------------*/
-const CE::VectorFloat& CE::Sprite::GetSize() const
+const CE::Vector2f& CE::Sprite::GetSize() const
 {
 	return m_size;
 }

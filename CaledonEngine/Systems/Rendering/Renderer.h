@@ -23,10 +23,10 @@ namespace CE
 
 		virtual void RenderCopy(Texture* pTexture, Rect* pSrc, Rect* pDest) = 0;				// Renders a texture to the screen
 
-		virtual void SetTextureColorMod(Texture* pTexture, unsigned char r,
-			unsigned char g, unsigned char b) = 0;												// Sets the color modulation for a texture
+		virtual void SetTextureColorMod(Texture* pTexture, uint8_t r,
+			uint8_t g, uint8_t b) = 0;															// Sets the color modulation for a texture
 
-		virtual void SetTextureAlphaMod(Texture* pTexture, unsigned char a) = 0;				// Sets the alpha modulation for a texture
+		virtual void SetTextureAlphaMod(Texture* pTexture, uint8_t a) = 0;						// Sets the alpha modulation for a texture
 
 		virtual void DrawRect(const Rect& rect, const Color& color, bool filled) = 0;			// Draws an outlined rectangle
 

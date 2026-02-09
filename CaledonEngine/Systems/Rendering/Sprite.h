@@ -21,11 +21,11 @@ namespace CE
 
 		std::shared_ptr<Texture> m_pTexture;																// The texture of the sprite
 		Rect m_textureRect;																					// The rectangle defining the texture area
-		VectorFloat m_pivot;																				// The pivot point of the sprite
+		Vector2f m_pivot;																					// The pivot point of the sprite
 
 		std::unique_ptr<Shape> m_pShape;																	// The shape of the sprite
 		int m_pixelsPerUnit;																				// The number of pixels per unit for scaling
-		VectorFloat m_size;																					// The size of the sprite in world units
+		Vector2f m_size;																					// The size of the sprite in world units
 
 	public:
 		Sprite();																							// Constructor
@@ -36,23 +36,23 @@ namespace CE
 		Sprite& operator=(Sprite&&) = delete;																// Prevent move-assignment
 
 		static std::unique_ptr<Sprite> CreateFromTexture(std::shared_ptr<Texture> pTexture,
-			const Rect& textureRect = Rect(), const VectorFloat& pivot = VectorFloat(0.5f, 0.5f),
+			const Rect& textureRect = Rect(), const Vector2f& pivot = Vector2f(0.5f, 0.5f),
 			int pixelsPerUnit = 100);																		// Creates a sprite from a texture
 
 		static std::unique_ptr<Sprite> CreateFromShape(std::unique_ptr<Shape> pShape,
 			int pixelsPerUnit = 100);																		// Creates a sprite from a shape
 
-		void SetPivot(const VectorFloat& pivot);															// Sets the pivot point of the sprite
+		void SetPivot(const Vector2f& pivot);																// Sets the pivot point of the sprite
 		void SetPixelsPerUnit(int pixelsPerUnit);															// Sets the number of pixels per unit for scaling
 
 		SpriteType GetType() const;																			// Returns the type of the sprite
 		Texture* GetTexture() const;																		// Returns the texture of the sprite
 		const Rect& GetTextureRect() const;																	// Returns the rectangle defining the texture area
-		VectorFloat GetTextureRectOffset() const;															// Returns the offset of the texture rectangle
-		const VectorFloat& GetPivot() const;																// Returns the pivot point of the sprite
+		Vector2f GetTextureRectOffset() const;																// Returns the offset of the texture rectangle
+		const Vector2f& GetPivot() const;																	// Returns the pivot point of the sprite
 		Shape* GetShape() const;																			// Returns the shape of the sprite
 		int GetPixelsPerUnit() const;																		// Returns the number of pixels per unit for scaling
-		const VectorFloat& GetSize() const;																	// Returns the size of the sprite in world units
+		const Vector2f& GetSize() const;																	// Returns the size of the sprite in world units
 
 		int GetPixelWidth() const;																			// Returns the width of the sprite in pixels
 		int GetPixelHeight() const;																			// Returns the height of the sprite in pixels

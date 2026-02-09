@@ -95,7 +95,7 @@ void CE::SDLRenderer::RenderCopy(Texture* pTexture, Rect* pSrc, Rect* pDest)
 /*---------------------------------------------------------------------
 | --- SetTextureColorMod: Sets the color modulation for a texture --- |
 ---------------------------------------------------------------------*/
-void CE::SDLRenderer::SetTextureColorMod(Texture* pTexture, unsigned char r, unsigned char g, unsigned char b)
+void CE::SDLRenderer::SetTextureColorMod(Texture* pTexture, uint8_t r, uint8_t g, uint8_t b)
 {
     if (!m_pRenderer || !pTexture)
         return;
@@ -107,7 +107,7 @@ void CE::SDLRenderer::SetTextureColorMod(Texture* pTexture, unsigned char r, uns
 /*---------------------------------------------------------------------
 | --- SetTextureAlphaMod: Sets the alpha modulation for a texture --- |
 ---------------------------------------------------------------------*/
-void CE::SDLRenderer::SetTextureAlphaMod(Texture* pTexture, unsigned char a)
+void CE::SDLRenderer::SetTextureAlphaMod(Texture* pTexture, uint8_t a)
 {
     if (!m_pRenderer || !pTexture)
         return;
@@ -125,7 +125,7 @@ void CE::SDLRenderer::DrawRect(const Rect& rect, const Color& color, bool filled
 	if (!m_pRenderer)
 		return;
 
-	SDL_SetRenderDrawColor(m_pRenderer, color.m_r, color.m_g, color.m_b, color.m_a);
+	SDL_SetRenderDrawColor(m_pRenderer, color.r, color.g, color.b, color.a);
 
 	SDL_Rect sdlRect
 	{
@@ -153,7 +153,7 @@ void CE::SDLRenderer::DrawCircle(int centerX, int centerY, int radius, const Col
 	if (!m_pRenderer)
 		return;
 
-	SDL_SetRenderDrawColor(m_pRenderer, color.m_r, color.m_g, color.m_b, color.m_a);
+	SDL_SetRenderDrawColor(m_pRenderer, color.r, color.g, color.b, color.a);
 
 	int x = radius;
 	int y = 0;
@@ -221,7 +221,7 @@ void CE::SDLRenderer::DrawTriangle(const Vector2i& v1, const Vector2i& v2, const
 	if (!m_pRenderer)
 		return;
 
-	SDL_SetRenderDrawColor(m_pRenderer, color.m_r, color.m_g, color.m_b, color.m_a);
+	SDL_SetRenderDrawColor(m_pRenderer, color.r, color.g, color.b, color.a);
 
 	if (filled)
 	{
@@ -274,7 +274,7 @@ void CE::SDLRenderer::DrawCapsule(int centerX, int centerY, int width, int heigh
 	if (!m_pRenderer)
 		return;
 
-	SDL_SetRenderDrawColor(m_pRenderer, color.m_r, color.m_g, color.m_b, color.m_a);
+	SDL_SetRenderDrawColor(m_pRenderer, color.r, color.g, color.b, color.a);
 
 	bool isVertical = height > width;
 

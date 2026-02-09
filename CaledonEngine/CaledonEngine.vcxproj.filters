@@ -44,6 +44,9 @@
     <Filter Include="Source Files\Systems\Tools">
       <UniqueIdentifier>{1a9739c0-f551-46e1-a9c9-7d346f611656}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Data Structures">
+      <UniqueIdentifier>{4ab8606a-7608-45ee-b9e2-ff9e1832eb61}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Component.cpp">
@@ -263,6 +266,21 @@
     </ClInclude>
     <ClInclude Include="Systems\Physics\BoxCollider2D.h">
       <Filter>Source Files\Systems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStructures\BinaryTree.h">
+      <Filter>Source Files\Data Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStructures\DynamicQueue.h">
+      <Filter>Source Files\Data Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStructures\DynamicStack.h">
+      <Filter>Source Files\Data Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStructures\Queue.h">
+      <Filter>Source Files\Data Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStructures\Stack.h">
+      <Filter>Source Files\Data Structures</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

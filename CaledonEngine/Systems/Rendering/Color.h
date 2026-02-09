@@ -1,41 +1,43 @@
 #pragma once
+#include <cstdint>
 
 namespace CE
 {
 	struct Color
 	{
-		unsigned char m_r;
-		unsigned char m_g;
-		unsigned char m_b;
-		unsigned char m_a;
+		std::uint8_t r = 255;
+		std::uint8_t g = 255;
+		std::uint8_t b = 255;
+		std::uint8_t a = 255;
 
-		constexpr Color(unsigned char red = 255, unsigned char green = 255,
-			unsigned char blue = 255, unsigned char alpha = 255)
-			: m_r{ red }
-			, m_g{ green }
-			, m_b{ blue }
-			, m_a{ alpha }
+		constexpr Color() = default;
+		constexpr Color(const std::uint8_t red, const std::uint8_t green, const std::uint8_t blue, const std::uint8_t alpha)
+			: r{ red }
+			, g{ green }
+			, b{ blue }
+			, a{ alpha }
 		{}
-
-		// Predefined colors
-		static constexpr Color Red()		{ return Color{ 255, 0, 0, 255 }; }
-		static constexpr Color Green()		{ return Color{ 0, 255, 0, 255 }; }
-		static constexpr Color Blue()		{ return Color{ 0, 0, 255, 255 }; }
-		static constexpr Color White()		{ return Color{ 255, 255, 255, 255 }; }
-		static constexpr Color Black()		{ return Color{ 0, 0, 0, 255 }; }
-		static constexpr Color Yellow()		{ return Color{ 255, 255, 0, 255 }; }
-		static constexpr Color Magenta()	{ return Color{ 255, 0, 255, 255 }; }
-		static constexpr Color Cyan()		{ return Color{ 0, 255, 255, 255 }; }
-
-		// Comparison operators
-		bool operator==(const Color& other) const
+		
+		constexpr bool operator==(const Color& other) const
 		{
-			return m_r == other.m_r && m_g == other.m_g && m_b == other.m_b && m_a == other.m_a;
+			return r == other.r && g == other.g && b == other.b && a == other.a;
 		}
 
-		bool operator!=(const Color& other) const
+		constexpr bool operator!=(const Color& other) const
 		{
 			return !(*this == other);
 		}
+
+		static constexpr Color Red()		{ return { 255, 0, 0, 255 }; }
+		static constexpr Color Green()		{ return { 0, 255, 0, 255 }; }
+		static constexpr Color Blue()		{ return { 0, 0, 255, 255 }; }
+		static constexpr Color White()		{ return { 255, 255, 255, 255 }; }
+		static constexpr Color Black()		{ return { 0, 0, 0, 255 }; }
+		static constexpr Color Yellow()		{ return { 255, 255, 0, 255 }; }
+		static constexpr Color Magenta()	{ return { 255, 0, 255, 255 }; }
+		static constexpr Color Cyan()		{ return { 0, 255, 255, 255 }; }
+		static constexpr Color Orange()		{ return { 255, 165, 0, 255 }; }
+		static constexpr Color Purple()		{ return { 128, 0, 128, 255 }; }
+		static constexpr Color Gray()		{ return { 128, 128, 128, 255 }; }
 	};
 }

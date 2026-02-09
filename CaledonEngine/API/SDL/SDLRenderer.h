@@ -20,10 +20,10 @@ namespace CE
 
 		virtual void RenderCopy(Texture* pTexture, Rect* pSrc, Rect* pDest) override;				// Renders a texture to the screen
 
-		virtual void SetTextureColorMod(Texture* pTexture, unsigned char r,
-			unsigned char g, unsigned char b) override;												// Sets the color modulation for a texture
+		virtual void SetTextureColorMod(Texture* pTexture, uint8_t r,
+			uint8_t g, uint8_t b) override;															// Sets the color modulation for a texture
 
-		virtual void SetTextureAlphaMod(Texture* pTexture, unsigned char a) override;				// Sets the alpha modulation for a texture
+		virtual void SetTextureAlphaMod(Texture* pTexture, uint8_t a) override;						// Sets the alpha modulation for a texture
 
 		virtual void DrawRect(const Rect& rect, const Color& color, bool filled) override;			// Draws a rectangle to the screen
 

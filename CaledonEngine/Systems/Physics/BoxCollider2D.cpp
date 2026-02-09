@@ -1,5 +1,7 @@
 #include "BoxCollider2D.h"
 
+// TODO: Utilize Vector2's methods more effectively in the BoxCollider2D's mathematical operations.
+
 /*-----------------------------------
 | --- Public Method Definitions --- |
 -----------------------------------*/

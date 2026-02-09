@@ -28,7 +28,7 @@ namespace CE
 
 		void SetSprite(std::unique_ptr<Sprite> pSprite);											// Sets the sprite to be rendered
 		void SetColor(const Color& color);															// Sets the color of the sprite
-		void SetColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);			// Sets the color of the sprite
+		void SetColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a);									// Sets the color of the sprite
 
 		Sprite* GetSprite() const;																	// Returns a pointer to the sprite
 		const Color& GetColor() const;																// Returns the color of the sprite

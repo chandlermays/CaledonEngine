@@ -46,23 +46,23 @@ void CE::SpriteComponent::Render()
 
 	const Transform& transform = m_pOwner->GetTransform();
 
-	const int x = static_cast<int>(transform.GetPosition().m_x);
-	const int y = static_cast<int>(transform.GetPosition().m_y);
+	const int x = static_cast<int>(transform.GetPosition().x);
+	const int y = static_cast<int>(transform.GetPosition().y);
 
-	const float sx = transform.GetScale().m_x;
-	const float sy = transform.GetScale().m_y;
+	const float sx = transform.GetScale().x;
+	const float sy = transform.GetScale().y;
 
 	const float scaleX = (sx != 0.0f ? sx : 1.0f);
 	const float scaleY = (sy != 0.0f ? sy : 1.0f);
 
-	const VectorFloat& spriteSize = m_pSprite->GetSize();
-	const VectorFloat& pivot = m_pSprite->GetPivot();
+	const Vector2f& spriteSize = m_pSprite->GetSize();
+	const Vector2f& pivot = m_pSprite->GetPivot();
 
 	int pixelWidth = static_cast<int>(m_pSprite->GetPixelWidth() * scaleX);
 	int pixelHeight = static_cast<int>(m_pSprite->GetPixelHeight() * scaleY);
 
-	int offsetX = static_cast<int>(-pivot.m_x * pixelWidth);
-	int offsetY = static_cast<int>(-pivot.m_y * pixelHeight);
+	int offsetX = static_cast<int>(-pivot.x * pixelWidth);
+	int offsetY = static_cast<int>(-pivot.y * pixelHeight);
 
 	Rect destRect
 	{
@@ -81,8 +81,8 @@ void CE::SpriteComponent::Render()
 
 			if (m_color != Color::White())
 			{
-				m_pRenderer->SetTextureColorMod(pTexture, m_color.m_r, m_color.m_g, m_color.m_b);
-				m_pRenderer->SetTextureAlphaMod(pTexture, m_color.m_a);
+				m_pRenderer->SetTextureColorMod(pTexture, m_color.r, m_color.g, m_color.b);
+				m_pRenderer->SetTextureAlphaMod(pTexture, m_color.a);
 			}
 
 			m_pRenderer->RenderCopy(pTexture, &srcRect, &destRect);
@@ -102,10 +102,10 @@ void CE::SpriteComponent::Render()
 			Color renderColor = pShape->GetColor();
 			if (m_color != Color::White())
 			{
-				renderColor.m_r = static_cast<unsigned char>((renderColor.m_r * m_color.m_r) / 255);
-				renderColor.m_g = static_cast<unsigned char>((renderColor.m_g * m_color.m_g) / 255);
-				renderColor.m_b = static_cast<unsigned char>((renderColor.m_b * m_color.m_b) / 255);
-				renderColor.m_a = static_cast<unsigned char>((renderColor.m_a * m_color.m_a) / 255);
+				renderColor.r = static_cast<unsigned char>((renderColor.r * m_color.r) / 255);
+				renderColor.g = static_cast<unsigned char>((renderColor.g * m_color.g) / 255);
+				renderColor.b = static_cast<unsigned char>((renderColor.b * m_color.b) / 255);
+				renderColor.a = static_cast<unsigned char>((renderColor.a * m_color.a) / 255);
 			}
 
 			Color originalColor = pShape->GetColor();
@@ -137,12 +137,12 @@ void CE::SpriteComponent::SetColor(const Color& color)
 /*-------------------------------------------------
 | --- SetColor: Sets the color of the sprite  --- |
 -------------------------------------------------*/
-void CE::SpriteComponent::SetColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+void CE::SpriteComponent::SetColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
-	m_color.m_r = r;
-	m_color.m_g = g;
-	m_color.m_b = b;
-	m_color.m_a = a;
+	m_color.r = r;
+	m_color.g = g;
+	m_color.b = b;
+	m_color.a = a;
 }
 
 /*----------------------------------------------------

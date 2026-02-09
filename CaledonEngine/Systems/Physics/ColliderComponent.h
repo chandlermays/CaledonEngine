@@ -13,15 +13,6 @@ namespace CE
 		kCapsule2D																			// A 2D capsule-shaped collider
 	};
 
-	struct CollisionInfo
-	{
-		GameObject* m_pOtherObject;															// Pointer to the other GameObject involved in the collision
-		ColliderComponent* m_pOtherCollider;												// Pointer to the other ColliderComponent involved in the collision
-		Vector2f m_contactPoint;															// The point of contact between the colliders
-		Vector2f m_contactNormal;															// The normal vector at the point of contact
-		float m_penetrationDepth;															// The depth of penetration between the colliders
-	};
-
 	class ColliderComponent : public Component
 	{
 	public:
@@ -53,13 +44,6 @@ namespace CE
 
 		virtual bool Initialize() override;													// Initializes the ColliderComponent
 		virtual void Update(float deltaTime) override;										// Updates the collider bounds based on owner's position
-
-		virtual void OnCollisionEnter(const CollisionInfo& info);							// Called when this collider has begun touching another collider
-		virtual void OnCollisionUpdate(const CollisionInfo& info);							// Called once per frame for every collider that is touching this collider
-		virtual void OnCollisionExit(const CollisionInfo& info);							// Called when this collider has stopped touching another collider
-		virtual void OnTriggerEnter(const CollisionInfo& info);								// Called when a collider with the isTrigger property overlaps another collider
-		virtual void OnTriggerUpdate(const CollisionInfo& info);							// Called once per frame for every collider that is touching the trigger
-		virtual void OnTriggerExit(const CollisionInfo& info);								// Called when the other collider has stopped touching the trigger
 
 		std::vector<ColliderComponent*> Overlap() const;									// Returns a list of all colliders that overlap this collider
 		bool IsTouching(const ColliderComponent* pOther) const;								// Returns whether this collider is touching the collider or not

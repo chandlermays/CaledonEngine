@@ -96,6 +96,11 @@
     <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\Scene.h" />
     <ClInclude Include="Core\Transform.h" />
+    <ClInclude Include="DataStructures\BinaryTree.h" />
+    <ClInclude Include="DataStructures\DynamicQueue.h" />
+    <ClInclude Include="DataStructures\DynamicStack.h" />
+    <ClInclude Include="DataStructures\Queue.h" />
+    <ClInclude Include="DataStructures\Stack.h" />
     <ClInclude Include="Systems\Engine\EngineManager.h" />
     <ClInclude Include="Systems\Engine\LoggingManager.h" />
     <ClInclude Include="Systems\Engine\Manager.h" />

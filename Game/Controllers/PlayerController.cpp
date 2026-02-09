@@ -45,10 +45,10 @@ void PlayerController::Update(float deltaTime)
         float moveY = -m_verticalInput * m_moveSpeed * deltaTime;
 
         CE::Transform& transform = m_pOwner->GetTransform();
-        CE::VectorFloat currentPosition = transform.GetPosition();
+        CE::Vector2f currentPosition = transform.GetPosition();
 
-        currentPosition.m_x += moveX;
-        currentPosition.m_y += moveY;
+        currentPosition.x += moveX;
+        currentPosition.y += moveY;
 
         transform.SetPosition(currentPosition);
     }
