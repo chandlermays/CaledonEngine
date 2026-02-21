@@ -6,7 +6,6 @@ namespace CE
 {
 	class GraphicsManager;
 	class InputManager;
-	class CollisionManager;
 	class SceneManager;
 	class ToolsManager;
 
@@ -16,7 +15,6 @@ namespace CE
 		std::vector<Manager*> m_pManagers;									// Vector of pointers to managers
 		GraphicsManager* m_pGraphicsManager;								// Pointer to the graphics manager
 		InputManager* m_pInputManager;										// Pointer to the input manager
-		CollisionManager* m_pCollisionManager;								// Pointer to the collision manager
 		SceneManager* m_pSceneManager;										// Pointer to the scene manager
 		ToolsManager* m_pToolsManager;										// Pointer to the tools manager
 
@@ -42,7 +40,6 @@ namespace CE
 	
 		GraphicsManager* GetGraphicsManager() const;						// Returns a pointer to the GraphicsManager
 		InputManager* GetInputManager() const;								// Returns a pointer to the InputManager
-		CollisionManager* GetCollisionManager() const;						// Returns a pointer to the CollisionManager
 		SceneManager* GetSceneManager() const;								// Returns a pointer to the SceneManager
 		ToolsManager* GetToolsManager() const;								// Returns a pointer to the ToolsManager
 	};

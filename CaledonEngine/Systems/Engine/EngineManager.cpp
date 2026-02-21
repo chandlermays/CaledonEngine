@@ -2,7 +2,6 @@
 #include "LoggingManager.h"
 #include "CaledonEngine/Systems/Rendering/GraphicsManager.h"
 #include "CaledonEngine/Systems/Input/InputManager.h"
-#include "CaledonEngine/Systems/Physics/CollisionManager.h"
 #include "CaledonEngine/Systems/Scene/SceneManager.h"
 #include "CaledonEngine/Systems/Tools/ToolsManager.h"
 #include <chrono>
@@ -113,14 +112,6 @@ CE::InputManager* CE::EngineManager::GetInputManager() const
 	return m_pInputManager;
 }
 
-/*------------------------------------------------------------------------
-| --- GetCollisionManager: Returns a pointer to the CollisionManager --- |
-------------------------------------------------------------------------*/
-CE::CollisionManager* CE::EngineManager::GetCollisionManager() const
-{
-	return m_pCollisionManager;
-}
-
 /*----------------------------------------------------------------
 | --- GetSceneManager: Returns a pointer to the SceneManager --- |
 ----------------------------------------------------------------*/
@@ -152,9 +143,6 @@ CE::EngineManager::EngineManager()
 
 	m_pInputManager = new InputManager();
 	m_pManagers.emplace_back(m_pInputManager);
-
-	m_pCollisionManager = new CollisionManager();
-	m_pManagers.emplace_back(m_pCollisionManager);
 
 	m_pSceneManager = new SceneManager();
 	m_pManagers.emplace_back(m_pSceneManager);

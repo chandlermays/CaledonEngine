@@ -89,7 +89,7 @@ namespace CE
 	{
 		for (Component* pComponent : m_components)
 		{
-			T* pResult = dynamic_cast<T*>(pComponent);		// Keep the use of 'dynamic_cast' until performance becomes an issue
+			T* pResult = dynamic_cast<T*>(pComponent);		// NOTE: Keep the use of 'dynamic_cast' until performance becomes an issue
 			if (pResult != nullptr)
 			{
 				return pResult;

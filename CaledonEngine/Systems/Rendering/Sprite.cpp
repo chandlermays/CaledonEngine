@@ -1,6 +1,6 @@
 #include "Sprite.h"
 #include "CaledonEngine/Systems/Rendering/Texture.h"
-#include "CaledonEngine/Systems/Rendering/Shape.h"
+#include "CaledonEngine/Systems/Rendering/Shapes/Shape.h"
 
 /*-----------------------------------
 | --- Public Method Definitions --- |

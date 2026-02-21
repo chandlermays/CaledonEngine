@@ -41,8 +41,8 @@ namespace CE
 		inline bool operator<=(const Vector2 other) const				{ return (x <= other.x && y <= other.y); }				// Compare if this vector is less than or equal to another vector (component-wise)
 		inline bool operator>=(const Vector2 other) const				{ return (x >= other.x && y >= other.y); }				// Compare if this vector is greater than or equal to another vector (component-wise)
 
-		inline float operator[](const size_t index) const				{ assert(index < 2); return *(&x + index); }			// Access vector components by index (0 for x, 1 for y)
-		inline float& operator[](const size_t index)					{ assert(index < 2); return *(&x + index); }			// Access vector components by index (0 for x, 1 for y)
+		inline T operator[](const size_t index) const					{ assert(index < 2); return *(&x + index); }			// Access vector components by index (0 for x, 1 for y)
+		inline T& operator[](const size_t index)						{ assert(index < 2); return *(&x + index); }			// Access vector components by index (0 for x, 1 for y)
 
 		inline Vector2 operator-() const								{ return { -x, -y }; }									// Negate the vector (unary minus)
 		inline Vector2 operator+(const Vector2 other) const				{ return { x + other.x, y + other.y }; }				// Add two vectors component-wise
@@ -55,10 +55,10 @@ namespace CE
 		inline Vector2& operator*=(const Vector2 other)					{ return *this = *this * other; }						// Multiply this vector by another vector component-wise and assign the result to this vector
 		inline Vector2& operator/=(const Vector2 other)					{ return *this = *this / other; }						// Divide this vector by another vector component-wise and assign the result to this vector
 
-		inline Vector2& operator+=(const float scalar)					{ return *this = *this + scalar; }						// Add a scalar to each component of this vector and assign the result to this vector
-		inline Vector2& operator-=(const float scalar)					{ return *this = *this - scalar; }						// Subtract a scalar from each component of this vector and assign the result to this vector
-		inline Vector2& operator*=(const float scalar)					{ return *this = *this * scalar; }						// Multiply each component of this vector by a scalar and assign the result to this vector
-		inline Vector2& operator/=(const float scalar)					{ return *this = *this / scalar; }						// Divide each component of this vector by a scalar and assign the result to this vector
+		inline Vector2& operator+=(const T scalar)						{ return *this = *this + scalar; }						// Add a scalar to each component of this vector and assign the result to this vector
+		inline Vector2& operator-=(const T scalar)						{ return *this = *this - scalar; }						// Subtract a scalar from each component of this vector and assign the result to this vector
+		inline Vector2& operator*=(const T scalar)						{ return *this = *this * scalar; }						// Multiply each component of this vector by a scalar and assign the result to this vector
+		inline Vector2& operator/=(const T scalar)						{ return *this = *this / scalar; }						// Divide each component of this vector by a scalar and assign the result to this vector
 
 		static constexpr inline Vector2 Up()							{ return { 0, 1 }; }									// Returns a vector pointing upwards (0, 1)
 		static constexpr inline Vector2 Down()							{ return { 0, -1 }; }									// Returns a vector pointing downwards (0, -1)

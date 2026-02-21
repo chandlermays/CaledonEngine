@@ -47,6 +47,12 @@
     <Filter Include="Source Files\Data Structures">
       <UniqueIdentifier>{4ab8606a-7608-45ee-b9e2-ff9e1832eb61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Systems\Rendering\Components">
+      <UniqueIdentifier>{403b96ec-21ca-4f16-8636-c92f975b3374}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Systems\Rendering\Shapes">
+      <UniqueIdentifier>{80bc1267-e098-49b1-abed-48baec78ecbb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Component.cpp">
@@ -70,9 +76,6 @@
     <ClCompile Include="Systems\Input\InputManager.cpp">
       <Filter>Source Files\Systems\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Systems\Physics\CollisionManager.cpp">
-      <Filter>Source Files\Systems\Physics</Filter>
-    </ClCompile>
     <ClCompile Include="Systems\Rendering\GraphicsManager.cpp">
       <Filter>Source Files\Systems\Rendering</Filter>
     </ClCompile>
@@ -94,9 +97,6 @@
     <ClCompile Include="Systems\Input\InputActions.cpp">
       <Filter>Source Files\Systems\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Systems\Rendering\SpriteComponent.cpp">
-      <Filter>Source Files\Systems\Rendering</Filter>
-    </ClCompile>
     <ClCompile Include="API\SDL\SDLRenderer.cpp">
       <Filter>Source Files\API\SDL</Filter>
     </ClCompile>
@@ -109,22 +109,7 @@
     <ClCompile Include="API\SDL\SDLTexture.cpp">
       <Filter>Source Files\API\SDL</Filter>
     </ClCompile>
-    <ClCompile Include="Systems\Rendering\Shape.cpp">
-      <Filter>Source Files\Systems\Rendering</Filter>
-    </ClCompile>
     <ClCompile Include="Systems\Rendering\Sprite.cpp">
-      <Filter>Source Files\Systems\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Systems\Rendering\Triangle.cpp">
-      <Filter>Source Files\Systems\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Systems\Rendering\Circle.cpp">
-      <Filter>Source Files\Systems\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Systems\Rendering\Square.cpp">
-      <Filter>Source Files\Systems\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Systems\Rendering\Capsule.cpp">
       <Filter>Source Files\Systems\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="Utilities\ImGUI\imgui.cpp">
@@ -148,11 +133,23 @@
     <ClCompile Include="Systems\Tools\ToolsManager.cpp">
       <Filter>Source Files\Systems\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="Systems\Physics\ColliderComponent.cpp">
-      <Filter>Source Files\Systems\Physics</Filter>
+    <ClCompile Include="Systems\Rendering\Components\SpriteComponent.cpp">
+      <Filter>Source Files\Systems\Rendering\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Systems\Physics\BoxCollider2D.cpp">
-      <Filter>Source Files\Systems\Physics</Filter>
+    <ClCompile Include="Systems\Rendering\Shapes\Capsule.cpp">
+      <Filter>Source Files\Systems\Rendering\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Rendering\Shapes\Circle.cpp">
+      <Filter>Source Files\Systems\Rendering\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Rendering\Shapes\Shape.cpp">
+      <Filter>Source Files\Systems\Rendering\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Rendering\Shapes\Square.cpp">
+      <Filter>Source Files\Systems\Rendering\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Rendering\Shapes\Triangle.cpp">
+      <Filter>Source Files\Systems\Rendering\Shapes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -183,9 +180,6 @@
     <ClInclude Include="Systems\Input\InputManager.h">
       <Filter>Source Files\Systems\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Systems\Physics\CollisionManager.h">
-      <Filter>Source Files\Systems\Physics</Filter>
-    </ClInclude>
     <ClInclude Include="Systems\Rendering\GraphicsManager.h">
       <Filter>Source Files\Systems\Rendering</Filter>
     </ClInclude>
@@ -209,9 +203,6 @@
     </ClInclude>
     <ClInclude Include="Systems\Input\InputActions.h">
       <Filter>Source Files\Systems\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Systems\Rendering\SpriteComponent.h">
-      <Filter>Source Files\Systems\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="API\SDL\SDLRenderer.h">
       <Filter>Source Files\API\SDL</Filter>
@@ -237,22 +228,7 @@
     <ClInclude Include="API\SDL\SDLTexture.h">
       <Filter>Source Files\API\SDL</Filter>
     </ClInclude>
-    <ClInclude Include="Systems\Rendering\Shape.h">
-      <Filter>Source Files\Systems\Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="Systems\Rendering\Sprite.h">
-      <Filter>Source Files\Systems\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Systems\Rendering\Square.h">
-      <Filter>Source Files\Systems\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Systems\Rendering\Circle.h">
-      <Filter>Source Files\Systems\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Systems\Rendering\Triangle.h">
-      <Filter>Source Files\Systems\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Systems\Rendering\Capsule.h">
       <Filter>Source Files\Systems\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Systems\Tools\DebugOverlay.h">
@@ -260,12 +236,6 @@
     </ClInclude>
     <ClInclude Include="Systems\Tools\ToolsManager.h">
       <Filter>Source Files\Systems\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Systems\Physics\ColliderComponent.h">
-      <Filter>Source Files\Systems\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Systems\Physics\BoxCollider2D.h">
-      <Filter>Source Files\Systems\Physics</Filter>
     </ClInclude>
     <ClInclude Include="DataStructures\BinaryTree.h">
       <Filter>Source Files\Data Structures</Filter>
@@ -282,5 +252,31 @@
     <ClInclude Include="DataStructures\Stack.h">
       <Filter>Source Files\Data Structures</Filter>
     </ClInclude>
+    <ClInclude Include="Systems\Rendering\Components\SpriteComponent.h">
+      <Filter>Source Files\Systems\Rendering\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Shapes\Capsule.h">
+      <Filter>Source Files\Systems\Rendering\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Shapes\Circle.h">
+      <Filter>Source Files\Systems\Rendering\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Shapes\Shape.h">
+      <Filter>Source Files\Systems\Rendering\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Shapes\Square.h">
+      <Filter>Source Files\Systems\Rendering\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Shapes\Triangle.h">
+      <Filter>Source Files\Systems\Rendering\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Physics\AABB2D.h">
+      <Filter>Source Files\Systems\Physics</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Core\Component.inl">
+      <Filter>Source Files\Core</Filter>
+    </None>
   </ItemGroup>
 </Project>
