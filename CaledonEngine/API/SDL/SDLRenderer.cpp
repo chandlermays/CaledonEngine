@@ -61,8 +61,8 @@ void CE::SDLRenderer::Render()
         return;
 
 	SDL_SetRenderDrawColor(m_pRenderer, 0, 156, 255, 255);
-	SDL_RenderPresent(m_pRenderer);
 	SDL_RenderClear(m_pRenderer);
+	SDL_RenderPresent(m_pRenderer);
 }
 
 /*-----------------------------------------------------

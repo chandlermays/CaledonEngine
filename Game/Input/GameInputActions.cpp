@@ -39,7 +39,7 @@ void GameInputActions::ConfigureGameplayMap()
 	AddActionMap("Gameplay");
 
 	// Ensure the action map was created successfully
-	m_gameplayActionMap = const_cast<CE::InputActionMap*>(GetActionMapByName("Gameplay"));
+	m_gameplayActionMap = GetActionMapByName("Gameplay");
 	if (!m_gameplayActionMap)
 		return;
 

@@ -2,10 +2,11 @@
 #include "Manager.h"
 #include <string>
 #include <fstream>
+#include <format>
 
 namespace CE
 {
-#define CE_LOG(message) CE::LoggingManager::LogMessage(message)
+#define CE_LOG(...) CE::LoggingManager::LogMessage(std::format(__VA_ARGS__))
 
     class LoggingManager : public Manager
     {

@@ -1,6 +1,7 @@
 #pragma once
 #include "CaledonEngine/Systems/Engine/Manager.h"
 #include <vector>
+#include <memory>
 
 namespace CE
 {
@@ -9,7 +10,7 @@ namespace CE
 	class SceneManager : public Manager
 	{
 	private:
-		std::vector<Scene*> m_pScenes;										// The list of scenes
+		std::vector<std::unique_ptr<Scene>> m_pScenes;						// The list of scenes
 		Scene* m_pCurrentScene;												// Pointer to the current scene
 
 	public:
@@ -25,7 +26,7 @@ namespace CE
 		void Render() override;												// Render the current scene
 		void Shutdown() override;											// Shutdown the SceneManager and clean up resources
 	
-		void AddScene(Scene* pScene);										// Add a scene to the list of scenes
+		void AddScene(std::unique_ptr<Scene> pScene);						// Add a scene to the list of scenes
 		void SetCurrentScene(Scene* pScene);								// Sets the provided scene as the current scene
 		Scene* GetCurrentScene() const;										// Returns the current scene
 		int GetSceneIndex(Scene* pScene) const;								// Returns the index of the provided scene

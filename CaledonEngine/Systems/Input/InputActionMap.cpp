@@ -17,8 +17,7 @@ CE::InputActionMap::InputActionMap(const std::string& name)
 void CE::InputActionMap::AddAction(const std::string& name, ActionType type)
 {
 	// Should consider checking for duplicates here. We don't want two of the same action!
-	InputAction* pAction = new InputAction(name, type);
-	m_actions.emplace(name, pAction);
+	m_actions.emplace(name, std::make_unique<InputAction>(name, type));
 }
 
 /*------------------------------------------------------------
@@ -26,12 +25,7 @@ void CE::InputActionMap::AddAction(const std::string& name, ActionType type)
 ------------------------------------------------------------*/
 void CE::InputActionMap::RemoveAction(const std::string& name)
 {
-	auto it = m_actions.find(name);
-	if (it == m_actions.end())
-		return;
-
-	delete it->second;
-	m_actions.erase(it);
+	m_actions.erase(name);
 }
 
 /*----------------------------------------
@@ -61,7 +55,7 @@ bool CE::InputActionMap::Contains(const std::string& name) const
 /*-----------------------------------------------------------
 | --- GetInputActions: Returns the map of input actions --- |
 -----------------------------------------------------------*/
-const std::unordered_map<std::string, CE::InputAction*>& CE::InputActionMap::GetInputActions() const
+const std::unordered_map<std::string, std::unique_ptr<CE::InputAction>>& CE::InputActionMap::GetInputActions() const
 {
 	return m_actions;
 }
@@ -72,11 +66,7 @@ const std::unordered_map<std::string, CE::InputAction*>& CE::InputActionMap::Get
 CE::InputAction* CE::InputActionMap::GetActionByName(const std::string& name) const
 {
 	auto it = m_actions.find(name);
-	if (it != m_actions.end())
-	{
-		return it->second;
-	}
-	return nullptr;
+	return it != m_actions.end() ? it->second.get() : nullptr;
 }
 
 /*-----------------------------------------------------

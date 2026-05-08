@@ -1,8 +1,10 @@
 #include "Game.h"
+#include "../Controllers/PlayerController.h"
 #include "CaledonEngine/Systems/Engine/EngineManager.h"
 #include "CaledonEngine/Systems/Input/InputManager.h"
 #include "CaledonEngine/Systems/Scene/SceneManager.h"
 #include "CaledonEngine/Core/Scene.h"
+#include "CaledonEngine/Core/GameObject.h"
 
 /*-----------------------------------
 | --- Public Method Definitions --- |
@@ -62,20 +64,24 @@ void Game::Run()
 -----------------------------------------------------------------------------*/
 void Game::CreateScenes()
 {
-	// Create the Scene
 	CE::SceneManager* pSceneManager = m_pEngineManager->GetSceneManager();
 
-	CE::Scene* pMainScene = new CE::Scene();
+	auto pMainScene = std::make_unique<CE::Scene>();
 	pMainScene->SetName("MainScene");
 
-	// Add game objects...
+	auto pPlayer = std::make_unique<CE::GameObject>();
+	pPlayer->SetName("Player");
+	pPlayer->SetTag("Player");
 
-	//....
+	PlayerController* pPlayerController = new PlayerController();
+	pPlayerController->SetInputActions(m_pInputActions);
+	pPlayer->AddComponent(pPlayerController);
+	pMainScene->AddGameObject(std::move(pPlayer));
 
-	pSceneManager->AddScene(pMainScene);
-	pSceneManager->SetCurrentScene(pMainScene);
-
-	pMainScene->Initialize();
+	CE::Scene* pSceneRef = pMainScene.get();
+	pSceneManager->AddScene(std::move(pMainScene));
+	pSceneManager->SetCurrentScene(pSceneRef);
+	pSceneRef->Initialize();
 }
 
 /*-----------------------------------------------------------------

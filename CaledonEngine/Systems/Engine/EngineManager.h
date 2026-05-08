@@ -8,6 +8,7 @@ namespace CE
 	class InputManager;
 	class SceneManager;
 	class ToolsManager;
+	class ResourceManager;
 
 	class EngineManager : public Manager
 	{
@@ -17,6 +18,7 @@ namespace CE
 		InputManager* m_pInputManager;										// Pointer to the input manager
 		SceneManager* m_pSceneManager;										// Pointer to the scene manager
 		ToolsManager* m_pToolsManager;										// Pointer to the tools manager
+		ResourceManager* m_pResourceManager;								// Pointer to the resource manager
 
 		bool m_isRunning;													// Flag to indicate if the engine is running
 
@@ -42,5 +44,6 @@ namespace CE
 		InputManager* GetInputManager() const;								// Returns a pointer to the InputManager
 		SceneManager* GetSceneManager() const;								// Returns a pointer to the SceneManager
 		ToolsManager* GetToolsManager() const;								// Returns a pointer to the ToolsManager
+		ResourceManager* GetResourceManager() const;						// Returns a pointer to the ResourceManager
 	};
 }

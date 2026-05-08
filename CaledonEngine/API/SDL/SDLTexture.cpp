@@ -25,6 +25,20 @@ CE::SDLTexture::~SDLTexture()
 	}
 }
 
+/*-------------------------------------------------------------
+| --- Load: Loads the SDL texture and sets its dimensions --- |
+-------------------------------------------------------------*/
+bool CE::SDLTexture::Load(SDL_Texture* pTexture, int width, int height)
+{
+    if (!pTexture)
+        return false;
+
+    m_pTexture = pTexture;
+    m_width = width;
+    m_height = height;
+    return true;
+}
+
 /*----------------------------------------------------
 | --- GetWidth: Returns the width of the texture --- |
 ----------------------------------------------------*/

@@ -10,6 +10,8 @@
 CE::Scene::Scene()
 	: m_name{ "Scene" }
 	, m_isActive{ true }
+	, m_isDirty{ false }
+	, m_isLoaded{ false }
 {}
 
 /*-------------------------------------------------------
@@ -25,13 +27,14 @@ CE::Scene::~Scene()
 ----------------------------------------------------------------*/
 bool CE::Scene::Initialize()
 {
-	for (GameObject* pObject : m_gameObjects)
+	for (const auto& pObject : m_gameObjects)
 	{
 		if (pObject != nullptr && !pObject->Initialize())
 		{
 			return false;
 		}
 	}
+	m_isLoaded = true;
 	return true;
 }
 
@@ -40,7 +43,7 @@ bool CE::Scene::Initialize()
 --------------------------------------------------------*/
 void CE::Scene::Update(float deltaTime)
 {
-	for (GameObject* pObject : m_gameObjects)
+	for (const auto& pObject : m_gameObjects)
 	{
 		if (pObject->IsActive())
 		{
@@ -54,9 +57,9 @@ void CE::Scene::Update(float deltaTime)
 --------------------------------------------------------*/
 void CE::Scene::Render()
 {
-	for (GameObject* pObject : m_gameObjects)
+	for (const auto& pObject : m_gameObjects)
 	{
-		if (pObject->IsActive())
+		if (pObject && pObject->IsActive())
 		{
 			pObject->Render();
 		}
@@ -100,15 +103,18 @@ void CE::Scene::SetActive(bool isActive)
 ------------------------------------------------*/
 bool CE::Scene::IsValid() const
 {
-	return false;
+	return m_isLoaded && !m_gameObjects.empty();
 }
 
 /*--------------------------------------------------------
 | --- AddGameObject: Adds a GameObject to this Scene --- |
 --------------------------------------------------------*/
-void CE::Scene::AddGameObject(GameObject* pGameObject)
+void CE::Scene::AddGameObject(std::unique_ptr<GameObject> pGameObject)
 {
-	m_gameObjects.emplace_back(pGameObject);
+	if (pGameObject)
+	{
+		m_gameObjects.emplace_back(std::move(pGameObject));
+	}
 }
 
 /*----------------------------------------------------------------
@@ -116,17 +122,20 @@ void CE::Scene::AddGameObject(GameObject* pGameObject)
 ----------------------------------------------------------------*/
 void CE::Scene::RemoveGameObject(GameObject* pGameObject)
 {
-	auto it = std::find(m_gameObjects.begin(), m_gameObjects.end(), pGameObject);
+	auto it = std::find_if(m_gameObjects.begin(), m_gameObjects.end(),
+		[pGameObject](const std::unique_ptr<GameObject>& p)
+		{
+			return p.get() == pGameObject;
+		});
+
 	if (it != m_gameObjects.end())
-	{
 		m_gameObjects.erase(it);
-	}
 }
 
-/*---------------------------------------------------------------
-| --- GetGameObjects: Returns the GameObjects in this Scene --- |
----------------------------------------------------------------*/
-const std::vector<CE::GameObject*>& CE::Scene::GetGameObjects() const
+/*----------------------------------------------------------------------------------------------
+| --- GetGameObjects: Returns a vector of unique pointers to the GameObjects in this Scene --- |
+----------------------------------------------------------------------------------------------*/
+const std::vector<std::unique_ptr<CE::GameObject>>& CE::Scene::GetGameObjects() const
 {
 	return m_gameObjects;
 }
@@ -136,10 +145,5 @@ const std::vector<CE::GameObject*>& CE::Scene::GetGameObjects() const
 -------------------------------------------------------*/
 void CE::Scene::Clear()
 {
-	for (GameObject* pObject : m_gameObjects)
-	{
-		delete pObject;
-		pObject = nullptr;
-	}
 	m_gameObjects.clear();
 }

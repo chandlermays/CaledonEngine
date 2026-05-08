@@ -51,6 +51,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="API\SDL\SDLImageLoader.cpp" />
     <ClCompile Include="API\SDL\SDLInput.cpp" />
     <ClCompile Include="API\SDL\SDLRenderer.cpp" />
     <ClCompile Include="API\SDL\SDLTexture.cpp" />
@@ -75,6 +76,7 @@
     <ClCompile Include="Systems\Rendering\Shapes\Triangle.cpp" />
     <ClCompile Include="Systems\Rendering\Sprite.cpp" />
     <ClCompile Include="Systems\Rendering\Window.cpp" />
+    <ClCompile Include="Systems\Resources\ResourceManager.cpp" />
     <ClCompile Include="Systems\Scene\SceneManager.cpp" />
     <ClCompile Include="Systems\Tools\DebugOverlay.cpp" />
     <ClCompile Include="Systems\Tools\ToolsManager.cpp" />
@@ -85,6 +87,7 @@
     <ClCompile Include="Utilities\ImGUI\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="API\SDL\SDLImageLoader.h" />
     <ClInclude Include="API\SDL\SDLInput.h" />
     <ClInclude Include="API\SDL\SDLRenderer.h" />
     <ClInclude Include="API\SDL\SDLTexture.h" />
@@ -110,6 +113,7 @@
     <ClInclude Include="Systems\Rendering\Color.h" />
     <ClInclude Include="Systems\Rendering\Components\SpriteComponent.h" />
     <ClInclude Include="Systems\Rendering\GraphicsManager.h" />
+    <ClInclude Include="Systems\Rendering\ImageLoader.h" />
     <ClInclude Include="Systems\Rendering\Renderer.h" />
     <ClInclude Include="Systems\Rendering\Shapes\Capsule.h" />
     <ClInclude Include="Systems\Rendering\Shapes\Circle.h" />
@@ -119,6 +123,7 @@
     <ClInclude Include="Systems\Rendering\Sprite.h" />
     <ClInclude Include="Systems\Rendering\Texture.h" />
     <ClInclude Include="Systems\Rendering\Window.h" />
+    <ClInclude Include="Systems\Resources\ResourceManager.h" />
     <ClInclude Include="Systems\Scene\SceneManager.h" />
     <ClInclude Include="Systems\Tools\DebugOverlay.h" />
     <ClInclude Include="Systems\Tools\ToolsManager.h" />

@@ -46,13 +46,12 @@ bool CE::InputManager::ProcessEvents()
 {
 	if (m_pInputAPI)
 	{
-		bool result = m_pInputAPI->ProcessEvents();
-		if (result)	// If the program is being shut down, break out now.
-			return false;
+		bool quitRequested = m_pInputAPI->ProcessEvents();
+
+		if (quitRequested)
+			return true;
 
 		ProcessInputActions();
-
-		return result;
 	}
 
 	return false;
@@ -104,7 +103,7 @@ void CE::InputManager::ProcessInputActions()
 		const auto& actions = pActionMap->GetInputActions();
 		for (const auto& [actionName, pAction] : actions)
 		{
-			ProcessAction(pAction);
+			ProcessAction(pAction.get());
 		}
 	}
 }

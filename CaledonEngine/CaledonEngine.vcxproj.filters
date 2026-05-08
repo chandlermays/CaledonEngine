@@ -53,6 +53,9 @@
     <Filter Include="Source Files\Systems\Rendering\Shapes">
       <UniqueIdentifier>{80bc1267-e098-49b1-abed-48baec78ecbb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Systems\Resources">
+      <UniqueIdentifier>{01dfcdc7-abd9-456e-ae6b-6c1f62bdba97}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Component.cpp">
@@ -150,6 +153,12 @@
     </ClCompile>
     <ClCompile Include="Systems\Rendering\Shapes\Triangle.cpp">
       <Filter>Source Files\Systems\Rendering\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="API\SDL\SDLImageLoader.cpp">
+      <Filter>Source Files\API\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Resources\ResourceManager.cpp">
+      <Filter>Source Files\Systems\Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -272,6 +281,15 @@
     </ClInclude>
     <ClInclude Include="Systems\Physics\AABB2D.h">
       <Filter>Source Files\Systems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="API\SDL\SDLImageLoader.h">
+      <Filter>Source Files\API\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\ImageLoader.h">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Resources\ResourceManager.h">
+      <Filter>Source Files\Systems\Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

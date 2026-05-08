@@ -4,6 +4,7 @@
 #include "CaledonEngine/Systems/Input/InputManager.h"
 #include "CaledonEngine/Systems/Scene/SceneManager.h"
 #include "CaledonEngine/Systems/Tools/ToolsManager.h"
+#include "CaledonEngine/Systems/Resources/ResourceManager.h"
 #include <chrono>
 
 /*-----------------------------------
@@ -64,7 +65,9 @@ void CE::EngineManager::Run()
 		float deltaTime = frameDuration.count();
 		lastFrameTime = thisFrameTime;
 
-		if (m_pInputManager->ProcessEvents())
+		bool quitRequested = m_pInputManager->ProcessEvents();
+
+		if (quitRequested)
 		{
 			m_isRunning = false;
 			break;
@@ -128,6 +131,14 @@ CE::ToolsManager* CE::EngineManager::GetToolsManager() const
 	return m_pToolsManager;
 }
 
+/*----------------------------------------------------------------------
+| --- GetResourceManager: Returns a pointer to the ResourceManager --- |
+----------------------------------------------------------------------*/
+CE::ResourceManager* CE::EngineManager::GetResourceManager() const
+{
+	return m_pResourceManager;
+}
+
 
 /*------------------------------------
 | --- Private Method Definitions --- |
@@ -140,6 +151,9 @@ CE::EngineManager::EngineManager()
 {
 	m_pGraphicsManager = new GraphicsManager();
 	m_pManagers.emplace_back(m_pGraphicsManager);
+
+	m_pResourceManager = new ResourceManager();
+	m_pManagers.emplace_back(m_pResourceManager);
 
 	m_pInputManager = new InputManager();
 	m_pManagers.emplace_back(m_pInputManager);

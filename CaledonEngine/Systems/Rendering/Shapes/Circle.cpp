@@ -4,21 +4,18 @@
 /*-----------------------------------
 | --- Public Method Definitions --- |
 -----------------------------------*/
-/*----------------------------------------------------------------
-| --- Constructor: Constructs the Circle with default values --- |
-----------------------------------------------------------------*/
+/*--------------------------------------------------------------------
+| --- Constructor: Constructs a Circle shape with default values --- |
+--------------------------------------------------------------------*/
 CE::Circle::Circle(const Color& color, int radius, bool isFilled)
 	: Shape(ShapeType::kCircle, color, radius * 2, radius * 2, isFilled)
 	, m_radius{ radius }
-{
-	// Update bounds to reflect the circle's dimensions
-	m_bounds = Rect{ 0, 0, radius * 2, radius * 2 };
-}
+{ }
 
-/*--------------------------------------------------
-| --- Render: Draws the circle onto the screen --- |
---------------------------------------------------*/
-void CE::Circle::Render(Renderer* pRenderer, const Rect& destRect) const
+/*------------------------------------------------------------------------------
+| --- Render: Draws the circle onto the screen using the provided Renderer --- |
+------------------------------------------------------------------------------*/
+void CE::Circle::Render(Renderer* pRenderer, const Rect& destRect, const Color& color) const
 {
 	if (pRenderer == nullptr)
 		return;
@@ -30,7 +27,7 @@ void CE::Circle::Render(Renderer* pRenderer, const Rect& destRect) const
 	// Calculate the radius based on the destination rectangle
 	int scaledRadius = (destRect.m_width < destRect.m_height ? destRect.m_width : destRect.m_height) / 2;
 
-	pRenderer->DrawCircle(centerX, centerY, scaledRadius, m_color, m_isFilled);
+	pRenderer->DrawCircle(centerX, centerY, scaledRadius, color, m_isFilled);
 }
 
 /*--------------------------------------------------

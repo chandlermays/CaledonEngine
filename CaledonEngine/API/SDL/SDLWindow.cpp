@@ -58,6 +58,8 @@ void CE::SDLWindow::Shutdown()
 		SDL_DestroyWindow(m_pWindow);
 		m_pWindow = nullptr;
 	}
+
+	SDL_Quit();
 }
 
 /*------------------------------------------------

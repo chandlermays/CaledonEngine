@@ -177,6 +177,21 @@ bool CE::SDLInput::ProcessEvents()
 			break;
 		}
 
+		// Mouse Event: Mouse Motion
+		case SDL_MOUSEMOTION:
+		{
+			m_mousePositionX = event.motion.x;
+			m_mousePositionY = event.motion.y;
+			break;
+		}
+
+		// Mouse Event: Mouse Wheel
+		case SDL_MOUSEWHEEL:
+		{
+			m_mouseWheelDelta = event.wheel.y;
+			break;
+		}
+
 		// More events, if any
 		default:
 			break;

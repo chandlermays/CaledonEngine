@@ -12,6 +12,7 @@ CE::Shape::Shape(ShapeType type, const Color& color, int width, int height, bool
 	, m_width{ width }
 	, m_height{ height }
 	, m_isFilled{ isFilled }
+	, m_bounds{ 0, 0, width, height }
 { }
 
 /*-----------------------------------------------

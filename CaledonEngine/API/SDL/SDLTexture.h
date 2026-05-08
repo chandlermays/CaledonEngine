@@ -16,9 +16,10 @@ namespace CE
 		SDLTexture();												// Constructor
 		~SDLTexture() override;										// Destructor
 
+		bool Load(SDL_Texture* pTexture, int width, int height);	// Loads the SDL texture and sets dimensions
+
 		int GetWidth() const override;								// Returns the width of the texture
 		int GetHeight() const override;								// Returns the height of the texture
-
 		void* GetNativeHandle() const override;						// Returns the native texture handle
 	};
 }

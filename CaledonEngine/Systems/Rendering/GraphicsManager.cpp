@@ -28,15 +28,17 @@ CE::GraphicsManager::~GraphicsManager()
 bool CE::GraphicsManager::Initialize()
 {
 	m_pWindowAPI = std::make_unique<CEWindow>();
-	if (m_pWindowAPI)
+	if (!m_pWindowAPI || !m_pWindowAPI->Initialize())
 	{
-		m_pWindowAPI->Initialize();
+		CE_LOG("GraphicsManager::Initialize - Failed to initialize Window.");
+		return false;
 	}
 
 	m_pRendererAPI = std::make_unique<CERenderer>();
-	if (m_pRendererAPI)
+	if (!m_pRendererAPI || !m_pRendererAPI->Initialize(m_pWindowAPI.get()))
 	{
-		m_pRendererAPI->Initialize(m_pWindowAPI.get());
+		CE_LOG("GraphicsManager::Initialize - Failed to initialize Renderer.");
+		return false;
 	}
 
 	return true;

@@ -34,7 +34,7 @@ namespace CE
 		Shape(Shape&&) = delete;																		// Prevent move-construction
 		Shape& operator=(Shape&&) = delete;																// Prevent move-assignment
 
-		virtual void Render(Renderer* pRenderer, const Rect& destRect) const = 0;						// Draws the shape onto the screen
+		virtual void Render(Renderer* pRenderer, const Rect& destRect, const Color& color) const = 0;	// Draws the shape onto the screen
 
 		void SetColor(const Color& color);																// Sets the color of the shape
 		void SetColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a = 255);		// Sets the color of the shape

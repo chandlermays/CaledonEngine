@@ -60,11 +60,6 @@ void CE::SceneManager::Render()
 --------------------------------------------------------------------*/
 void CE::SceneManager::Shutdown()
 {
-	for (Scene* pScene : m_pScenes)
-	{
-		delete pScene;
-		pScene = nullptr;
-	}
 	m_pScenes.clear();
 	m_pCurrentScene = nullptr;
 }
@@ -72,18 +67,17 @@ void CE::SceneManager::Shutdown()
 /*-----------------------------------------------------
 | --- AddScene: Add a scene to the list of scenes --- |
 -----------------------------------------------------*/
-void CE::SceneManager::AddScene(Scene* pScene)
+void CE::SceneManager::AddScene(std::unique_ptr<Scene> pScene)
 {
-	if (pScene != nullptr)
-	{
-		m_pScenes.emplace_back(pScene);
+	if (!pScene)
+		return;
 
-		// If there is no current scene, set the added scene as the current scene
-		if (m_pCurrentScene == nullptr)
-		{
-			m_pCurrentScene = pScene;
-		}
+	if (m_pCurrentScene == nullptr)
+	{
+		m_pCurrentScene = pScene.get();
 	}
+
+	m_pScenes.emplace_back(std::move(pScene));
 }
 
 /*-----------------------------------------------------------------------
@@ -110,12 +104,14 @@ CE::Scene* CE::SceneManager::GetCurrentScene() const
 ----------------------------------------------------------------*/
 int CE::SceneManager::GetSceneIndex(Scene* pScene) const
 {
-	for (int i = 0; i < m_pScenes.size(); ++i)
+	if (!pScene)
+		return -1;
+
+	for (int i = 0; i < static_cast<int>(m_pScenes.size()); ++i)
 	{
-		if (m_pScenes[i] == pScene)
-		{
-			return static_cast<int>(i);
-		}
+		if (m_pScenes[i].get() == pScene)
+			return i;
 	}
-	return -1; // Scene not found
+
+	return -1;
 }

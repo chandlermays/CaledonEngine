@@ -102,18 +102,12 @@ void CE::SpriteComponent::Render()
 			Color renderColor = pShape->GetColor();
 			if (m_color != Color::White())
 			{
-				renderColor.r = static_cast<unsigned char>((renderColor.r * m_color.r) / 255);
-				renderColor.g = static_cast<unsigned char>((renderColor.g * m_color.g) / 255);
-				renderColor.b = static_cast<unsigned char>((renderColor.b * m_color.b) / 255);
-				renderColor.a = static_cast<unsigned char>((renderColor.a * m_color.a) / 255);
+				renderColor.r = static_cast<uint8_t>((renderColor.r * m_color.r) / 255);
+				renderColor.g = static_cast<uint8_t>((renderColor.g * m_color.g) / 255);
+				renderColor.b = static_cast<uint8_t>((renderColor.b * m_color.b) / 255);
+				renderColor.a = static_cast<uint8_t>((renderColor.a * m_color.a) / 255);
 			}
-
-			Color originalColor = pShape->GetColor();
-			const_cast<Shape*>(pShape)->SetColor(renderColor);
-
-			pShape->Render(m_pRenderer, destRect);
-
-			const_cast<Shape*>(pShape)->SetColor(originalColor);
+			pShape->Render(m_pRenderer, destRect, renderColor);
 		}
 	}
 }

@@ -3,11 +3,20 @@
 #include "CaledonEngine/Utilities/Math/Rect.h"
 #include "CaledonEngine/Utilities/Math/Vector2.h"
 
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
+/*----------------------------------------------------------------------
+| --- Constructor: Constructs a Triangle shape with default values --- |
+----------------------------------------------------------------------*/
 CE::Triangle::Triangle(const Color& color, int width, int height, bool isFilled)
 	: Shape{ ShapeType::kTriangle, color, width, height, isFilled }
 { }
 
-void CE::Triangle::Render(Renderer* pRenderer, const Rect& destRect) const
+/*--------------------------------------------------------------------------------
+| --- Render: Draws the triangle onto the screen using the provided Renderer --- |
+--------------------------------------------------------------------------------*/
+void CE::Triangle::Render(Renderer* pRenderer, const Rect& destRect, const Color& color) const
 {
 	if (!pRenderer)
 		return;
@@ -16,5 +25,5 @@ void CE::Triangle::Render(Renderer* pRenderer, const Rect& destRect) const
 	Vector2i v2(destRect.m_x, destRect.m_y + destRect.m_height);
 	Vector2i v3(destRect.m_x + destRect.m_width, destRect.m_y + destRect.m_height);
 
-	pRenderer->DrawTriangle(v1, v2, v3, m_color, m_isFilled);
+	pRenderer->DrawTriangle(v1, v2, v3, color, m_isFilled);
 }
