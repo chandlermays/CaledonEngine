@@ -1,3 +1,7 @@
+/*------------------------------
+| File: SDLInput.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "CaledonEngine/Systems/Input/Input.h"
 

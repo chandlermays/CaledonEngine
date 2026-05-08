@@ -1,3 +1,7 @@
+/*------------------------------
+| File: InputAction.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "InputAction.h"
 
 /*-----------------------------------

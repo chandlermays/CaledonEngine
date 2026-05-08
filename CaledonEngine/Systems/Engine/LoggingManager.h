@@ -1,3 +1,7 @@
+/*------------------------------
+| File: LoggingManager.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "Manager.h"
 #include <string>

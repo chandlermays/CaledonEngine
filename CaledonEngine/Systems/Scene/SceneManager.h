@@ -1,3 +1,7 @@
+/*------------------------------
+| File: SceneManager.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "CaledonEngine/Systems/Engine/Manager.h"
 #include <vector>

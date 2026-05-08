@@ -1,3 +1,7 @@
+/*------------------------------
+| File: GraphicsManager.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "GraphicsManager.h"
 #include "CaledonEngine/Systems/Engine/LoggingManager.h"
 #include "CaledonEngine/Utilities/APIConfig.h"

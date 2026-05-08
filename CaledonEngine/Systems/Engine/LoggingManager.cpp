@@ -1,3 +1,7 @@
+/*------------------------------
+| File: LoggingManager.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "LoggingManager.h"
 #include <iostream>
 

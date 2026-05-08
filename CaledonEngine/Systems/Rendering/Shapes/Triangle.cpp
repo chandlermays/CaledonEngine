@@ -1,3 +1,7 @@
+/*------------------------------
+| File: Triangle.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "Triangle.h"
 #include "CaledonEngine/Systems/Rendering/Renderer.h"
 #include "CaledonEngine/Utilities/Math/Rect.h"

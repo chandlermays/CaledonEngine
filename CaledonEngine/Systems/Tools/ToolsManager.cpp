@@ -1,3 +1,7 @@
+/*------------------------------
+| File: ToolsManager.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "ToolsManager.h"
 #include "CaledonEngine/Systems/Engine/LoggingManager.h"
 #include "CaledonEngine/Systems/Engine/EngineManager.h"

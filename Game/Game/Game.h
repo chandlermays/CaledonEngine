@@ -1,3 +1,7 @@
+/*------------------------------
+| File: Game.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "Game/Input/GameInputActions.h"
 

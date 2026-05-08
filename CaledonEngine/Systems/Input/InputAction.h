@@ -1,3 +1,7 @@
+/*------------------------------
+| File: InputAction.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "Input.h"
 #include <string>

@@ -1,3 +1,7 @@
+/*------------------------------
+| File: SDLWindow.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "SDLWindow.h"
 #include "CaledonEngine/Systems/Engine/LoggingManager.h"
 #include "SDL.h"

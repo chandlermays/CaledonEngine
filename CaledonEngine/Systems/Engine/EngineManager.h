@@ -1,24 +1,29 @@
+/*------------------------------
+| File: EngineManager.h 
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "Manager.h"
 #include <vector>
+#include <memory>
 
 namespace CE
 {
 	class GraphicsManager;
-	class InputManager;
-	class SceneManager;
-	class ToolsManager;
 	class ResourceManager;
+	class SceneManager;
+	class InputManager;
+	class ToolsManager;
 
 	class EngineManager : public Manager
 	{
 	private:
-		std::vector<Manager*> m_pManagers;									// Vector of pointers to managers
+		std::vector<std::unique_ptr<Manager>> m_pManagers;					// Vector of pointers to managers
 		GraphicsManager* m_pGraphicsManager;								// Pointer to the graphics manager
-		InputManager* m_pInputManager;										// Pointer to the input manager
-		SceneManager* m_pSceneManager;										// Pointer to the scene manager
-		ToolsManager* m_pToolsManager;										// Pointer to the tools manager
 		ResourceManager* m_pResourceManager;								// Pointer to the resource manager
+		SceneManager* m_pSceneManager;										// Pointer to the scene manager
+		InputManager* m_pInputManager;										// Pointer to the input manager
+		ToolsManager* m_pToolsManager;										// Pointer to the tools manager
 
 		bool m_isRunning;													// Flag to indicate if the engine is running
 
@@ -41,9 +46,9 @@ namespace CE
 		void Shutdown() override;											// Shuts down and cleans up all engine subsystem managers
 	
 		GraphicsManager* GetGraphicsManager() const;						// Returns a pointer to the GraphicsManager
-		InputManager* GetInputManager() const;								// Returns a pointer to the InputManager
-		SceneManager* GetSceneManager() const;								// Returns a pointer to the SceneManager
-		ToolsManager* GetToolsManager() const;								// Returns a pointer to the ToolsManager
 		ResourceManager* GetResourceManager() const;						// Returns a pointer to the ResourceManager
+		SceneManager* GetSceneManager() const;								// Returns a pointer to the SceneManager
+		InputManager* GetInputManager() const;								// Returns a pointer to the InputManager
+		ToolsManager* GetToolsManager() const;								// Returns a pointer to the ToolsManager
 	};
 }

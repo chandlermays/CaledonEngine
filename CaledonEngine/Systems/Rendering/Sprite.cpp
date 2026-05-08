@@ -1,3 +1,7 @@
+/*------------------------------
+| File: Sprite.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "Sprite.h"
 #include "CaledonEngine/Systems/Rendering/Texture.h"
 #include "CaledonEngine/Systems/Rendering/Shapes/Shape.h"

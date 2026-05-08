@@ -1,3 +1,7 @@
+/*------------------------------
+| File: DyanmicStack.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include <iostream>
 #include <stdexcept>

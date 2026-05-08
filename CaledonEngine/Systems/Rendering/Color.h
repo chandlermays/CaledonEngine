@@ -1,3 +1,7 @@
+/*------------------------------
+| File: Color.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include <cstdint>
 

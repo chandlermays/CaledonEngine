@@ -1,3 +1,7 @@
+/*------------------------------
+| File: Stack.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include <iostream>
 #include <stdexcept>

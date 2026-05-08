@@ -1,3 +1,7 @@
+/*------------------------------
+| File: BinaryTree.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include <iostream>
 #include <functional>

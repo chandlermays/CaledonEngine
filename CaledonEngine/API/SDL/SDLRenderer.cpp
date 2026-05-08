@@ -1,3 +1,7 @@
+/*------------------------------
+| File: SDLRenderer.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "SDLRenderer.h"
 #include "CaledonEngine/Systems/Rendering/Window.h"
 #include "CaledonEngine/Systems/Rendering/Texture.h"

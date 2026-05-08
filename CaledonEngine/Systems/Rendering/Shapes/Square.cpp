@@ -1,3 +1,7 @@
+/*------------------------------
+| File: Square.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "Square.h"
 #include "CaledonEngine/Systems/Rendering/Renderer.h"
 

@@ -56,6 +56,9 @@
     <Filter Include="Source Files\Systems\Resources">
       <UniqueIdentifier>{01dfcdc7-abd9-456e-ae6b-6c1f62bdba97}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Utilities\ThirdParty">
+      <UniqueIdentifier>{6d74333d-3fd0-4412-87ff-7546a9149911}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Component.cpp">
@@ -154,11 +157,26 @@
     <ClCompile Include="Systems\Rendering\Shapes\Triangle.cpp">
       <Filter>Source Files\Systems\Rendering\Shapes</Filter>
     </ClCompile>
-    <ClCompile Include="API\SDL\SDLImageLoader.cpp">
-      <Filter>Source Files\API\SDL</Filter>
-    </ClCompile>
     <ClCompile Include="Systems\Resources\ResourceManager.cpp">
       <Filter>Source Files\Systems\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\ThirdParty\CaledonZlib.cpp">
+      <Filter>Source Files\Utilities\ThirdParty</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\ThirdParty\tinyxml2.cpp">
+      <Filter>Source Files\Utilities\ThirdParty</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\CaledonParser.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="API\SDL\SDLImage.cpp">
+      <Filter>Source Files\API\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectCreator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentFactory.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -282,14 +300,29 @@
     <ClInclude Include="Systems\Physics\AABB2D.h">
       <Filter>Source Files\Systems\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="API\SDL\SDLImageLoader.h">
-      <Filter>Source Files\API\SDL</Filter>
-    </ClInclude>
-    <ClInclude Include="Systems\Rendering\ImageLoader.h">
-      <Filter>Source Files\Systems\Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="Systems\Resources\ResourceManager.h">
       <Filter>Source Files\Systems\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\ThirdParty\CaledonZlib.h">
+      <Filter>Source Files\Utilities\ThirdParty</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\ThirdParty\tinyxml2.h">
+      <Filter>Source Files\Utilities\ThirdParty</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\CaledonParser.h">
+      <Filter>Source Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Image.h">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="API\SDL\SDLImage.h">
+      <Filter>Source Files\API\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectCreator.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentFactory.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

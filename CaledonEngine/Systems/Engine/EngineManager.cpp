@@ -1,10 +1,14 @@
+/*------------------------------
+| File: EngineManager.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "EngineManager.h"
 #include "LoggingManager.h"
 #include "CaledonEngine/Systems/Rendering/GraphicsManager.h"
-#include "CaledonEngine/Systems/Input/InputManager.h"
-#include "CaledonEngine/Systems/Scene/SceneManager.h"
-#include "CaledonEngine/Systems/Tools/ToolsManager.h"
 #include "CaledonEngine/Systems/Resources/ResourceManager.h"
+#include "CaledonEngine/Systems/Scene/SceneManager.h"
+#include "CaledonEngine/Systems/Input/InputManager.h"
+#include "CaledonEngine/Systems/Tools/ToolsManager.h"
 #include <chrono>
 
 /*-----------------------------------
@@ -39,7 +43,7 @@ bool CE::EngineManager::Initialize()
 	}
 
 	bool success = true;
-	for (auto* manager : m_pManagers)
+	for (const auto& manager : m_pManagers)
 	{
 		if (!manager->Initialize())
 		{
@@ -88,13 +92,17 @@ void CE::EngineManager::Shutdown()
 
 	for (auto it = m_pManagers.rbegin(); it != m_pManagers.rend(); ++it)
 	{
-		auto manager = *it;
-		manager->Shutdown();
-		delete manager;
-		manager = nullptr;
+		(*it)->Shutdown();
 	}
 
 	m_pManagers.clear();
+
+	// Null out observers
+	m_pGraphicsManager = nullptr;
+	m_pResourceManager = nullptr;
+	m_pSceneManager = nullptr;
+	m_pInputManager = nullptr;
+	m_pToolsManager = nullptr;
 
 	LoggingManager::GetInstance().Shutdown();
 }
@@ -107,12 +115,12 @@ CE::GraphicsManager* CE::EngineManager::GetGraphicsManager() const
 	return m_pGraphicsManager;
 }
 
-/*----------------------------------------------------------------
-| --- GetInputManager: Returns a pointer to the InputManager --- |
-----------------------------------------------------------------*/
-CE::InputManager* CE::EngineManager::GetInputManager() const
+/*----------------------------------------------------------------------
+| --- GetResourceManager: Returns a pointer to the ResourceManager --- |
+----------------------------------------------------------------------*/
+CE::ResourceManager* CE::EngineManager::GetResourceManager() const
 {
-	return m_pInputManager;
+	return m_pResourceManager;
 }
 
 /*----------------------------------------------------------------
@@ -124,6 +132,14 @@ CE::SceneManager* CE::EngineManager::GetSceneManager() const
 }
 
 /*----------------------------------------------------------------
+| --- GetInputManager: Returns a pointer to the InputManager --- |
+----------------------------------------------------------------*/
+CE::InputManager* CE::EngineManager::GetInputManager() const
+{
+	return m_pInputManager;
+}
+
+/*----------------------------------------------------------------
 | --- GetToolsManager: Returns a pointer to the ToolsManager --- |
 ----------------------------------------------------------------*/
 CE::ToolsManager* CE::EngineManager::GetToolsManager() const
@@ -131,13 +147,7 @@ CE::ToolsManager* CE::EngineManager::GetToolsManager() const
 	return m_pToolsManager;
 }
 
-/*----------------------------------------------------------------------
-| --- GetResourceManager: Returns a pointer to the ResourceManager --- |
-----------------------------------------------------------------------*/
-CE::ResourceManager* CE::EngineManager::GetResourceManager() const
-{
-	return m_pResourceManager;
-}
+
 
 
 /*------------------------------------
@@ -148,21 +158,31 @@ CE::ResourceManager* CE::EngineManager::GetResourceManager() const
 -----------------------------------------------------------------------------*/
 CE::EngineManager::EngineManager()
 	: m_isRunning{ true }
+	, m_pGraphicsManager{ nullptr }
+	, m_pResourceManager{ nullptr }
+	, m_pSceneManager{ nullptr }
+	, m_pInputManager{ nullptr }
+	, m_pToolsManager{ nullptr }
 {
-	m_pGraphicsManager = new GraphicsManager();
-	m_pManagers.emplace_back(m_pGraphicsManager);
+	auto pGraphics = std::make_unique<GraphicsManager>();
+	m_pGraphicsManager = pGraphics.get();
+	m_pManagers.emplace_back(std::move(pGraphics));
 
-	m_pResourceManager = new ResourceManager();
-	m_pManagers.emplace_back(m_pResourceManager);
+	auto pResource = std::make_unique<ResourceManager>();
+	m_pResourceManager = pResource.get();
+	m_pManagers.emplace_back(std::move(pResource));
 
-	m_pInputManager = new InputManager();
-	m_pManagers.emplace_back(m_pInputManager);
+	auto pScene = std::make_unique<SceneManager>();
+	m_pSceneManager = pScene.get();
+	m_pManagers.emplace_back(std::move(pScene));
 
-	m_pSceneManager = new SceneManager();
-	m_pManagers.emplace_back(m_pSceneManager);
+	auto pInput = std::make_unique<InputManager>();
+	m_pInputManager = pInput.get();
+	m_pManagers.emplace_back(std::move(pInput));
 
-	m_pToolsManager = new ToolsManager();
-	m_pManagers.emplace_back(m_pToolsManager);
+	auto pTools = std::make_unique<ToolsManager>();
+	m_pToolsManager = pTools.get();
+	m_pManagers.emplace_back(std::move(pTools));
 }
 
 /*-------------------------------------------------------
@@ -170,7 +190,7 @@ CE::EngineManager::EngineManager()
 -------------------------------------------------------*/
 void CE::EngineManager::Update(float deltaTime)
 {
-	for (auto* manager : m_pManagers)
+	for (const auto& manager : m_pManagers)
 	{
 		manager->Update(deltaTime);
 	}
@@ -181,7 +201,7 @@ void CE::EngineManager::Update(float deltaTime)
 -------------------------------------------------------*/
 void CE::EngineManager::Render()
 {
-	for (auto* manager : m_pManagers)
+	for (const auto& manager : m_pManagers)
 	{
 		manager->Render();
 	}

@@ -1,3 +1,7 @@
+/*------------------------------
+| File: GameObject.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "Transform.h"
 #include <string>

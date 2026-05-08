@@ -1,3 +1,7 @@
+/*------------------------------
+| File: SDLTexture.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "CaledonEngine/Systems/Rendering/Texture.h"
 

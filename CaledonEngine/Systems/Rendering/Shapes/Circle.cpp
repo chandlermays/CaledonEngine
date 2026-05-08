@@ -1,3 +1,7 @@
+/*------------------------------
+| File: Circle.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "Circle.h"
 #include "CaledonEngine/Systems/Rendering/Renderer.h"
 

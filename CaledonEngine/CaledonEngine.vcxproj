@@ -51,15 +51,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="API\SDL\SDLImageLoader.cpp" />
+    <ClCompile Include="API\SDL\SDLImage.cpp" />
     <ClCompile Include="API\SDL\SDLInput.cpp" />
     <ClCompile Include="API\SDL\SDLRenderer.cpp" />
     <ClCompile Include="API\SDL\SDLTexture.cpp" />
     <ClCompile Include="API\SDL\SDLWindow.cpp" />
+    <ClCompile Include="ComponentFactory.cpp" />
     <ClCompile Include="Core\Component.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Scene.cpp" />
     <ClCompile Include="Core\Transform.cpp" />
+    <ClCompile Include="GameObjectCreator.cpp" />
     <ClCompile Include="Systems\Engine\EngineManager.cpp" />
     <ClCompile Include="Systems\Engine\LoggingManager.cpp" />
     <ClCompile Include="Systems\Input\Input.cpp" />
@@ -80,18 +82,22 @@
     <ClCompile Include="Systems\Scene\SceneManager.cpp" />
     <ClCompile Include="Systems\Tools\DebugOverlay.cpp" />
     <ClCompile Include="Systems\Tools\ToolsManager.cpp" />
+    <ClCompile Include="Utilities\CaledonParser.cpp" />
     <ClCompile Include="Utilities\ImGUI\imgui.cpp" />
     <ClCompile Include="Utilities\ImGUI\imgui_demo.cpp" />
     <ClCompile Include="Utilities\ImGUI\imgui_draw.cpp" />
     <ClCompile Include="Utilities\ImGUI\imgui_tables.cpp" />
     <ClCompile Include="Utilities\ImGUI\imgui_widgets.cpp" />
+    <ClCompile Include="Utilities\ThirdParty\CaledonZlib.cpp" />
+    <ClCompile Include="Utilities\ThirdParty\tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="API\SDL\SDLImageLoader.h" />
+    <ClInclude Include="API\SDL\SDLImage.h" />
     <ClInclude Include="API\SDL\SDLInput.h" />
     <ClInclude Include="API\SDL\SDLRenderer.h" />
     <ClInclude Include="API\SDL\SDLTexture.h" />
     <ClInclude Include="API\SDL\SDLWindow.h" />
+    <ClInclude Include="ComponentFactory.h" />
     <ClInclude Include="Core\Component.h" />
     <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\Scene.h" />
@@ -101,6 +107,7 @@
     <ClInclude Include="DataStructures\DynamicStack.h" />
     <ClInclude Include="DataStructures\Queue.h" />
     <ClInclude Include="DataStructures\Stack.h" />
+    <ClInclude Include="GameObjectCreator.h" />
     <ClInclude Include="Systems\Engine\EngineManager.h" />
     <ClInclude Include="Systems\Engine\LoggingManager.h" />
     <ClInclude Include="Systems\Engine\Manager.h" />
@@ -113,7 +120,7 @@
     <ClInclude Include="Systems\Rendering\Color.h" />
     <ClInclude Include="Systems\Rendering\Components\SpriteComponent.h" />
     <ClInclude Include="Systems\Rendering\GraphicsManager.h" />
-    <ClInclude Include="Systems\Rendering\ImageLoader.h" />
+    <ClInclude Include="Systems\Rendering\Image.h" />
     <ClInclude Include="Systems\Rendering\Renderer.h" />
     <ClInclude Include="Systems\Rendering\Shapes\Capsule.h" />
     <ClInclude Include="Systems\Rendering\Shapes\Circle.h" />
@@ -128,8 +135,11 @@
     <ClInclude Include="Systems\Tools\DebugOverlay.h" />
     <ClInclude Include="Systems\Tools\ToolsManager.h" />
     <ClInclude Include="Utilities\APIConfig.h" />
+    <ClInclude Include="Utilities\CaledonParser.h" />
     <ClInclude Include="Utilities\Math\Rect.h" />
     <ClInclude Include="Utilities\Math\Vector2.h" />
+    <ClInclude Include="Utilities\ThirdParty\CaledonZlib.h" />
+    <ClInclude Include="Utilities\ThirdParty\tinyxml2.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Component.inl" />

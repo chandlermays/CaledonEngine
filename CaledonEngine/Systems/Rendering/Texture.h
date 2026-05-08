@@ -1,3 +1,7 @@
+/*------------------------------
+| File: Texture.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 
 namespace CE

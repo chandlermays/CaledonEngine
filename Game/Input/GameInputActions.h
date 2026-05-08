@@ -1,3 +1,7 @@
+/*------------------------------
+| File: GameInputActions.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "CaledonEngine/Systems/Input/InputActions.h"
 

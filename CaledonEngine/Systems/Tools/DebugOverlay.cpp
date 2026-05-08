@@ -1,3 +1,7 @@
+/*------------------------------
+| File: DebugOverlap.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "DebugOverlay.h"
 #include "ImGUI/imgui.h"
 

@@ -1,3 +1,7 @@
+/*------------------------------
+| File: SpriteComponent.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "SpriteComponent.h"
 #include "CaledonEngine/Systems/Rendering/GraphicsManager.h"
 #include "CaledonEngine/Systems/Engine/EngineManager.h"
@@ -18,6 +22,18 @@ CE::SpriteComponent::SpriteComponent()
 	, m_pSprite{ nullptr }
 	, m_color{ 255, 255, 255, 255 }
 {}
+
+/*-------------------------------------------------------------------------------
+| --- Constructor: Constructs the SpriteComponent with parameterized values --- |
+-------------------------------------------------------------------------------*/
+CE::SpriteComponent::SpriteComponent(const char* pSheet, int width, int height, float scale)
+	: Component()
+	, m_pRenderer{ nullptr }
+	, m_pSprite{ nullptr }
+	, m_color{ 255, 255, 255, 255 }
+{
+	LoadSpritesheet(pSheet, width, height, scale);
+}
 
 /*----------------------------------------------------------
 | --- Initialize: Prepares the SpriteComponent for use --- |
@@ -110,6 +126,10 @@ void CE::SpriteComponent::Render()
 			pShape->Render(m_pRenderer, destRect, renderColor);
 		}
 	}
+}
+
+void CE::SpriteComponent::LoadSpritesheet(const char* pSheet, int width, int height, float scale)
+{
 }
 
 /*---------------------------------------------------

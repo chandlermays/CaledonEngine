@@ -1,3 +1,7 @@
+/*------------------------------
+| File: Sprite.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "CaledonEngine/Utilities/Math/Rect.h"
 #include "CaledonEngine/Utilities/Math/Vector2.h"

@@ -1,3 +1,7 @@
+/*------------------------------
+| File: SDLTexture.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "SDLTexture.h"
 #include "SDL.h"
 

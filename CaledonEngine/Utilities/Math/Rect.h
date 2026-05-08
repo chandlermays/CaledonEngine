@@ -1,3 +1,7 @@
+/*------------------------------
+| File: Rect.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 
 namespace CE

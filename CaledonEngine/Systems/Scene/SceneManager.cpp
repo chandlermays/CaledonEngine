@@ -1,3 +1,7 @@
+/*------------------------------
+| File: SceneManager.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "SceneManager.h"
 #include "CaledonEngine/Core/Scene.h"
 #include <CaledonEngine/Systems/Engine/LoggingManager.h>

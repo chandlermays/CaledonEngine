@@ -1,3 +1,7 @@
+/*------------------------------
+| File: Square.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "CaledonEngine/Systems/Rendering/Shapes/Shape.h"
 

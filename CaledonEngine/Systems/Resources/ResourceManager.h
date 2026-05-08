@@ -1,36 +1,39 @@
-// ResourceManager.h
+/*------------------------------
+| File: ResourceManager.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "CaledonEngine/Systems/Engine/Manager.h"
+#include "CaledonEngine/Systems/Rendering/Image.h"
 #include "CaledonEngine/Systems/Rendering/Texture.h"
-#include "CaledonEngine/Systems/Rendering/ImageLoader.h"
+#include "CaledonEngine/Utilities/CaledonParser.h"
 #include <memory>
 #include <string>
 #include <unordered_map>
 
 namespace CE
 {
-    class Renderer;
+	class ResourceManager : public Manager
+	{
+	private:
+#ifdef NDEBUG
+		Caledon_zLib m_zLib;																	// zLib Compression
+#endif
+		std::unordered_map<std::string, std::string> m_loadedResources;							// A Collection of Loaded Resources
+		CaledonParser m_parser;																	// Parser for the XML Files
 
-    class ResourceManager : public Manager
-    {
-    private:
-        std::unique_ptr<ImageLoader> m_pImageLoader;
-        std::unordered_map<std::string, std::shared_ptr<Texture>> m_textureCache;
-        Renderer* m_pRenderer;
+	public:
+		ResourceManager();																		// Constructor
+		~ResourceManager() = default;															// Destructor
 
-    public:
-        ResourceManager();
-        ~ResourceManager();
-        ResourceManager(const ResourceManager&) = delete;
-        ResourceManager& operator=(const ResourceManager&) = delete;
-        ResourceManager(ResourceManager&&) = delete;
-        ResourceManager& operator=(ResourceManager&&) = delete;
+		virtual bool Initialize() override;														// Initialize the Resource Manager
+		virtual void Shutdown() override;														// Shutdown the Resource Manager
 
-        bool Initialize() override;
-        void Shutdown() override;
+		bool LoadResource(const std::string& fileName, std::string& data);						// Load the Data of the Associated File
+		std::string GetResource(const std::string& fileName);									// Returns the Data of the Associated File
 
-        std::shared_ptr<Texture> LoadTexture(const std::string& filePath);
-        void UnloadTexture(const std::string& filePath);
-        void UnloadAll();
-    };
+		CE::Image* LoadSurface(const std::string& filePath);									// Load the Image File
+
+		bool LoadMasterXML(const std::string& filePath);										// Load the Master XML File
+	};
 }

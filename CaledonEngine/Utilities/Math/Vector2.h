@@ -1,3 +1,7 @@
+/*------------------------------
+| File: Vector2.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include <cmath>
 #include <algorithm>

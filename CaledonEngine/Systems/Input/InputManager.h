@@ -1,3 +1,7 @@
+/*------------------------------
+| File: InputManager.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "CaledonEngine/Systems/Engine/Manager.h"
 #include "CaledonEngine/Systems/Input/Input.h"

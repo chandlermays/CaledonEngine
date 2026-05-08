@@ -1,3 +1,7 @@
+/*------------------------------
+| File: PlayerController.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "CaledonEngine/Core/Component.h"
 #include "Game/Input/GameInputActions.h"

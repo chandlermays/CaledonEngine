@@ -1,3 +1,7 @@
+/*------------------------------
+| File: Input.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include <unordered_map>
 

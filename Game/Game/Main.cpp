@@ -1,4 +1,8 @@
-﻿#include "Game.h"
+﻿/*------------------------------
+| File: Main.cpp
+| Author: Chandler Mays
+------------------------------*/
+#include "Game.h"
 
 /*----------------------------------------------
 | --- Main: Entry point of the application --- |

@@ -1,3 +1,7 @@
+/*------------------------------
+| File: DebugOverlap.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 
 namespace CE

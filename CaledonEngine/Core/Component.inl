@@ -1,3 +1,7 @@
+/*------------------------------
+| File: Component.inl
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "GameObject.h"
 

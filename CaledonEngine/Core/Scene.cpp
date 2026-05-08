@@ -1,3 +1,7 @@
+/*------------------------------
+| File: Scene.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "Scene.h"
 #include "CaledonEngine/Core/GameObject.h"
 

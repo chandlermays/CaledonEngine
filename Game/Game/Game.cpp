@@ -1,3 +1,7 @@
+/*------------------------------
+| File: Game.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "Game.h"
 #include "../Controllers/PlayerController.h"
 #include "CaledonEngine/Systems/Engine/EngineManager.h"

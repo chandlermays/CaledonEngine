@@ -1,3 +1,7 @@
+/*------------------------------
+| File: SDLWindow.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "CaledonEngine/Systems/Rendering/Window.h"
 

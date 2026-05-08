@@ -1,3 +1,7 @@
+/*------------------------------
+| File: Shape.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "CaledonEngine/Systems/Rendering/Color.h"
 #include "CaledonEngine/Utilities/Math/Rect.h"

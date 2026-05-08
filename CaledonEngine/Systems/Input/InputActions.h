@@ -1,3 +1,7 @@
+/*------------------------------
+| File: InputActions.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "InputActionMap.h"
 #include <unordered_map>

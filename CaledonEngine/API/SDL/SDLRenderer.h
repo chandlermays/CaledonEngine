@@ -1,3 +1,7 @@
+/*------------------------------
+| File: SDLRenderer.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "CaledonEngine/Systems/Rendering/Renderer.h"
 

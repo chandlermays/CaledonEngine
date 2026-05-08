@@ -1,3 +1,7 @@
+/*------------------------------
+| File: SpriteComponent.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "CaledonEngine/Core/Component.h"
 #include "CaledonEngine/Systems/Rendering/Color.h"
@@ -17,6 +21,7 @@ namespace CE
 
 	public:
 		SpriteComponent();																			// Constructor
+		SpriteComponent(const char* pSheet, int width, int height, float scale);					// Parameterized Constructor
 		~SpriteComponent() = default;																// Destructor
 		SpriteComponent(const SpriteComponent&) = delete;											// Prevent copy-construction
 		SpriteComponent& operator=(const SpriteComponent&) = delete;								// Prevent copy-assignment
@@ -26,6 +31,7 @@ namespace CE
 		virtual bool Initialize() override;															// Prepares the SpriteComponent for use
 		virtual void Render() override;																// Draws the sprite to the screen
 
+		void LoadSpritesheet(const char* pSheet, int width, int height, float scale);				// Loads a sprite from a spritesheet
 		void SetSprite(std::unique_ptr<Sprite> pSprite);											// Sets the sprite to be rendered
 		void SetColor(const Color& color);															// Sets the color of the sprite
 		void SetColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a);									// Sets the color of the sprite

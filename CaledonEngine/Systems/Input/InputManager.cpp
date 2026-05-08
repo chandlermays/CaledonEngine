@@ -1,3 +1,7 @@
+/*------------------------------
+| File: InputManager.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "InputManager.h"
 #include "CaledonEngine/Utilities/APIConfig.h"
 

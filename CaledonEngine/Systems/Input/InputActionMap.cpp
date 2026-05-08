@@ -1,3 +1,7 @@
+/*------------------------------
+| File: InputActionMap.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "InputActionMap.h"
 
 /*-----------------------------------

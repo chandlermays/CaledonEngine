@@ -1,3 +1,7 @@
+/*------------------------------
+| File: SDLInput.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "SDLInput.h"
 #include "SDL.h"
 
