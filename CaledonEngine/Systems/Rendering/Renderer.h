@@ -6,11 +6,13 @@
 #include "CaledonEngine/Systems/Rendering/Color.h"
 #include "CaledonEngine/Utilities/Math/Rect.h"
 #include "CaledonEngine/Utilities/Math/Vector2.h"
+#include <memory>
 
 namespace CE
 {
 	class Window;
 	class Texture;
+	class Image;
 
 	class Renderer
 	{
@@ -27,6 +29,7 @@ namespace CE
 		virtual void Render() = 0;																// Executes the rendering process
 
 		virtual void RenderCopy(Texture* pTexture, Rect* pSrc, Rect* pDest) = 0;				// Renders a texture to the screen
+		virtual std::shared_ptr<Texture> CreateTexture(Image* pImage) = 0;						// Creates a Texture from a loaded Image
 
 		virtual void SetTextureColorMod(Texture* pTexture, uint8_t r,
 			uint8_t g, uint8_t b) = 0;															// Sets the color modulation for a texture

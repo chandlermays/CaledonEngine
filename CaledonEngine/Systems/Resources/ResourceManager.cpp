@@ -4,23 +4,18 @@
 
 #include <fstream>
 #include <iostream>
-#include <cassert>
 
 #ifdef NDEBUG
 #include "SDL.h"
 #include "SDL_image.h"
 #endif
 
-///////////////////////////////////////
-/*-------------------------------------
-| --- Public Function Definitions --- |
--------------------------------------*/
-///////////////////////////////////////
-
-/*---------------------
-| --- Constructor --- |
----------------------*/
-
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
+/*-------------------------------------------------------------------------
+| --- Constructor: Constructs the ResourceManager with default values --- |
+-------------------------------------------------------------------------*/
 CE::ResourceManager::ResourceManager()
 {
     // Constructor body - initialization handled in Initialize()
@@ -29,7 +24,6 @@ CE::ResourceManager::ResourceManager()
 /*------------------------------------------------
 | --- Initialize: Setup the Resource Manager --- |
 ------------------------------------------------*/
-
 bool CE::ResourceManager::Initialize()
 {
 #ifdef NDEBUG
@@ -45,7 +39,6 @@ bool CE::ResourceManager::Initialize()
 /*-------------------------------------------------
 | --- Shutdown: Shutdown the Resource Manager --- |
 -------------------------------------------------*/
-
 void CE::ResourceManager::Shutdown()
 {
     // Clear all loaded resources
@@ -56,7 +49,6 @@ void CE::ResourceManager::Shutdown()
 /*------------------------------------------------------------
 | --- LoadResource: Load the Data of the Associated File --- |
 ------------------------------------------------------------*/
-
 bool CE::ResourceManager::LoadResource(const std::string& fileName, std::string& data)
 {
     // Check if resource is already loaded
@@ -107,7 +99,6 @@ bool CE::ResourceManager::LoadResource(const std::string& fileName, std::string&
 /*--------------------------------------------------------------
 | --- GetResource: Returns the Data of the Associated File --- |
 --------------------------------------------------------------*/
-
 std::string CE::ResourceManager::GetResource(const std::string& fileName)
 {
     // Check if already loaded
@@ -130,11 +121,9 @@ std::string CE::ResourceManager::GetResource(const std::string& fileName)
 /*-------------------------------------------------
 | --- LoadSurface: Load a Surface from a File --- |
 -------------------------------------------------*/
-
 CE::Image* CE::ResourceManager::LoadSurface(const std::string& filePath)
 {
 #ifdef NDEBUG
-    // Release mode: Load from zip file data
     std::string imageData = GetResource(filePath);
     if (imageData.empty())
     {
@@ -142,47 +131,57 @@ CE::Image* CE::ResourceManager::LoadSurface(const std::string& filePath)
         return nullptr;
     }
 
-    // Create SDL_RWops from memory buffer
     SDL_RWops* rw = SDL_RWFromMem(const_cast<char*>(imageData.c_str()), static_cast<int>(imageData.size()));
-    assert(rw);
+    if (!rw)
+    {
+        std::cout << "Failed to create SDL_RWops for: " << filePath << std::endl;
+        return nullptr;
+    }
 
-    // Load the surface from memory
     SDL_Surface* surface = IMG_Load_RW(rw, 1); // 1 means SDL will free the RWops
-    assert(surface);
+    if (!surface)
+    {
+        std::cout << "Failed to load surface from zip data for: " << filePath << std::endl;
+        return nullptr;
+    }
 
     std::cout << "Loaded surface from zip: " << filePath << " (" << surface->w << "x" << surface->h << ")" << std::endl;
     return new CE::SDLImage(surface);
 
 #else
-    // Debug mode: Load directly from file system
-    CE::SDLImage* image = CE::SDLImage::CreateImage(filePath);
-    assert(image);
+    CE::SDLImage* pImage = CE::SDLImage::CreateImage(filePath);
+    if (!pImage)
+    {
+        std::cout << "Failed to load image from file: " << filePath << std::endl;
+        return nullptr;
+    }
 
-    std::cout << "Loaded surface from file: " << filePath << " (" << image->GetW() << "x" << image->GetH() << ")" << std::endl;
-    return image;
+    std::cout << "Loaded surface from file: " << filePath << " (" << pImage->GetW() << "x" << pImage->GetH() << ")" << std::endl;
+    return pImage;
 #endif
 }
 
-/*-----------------------------------------------
-| --- LoadMasterXML: Load a Master XML File --- |
------------------------------------------------*/
-
-bool CE::ResourceManager::LoadMasterXML(const std::string& filePath)
+/*---------------------------------------------------------------------------------------
+| --- LoadMasterXML: Loads a master XML file, returns its {name, path} file entries --- |
+---------------------------------------------------------------------------------------*/
+std::unordered_map<std::string, std::string> CE::ResourceManager::LoadMasterXML(const std::string& filePath)
 {
     std::string xmlData = GetResource(filePath);
     if (xmlData.empty())
     {
         std::cout << "Failed to load master XML: " << filePath << std::endl;
-        return false;
+        return {};
     }
 
-    // Parse the XML data using your CaledonParser
     if (!m_parser.Parse(xmlData))
     {
         std::cout << "Failed to parse master XML: " << filePath << std::endl;
-        return false;
+        return {};
     }
 
-    std::cout << "Successfully loaded and parsed master XML: " << filePath << std::endl;
-    return true;
+    // Expects: <MasterAssets><File name="..." path="..."/>...</MasterAssets>
+    auto entries = m_parser.ExtractStructure("MasterAssets", "File", "name", "path");
+
+    std::cout << "Loaded master XML: " << filePath << " (" << entries.size() << " entries)" << std::endl;
+    return entries;
 }

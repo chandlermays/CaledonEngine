@@ -9,12 +9,14 @@
 
 namespace CE
 {
+	class SpriteSheet;
 	class Renderer;
 	class Sprite;
 
 	class SpriteComponent : public Component
 	{
 	private:
+		std::unique_ptr<SpriteSheet> m_pSpriteSheet;												// Pointer to the SpriteSheet
 		Renderer* m_pRenderer;																		// Pointer to the Renderer
 		std::unique_ptr<Sprite> m_pSprite;															// Pointer to the Sprite
 		Color m_color;																				// Color of the sprite
@@ -31,11 +33,12 @@ namespace CE
 		virtual bool Initialize() override;															// Prepares the SpriteComponent for use
 		virtual void Render() override;																// Draws the sprite to the screen
 
-		void LoadSpritesheet(const char* pSheet, int width, int height, float scale);				// Loads a sprite from a spritesheet
+		void LoadSpriteSheet(const char* pSheet, int width, int height, float scale);				// Loads a sprite from a spritesheet
 		void SetSprite(std::unique_ptr<Sprite> pSprite);											// Sets the sprite to be rendered
 		void SetColor(const Color& color);															// Sets the color of the sprite
 		void SetColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a);									// Sets the color of the sprite
 
+		SpriteSheet* GetSpriteSheet() const;														// Returns a pointer to the sprite sheet
 		Sprite* GetSprite() const;																	// Returns a pointer to the sprite
 		const Color& GetColor() const;																// Returns the color of the sprite
 	};

@@ -175,7 +175,7 @@ CE::CaledonZLib::CaledonZLib()
 		pUncompressedData[dataHeader.uncompressedSize] = NULL;
 
 		// Store the uncompressed data in the map
-		m_uncompressedData[fileName] = std::string(pUncompressedData);
+		m_uncompressedData[fileName] = std::string(pUncompressedData, dataHeader.uncompressedSize);
 
 		delete[] pUncompressedData;
 

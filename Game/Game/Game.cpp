@@ -5,10 +5,14 @@
 #include "Game.h"
 #include "../Controllers/PlayerController.h"
 #include "CaledonEngine/Systems/Engine/EngineManager.h"
+#include "CaledonEngine/Systems/Engine/LoggingManager.h"
 #include "CaledonEngine/Systems/Input/InputManager.h"
+#include "CaledonEngine/Systems/Resources/ResourceManager.h"
 #include "CaledonEngine/Systems/Scene/SceneManager.h"
 #include "CaledonEngine/Core/Scene.h"
 #include "CaledonEngine/Core/GameObject.h"
+#include "CaledonEngine/ComponentFactory.h"
+#include "CaledonEngine/GameObjectCreator.h"
 
 /*-----------------------------------
 | --- Public Method Definitions --- |
@@ -37,14 +41,13 @@ bool Game::Initialize()
 	m_pEngineManager = &CE::EngineManager::GetInstance();
 
 	if (!m_pEngineManager->Initialize())
-	{
 		return false;
-	}
 
 	m_pInputActions = new GameInputActions();
 	m_pInputActions->Initialize();
 
 	m_pEngineManager->GetInputManager()->SetInputActions(m_pInputActions);
+	RegisterGameComponents();
 
 	return true;
 }
@@ -63,6 +66,20 @@ void Game::Run()
 /*------------------------------------
 | --- Private Method Definitions --- |
 ------------------------------------*/
+/*-----------------------------------------------------------------------------------------------
+| --- RegisterGameComponents: Registers Game-side component types with the ComponentFactory --- |
+-----------------------------------------------------------------------------------------------*/
+void Game::RegisterGameComponents()
+{
+	CE::ComponentFactory::RegisterComponent("PlayerController",
+		[this](CE::GameObject*, tinyxml2::XMLElement*) -> CE::Component*
+		{
+			PlayerController* pController = new PlayerController();
+			pController->SetInputActions(m_pInputActions);
+			return pController;
+		});
+}
+
 /*-----------------------------------------------------------------------------
 | --- CreateScenes: Constructs and configures all game scenes and objects --- |
 -----------------------------------------------------------------------------*/
@@ -73,6 +90,7 @@ void Game::CreateScenes()
 	auto pMainScene = std::make_unique<CE::Scene>();
 	pMainScene->SetName("MainScene");
 
+	// Hand-built for now, until the Player is authored as XML content too
 	auto pPlayer = std::make_unique<CE::GameObject>();
 	pPlayer->SetName("Player");
 	pPlayer->SetTag("Player");
@@ -82,10 +100,43 @@ void Game::CreateScenes()
 	pPlayer->AddComponent(pPlayerController);
 	pMainScene->AddGameObject(std::move(pPlayer));
 
+	LoadWorldObjects(pMainScene.get(), "Assets/MasterAssets.xml");
+
 	CE::Scene* pSceneRef = pMainScene.get();
 	pSceneManager->AddScene(std::move(pMainScene));
 	pSceneManager->SetCurrentScene(pSceneRef);
 	pSceneRef->Initialize();
+}
+
+/*------------------------------------------------------------------------------------------
+| --- LoadWorldObjects: Loads all GameObjects listed in a master XML file into a scene --- |
+------------------------------------------------------------------------------------------*/
+void Game::LoadWorldObjects(CE::Scene* pScene, const std::string& masterXmlPath)
+{
+	if (!pScene)
+		return;
+
+	CE::ResourceManager* pResourceManager = m_pEngineManager->GetResourceManager();
+	if (!pResourceManager)
+		return;
+
+	auto subsystemFiles = pResourceManager->LoadMasterXML(masterXmlPath);
+
+	for (const auto& [name, path] : subsystemFiles)
+	{
+		std::string fileData = pResourceManager->GetResource(path);
+		if (fileData.empty())
+		{
+			CE_LOG("Game::LoadWorldObjects - Failed to load subsystem file '{}' ({})", name, path);
+			continue;
+		}
+
+		std::vector<CE::GameObject*> gameObjects = m_pGameObjectCreator->CreateGameObjects(fileData);
+		for (CE::GameObject* pGameObject : gameObjects)
+		{
+			pScene->AddGameObject(std::unique_ptr<CE::GameObject>(pGameObject));
+		}
+	}
 }
 
 /*-----------------------------------------------------------------

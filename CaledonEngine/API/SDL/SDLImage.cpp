@@ -1,35 +1,31 @@
-#include "SDLImage.h"
+/*------------------------------
+| File: SDLImage.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "SDL.h"
 #include "SDL_image.h"
+#include "SDLImage.h"
 
-///////////////////////////////////////
-/*-------------------------------------
-| --- Public Function Definitions --- |
--------------------------------------*/
-///////////////////////////////////////
-
-/*---------------------
-| --- Constructor --- |
----------------------*/
-
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
+/*-------------------------------------------------------------------
+| --- Constructor: Constructs the SDL_Image with default values --- |
+-------------------------------------------------------------------*/
 CE::SDLImage::SDLImage()
 	: m_pSurface{ nullptr }
-{
-}
+{ }
 
 /*-----------------------------------
 | --- Parameterized Constructor --- |
 -----------------------------------*/
-
 CE::SDLImage::SDLImage(SDL_Surface* surface)
 	: m_pSurface{ surface }
-{
-}
+{ }
 
 /*--------------------
 | --- Destructor --- |
 --------------------*/
-
 CE::SDLImage::~SDLImage()
 {
 	if (m_pSurface)
@@ -41,7 +37,6 @@ CE::SDLImage::~SDLImage()
 /*------------------------------------------
 | --- GetW: Get the width of the image --- |
 ------------------------------------------*/
-
 int CE::SDLImage::GetW() const
 {
 	return m_pSurface->w;
@@ -50,7 +45,6 @@ int CE::SDLImage::GetW() const
 /*-------------------------------------------
 | --- GetH: Get the height of the image --- |
 -------------------------------------------*/
-
 int CE::SDLImage::GetH() const
 {
 	return m_pSurface->h;
@@ -59,7 +53,6 @@ int CE::SDLImage::GetH() const
 /*--------------------------------------------------
 | --- CreateImage: Create an Image from a File --- |
 --------------------------------------------------*/
-
 CE::SDLImage* CE::SDLImage::CreateImage(const std::string& filePath)
 {
 	SDL_Surface* surface = IMG_Load(filePath.c_str());
@@ -70,11 +63,10 @@ CE::SDLImage* CE::SDLImage::CreateImage(const std::string& filePath)
 	return new SDLImage(surface);
 }
 
-/*---------------------------------------------------------------
-| --- GetNativeImageHandle: Returns the API-specified Image --- |
----------------------------------------------------------------*/
-
-SDL_Surface* CE::SDLImage::GetNativeImageHandle() const
+/*---------------------------------------------------------------------
+| --- GetNativeHandle: Get the native image handle (SDL_Surface*) --- |
+---------------------------------------------------------------------*/
+void* CE::SDLImage::GetNativeHandle() const
 {
-	return m_pSurface;
+	return static_cast<void*>(m_pSurface);
 }

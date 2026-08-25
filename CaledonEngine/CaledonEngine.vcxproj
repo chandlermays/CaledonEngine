@@ -77,6 +77,7 @@
     <ClCompile Include="Systems\Rendering\Shapes\Square.cpp" />
     <ClCompile Include="Systems\Rendering\Shapes\Triangle.cpp" />
     <ClCompile Include="Systems\Rendering\Sprite.cpp" />
+    <ClCompile Include="Systems\Rendering\SpriteSheet.cpp" />
     <ClCompile Include="Systems\Rendering\Window.cpp" />
     <ClCompile Include="Systems\Resources\ResourceManager.cpp" />
     <ClCompile Include="Systems\Scene\SceneManager.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="Systems\Rendering\Shapes\Square.h" />
     <ClInclude Include="Systems\Rendering\Shapes\Triangle.h" />
     <ClInclude Include="Systems\Rendering\Sprite.h" />
+    <ClInclude Include="Systems\Rendering\SpriteSheet.h" />
     <ClInclude Include="Systems\Rendering\Texture.h" />
     <ClInclude Include="Systems\Rendering\Window.h" />
     <ClInclude Include="Systems\Resources\ResourceManager.h" />

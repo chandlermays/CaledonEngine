@@ -3,10 +3,13 @@
 | Author: Chandler Mays
 ------------------------------*/
 #include "SpriteComponent.h"
-#include "CaledonEngine/Systems/Rendering/GraphicsManager.h"
 #include "CaledonEngine/Systems/Engine/EngineManager.h"
-#include "CaledonEngine/Systems/Rendering/Sprite.h"
+#include "CaledonEngine/Systems/Rendering/GraphicsManager.h"
 #include "CaledonEngine/Systems/Rendering/Shapes/Shape.h"
+#include "CaledonEngine/Systems/Rendering/Sprite.h"
+#include "CaledonEngine/Systems/Rendering/SpriteSheet.h"
+#include "CaledonEngine/Systems/Rendering/Image.h"
+#include "CaledonEngine/Systems/Resources/ResourceManager.h"
 #include "CaledonEngine/Core/GameObject.h"
 #include "CaledonEngine/Core/Transform.h"
 
@@ -21,7 +24,7 @@ CE::SpriteComponent::SpriteComponent()
 	, m_pRenderer{ nullptr }
 	, m_pSprite{ nullptr }
 	, m_color{ 255, 255, 255, 255 }
-{}
+{ }
 
 /*-------------------------------------------------------------------------------
 | --- Constructor: Constructs the SpriteComponent with parameterized values --- |
@@ -32,7 +35,7 @@ CE::SpriteComponent::SpriteComponent(const char* pSheet, int width, int height, 
 	, m_pSprite{ nullptr }
 	, m_color{ 255, 255, 255, 255 }
 {
-	LoadSpritesheet(pSheet, width, height, scale);
+	LoadSpriteSheet(pSheet, width, height, scale);
 }
 
 /*----------------------------------------------------------
@@ -128,8 +131,33 @@ void CE::SpriteComponent::Render()
 	}
 }
 
-void CE::SpriteComponent::LoadSpritesheet(const char* pSheet, int width, int height, float scale)
+/*----------------------------------------------------------------------------------------------
+| --- LoadSpritesheet: Loads a sprite from a spritesheet and sets it as the current sprite --- |
+----------------------------------------------------------------------------------------------*/
+void CE::SpriteComponent::LoadSpriteSheet(const char* pSheet, int frameWidth, int frameHeight, float scale)
 {
+	if (!pSheet)
+		return;
+
+	GraphicsManager* pGraphicsManager = EngineManager::GetInstance().GetGraphicsManager();
+	Renderer* pRenderer = pGraphicsManager ? pGraphicsManager->GetRenderer() : nullptr;
+	ResourceManager* pResourceManager = EngineManager::GetInstance().GetResourceManager();
+
+	if (!pRenderer || !pResourceManager)
+		return;
+
+	std::unique_ptr<Image> pImage(pResourceManager->LoadSurface(pSheet));
+	if (!pImage)
+		return;
+
+	std::shared_ptr<Texture> pTexture = pRenderer->CreateTexture(pImage.get());
+	if (!pTexture)
+		return;
+
+	m_pSpriteSheet = std::make_unique<SpriteSheet>(pTexture, frameWidth, frameHeight);
+	m_pSprite = m_pSpriteSheet->CreateSprite(0);
+
+	(void)scale;	// TODO: decide how 'scale' maps to Transform scale / pixelsPerUnit once that's settled
 }
 
 /*---------------------------------------------------
@@ -157,6 +185,14 @@ void CE::SpriteComponent::SetColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 	m_color.g = g;
 	m_color.b = b;
 	m_color.a = a;
+}
+
+/*---------------------------------------------------------------
+| --- GetSpriteSheet: Returns a pointer to the sprite sheet --- |
+---------------------------------------------------------------*/
+CE::SpriteSheet* CE::SpriteComponent::GetSpriteSheet() const
+{
+	return m_pSpriteSheet.get();
 }
 
 /*----------------------------------------------------

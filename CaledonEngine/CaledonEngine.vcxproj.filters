@@ -178,6 +178,9 @@
     <ClCompile Include="ComponentFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Systems\Rendering\SpriteSheet.cpp">
+      <Filter>Source Files\Systems\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\GameObject.h">
@@ -323,6 +326,9 @@
     </ClInclude>
     <ClInclude Include="ComponentFactory.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\SpriteSheet.h">
+      <Filter>Source Files\Systems\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

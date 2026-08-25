@@ -5,6 +5,8 @@
 #include "SDLRenderer.h"
 #include "CaledonEngine/Systems/Rendering/Window.h"
 #include "CaledonEngine/Systems/Rendering/Texture.h"
+#include "CaledonEngine/Systems/Rendering/Image.h"
+#include "CaledonEngine/API/SDL/SDLTexture.h"
 #include "SDL.h"
 
 /*-----------------------------------
@@ -94,6 +96,32 @@ void CE::SDLRenderer::RenderCopy(Texture* pTexture, Rect* pSrc, Rect* pDest)
 	destRect.h = pDest->m_height;
 
 	SDL_RenderCopy(m_pRenderer, pSDLTexture, pSrc ? &srcRect : nullptr, &destRect);
+}
+
+/*--------------------------------------------------------------
+| --- CreateTexture: Creates a Texture from a loaded Image --- |
+--------------------------------------------------------------*/
+std::shared_ptr<CE::Texture> CE::SDLRenderer::CreateTexture(Image* pImage)
+{
+	if (!m_pRenderer || !pImage)
+		return nullptr;
+
+	SDL_Surface* pSurface = static_cast<SDL_Surface*>(pImage->GetNativeHandle());
+	if (!pSurface)
+		return nullptr;
+
+	SDL_Texture* pSDLTexture = SDL_CreateTextureFromSurface(m_pRenderer, pSurface);
+	if (!pSDLTexture)
+		return nullptr;
+
+	auto pTexture = std::make_shared<SDLTexture>();
+	if (!pTexture->Load(pSDLTexture, pSurface->w, pSurface->h))
+	{
+		SDL_DestroyTexture(pSDLTexture);
+		return nullptr;
+	}
+
+	return pTexture;
 }
 
 /*---------------------------------------------------------------------

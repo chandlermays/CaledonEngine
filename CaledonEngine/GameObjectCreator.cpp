@@ -8,25 +8,19 @@
 
 using namespace tinyxml2;
 
-///////////////////////////////////////
-/*-------------------------------------
-| --- Public Function Definitions --- |
--------------------------------------*/
-///////////////////////////////////////
-
-/*---------------------
-| --- Constructor --- |
----------------------*/
-
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
+/*---------------------------------------------------------------------------
+| --- Constructor: Constructs the GameObjectCreator with default values --- |
+---------------------------------------------------------------------------*/
 CE::GameObjectCreator::GameObjectCreator()
 	: m_pComponentFactory{ new CE::ComponentFactory() }
-{
-}
+{ }
 
 /*--------------------
 | --- Destructor --- |
 --------------------*/
-
 CE::GameObjectCreator::~GameObjectCreator()
 {
 	delete m_pComponentFactory;
@@ -37,7 +31,6 @@ CE::GameObjectCreator::~GameObjectCreator()
 /*----------------------------------------------------------------
 | --- CreateGameObject: Create a GameObject from an XML File --- |
 ----------------------------------------------------------------*/
-
 CE::GameObject* CE::GameObjectCreator::CreateGameObject(const std::string& fileData)
 {
 	if (!m_parser.Parse(fileData))
@@ -59,7 +52,6 @@ CE::GameObject* CE::GameObjectCreator::CreateGameObject(const std::string& fileD
 /*-------------------------------------------------------------------------
 | --- CreateGameObjects: Create multiple GameObjects from an XML File --- |
 -------------------------------------------------------------------------*/
-
 std::vector<CE::GameObject*> CE::GameObjectCreator::CreateGameObjects(const std::string& fileData)
 {
 	if (!m_parser.Parse(fileData))
@@ -90,12 +82,9 @@ std::vector<CE::GameObject*> CE::GameObjectCreator::CreateGameObjects(const std:
 
 
 
-////////////////////////////////////////
 /*--------------------------------------
 | --- Private Function Definitions --- |
 --------------------------------------*/
-////////////////////////////////////////
-
 /*--------------------------------------------------------------------------
 | --- CreateGameObject: Create a GameObject from an XML Element (Root) --- |
 --------------------------------------------------------------------------*/
@@ -120,9 +109,20 @@ CE::GameObject* CE::GameObjectCreator::ParseGameObject(XMLElement* pElement)
 	}
 
 	// Parse and Set the Position and Size of the GameObject
-	Vector2f position, size;
-	sscanf_s(pElement->Attribute("position"), "%f,%f", &position.x, &position.y);
-	sscanf_s(pElement->Attribute("size"), "%f,%f", &size.x, &size.y);
+	Vector2f position = Vector2f::Zero();
+	Vector2f size = Vector2f::One();
+
+	const char* pPosition = pElement->Attribute("position");
+	if (pPosition)
+	{
+		sscanf_s(pPosition, "%f,%f", &position.x, &position.y);
+	}
+
+	const char* pSize = pElement->Attribute("size");
+	if (pSize)
+	{
+		sscanf_s(pSize, "%f,%f", &size.x, &size.y);
+	}
 
 	pGameObject->GetTransform().SetPosition(position);
 	pGameObject->GetTransform().SetScale(size);

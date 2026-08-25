@@ -23,6 +23,7 @@ namespace CE
 		void Render() override;																		// Executes the rendering process
 
 		virtual void RenderCopy(Texture* pTexture, Rect* pSrc, Rect* pDest) override;				// Renders a texture to the screen
+		std::shared_ptr<Texture> CreateTexture(Image* pImage) override;								// Creates a Texture from a loaded Image
 
 		virtual void SetTextureColorMod(Texture* pTexture, uint8_t r,
 			uint8_t g, uint8_t b) override;															// Sets the color modulation for a texture

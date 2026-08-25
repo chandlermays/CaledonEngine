@@ -1,3 +1,7 @@
+/*------------------------------
+| File: SDLImage.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "CaledonEngine/Systems/Rendering/Image.h"
 
@@ -20,6 +24,6 @@ namespace CE
 
         static SDLImage* CreateImage(const std::string& filePath);	            // Create an Image from a File
 
-        SDL_Surface* GetNativeImageHandle() const;                              // Returns the API-specified Image
+        void* GetNativeHandle() const override;                                 // Get the native image handle (SDL_Surface*)
     };
 }
