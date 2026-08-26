@@ -330,6 +330,12 @@
     <ClInclude Include="Systems\Rendering\SpriteSheet.h">
       <Filter>Source Files\Systems\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="Systems\IRenderable.h">
+      <Filter>Source Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\IUpdatable.h">
+      <Filter>Source Files\Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Component.inl">

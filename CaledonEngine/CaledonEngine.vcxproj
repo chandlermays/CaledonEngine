@@ -117,6 +117,8 @@
     <ClInclude Include="Systems\Input\InputActionMap.h" />
     <ClInclude Include="Systems\Input\InputActions.h" />
     <ClInclude Include="Systems\Input\InputManager.h" />
+    <ClInclude Include="Systems\IRenderable.h" />
+    <ClInclude Include="Systems\IUpdatable.h" />
     <ClInclude Include="Systems\Physics\AABB2D.h" />
     <ClInclude Include="Systems\Rendering\Color.h" />
     <ClInclude Include="Systems\Rendering\Components\SpriteComponent.h" />

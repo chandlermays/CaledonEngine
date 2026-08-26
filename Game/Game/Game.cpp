@@ -22,6 +22,7 @@
 -----------------------------------------------------------------------*/
 Game::Game()
 	: m_pEngineManager{ nullptr }
+	, m_pGameObjectCreator{ nullptr }
 	, m_pInputActions{ nullptr }
 {}
 
@@ -144,6 +145,12 @@ void Game::LoadWorldObjects(CE::Scene* pScene, const std::string& masterXmlPath)
 -----------------------------------------------------------------*/
 void Game::Shutdown()
 {
+	if (m_pGameObjectCreator)
+	{
+		delete m_pGameObjectCreator;
+		m_pGameObjectCreator = nullptr;
+	}
+
 	if (m_pInputActions)
 	{
 		delete m_pInputActions;

@@ -26,7 +26,8 @@ namespace CE
 
 		virtual bool Initialize(Window* pWindow) = 0;											// Prepares the Renderer for use
 		virtual void Shutdown() = 0;															// Cleans up the Renderer
-		virtual void Render() = 0;																// Executes the rendering process
+		virtual void BeginFrame() = 0;															// Prepares the Renderer for a new frame
+		virtual void EndFrame() = 0;															// Finalizes the rendering process for the current frame
 
 		virtual void RenderCopy(Texture* pTexture, Rect* pSrc, Rect* pDest) = 0;				// Renders a texture to the screen
 		virtual std::shared_ptr<Texture> CreateTexture(Image* pImage) = 0;						// Creates a Texture from a loaded Image

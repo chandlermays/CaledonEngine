@@ -29,6 +29,8 @@ namespace CE
 
 		EngineManager();													// Constructor
 
+		void RegisterManagers();											// Registers all engine subsystem managers
+
 		void Update(float deltaTime) override;								// Updates all engine subsystem managers
 		void Render() override;												// Renders all engine subsystem managers
 

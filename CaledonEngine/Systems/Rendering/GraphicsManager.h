@@ -25,7 +25,8 @@ namespace CE
 		GraphicsManager& operator=(GraphicsManager&&) = delete;					// Prevent move-assignment
 
 		bool Initialize() override;												// Prepares the GraphicsManager for use
-		void Render() override;													// Presents the current frame to the screen
+		void BeginFrame();														// Prepares the graphics system for a new frame
+		void EndFrame();														// Finalizes the rendering process for the current frame
 		void Shutdown() override;												// Cleans up and shuts down the graphics system
 
 		Window* GetWindow() const;												// Returns a pointer to the Window's API

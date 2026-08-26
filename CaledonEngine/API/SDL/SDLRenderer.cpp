@@ -58,16 +58,26 @@ void CE::SDLRenderer::Shutdown()
     m_pRenderer = nullptr;
 }
 
-/*------------------------------------------------
-| --- Render: Executes the rendering process --- |
-------------------------------------------------*/
-void CE::SDLRenderer::Render()
+/*-----------------------------------------------------------------
+| --- BeginFrame: Prepares the 'SDL' Renderer for a new frame --- |
+-----------------------------------------------------------------*/
+void CE::SDLRenderer::BeginFrame()
 {
-    if (!m_pRenderer)
-        return;
+	if (!m_pRenderer)
+		return;
 
 	SDL_SetRenderDrawColor(m_pRenderer, 0, 156, 255, 255);
 	SDL_RenderClear(m_pRenderer);
+}
+
+/*-------------------------------------------------------------------------
+| --- EndFrame: Finalizes the rendering process for the current frame --- |
+-------------------------------------------------------------------------*/
+void CE::SDLRenderer::EndFrame()
+{
+	if (!m_pRenderer)
+		return;
+
 	SDL_RenderPresent(m_pRenderer);
 }
 

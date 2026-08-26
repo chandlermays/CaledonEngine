@@ -149,13 +149,12 @@ CE::ToolsManager* CE::EngineManager::GetToolsManager() const
 
 
 
-
 /*------------------------------------
 | --- Private Method Definitions --- |
 ------------------------------------*/
-/*-----------------------------------------------------------------------------
-| --- Constructor: Constructs and registers all engine subsystem managers --- |
------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------
+| --- Constructor: Constructs the EngineManager with default values --- |
+-----------------------------------------------------------------------*/
 CE::EngineManager::EngineManager()
 	: m_isRunning{ true }
 	, m_pGraphicsManager{ nullptr }
@@ -163,6 +162,14 @@ CE::EngineManager::EngineManager()
 	, m_pSceneManager{ nullptr }
 	, m_pInputManager{ nullptr }
 	, m_pToolsManager{ nullptr }
+{
+	RegisterManagers();
+}
+
+/*-------------------------------------------------------------------
+| --- RegisterManagers: Registers all engine subsystem managers --- |
+-------------------------------------------------------------------*/
+void CE::EngineManager::RegisterManagers()
 {
 	auto pGraphics = std::make_unique<GraphicsManager>();
 	m_pGraphicsManager = pGraphics.get();
@@ -192,7 +199,7 @@ void CE::EngineManager::Update(float deltaTime)
 {
 	for (const auto& manager : m_pManagers)
 	{
-		manager->Update(deltaTime);
+		manager->Update(deltaTime);		// TODO: Refactor this so that not every Manager gets an Update() call
 	}
 }
 
@@ -201,8 +208,18 @@ void CE::EngineManager::Update(float deltaTime)
 -------------------------------------------------------*/
 void CE::EngineManager::Render()
 {
+	if (m_pGraphicsManager)
+	{
+		m_pGraphicsManager->BeginFrame();
+	}
+
 	for (const auto& manager : m_pManagers)
 	{
-		manager->Render();
+		manager->Render();				// TODO: Refactor this so that not every Manager gets a Render() call
+	}
+
+	if (m_pGraphicsManager)
+	{
+		m_pGraphicsManager->EndFrame();
 	}
 }

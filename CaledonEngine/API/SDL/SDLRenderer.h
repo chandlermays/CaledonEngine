@@ -20,7 +20,8 @@ namespace CE
 
 		bool Initialize(Window* pWindow) override;													// Prepares the SDL Renderer for use
 		void Shutdown() override;																	// Cleans up the SDL Renderer
-		void Render() override;																		// Executes the rendering process
+		void BeginFrame() override;																	// Prepares the SDL Renderer for a new frame
+		void EndFrame() override;																	// Finalizes the rendering process for the current frame
 
 		virtual void RenderCopy(Texture* pTexture, Rect* pSrc, Rect* pDest) override;				// Renders a texture to the screen
 		std::shared_ptr<Texture> CreateTexture(Image* pImage) override;								// Creates a Texture from a loaded Image

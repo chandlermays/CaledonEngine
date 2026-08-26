@@ -10,7 +10,7 @@
 
 namespace CE
 {
-#define CE_LOG(...) CE::LoggingManager::LogMessage(std::format(__VA_ARGS__))
+#define CE_LOG(...) CE::LoggingManager::LogMessage(__VA_ARGS__)
 
     class LoggingManager : public Manager
     {

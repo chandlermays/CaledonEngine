@@ -1,5 +1,10 @@
 #include "ComponentFactory.h"
 #include "CaledonEngine/Systems/Rendering/Components/SpriteComponent.h"
+#include "CaledonEngine/Systems/Rendering/Shapes/Square.h"
+#include "CaledonEngine/Systems/Rendering/Shapes/Circle.h"
+#include "CaledonEngine/Systems/Rendering/Shapes/Triangle.h"
+#include "CaledonEngine/Systems/Rendering/Shapes/Capsule.h"
+#include "CaledonEngine/Systems/Rendering/Sprite.h"
 
 #include "CaledonEngine/Core/GameObject.h"
 #include "CaledonEngine/Utilities/ThirdParty/tinyxml2.h"
@@ -68,24 +73,74 @@ void CE::ComponentFactory::AddSpriteComponent(GameObject* pGameObject, tinyxml2:
 	int frameWidth = pElement->IntAttribute("frameWidth");
 	int frameHeight = pElement->IntAttribute("frameHeight");
 	float scale = pElement->FloatAttribute("scale");
+	const char* pShapeType = pElement->Attribute("shape");
 
-	SpriteComponent* pSpriteCmp = (pSpritesheet && frameWidth > 0 && frameHeight > 0)
-		? new SpriteComponent(pSpritesheet, frameWidth, frameHeight, scale)
-		: new SpriteComponent();
+	SpriteComponent* pSpriteCmp = nullptr;
 
-	XMLElement* pColor = pElement->FirstChildElement("Color");
-	if (pColor != nullptr)
+	if (pSpritesheet && frameWidth > 0 && frameHeight > 0)
 	{
-		unsigned char r = static_cast<unsigned char>(pColor->UnsignedAttribute("r"));
-		unsigned char g = static_cast<unsigned char>(pColor->UnsignedAttribute("g"));
-		unsigned char b = static_cast<unsigned char>(pColor->UnsignedAttribute("b"));
-		unsigned char a = static_cast<unsigned char>(pColor->UnsignedAttribute("a"));
-		pSpriteCmp->SetColor(r, g, b, a);
-	}
+		// Texture-backed sprite, loaded from a spritesheet
+		pSpriteCmp = new SpriteComponent(pSpritesheet, frameWidth, frameHeight, scale);
 
-	XMLElement* pImage = pElement->FirstChildElement("Image");
-	
-	//...
+		XMLElement* pColor = pElement->FirstChildElement("Color");
+		if (pColor != nullptr)
+		{
+			unsigned char r = static_cast<unsigned char>(pColor->UnsignedAttribute("r"));
+			unsigned char g = static_cast<unsigned char>(pColor->UnsignedAttribute("g"));
+			unsigned char b = static_cast<unsigned char>(pColor->UnsignedAttribute("b"));
+			unsigned char a = static_cast<unsigned char>(pColor->UnsignedAttribute("a"));
+			pSpriteCmp->SetColor(r, g, b, a);		// Tint applied on top of the texture
+		}
+	}
+	else if (pShapeType)
+	{
+		// Primitive shape sprite (no texture) — <Color> sets the shape's own color directly
+		pSpriteCmp = new SpriteComponent();
+
+		Color shapeColor = Color::White();
+		XMLElement* pColor = pElement->FirstChildElement("Color");
+		if (pColor != nullptr)
+		{
+			shapeColor.r = static_cast<unsigned char>(pColor->UnsignedAttribute("r"));
+			shapeColor.g = static_cast<unsigned char>(pColor->UnsignedAttribute("g"));
+			shapeColor.b = static_cast<unsigned char>(pColor->UnsignedAttribute("b"));
+			shapeColor.a = static_cast<unsigned char>(pColor->UnsignedAttribute("a"));
+		}
+
+		bool isFilled = pElement->BoolAttribute("filled", true);
+		int width = pElement->IntAttribute("width", 100);
+		int height = pElement->IntAttribute("height", 100);
+
+		std::string shapeType = pShapeType;
+		std::unique_ptr<Shape> pShape;
+
+		if (shapeType == "Square")
+		{
+			pShape = std::make_unique<Square>(shapeColor, width, isFilled);
+		}
+		else if (shapeType == "Circle")
+		{
+			pShape = std::make_unique<Circle>(shapeColor, pElement->IntAttribute("radius", width / 2), isFilled);
+		}
+		else if (shapeType == "Triangle")
+		{
+			pShape = std::make_unique<Triangle>(shapeColor, width, height, isFilled);
+		}
+		else if (shapeType == "Capsule")
+		{
+			pShape = std::make_unique<Capsule>(shapeColor, width, height, isFilled);
+		}
+
+		if (pShape)
+		{
+			pSpriteCmp->SetSprite(Sprite::CreateFromShape(std::move(pShape)));
+		}
+	}
+	else
+	{
+		// No sprite content specified — a blank SpriteComponent that can be assigned one later
+		pSpriteCmp = new SpriteComponent();
+	}
 
 	pGameObject->AddComponent(pSpriteCmp);
 }

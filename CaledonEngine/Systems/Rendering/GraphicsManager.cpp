@@ -48,12 +48,20 @@ bool CE::GraphicsManager::Initialize()
 	return true;
 }
 
-/*----------------------------------------------------------
-| --- Render: Presents the current frame to the screen --- |
-----------------------------------------------------------*/
-void CE::GraphicsManager::Render()
+void CE::GraphicsManager::BeginFrame()
 {
-	m_pRendererAPI->Render();
+	if (m_pRendererAPI)
+	{
+		m_pRendererAPI->BeginFrame();
+	}
+}
+
+void CE::GraphicsManager::EndFrame()
+{
+	if (m_pRendererAPI)
+	{
+		m_pRendererAPI->EndFrame();
+	}
 }
 
 /*----------------------------------------------------------------
