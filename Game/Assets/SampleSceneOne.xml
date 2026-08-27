@@ -1,0 +1,8 @@
+<GameObjects>
+	<GameObject name="Player" tag="Player" position="400,300" size="100,100">
+		<PlayerController/>
+		<SpriteComponent shape="Square" width="32" filled="true">
+			<Color r="0" g="200" b="255" a="255"/>
+		</SpriteComponent>
+	</GameObject>
+</GameObjects>

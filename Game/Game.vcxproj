@@ -242,7 +242,8 @@
       <AdditionalDependencies>CaledonEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)Assets" "$(SolutionDir)Build\Assets" /s /e /i /y</Command>
+      <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
+xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SFML_Debug|Win32'">
@@ -261,7 +262,8 @@
       <AdditionalDependencies>CaledonEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)Assets" "$(SolutionDir)Build\Assets" /s /e /i /y</Command>
+      <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
+xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SDL_Debug|Win32'">
@@ -280,7 +282,8 @@
       <AdditionalDependencies>CaledonEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)Assets" "$(SolutionDir)Build\Assets" /s /e /i /y</Command>
+      <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
+xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -303,7 +306,8 @@
       <AdditionalDependencies>CaledonEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)Assets" "$(SolutionDir)Build\Assets" /s /e /i /y</Command>
+      <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
+xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SFML_Release|Win32'">
@@ -326,7 +330,8 @@
       <AdditionalDependencies>CaledonEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)Assets" "$(SolutionDir)Build\Assets" /s /e /i /y</Command>
+      <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
+xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SDL_Release|Win32'">
@@ -349,7 +354,8 @@
       <AdditionalDependencies>CaledonEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)Assets" "$(SolutionDir)Build\Assets" /s /e /i /y</Command>
+      <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
+xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -368,7 +374,8 @@
       <AdditionalDependencies>CaledonEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)Assets" "$(SolutionDir)Build\Assets" /s /e /i /y</Command>
+      <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
+xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SFML_Debug|x64'">
@@ -387,7 +394,8 @@
       <AdditionalDependencies>CaledonEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)Assets" "$(SolutionDir)Build\Assets" /s /e /i /y</Command>
+      <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
+xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SDL_Debug|x64'">
@@ -406,7 +414,8 @@
       <AdditionalDependencies>CaledonEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)Assets" "$(SolutionDir)Build\Assets" /s /e /i /y</Command>
+      <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
+xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -429,7 +438,8 @@
       <AdditionalDependencies>CaledonEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)Assets" "$(SolutionDir)Build\Assets" /s /e /i /y</Command>
+      <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
+xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SFML_Release|x64'">
@@ -452,7 +462,8 @@
       <AdditionalDependencies>CaledonEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)Assets" "$(SolutionDir)Build\Assets" /s /e /i /y</Command>
+      <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
+xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SDL_Release|x64'">
@@ -475,7 +486,8 @@
       <AdditionalDependencies>CaledonEngine.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)Assets" "$(SolutionDir)Build\Assets" /s /e /i /y</Command>
+      <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
+xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
