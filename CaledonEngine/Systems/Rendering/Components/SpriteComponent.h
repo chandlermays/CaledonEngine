@@ -24,7 +24,7 @@ namespace CE
 	public:
 		SpriteComponent();																			// Constructor
 		SpriteComponent(const char* pSheet, int width, int height, float scale);					// Parameterized Constructor
-		~SpriteComponent() = default;																// Destructor
+		~SpriteComponent();																			// Destructor
 		SpriteComponent(const SpriteComponent&) = delete;											// Prevent copy-construction
 		SpriteComponent& operator=(const SpriteComponent&) = delete;								// Prevent copy-assignment
 		SpriteComponent(SpriteComponent&&) = delete;												// Prevent move-construction

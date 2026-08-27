@@ -26,7 +26,7 @@ namespace CE
 
 	public:
 		ResourceManager();																				// Constructor
-		~ResourceManager() = default;																	// Destructor
+		~ResourceManager();																				// Destructor
 
 		virtual bool Initialize() override;																// Initialize the Resource Manager
 		virtual void Shutdown() override;																// Shutdown the Resource Manager

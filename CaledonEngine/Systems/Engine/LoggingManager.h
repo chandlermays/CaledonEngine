@@ -34,5 +34,11 @@ namespace CE
 		void Log(const std::string& message, bool newLine = true);                          // Log a message to the log file
 
 		static void LogMessage(const std::string& message, bool newLine = true);            // Static method to log a message
+
+        template<typename... Args>
+        static void LogMessage(std::format_string<Args...> fmt, Args&&... args)
+        {
+            GetInstance().Log(std::format(fmt, std::forward<Args>(args)...));
+        }
     };
 }

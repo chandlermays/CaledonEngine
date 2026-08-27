@@ -21,7 +21,7 @@ private:
 
 	void RegisterGameComponents();														// Registers Game-side component types with the ComponentFactory
 	void CreateScenes();																// Constructs and configures all game scenes and objects
-	void LoadWorldObjects(CE::Scene* pScene, const std::string& masterXmlPath);			// Loads all GameObjects listed in a master XML file into a scene
+	void LoadScenes(const std::string& masterXmlPath);									// Loads all GameObjects listed in a master XML file into a scene
 
 	void Shutdown();																	// Shuts down the game and engine, and cleans up
 

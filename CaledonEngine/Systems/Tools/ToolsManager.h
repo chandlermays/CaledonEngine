@@ -4,13 +4,15 @@
 ------------------------------*/
 #pragma once
 #include "CaledonEngine/Systems/Engine/Manager.h"
+#include "CaledonEngine/Systems/Engine/IRenderable.h"
+#include "CaledonEngine/Systems/Engine/IUpdatable.h"
 #include "CaledonEngine/Systems/Tools/DebugOverlay.h"
 
 namespace CE
 {
 	class InputManager;
 
-	class ToolsManager : public Manager
+	class ToolsManager : public Manager, public IRenderable, public IUpdatable
 	{
 	private:
 		InputManager* m_pInputManager;
@@ -25,8 +27,8 @@ namespace CE
 		ToolsManager& operator=(ToolsManager&&) = delete;
 
 		bool Initialize() override;
-		void Render() override;
 		void Update(float) override;
+		void Render() override;
 		void Shutdown() override;
 	};
 }

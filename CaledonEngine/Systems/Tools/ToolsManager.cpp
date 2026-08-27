@@ -29,11 +29,6 @@ bool CE::ToolsManager::Initialize()
 	return m_debugOverlay.Initialize();
 }
 
-void CE::ToolsManager::Render()
-{
-	m_debugOverlay.Render();
-}
-
 void CE::ToolsManager::Update(float)
 {
 	auto* pInput = m_pInputManager->GetInputAPI();
@@ -44,6 +39,11 @@ void CE::ToolsManager::Update(float)
 	{
 		m_debugOverlay.ToggleVisibility();
 	}
+}
+
+void CE::ToolsManager::Render()
+{
+	m_debugOverlay.Render();
 }
 
 void CE::ToolsManager::Shutdown()

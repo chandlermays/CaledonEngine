@@ -4,6 +4,8 @@
 ------------------------------*/
 #pragma once
 #include "Manager.h"
+#include "IRenderable.h"
+#include "IUpdatable.h"
 #include <vector>
 #include <memory>
 
@@ -19,6 +21,9 @@ namespace CE
 	{
 	private:
 		std::vector<std::unique_ptr<Manager>> m_pManagers;					// Vector of pointers to managers
+		std::vector<IRenderable*> m_pRenderables;							// Vector of pointers to renderable managers
+		std::vector<IUpdatable*> m_pUpdatables;								// Vector of pointers to updatable managers
+
 		GraphicsManager* m_pGraphicsManager;								// Pointer to the graphics manager
 		ResourceManager* m_pResourceManager;								// Pointer to the resource manager
 		SceneManager* m_pSceneManager;										// Pointer to the scene manager
@@ -29,10 +34,10 @@ namespace CE
 
 		EngineManager();													// Constructor
 
-		void RegisterManagers();											// Registers all engine subsystem managers
+		void RegisterManager(std::unique_ptr<CE::Manager> pManager);		// Registers a manager with the engine
 
-		void Update(float deltaTime) override;								// Updates all engine subsystem managers
-		void Render() override;												// Renders all engine subsystem managers
+		void Update(float deltaTime);										// Updates all engine subsystem managers
+		void Render();														// Renders all engine subsystem managers
 
 	public:
 		~EngineManager();													// Destructor

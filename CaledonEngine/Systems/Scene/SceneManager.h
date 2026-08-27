@@ -4,6 +4,8 @@
 ------------------------------*/
 #pragma once
 #include "CaledonEngine/Systems/Engine/Manager.h"
+#include "CaledonEngine/Systems/Engine/IRenderable.h"
+#include "CaledonEngine/Systems/Engine/IUpdatable.h"
 #include <vector>
 #include <memory>
 
@@ -11,7 +13,7 @@ namespace CE
 {
 	class Scene;
 
-	class SceneManager : public Manager
+	class SceneManager : public Manager, public IRenderable, public IUpdatable
 	{
 	private:
 		std::vector<std::unique_ptr<Scene>> m_pScenes;						// The list of scenes

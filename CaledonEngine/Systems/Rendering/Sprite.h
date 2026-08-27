@@ -33,7 +33,7 @@ namespace CE
 
 	public:
 		Sprite();																							// Constructor
-		~Sprite() = default;																				// Destructor
+		~Sprite();																							// Destructor
 		Sprite(const Sprite&) = delete;																		// Prevent copy-construction
 		Sprite& operator=(const Sprite&) = delete;															// Prevent copy-assignment
 		Sprite(Sprite&&) = delete;																			// Prevent move-construction

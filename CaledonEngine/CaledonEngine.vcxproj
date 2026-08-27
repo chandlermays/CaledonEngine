@@ -110,6 +110,8 @@
     <ClInclude Include="DataStructures\Stack.h" />
     <ClInclude Include="GameObjectCreator.h" />
     <ClInclude Include="Systems\Engine\EngineManager.h" />
+    <ClInclude Include="Systems\Engine\IRenderable.h" />
+    <ClInclude Include="Systems\Engine\IUpdatable.h" />
     <ClInclude Include="Systems\Engine\LoggingManager.h" />
     <ClInclude Include="Systems\Engine\Manager.h" />
     <ClInclude Include="Systems\Input\Input.h" />
@@ -117,8 +119,6 @@
     <ClInclude Include="Systems\Input\InputActionMap.h" />
     <ClInclude Include="Systems\Input\InputActions.h" />
     <ClInclude Include="Systems\Input\InputManager.h" />
-    <ClInclude Include="Systems\IRenderable.h" />
-    <ClInclude Include="Systems\IUpdatable.h" />
     <ClInclude Include="Systems\Physics\AABB2D.h" />
     <ClInclude Include="Systems\Rendering\Color.h" />
     <ClInclude Include="Systems\Rendering\Components\SpriteComponent.h" />

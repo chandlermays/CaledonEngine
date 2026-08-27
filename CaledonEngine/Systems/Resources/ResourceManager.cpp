@@ -1,6 +1,7 @@
 #include "ResourceManager.h"
 #include "CaledonEngine/API/SDL/SDLImage.h"
 #include "CaledonEngine/Utilities/ThirdParty/tinyxml2.h"
+#include "CaledonEngine/Systems/Engine/LoggingManager.h"
 
 #include <fstream>
 #include <iostream>
@@ -19,6 +20,15 @@
 CE::ResourceManager::ResourceManager()
 {
     // Constructor body - initialization handled in Initialize()
+}
+
+/*-------------------------------------------------------
+| --- Destructor: Cleans up any allocated resources --- |
+-------------------------------------------------------*/
+CE::ResourceManager::~ResourceManager()
+{
+    CE_LOG("GraphicsManager::~GraphicsManager - Shutting down GraphicsManager.");
+    Shutdown();
 }
 
 /*------------------------------------------------
@@ -43,7 +53,6 @@ void CE::ResourceManager::Shutdown()
 {
     // Clear all loaded resources
     m_loadedResources.clear();
-    std::cout << "ResourceManager shutdown complete" << std::endl;
 }
 
 /*------------------------------------------------------------

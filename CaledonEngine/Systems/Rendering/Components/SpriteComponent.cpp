@@ -38,6 +38,11 @@ CE::SpriteComponent::SpriteComponent(const char* pSheet, int width, int height, 
 	LoadSpriteSheet(pSheet, width, height, scale);
 }
 
+/*-------------------------------------------------------
+| --- Destructor: Cleans up any allocated resources --- |
+-------------------------------------------------------*/
+CE::SpriteComponent::~SpriteComponent() = default;
+
 /*----------------------------------------------------------
 | --- Initialize: Prepares the SpriteComponent for use --- |
 ----------------------------------------------------------*/

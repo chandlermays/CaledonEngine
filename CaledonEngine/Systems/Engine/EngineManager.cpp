@@ -96,6 +96,8 @@ void CE::EngineManager::Shutdown()
 	}
 
 	m_pManagers.clear();
+	m_pUpdatables.clear();
+	m_pRenderables.clear();
 
 	// Null out observers
 	m_pGraphicsManager = nullptr;
@@ -163,33 +165,43 @@ CE::EngineManager::EngineManager()
 	, m_pInputManager{ nullptr }
 	, m_pToolsManager{ nullptr }
 {
-	RegisterManagers();
-}
-
-/*-------------------------------------------------------------------
-| --- RegisterManagers: Registers all engine subsystem managers --- |
--------------------------------------------------------------------*/
-void CE::EngineManager::RegisterManagers()
-{
 	auto pGraphics = std::make_unique<GraphicsManager>();
 	m_pGraphicsManager = pGraphics.get();
-	m_pManagers.emplace_back(std::move(pGraphics));
+	RegisterManager(std::move(pGraphics));
 
 	auto pResource = std::make_unique<ResourceManager>();
 	m_pResourceManager = pResource.get();
-	m_pManagers.emplace_back(std::move(pResource));
+	RegisterManager(std::move(pResource));
 
 	auto pScene = std::make_unique<SceneManager>();
 	m_pSceneManager = pScene.get();
-	m_pManagers.emplace_back(std::move(pScene));
+	RegisterManager(std::move(pScene));
 
 	auto pInput = std::make_unique<InputManager>();
 	m_pInputManager = pInput.get();
-	m_pManagers.emplace_back(std::move(pInput));
+	RegisterManager(std::move(pInput));
 
 	auto pTools = std::make_unique<ToolsManager>();
 	m_pToolsManager = pTools.get();
-	m_pManagers.emplace_back(std::move(pTools));
+	RegisterManager(std::move(pTools));
+}
+
+/*--------------------------------------------------------------
+| --- RegisterManager: Registers a manager with the engine --- |
+--------------------------------------------------------------*/
+void CE::EngineManager::RegisterManager(std::unique_ptr<CE::Manager> pManager)
+{
+	if (auto* pUpdatable = dynamic_cast<IUpdatable*>(pManager.get()))
+	{
+		m_pUpdatables.emplace_back(pUpdatable);
+	}
+
+	if (auto* pRenderable = dynamic_cast<IRenderable*>(pManager.get()))
+	{
+		m_pRenderables.emplace_back(pRenderable);
+	}
+
+	m_pManagers.emplace_back(std::move(pManager));
 }
 
 /*-------------------------------------------------------
@@ -197,9 +209,9 @@ void CE::EngineManager::RegisterManagers()
 -------------------------------------------------------*/
 void CE::EngineManager::Update(float deltaTime)
 {
-	for (const auto& manager : m_pManagers)
+	for (IUpdatable* pUpdatable : m_pUpdatables)
 	{
-		manager->Update(deltaTime);		// TODO: Refactor this so that not every Manager gets an Update() call
+		pUpdatable->Update(deltaTime);
 	}
 }
 
@@ -213,9 +225,9 @@ void CE::EngineManager::Render()
 		m_pGraphicsManager->BeginFrame();
 	}
 
-	for (const auto& manager : m_pManagers)
+	for (IRenderable* pRenderable : m_pRenderables)
 	{
-		manager->Render();				// TODO: Refactor this so that not every Manager gets a Render() call
+		pRenderable->Render();
 	}
 
 	if (m_pGraphicsManager)

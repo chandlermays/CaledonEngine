@@ -44,6 +44,8 @@ bool Game::Initialize()
 	if (!m_pEngineManager->Initialize())
 		return false;
 
+	m_pGameObjectCreator = new CE::GameObjectCreator();
+
 	m_pInputActions = new GameInputActions();
 	m_pInputActions->Initialize();
 
@@ -86,57 +88,43 @@ void Game::RegisterGameComponents()
 -----------------------------------------------------------------------------*/
 void Game::CreateScenes()
 {
-	CE::SceneManager* pSceneManager = m_pEngineManager->GetSceneManager();
-
-	auto pMainScene = std::make_unique<CE::Scene>();
-	pMainScene->SetName("MainScene");
-
-	// Hand-built for now, until the Player is authored as XML content too
-	auto pPlayer = std::make_unique<CE::GameObject>();
-	pPlayer->SetName("Player");
-	pPlayer->SetTag("Player");
-
-	PlayerController* pPlayerController = new PlayerController();
-	pPlayerController->SetInputActions(m_pInputActions);
-	pPlayer->AddComponent(pPlayerController);
-	pMainScene->AddGameObject(std::move(pPlayer));
-
-	LoadWorldObjects(pMainScene.get(), "Assets/MasterAssets.xml");
-
-	CE::Scene* pSceneRef = pMainScene.get();
-	pSceneManager->AddScene(std::move(pMainScene));
-	pSceneManager->SetCurrentScene(pSceneRef);
-	pSceneRef->Initialize();
+	LoadScenes("Assets/MasterAssets.xml");
 }
 
 /*------------------------------------------------------------------------------------------
 | --- LoadWorldObjects: Loads all GameObjects listed in a master XML file into a scene --- |
 ------------------------------------------------------------------------------------------*/
-void Game::LoadWorldObjects(CE::Scene* pScene, const std::string& masterXmlPath)
+void Game::LoadScenes(const std::string& masterXmlPath)
 {
-	if (!pScene)
-		return;
-
 	CE::ResourceManager* pResourceManager = m_pEngineManager->GetResourceManager();
 	if (!pResourceManager)
 		return;
 
-	auto subsystemFiles = pResourceManager->LoadMasterXML(masterXmlPath);
+	CE::SceneManager* pSceneManager = m_pEngineManager->GetSceneManager();
 
-	for (const auto& [name, path] : subsystemFiles)
+	auto sceneFiles = pResourceManager->LoadMasterXML(masterXmlPath);
+
+	for (const auto& [name, path] : sceneFiles)
 	{
 		std::string fileData = pResourceManager->GetResource(path);
 		if (fileData.empty())
 		{
-			CE_LOG("Game::LoadWorldObjects - Failed to load subsystem file '{}' ({})", name, path);
+			CE_LOG("Game::LoadScenes - Failed to load scene file '{}' ({})", name, path);
 			continue;
 		}
+
+		auto pScene = std::make_unique<CE::Scene>();
+		pScene->SetName(name);
 
 		std::vector<CE::GameObject*> gameObjects = m_pGameObjectCreator->CreateGameObjects(fileData);
 		for (CE::GameObject* pGameObject : gameObjects)
 		{
 			pScene->AddGameObject(std::unique_ptr<CE::GameObject>(pGameObject));
 		}
+
+		CE::Scene* pSceneRef = pScene.get();
+		pSceneManager->AddScene(std::move(pScene));
+		pSceneRef->Initialize();
 	}
 }
 
