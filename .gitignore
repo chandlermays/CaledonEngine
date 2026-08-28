@@ -27,3 +27,9 @@ ipch/
 
 # IDE / Code Editor Tooling
 .vscode/
+
+# --- Re-include vendored third-party libraries (SDL, SFML, etc.) ---
+# These live under CaledonEngine/lib/ but contain folders named x64/x86/Debug/Release,
+# which would otherwise get swallowed by the build-output rules above.
+!CaledonEngine/lib/
+!CaledonEngine/lib/**
