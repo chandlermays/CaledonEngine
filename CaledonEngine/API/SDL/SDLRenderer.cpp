@@ -66,7 +66,7 @@ void CE::SDLRenderer::BeginFrame()
 	if (!m_pRenderer)
 		return;
 
-	SDL_SetRenderDrawColor(m_pRenderer, 0, 156, 255, 255);
+	SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 255);
 	SDL_RenderClear(m_pRenderer);
 }
 

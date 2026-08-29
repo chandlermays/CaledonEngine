@@ -11,7 +11,8 @@
 | --- Constructor: Constructs the Transform with default values --- |
 -------------------------------------------------------------------*/
 CE::Transform::Transform()
-	: m_position{ 0.0f, 0.0f }
+	: Component()
+	, m_position{ 0.0f, 0.0f }
 	, m_rotation{ 0.0f }
 	, m_scale{ 1.0f, 1.0f }
 {}
@@ -20,7 +21,8 @@ CE::Transform::Transform()
 | --- Parameterized Constructor: Sets initial values for position, rotation, and scale --- |
 ------------------------------------------------------------------------------------------*/
 CE::Transform::Transform(const Vector2f& position, float rotation, const Vector2f& scale)
-	: m_position{ position }
+	: Component()
+	, m_position{ position }
 	, m_rotation{ rotation }
 	, m_scale{ scale }
 {}

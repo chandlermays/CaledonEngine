@@ -2,7 +2,8 @@
 | File: GameObject.cpp
 | Author: Chandler Mays
 ------------------------------*/
-#include "GameObject.h"
+#include "CaledonEngine/Core/GameObject.h"
+#include "CaledonEngine/Core/Transform.h"
 #include "CaledonEngine/Core/Component.h"
 
 /*-----------------------------------
@@ -16,7 +17,12 @@ CE::GameObject::GameObject()
 	, m_name{ "GameObject" }
 	, m_tag{ "Untagged" }
 	, m_isActive{ true }
-{}
+	, m_pTransform{ nullptr }
+{
+	// Create a new Transform component and add it to the GameObject
+	m_pTransform = new Transform();
+	AddComponent(m_pTransform);
+}
 
 /*-------------------------------------------------------
 | --- Destructor: Cleans up any allocated resources --- |
@@ -194,7 +200,7 @@ void CE::GameObject::SetActive(bool isActive)
 -------------------------------------------------------------*/
 const CE::Transform& CE::GameObject::GetTransform() const
 {
-	return m_transform;
+	return *m_pTransform;
 }
 
 /*-------------------------------------------------------------
@@ -202,7 +208,7 @@ const CE::Transform& CE::GameObject::GetTransform() const
 -------------------------------------------------------------*/
 CE::Transform& CE::GameObject::GetTransform()
 {
-	return m_transform;
+	return *m_pTransform;
 }
 
 /*-----------------------------------------------------------
@@ -222,6 +228,9 @@ void CE::GameObject::AddComponent(CE::Component* pComponent)
 -------------------------------------------------------------------*/
 void CE::GameObject::RemoveComponent(CE::Component* pComponent)
 {
+	if (pComponent == nullptr || pComponent == m_pTransform)
+		return;
+
 	auto it = std::find(m_components.begin(), m_components.end(), pComponent);
 	if (it != m_components.end())
 	{

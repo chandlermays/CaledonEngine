@@ -4,6 +4,7 @@
 ------------------------------*/
 #include "PlayerController.h"
 #include "CaledonEngine/Core/GameObject.h"
+#include "CaledonEngine/Core/Transform.h"
 
 /*-----------------------------------
 | --- Public Method Definitions --- |

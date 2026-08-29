@@ -3,7 +3,7 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
-#include "GameObject.h"
+#include "CaledonEngine/Core/GameObject.h"
 
 namespace CE
 {

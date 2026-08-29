@@ -3,11 +3,12 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
+#include "CaledonEngine/Core/Component.h"
 #include "CaledonEngine/Utilities/Math/Vector2.h"
 
 namespace CE
 {
-	class Transform
+	class Transform : public Component
 	{
 	private:
 		Vector2f m_position;																		// The position of the object
@@ -17,7 +18,7 @@ namespace CE
 	public:
 		Transform();																				// Constructor
 		Transform(const Vector2f& position, float rotation, const Vector2f& scale);					// Parameterized Constructor
-		~Transform() = default;																		// Destructor
+		~Transform() override = default;															// Destructor
 		Transform(const Transform&) = delete;														// Prevent copy-construction
 		Transform& operator=(const Transform&) = delete;											// Prevent copy-assignment
 		Transform(Transform&&) = delete;															// Prevent move-construction

@@ -3,12 +3,12 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
-#include "Transform.h"
 #include <string>
 #include <vector>
 
 namespace CE
 {
+	class Transform;
 	class Component;
 
 	class GameObject
@@ -21,7 +21,7 @@ namespace CE
 		std::string m_tag;																// The tag of this GameObject
 		bool m_isActive;																// Whether this GameObject is active or not
 
-		Transform m_transform;															// The Transform of this GameObject
+		Transform* m_pTransform;														// Pointer to this GameObject's Transform component
 		std::vector<Component*> m_components;											// Vector of pointers to Components attached to this GameObject
 
 	public:
