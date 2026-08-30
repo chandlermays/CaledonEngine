@@ -2,6 +2,7 @@
 | File: GameObject.cpp
 | Author: Chandler Mays
 ------------------------------*/
+#include "CaledonEngine/Systems/Engine/LoggingManager.h"
 #include "CaledonEngine/Core/GameObject.h"
 #include "CaledonEngine/Core/Transform.h"
 #include "CaledonEngine/Core/Component.h"
@@ -42,8 +43,8 @@ bool CE::GameObject::Initialize()
 	{
 		if (pComponent != nullptr && !pComponent->Initialize())
 		{
+			CE_LOG("GameObject::Initialize - A component on '" + m_name + "' failed to initialize.");
 			success = false;
-			break;
 		}
 	}
 	return success;
@@ -250,6 +251,7 @@ void CE::GameObject::Destroy()
 		pComponent = nullptr;
 	}
 	m_components.clear();
+	m_pTransform = nullptr;
 
 	for (GameObject* child : m_children)
 	{

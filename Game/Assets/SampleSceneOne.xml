@@ -1,7 +1,7 @@
 <GameObjects>
 	<GameObject name="Player" tag="Player" position="400,300" size="1,1">
 		<PlayerController/>
-		<SpriteComponent shape="Square" width="100" filled="true">
+		<SpriteComponent shape="Square" width="50" filled="true">
 			<Color r="255" g="0" b="0" a="255"/>
 		</SpriteComponent>
 	</GameObject>

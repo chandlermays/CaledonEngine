@@ -83,6 +83,9 @@ namespace CE
 		void RemoveComponent(Component* pComponent);									// Removes a component from this GameObject
 
 		void Destroy();																	// Destroys this GameObject and its components
+
+		// void BroadcastMessage(method:...)											// Calls a method on every Component attached to this GameObject or any of its children
+		// void SendMessage(method:...)													// Calls a method on every Component attached to this GameObject
 	};
 
 	/*------------------------------------------------------------------------------------------------

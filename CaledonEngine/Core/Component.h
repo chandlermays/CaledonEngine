@@ -9,7 +9,6 @@
 namespace CE
 {
 	class GameObject;
-	class Transform;
 
 	class Component
 	{
