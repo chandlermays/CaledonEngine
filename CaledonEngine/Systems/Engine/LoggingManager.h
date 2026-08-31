@@ -4,6 +4,7 @@
 ------------------------------*/
 #pragma once
 #include "Manager.h"
+
 #include <string>
 #include <fstream>
 #include <format>

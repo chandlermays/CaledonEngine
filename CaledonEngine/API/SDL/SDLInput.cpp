@@ -3,7 +3,8 @@
 | Author: Chandler Mays
 ------------------------------*/
 #include "SDLInput.h"
-#include "SDL.h"
+
+#include <SDL3/SDL.h>
 
 /*-----------------------------------
 | --- Public Method Definitions --- |
@@ -31,32 +32,32 @@ bool CE::SDLInput::Initialize()
 	m_keyMapping.emplace(SDLK_LALT, KeyCode::kLeftAlt);
 	m_keyMapping.emplace(SDLK_RALT, KeyCode::kRightAlt);
 	m_keyMapping.emplace(SDLK_TAB, KeyCode::kTab);
-	m_keyMapping.emplace(SDLK_a, KeyCode::kA);
-	m_keyMapping.emplace(SDLK_b, KeyCode::kB);
-	m_keyMapping.emplace(SDLK_c, KeyCode::kC);
-	m_keyMapping.emplace(SDLK_d, KeyCode::kD);
-	m_keyMapping.emplace(SDLK_e, KeyCode::kE);
-	m_keyMapping.emplace(SDLK_f, KeyCode::kF);
-	m_keyMapping.emplace(SDLK_g, KeyCode::kG);
-	m_keyMapping.emplace(SDLK_h, KeyCode::kH);
-	m_keyMapping.emplace(SDLK_i, KeyCode::kI);
-	m_keyMapping.emplace(SDLK_j, KeyCode::kJ);
-	m_keyMapping.emplace(SDLK_k, KeyCode::kK);
-	m_keyMapping.emplace(SDLK_l, KeyCode::kL);
-	m_keyMapping.emplace(SDLK_m, KeyCode::kM);
-	m_keyMapping.emplace(SDLK_n, KeyCode::kN);
-	m_keyMapping.emplace(SDLK_o, KeyCode::kO);
-	m_keyMapping.emplace(SDLK_p, KeyCode::kP);
-	m_keyMapping.emplace(SDLK_q, KeyCode::kQ);
-	m_keyMapping.emplace(SDLK_r, KeyCode::kR);
-	m_keyMapping.emplace(SDLK_s, KeyCode::kS);
-	m_keyMapping.emplace(SDLK_t, KeyCode::kT);
-	m_keyMapping.emplace(SDLK_u, KeyCode::kU);
-	m_keyMapping.emplace(SDLK_v, KeyCode::kV);
-	m_keyMapping.emplace(SDLK_w, KeyCode::kW);
-	m_keyMapping.emplace(SDLK_x, KeyCode::kX);
-	m_keyMapping.emplace(SDLK_y, KeyCode::kY);
-	m_keyMapping.emplace(SDLK_z, KeyCode::kZ);
+	m_keyMapping.emplace(SDLK_A, KeyCode::kA);
+	m_keyMapping.emplace(SDLK_B, KeyCode::kB);
+	m_keyMapping.emplace(SDLK_C, KeyCode::kC);
+	m_keyMapping.emplace(SDLK_D, KeyCode::kD);
+	m_keyMapping.emplace(SDLK_E, KeyCode::kE);
+	m_keyMapping.emplace(SDLK_F, KeyCode::kF);
+	m_keyMapping.emplace(SDLK_G, KeyCode::kG);
+	m_keyMapping.emplace(SDLK_H, KeyCode::kH);
+	m_keyMapping.emplace(SDLK_I, KeyCode::kI);
+	m_keyMapping.emplace(SDLK_J, KeyCode::kJ);
+	m_keyMapping.emplace(SDLK_K, KeyCode::kK);
+	m_keyMapping.emplace(SDLK_L, KeyCode::kL);
+	m_keyMapping.emplace(SDLK_M, KeyCode::kM);
+	m_keyMapping.emplace(SDLK_N, KeyCode::kN);
+	m_keyMapping.emplace(SDLK_O, KeyCode::kO);
+	m_keyMapping.emplace(SDLK_P, KeyCode::kP);
+	m_keyMapping.emplace(SDLK_Q, KeyCode::kQ);
+	m_keyMapping.emplace(SDLK_R, KeyCode::kR);
+	m_keyMapping.emplace(SDLK_S, KeyCode::kS);
+	m_keyMapping.emplace(SDLK_T, KeyCode::kT);
+	m_keyMapping.emplace(SDLK_U, KeyCode::kU);
+	m_keyMapping.emplace(SDLK_V, KeyCode::kV);
+	m_keyMapping.emplace(SDLK_W, KeyCode::kW);
+	m_keyMapping.emplace(SDLK_X, KeyCode::kX);
+	m_keyMapping.emplace(SDLK_Y, KeyCode::kY);
+	m_keyMapping.emplace(SDLK_Z, KeyCode::kZ);
 	m_keyMapping.emplace(SDLK_1, KeyCode::k1);
 	m_keyMapping.emplace(SDLK_2, KeyCode::k2);
 	m_keyMapping.emplace(SDLK_3, KeyCode::k3);
@@ -95,11 +96,11 @@ bool CE::SDLInput::Initialize()
 	m_keyMapping.emplace(SDLK_LEFTBRACKET, KeyCode::kLeftBracket);
 	m_keyMapping.emplace(SDLK_RIGHTBRACKET, KeyCode::kRightBracket);
 	m_keyMapping.emplace(SDLK_SEMICOLON, KeyCode::kSemicolon);
-	m_keyMapping.emplace(SDLK_QUOTE, KeyCode::kApostrophe);
+	m_keyMapping.emplace(SDLK_APOSTROPHE, KeyCode::kApostrophe);
 	m_keyMapping.emplace(SDLK_COMMA, KeyCode::kComma);
 	m_keyMapping.emplace(SDLK_PERIOD, KeyCode::kPeriod);
 	m_keyMapping.emplace(SDLK_BACKSLASH, KeyCode::kBackslash);
-	m_keyMapping.emplace(SDLK_BACKQUOTE, KeyCode::kTilde);
+	m_keyMapping.emplace(SDLK_GRAVE, KeyCode::kTilde);
 
 
 	// Initialize the Mouse Mappings
@@ -128,7 +129,7 @@ bool CE::SDLInput::ProcessEvents()
 	m_prevKeyStates = m_keyStates;
 	m_prevMouseStates = m_mouseStates;
 
-	m_mouseWheelDelta = 0;
+	m_mouseWheelDelta = 0.0f;
 
 	SDL_Event event;
 	while (SDL_PollEvent(&event) != 0)
@@ -136,13 +137,13 @@ bool CE::SDLInput::ProcessEvents()
 		switch (event.type)
 		{
 			// Window Event: Closing the Window
-		case SDL_QUIT:
+		case SDL_EVENT_QUIT:
 			return true;
 
 			// Keyboard Event: Key Pressed
-		case SDL_KEYDOWN:
+		case SDL_EVENT_KEY_DOWN:
 		{
-			const auto it = m_keyMapping.find(event.key.keysym.sym);
+			const auto it = m_keyMapping.find(event.key.key);
 			if (it != m_keyMapping.end())
 			{
 				m_keyStates[it->second] = true;
@@ -150,9 +151,9 @@ bool CE::SDLInput::ProcessEvents()
 			break;
 		}
 		// Keyboard Event: Key Released
-		case SDL_KEYUP:
+		case SDL_EVENT_KEY_UP:
 		{
-			const auto it = m_keyMapping.find(event.key.keysym.sym);
+			const auto it = m_keyMapping.find(event.key.key);
 			if (it != m_keyMapping.end())
 			{
 				m_keyStates[it->second] = false;
@@ -160,7 +161,7 @@ bool CE::SDLInput::ProcessEvents()
 			break;
 		}
 		// Mouse Event: Mouse Button Pressed
-		case SDL_MOUSEBUTTONDOWN:
+		case SDL_EVENT_MOUSE_BUTTON_DOWN:
 		{
 			const auto it = m_mouseMapping.find(event.button.button);
 			if (it != m_mouseMapping.end())
@@ -171,7 +172,7 @@ bool CE::SDLInput::ProcessEvents()
 		}
 
 		// Mouse Event: Mouse Button Released
-		case SDL_MOUSEBUTTONUP:
+		case SDL_EVENT_MOUSE_BUTTON_UP:
 		{
 			const auto it = m_mouseMapping.find(event.button.button);
 			if (it != m_mouseMapping.end())
@@ -182,7 +183,7 @@ bool CE::SDLInput::ProcessEvents()
 		}
 
 		// Mouse Event: Mouse Motion
-		case SDL_MOUSEMOTION:
+		case SDL_EVENT_MOUSE_MOTION:
 		{
 			m_mousePositionX = event.motion.x;
 			m_mousePositionY = event.motion.y;
@@ -190,7 +191,7 @@ bool CE::SDLInput::ProcessEvents()
 		}
 
 		// Mouse Event: Mouse Wheel
-		case SDL_MOUSEWHEEL:
+		case SDL_EVENT_MOUSE_WHEEL:
 		{
 			m_mouseWheelDelta = event.wheel.y;
 			break;

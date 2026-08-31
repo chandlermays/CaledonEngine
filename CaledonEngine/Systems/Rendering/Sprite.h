@@ -3,8 +3,9 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
-#include "CaledonEngine/Utilities/Math/Rect.h"
-#include "CaledonEngine/Utilities/Math/Vector2.h"
+#include "Utilities/Math/Rect.h"
+#include "Utilities/Math/Vector2.h"
+
 #include <memory>
 
 namespace CE

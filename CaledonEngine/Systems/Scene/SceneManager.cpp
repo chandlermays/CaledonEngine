@@ -3,8 +3,9 @@
 | Author: Chandler Mays
 ------------------------------*/
 #include "SceneManager.h"
-#include "CaledonEngine/Core/Scene.h"
-#include <CaledonEngine/Systems/Engine/LoggingManager.h>
+
+#include "Core/Scene.h"
+#include "Systems/Engine/LoggingManager.h"
 
 /*----------------------------------------------------------------------
 | --- Constructor: Constructs the SceneManager with default values --- |

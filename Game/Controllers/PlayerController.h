@@ -4,7 +4,8 @@
 ------------------------------*/
 #pragma once
 #include "CaledonEngine/Core/Component.h"
-#include "Game/Input/GameInputActions.h"
+
+#include "Input/GameInputActions.h"
 
 class PlayerController : public CE::Component
 {

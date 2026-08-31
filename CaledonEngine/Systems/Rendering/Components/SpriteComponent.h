@@ -3,8 +3,9 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
-#include "CaledonEngine/Core/Component.h"
-#include "CaledonEngine/Systems/Rendering/Color.h"
+#include "Core/Component.h"
+#include "Systems/Rendering/Color.h"
+
 #include <memory>
 
 namespace CE

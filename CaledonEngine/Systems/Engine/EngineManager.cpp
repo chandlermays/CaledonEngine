@@ -4,11 +4,13 @@
 ------------------------------*/
 #include "EngineManager.h"
 #include "LoggingManager.h"
-#include "CaledonEngine/Systems/Rendering/GraphicsManager.h"
-#include "CaledonEngine/Systems/Resources/ResourceManager.h"
-#include "CaledonEngine/Systems/Scene/SceneManager.h"
-#include "CaledonEngine/Systems/Input/InputManager.h"
-#include "CaledonEngine/Systems/Tools/ToolsManager.h"
+
+#include "Systems/Rendering/GraphicsManager.h"
+#include "Systems/Resources/ResourceManager.h"
+#include "Systems/Scene/SceneManager.h"
+#include "Systems/Input/InputManager.h"
+#include "Systems/Tools/ToolsManager.h"
+
 #include <chrono>
 
 /*-----------------------------------

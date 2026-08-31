@@ -3,7 +3,8 @@
 | Author: Chandler Mays
 ------------------------------*/
 #include "DebugOverlay.h"
-#include "ImGUI/imgui.h"
+
+#include <ImGUI/imgui.h>
 
 CE::DebugOverlay::DebugOverlay()
 	: m_isVisible{ false }

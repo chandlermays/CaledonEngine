@@ -1,5 +1,5 @@
 #pragma once
-#include "CaledonEngine/Utilities/CaledonParser.h"
+#include "Utilities/CaledonParser.h"
 
 #include <vector>
 #include <string>

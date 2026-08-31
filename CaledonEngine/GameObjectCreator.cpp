@@ -1,9 +1,11 @@
 #include "GameObjectCreator.h"
-#include "CaledonEngine/Utilities/ThirdParty/tinyxml2.h"
+
+#include "Core/GameObject.h"
+#include "Core/Transform.h"
+#include "Systems/Engine/LoggingManager.h"
+#include "Utilities/ThirdParty/tinyxml2.h"
+
 #include "ComponentFactory.h"
-#include "CaledonEngine/Core/GameObject.h"
-#include "CaledonEngine/Core/Transform.h"
-#include "CaledonEngine/Systems/Engine/LoggingManager.h"
 
 #include <string>
 

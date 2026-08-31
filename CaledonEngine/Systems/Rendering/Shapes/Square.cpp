@@ -3,7 +3,8 @@
 | Author: Chandler Mays
 ------------------------------*/
 #include "Square.h"
-#include "CaledonEngine/Systems/Rendering/Renderer.h"
+
+#include "Systems/Rendering/Renderer.h"
 
 /*-----------------------------------
 | --- Public Method Definitions --- |

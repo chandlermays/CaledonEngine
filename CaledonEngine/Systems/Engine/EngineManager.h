@@ -6,6 +6,7 @@
 #include "Manager.h"
 #include "IRenderable.h"
 #include "IUpdatable.h"
+
 #include <vector>
 #include <memory>
 

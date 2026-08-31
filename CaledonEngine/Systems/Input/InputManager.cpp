@@ -3,7 +3,8 @@
 | Author: Chandler Mays
 ------------------------------*/
 #include "InputManager.h"
-#include "CaledonEngine/Utilities/APIConfig.h"
+
+#include "Utilities/APIConfig.h"
 
 /*-----------------------------------
 | --- Public Method Definitions --- |

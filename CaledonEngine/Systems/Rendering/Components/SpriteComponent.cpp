@@ -3,15 +3,16 @@
 | Author: Chandler Mays
 ------------------------------*/
 #include "SpriteComponent.h"
-#include "CaledonEngine/Systems/Engine/EngineManager.h"
-#include "CaledonEngine/Systems/Rendering/GraphicsManager.h"
-#include "CaledonEngine/Systems/Rendering/Shapes/Shape.h"
-#include "CaledonEngine/Systems/Rendering/Sprite.h"
-#include "CaledonEngine/Systems/Rendering/SpriteSheet.h"
-#include "CaledonEngine/Systems/Rendering/Image.h"
-#include "CaledonEngine/Systems/Resources/ResourceManager.h"
-#include "CaledonEngine/Core/GameObject.h"
-#include "CaledonEngine/Core/Transform.h"
+
+#include "Systems/Engine/EngineManager.h"
+#include "Systems/Rendering/GraphicsManager.h"
+#include "Systems/Rendering/Shapes/Shape.h"
+#include "Systems/Rendering/Sprite.h"
+#include "Systems/Rendering/SpriteSheet.h"
+#include "Systems/Rendering/Image.h"
+#include "Systems/Resources/ResourceManager.h"
+#include "Core/GameObject.h"
+#include "Core/Transform.h"
 
 /*-----------------------------------
 | --- Public Method Definitions --- |
@@ -109,7 +110,7 @@ void CE::SpriteComponent::Render()
 				m_pRenderer->SetTextureAlphaMod(pTexture, m_color.a);
 			}
 
-			m_pRenderer->RenderCopy(pTexture, &srcRect, &destRect);
+			m_pRenderer->RenderTexture(pTexture, &srcRect, &destRect);
 
 			if (m_color != Color::White())
 			{

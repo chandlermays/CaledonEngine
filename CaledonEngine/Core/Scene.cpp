@@ -3,7 +3,8 @@
 | Author: Chandler Mays
 ------------------------------*/
 #include "Scene.h"
-#include "CaledonEngine/Core/GameObject.h"
+
+#include "Core/GameObject.h"
 
 /*-----------------------------------
 | --- Public Method Definitions --- |

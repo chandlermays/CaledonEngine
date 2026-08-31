@@ -3,8 +3,10 @@
 | Author: Chandler Mays
 ------------------------------*/
 #include "SDLWindow.h"
-#include "CaledonEngine/Systems/Engine/LoggingManager.h"
-#include "SDL.h"
+
+#include "Systems/Engine/LoggingManager.h"
+
+#include <SDL3/SDL.h>
 
 /*-----------------------------------
 | --- Public Method Definitions --- |
@@ -31,17 +33,17 @@ bool CE::SDLWindow::Initialize()
 {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 	{
-		CE_LOG("SDLWindow::Initialize - SDL could not initialize! SDL_Error: {}", SDL_GetError());
+		CE_LOG("SDLWindow::Initialize - SDL could not initialize! SDL_Error: {}", SDL_GetError());		// FIX: SDL_GetError doesn't actually display any error.
 		return false;
 	}
 
-	Uint32 windowFlags = SDL_WINDOW_SHOWN;
+	Uint32 windowFlags = 0;
 	if (m_isFullscreen)
 	{
 		windowFlags |= SDL_WINDOW_FULLSCREEN;
 	}
 
-	m_pWindow = SDL_CreateWindow(m_title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_width, m_height, windowFlags);
+	m_pWindow = SDL_CreateWindow(m_title.c_str(), m_width, m_height, windowFlags);
 
 	if (m_pWindow == nullptr)
 	{

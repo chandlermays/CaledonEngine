@@ -3,7 +3,7 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
-#include "CaledonEngine/Systems/Input/Input.h"
+#include "Systems/Input/Input.h"
 
 namespace CE
 {

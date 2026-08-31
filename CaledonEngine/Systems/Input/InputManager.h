@@ -3,9 +3,9 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
-#include "CaledonEngine/Systems/Engine/Manager.h"
-#include "CaledonEngine/Systems/Input/Input.h"
-#include "CaledonEngine/Systems/Input/InputActions.h"
+#include "Systems/Engine/Manager.h"
+#include "Systems/Input/Input.h"
+#include "Systems/Input/InputActions.h"
 
 #include <memory>
 

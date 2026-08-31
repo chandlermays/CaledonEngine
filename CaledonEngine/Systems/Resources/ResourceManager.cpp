@@ -1,14 +1,15 @@
 #include "ResourceManager.h"
-#include "CaledonEngine/API/SDL/SDLImage.h"
-#include "CaledonEngine/Utilities/ThirdParty/tinyxml2.h"
-#include "CaledonEngine/Systems/Engine/LoggingManager.h"
+
+#include "API/SDL/SDLImage.h"
+#include "Systems/Engine/LoggingManager.h"
+#include "Utilities/ThirdParty/tinyxml2.h"
 
 #include <fstream>
 #include <iostream>
 
 #ifdef NDEBUG
-#include "SDL.h"
-#include "SDL_image.h"
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_image.h>
 #endif
 
 /*-----------------------------------

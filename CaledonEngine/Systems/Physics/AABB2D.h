@@ -1,5 +1,5 @@
 #pragma once
-#include "CaledonEngine/Utilities/Math/Vector2.h"
+#include "Utilities/Math/Vector2.h"
 
 namespace CE
 {

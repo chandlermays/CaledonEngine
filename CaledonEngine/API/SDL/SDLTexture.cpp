@@ -3,7 +3,8 @@
 | Author: Chandler Mays
 ------------------------------*/
 #include "SDLTexture.h"
-#include "SDL.h"
+
+#include <SDL3/SDL.h>
 
 /*-----------------------------------
 | --- Public Method Definitions --- |

@@ -1,0 +1,5 @@
+SDLWindow::Initialize - SDL could not initialize! SDL_Error: 
+GraphicsManager::Initialize - Failed to initialize Window.
+GraphicsManager::~GraphicsManager - Shutting down GraphicsManager.
+GraphicsManager::~GraphicsManager - Shutting down GraphicsManager.
+SceneManager::~SceneManager - Shutting down SceneManager.

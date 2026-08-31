@@ -3,7 +3,7 @@
 | Author: Chandler Mays
 ------------------------------*/
 #include "Game.h"
-#include "../Controllers/PlayerController.h"
+
 #include "CaledonEngine/Systems/Engine/EngineManager.h"
 #include "CaledonEngine/Systems/Engine/LoggingManager.h"
 #include "CaledonEngine/Systems/Input/InputManager.h"
@@ -13,6 +13,8 @@
 #include "CaledonEngine/Core/GameObject.h"
 #include "CaledonEngine/ComponentFactory.h"
 #include "CaledonEngine/GameObjectCreator.h"
+
+#include "Controllers/PlayerController.h"
 
 /*-----------------------------------
 | --- Public Method Definitions --- |

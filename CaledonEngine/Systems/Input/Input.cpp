@@ -11,8 +11,8 @@
 | --- Constructor: Constructs the Input with default values --- |
 ---------------------------------------------------------------*/
 CE::Input::Input()
-    : m_mousePositionX{ 0 }
-    , m_mousePositionY{ 0 }
+    : m_mousePositionX{ 0.0f }
+    , m_mousePositionY{ 0.0f }
 	, m_mouseWheelDelta{ 0 }
 {
 	// Initialize all keys to the released state
@@ -119,7 +119,7 @@ bool CE::Input::IsMouseButtonReleased(MouseCode button) const
 /*--------------------------------------------------------------
 | --- GetMousePosition: Returns the current mouse position --- |
 --------------------------------------------------------------*/
-void CE::Input::GetMousePosition(int& x, int& y) const
+void CE::Input::GetMousePosition(float& x, float& y) const
 {
     x = m_mousePositionX;
 	y = m_mousePositionY;
@@ -128,7 +128,7 @@ void CE::Input::GetMousePosition(int& x, int& y) const
 /*----------------------------------------------------------------------------
 | --- GetMouseWheelDelta: Returns the mouse wheel delta since last frame --- |
 ----------------------------------------------------------------------------*/
-int CE::Input::GetMouseWheelDelta() const
+float CE::Input::GetMouseWheelDelta() const
 {
 	return m_mouseWheelDelta;
 }

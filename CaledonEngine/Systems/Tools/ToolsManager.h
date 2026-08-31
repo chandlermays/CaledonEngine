@@ -3,10 +3,10 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
-#include "CaledonEngine/Systems/Engine/Manager.h"
-#include "CaledonEngine/Systems/Engine/IRenderable.h"
-#include "CaledonEngine/Systems/Engine/IUpdatable.h"
-#include "CaledonEngine/Systems/Tools/DebugOverlay.h"
+#include "Systems/Engine/Manager.h"
+#include "Systems/Engine/IRenderable.h"
+#include "Systems/Engine/IUpdatable.h"
+#include "Systems/Tools/DebugOverlay.h"
 
 namespace CE
 {

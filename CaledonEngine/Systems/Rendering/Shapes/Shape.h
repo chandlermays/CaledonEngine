@@ -3,8 +3,8 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
-#include "CaledonEngine/Systems/Rendering/Color.h"
-#include "CaledonEngine/Utilities/Math/Rect.h"
+#include "Systems/Rendering/Color.h"
+#include "Utilities/Math/Rect.h"
 
 namespace CE
 {

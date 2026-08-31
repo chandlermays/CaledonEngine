@@ -3,8 +3,9 @@
 | Author: Chandler Mays
 ------------------------------*/
 #include "Sprite.h"
-#include "CaledonEngine/Systems/Rendering/Texture.h"
-#include "CaledonEngine/Systems/Rendering/Shapes/Shape.h"
+
+#include "Systems/Rendering/Texture.h"
+#include "Systems/Rendering/Shapes/Shape.h"
 
 /*-----------------------------------
 | --- Public Method Definitions --- |

@@ -3,7 +3,7 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
-#include "CaledonEngine/Systems/Rendering/Renderer.h"
+#include "Systems/Rendering/Renderer.h"
 
 struct SDL_Renderer;
 
@@ -23,7 +23,7 @@ namespace CE
 		void BeginFrame() override;																	// Prepares the SDL Renderer for a new frame
 		void EndFrame() override;																	// Finalizes the rendering process for the current frame
 
-		virtual void RenderCopy(Texture* pTexture, Rect* pSrc, Rect* pDest) override;				// Renders a texture to the screen
+		virtual void RenderTexture(Texture* pTexture, Rect* pSrc, Rect* pDest) override;			// Renders a texture to the screen
 		std::shared_ptr<Texture> CreateTexture(Image* pImage) override;								// Creates a Texture from a loaded Image
 
 		virtual void SetTextureColorMod(Texture* pTexture, uint8_t r,
@@ -33,13 +33,13 @@ namespace CE
 
 		virtual void DrawRect(const Rect& rect, const Color& color, bool filled) override;			// Draws a rectangle to the screen
 
-		virtual void DrawCircle(int centerX, int centerY, int radius,
+		virtual void DrawCircle(float centerX, float centerY, float radius,
 			const Color& color, bool filled) override;												// Draws a circle to the screen
 
-		virtual void DrawTriangle(const Vector2i& v1, const Vector2i& v2,
-			const Vector2i& v3, const Color& color, bool filled) override;							// Draws a triangle to the screen
+		virtual void DrawTriangle(const Vector2f& v1, const Vector2f& v2,
+			const Vector2f& v3, const Color& color, bool filled) override;							// Draws a triangle to the screen
 
-		virtual void DrawCapsule(int centerX, int centerY, int width, int height,
+		virtual void DrawCapsule(float centerX, float centerY, float width, float height,
 			const Color& color, bool filled) override;												// Draws a capsule to the screen
 
 		void* GetNativeHandle() const override;														// Returns the native renderer handle

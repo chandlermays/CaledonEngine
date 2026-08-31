@@ -3,9 +3,10 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
-#include "CaledonEngine/Systems/Engine/Manager.h"
-#include "CaledonEngine/Systems/Rendering/Window.h"
-#include "CaledonEngine/Systems/Rendering/Renderer.h"
+#include "Systems/Engine/Manager.h"
+#include "Systems/Rendering/Window.h"
+#include "Systems/Rendering/Renderer.h"
+
 #include <memory>
 
 namespace CE

@@ -3,11 +3,11 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
-#include "CaledonEngine/Systems/Engine/Manager.h"
-#include "CaledonEngine/Systems/Rendering/Image.h"
-#include "CaledonEngine/Systems/Rendering/Texture.h"
-#include "CaledonEngine/Utilities/CaledonParser.h"
-#include "CaledonEngine/Utilities/ThirdParty/CaledonZLib.h"
+#include "Systems/Engine/Manager.h"
+#include "Systems/Rendering/Image.h"
+#include "Systems/Rendering/Texture.h"
+#include "Utilities/CaledonParser.h"
+#include "Utilities/ThirdParty/CaledonZLib.h"
 
 #include <memory>
 #include <string>

@@ -3,7 +3,7 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
-#include "Game/Input/GameInputActions.h"
+#include "Input/GameInputActions.h"
 
 namespace CE
 {

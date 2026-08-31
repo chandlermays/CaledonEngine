@@ -1,13 +1,13 @@
 #include "ComponentFactory.h"
-#include "CaledonEngine/Systems/Rendering/Components/SpriteComponent.h"
-#include "CaledonEngine/Systems/Rendering/Shapes/Square.h"
-#include "CaledonEngine/Systems/Rendering/Shapes/Circle.h"
-#include "CaledonEngine/Systems/Rendering/Shapes/Triangle.h"
-#include "CaledonEngine/Systems/Rendering/Shapes/Capsule.h"
-#include "CaledonEngine/Systems/Rendering/Sprite.h"
 
-#include "CaledonEngine/Core/GameObject.h"
-#include "CaledonEngine/Utilities/ThirdParty/tinyxml2.h"
+#include "Systems/Rendering/Components/SpriteComponent.h"
+#include "Systems/Rendering/Shapes/Square.h"
+#include "Systems/Rendering/Shapes/Circle.h"
+#include "Systems/Rendering/Shapes/Triangle.h"
+#include "Systems/Rendering/Shapes/Capsule.h"
+#include "Systems/Rendering/Sprite.h"
+#include "Core/GameObject.h"
+#include "Utilities/ThirdParty/tinyxml2.h"
 
 #include <unordered_set>
 

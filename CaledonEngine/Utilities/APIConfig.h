@@ -6,10 +6,10 @@
 
 #if SDL_DEBUG_CE || SDL_NDEBUG_CE
 
-#include "CaledonEngine/API/SDL/SDLWindow.h"
-#include "CaledonEngine/API/SDL/SDLRenderer.h"
-#include "CaledonEngine/API/SDL/SDLInput.h"
-#include "CaledonEngine/API/SDL/SDLImage.h"
+#include "API/SDL/SDLWindow.h"
+#include "API/SDL/SDLRenderer.h"
+#include "API/SDL/SDLInput.h"
+#include "API/SDL/SDLImage.h"
 
 namespace CE
 {

@@ -75,9 +75,9 @@ namespace CE
 		std::unordered_map<MouseCode, bool> m_mouseStates;					// State of the Mouse Button: Pressed vs. Released
 		std::unordered_map<MouseCode, bool> m_prevMouseStates;				// State of the Mouse Button in the previous frame
 
-		int m_mousePositionX;												// Current Mouse X Position
-		int m_mousePositionY;												// Current Mouse Y Position
-		int m_mouseWheelDelta;												// Mouse Wheel Delta since last frame
+		float m_mousePositionX;												// Current Mouse X Position
+		float m_mousePositionY;												// Current Mouse Y Position
+		float m_mouseWheelDelta;											// Mouse Wheel Delta since last frame
 
 	public:
 		Input();															// Constructor
@@ -99,7 +99,7 @@ namespace CE
 		virtual bool IsMouseButtonPressed(MouseCode button) const;			// Returns true if the specified mouse button was pressed this frame
 		virtual bool IsMouseButtonReleased(MouseCode button) const;			// Returns true if the specified mouse button was released this frame
 
-		virtual void GetMousePosition(int& x, int& y) const;				// Returns the current mouse position
-		virtual int GetMouseWheelDelta() const;								// Returns the mouse wheel delta since last frame
+		virtual void GetMousePosition(float& x, float& y) const;			// Returns the current mouse position
+		virtual float GetMouseWheelDelta() const;							// Returns the mouse wheel delta since last frame
 	};
 }

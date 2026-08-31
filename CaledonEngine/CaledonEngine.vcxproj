@@ -343,21 +343,31 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL2_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
 xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\zlib1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL2_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL2_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Net\lib\$(Platform)\SDL3_net.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SFML_Debug|Win32'">
@@ -367,24 +377,34 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL2_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
 xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\zlib1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL2_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL2_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Net\lib\$(Platform)\SDL3_net.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
     </PostBuildEvent>
     <Lib>
-      <AdditionalDependencies>sdl2.lib;sdl2main.lib;sdl2_image.lib;sdl2_ttf.lib;sdl2_mixer.lib;sfml-audio-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;sfml-system-s-d.lib;sfml-window-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;zlibstat.lib;lua.lib</AdditionalDependencies>
+      <AdditionalDependencies>sdl3.lib;sdl3_image.lib;sdl3_ttf.lib;sdl3_mixer.lib;sfml-audio-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;sfml-system-s-d.lib;sfml-window-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;zlibstat.lib;lua.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Debug\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;$(ProjectDir)lib\SFML\lib;$(ProjectDir)lib\zlib\contrib\vstudio\vc14\$(Platform)\ZlibStatDebug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -395,27 +415,37 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>sdl2.lib;sdl2main.lib;sdl2_image.lib;sdl2_ttf.lib;sdl2_mixer.lib;sfml-audio-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;sfml-system-s-d.lib;sfml-window-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;zlibstat.lib;lua.lib</AdditionalDependencies>
+      <AdditionalDependencies>sdl3.lib;sdl3_image.lib;sdl3_ttf.lib;sdl3_mixer.lib;sfml-audio-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;sfml-system-s-d.lib;sfml-window-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;zlibstat.lib;lua.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Debug\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;$(ProjectDir)lib\SFML\lib;$(ProjectDir)lib\zlib\contrib\vstudio\vc14\$(Platform)\ZlibStatDebug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL2_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
 xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\zlib1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL2_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL2_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Net\lib\$(Platform)\SDL3_net.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -427,7 +457,7 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -436,14 +466,24 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL2_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
 xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\zlib1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL2_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL2_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Net\lib\$(Platform)\SDL3_net.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SFML_Release|Win32'">
@@ -455,7 +495,7 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -464,18 +504,28 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL2_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
 xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\zlib1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL2_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL2_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Net\lib\$(Platform)\SDL3_net.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
     </PostBuildEvent>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Release\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;$(ProjectDir)lib\SFML\lib;$(ProjectDir)lib\zlib\contrib\vstudio\vc14\$(Platform)\ZlibStatRelease\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sdl2.lib;sdl2main.lib;sdl2_image.lib;sdl2_ttf.lib;sdl2_mixer.lib;sfml-audio-s.lib;sfml-graphics-s.lib;sfml-network-s.lib;sfml-system-s.lib;sfml-window-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;zlibstat.lib;lua.lib</AdditionalDependencies>
+      <AdditionalDependencies>sdl3.lib;sdl3_image.lib;sdl3_ttf.lib;sdl3_mixer.lib;sfml-audio-s.lib;sfml-graphics-s.lib;sfml-network-s.lib;sfml-system-s.lib;sfml-window-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;zlibstat.lib;lua.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SDL_Release|Win32'">
@@ -487,7 +537,7 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -496,17 +546,27 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL2_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
 xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\zlib1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL2_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL2_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Net\lib\$(Platform)\SDL3_net.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
     </PostBuildEvent>
     <Lib>
-      <AdditionalDependencies>sdl2.lib;sdl2main.lib;sdl2_image.lib;sdl2_ttf.lib;sdl2_mixer.lib;sfml-audio-s.lib;sfml-graphics-s.lib;sfml-network-s.lib;sfml-system-s.lib;sfml-window-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;zlibstat.lib;lua.lib</AdditionalDependencies>
+      <AdditionalDependencies>sdl3.lib;sdl3_image.lib;sdl3_ttf.lib;sdl3_mixer.lib;sfml-audio-s.lib;sfml-graphics-s.lib;sfml-network-s.lib;sfml-system-s.lib;sfml-window-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;zlibstat.lib;lua.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Release\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;$(ProjectDir)lib\SFML\lib\;$(ProjectDir)lib\zlib\contrib\vstudio\vc14\$(Platform)\ZlibStatRelease\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -517,21 +577,31 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL2_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
 xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\zlib1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL2_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL2_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Net\lib\$(Platform)\SDL3_net.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SFML_Debug|x64'">
@@ -541,27 +611,37 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;SFML_STATIC;SFML_DEBUG_CE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>sdl2.lib;sdl2main.lib;sdl2_image.lib;sdl2_ttf.lib;sdl2_mixer.lib;sfml-audio-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;sfml-system-s-d.lib;sfml-window-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;zlibstat.lib;lua.lib</AdditionalDependencies>
+      <AdditionalDependencies>sdl3.lib;sdl3_image.lib;sdl3_ttf.lib;sdl3_mixer.lib;sfml-audio-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;sfml-system-s-d.lib;sfml-window-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;zlibstat.lib;lua.lib</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Debug\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;$(ProjectDir)lib\SFML\lib;$(ProjectDir)lib\zlib\contrib\vstudio\vc14\$(Platform)\ZlibStatDebug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Debug\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_Net\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;$(ProjectDir)lib\SFML\lib;$(ProjectDir)lib\zlib\contrib\vstudio\vc14\$(Platform)\ZlibStatDebug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL2_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
 xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\zlib1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL2_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL2_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Net\lib\$(Platform)\SDL3_net.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SDL_Debug|x64'">
@@ -571,27 +651,37 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;SDL_DEBUG_CE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>sdl2.lib;sdl2main.lib;sdl2_image.lib;sdl2_ttf.lib;sdl2_mixer.lib;sfml-audio-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;sfml-system-s-d.lib;sfml-window-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;zlibstat.lib;lua.lib</AdditionalDependencies>
+      <AdditionalDependencies>sdl3.lib;sdl3_image.lib;sdl3_ttf.lib;sdl3_mixer.lib;sfml-audio-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;sfml-system-s-d.lib;sfml-window-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;zlibstat.lib;lua.lib</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Debug\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;$(ProjectDir)lib\SFML\lib;$(ProjectDir)lib\zlib\contrib\vstudio\vc14\$(Platform)\ZlibStatDebug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Debug\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_Net\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;$(ProjectDir)lib\SFML\lib;$(ProjectDir)lib\zlib\contrib\vstudio\vc14\$(Platform)\ZlibStatDebug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL2_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
 xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\zlib1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL2_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL2_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Net\lib\$(Platform)\SDL3_net.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -603,7 +693,7 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -612,14 +702,24 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL2_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
 xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\zlib1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL2_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL2_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Net\lib\$(Platform)\SDL3_net.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SFML_Release|x64'">
@@ -631,7 +731,7 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;SFML_STATIC;SFML_NDEBUG_CE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -640,20 +740,30 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>sdl2.lib;sdl2main.lib;sdl2_image.lib;sdl2_ttf.lib;sdl2_mixer.lib;sfml-audio-s.lib;sfml-graphics-s.lib;sfml-network-s.lib;sfml-system-s.lib;sfml-window-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;zlibstat.lib;lua.lib</AdditionalDependencies>
+      <AdditionalDependencies>sdl3.lib;sdl3_image.lib;sdl3_ttf.lib;sdl3_mixer.lib;sfml-audio-s.lib;sfml-graphics-s.lib;sfml-network-s.lib;sfml-system-s.lib;sfml-window-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;zlibstat.lib;lua.lib</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Release\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;$(ProjectDir)lib\SFML\lib;$(ProjectDir)lib\zlib\contrib\vstudio\vc14\$(Platform)\ZlibStatRelease\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Release\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_Net\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;$(ProjectDir)lib\SFML\lib;$(ProjectDir)lib\zlib\contrib\vstudio\vc14\$(Platform)\ZlibStatRelease\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL2_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
 xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\zlib1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL2_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL2_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Net\lib\$(Platform)\SDL3_net.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SDL_Release|x64'">
@@ -665,7 +775,7 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;SDL_NDEBUG_CE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName);$(SolutionDir)$(ProjectName)\lib\ImGUI;$(SolutionDir)$(ProjectName)\lib\Lua\include;$(SolutionDir)$(ProjectName)\lib\SDL\include;$(SolutionDir)$(ProjectName)\lib\SDL_Image\include;$(SolutionDir)$(ProjectName)\lib\SDL_TTF\include;$(SolutionDir)$(ProjectName)\lib\SDL_Mixer\include;$(SolutionDir)$(ProjectName)\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -674,20 +784,30 @@ xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDi
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>sdl2.lib;sdl2main.lib;sdl2_image.lib;sdl2_ttf.lib;sdl2_mixer.lib;sfml-audio-s.lib;sfml-graphics-s.lib;sfml-network-s.lib;sfml-system-s.lib;sfml-window-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;zlibstat.lib;lua.lib</AdditionalDependencies>
+      <AdditionalDependencies>sdl3.lib;sdl3_image.lib;sdl3_ttf.lib;sdl3_mixer.lib;sfml-audio-s.lib;sfml-graphics-s.lib;sfml-network-s.lib;sfml-system-s.lib;sfml-window-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;zlibstat.lib;lua.lib</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Release\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;$(ProjectDir)lib\SFML\lib\;$(ProjectDir)lib\zlib\contrib\vstudio\vc14\$(Platform)\ZlibStatRelease\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Release\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_Net\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;$(ProjectDir)lib\SFML\lib\;$(ProjectDir)lib\zlib\contrib\vstudio\vc14\$(Platform)\ZlibStatRelease\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL2_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+      <Command>xcopy "$(ProjectDir)lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
 xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\zlib1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL2_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL2_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
-xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libmpg123-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_Net\lib\$(Platform)\SDL3_net.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y
+xcopy "$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\Game\" /d /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -3,7 +3,7 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
-#include "CaledonEngine/Systems/Rendering/Image.h"
+#include "Systems/Rendering/Image.h"
 
 struct SDL_Surface;
 

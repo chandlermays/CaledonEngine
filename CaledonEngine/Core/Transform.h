@@ -3,8 +3,8 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
-#include "CaledonEngine/Core/Component.h"
-#include "CaledonEngine/Utilities/Math/Vector2.h"
+#include "Core/Component.h"
+#include "Utilities/Math/Vector2.h"
 
 namespace CE
 {

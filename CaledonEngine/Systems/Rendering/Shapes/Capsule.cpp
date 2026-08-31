@@ -3,8 +3,9 @@
 | Author: Chandler Mays
 ------------------------------*/
 #include "Capsule.h"
-#include "CaledonEngine/Systems/Rendering/Renderer.h"
-#include "CaledonEngine/Utilities/Math/Rect.h"
+
+#include "Systems/Rendering/Renderer.h"
+#include "Utilities/Math/Rect.h"
 
 /*-----------------------------------
 | --- Public Method Definitions --- |
@@ -24,8 +25,8 @@ void CE::Capsule::Render(Renderer* pRenderer, const Rect& destRect, const Color&
 	if (!pRenderer)
 		return;
 
-	int centerX = destRect.m_x + destRect.m_width / 2;
-	int centerY = destRect.m_y + destRect.m_height / 2;
+	float centerX = destRect.m_x + destRect.m_width / 2.0f;
+	float centerY = destRect.m_y + destRect.m_height / 2.0f;
 
 	pRenderer->DrawCapsule(centerX, centerY, destRect.m_width, destRect.m_height, color, m_isFilled);
 }

@@ -3,7 +3,7 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
-#include "CaledonEngine/Systems/Rendering/Texture.h"
+#include "Systems/Rendering/Texture.h"
 
 struct SDL_Texture;
 

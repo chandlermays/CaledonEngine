@@ -1,6 +1,7 @@
 #include "CaledonParser.h"
-#include "CaledonEngine/Systems/Engine/LoggingManager.h"
-#include "CaledonEngine/Utilities/ThirdParty/tinyxml2.h"
+
+#include "Systems/Engine/LoggingManager.h"
+#include "Utilities/ThirdParty/tinyxml2.h"
 
 #include <fstream>
 #include <sstream>

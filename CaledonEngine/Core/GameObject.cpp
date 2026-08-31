@@ -2,10 +2,11 @@
 | File: GameObject.cpp
 | Author: Chandler Mays
 ------------------------------*/
-#include "CaledonEngine/Systems/Engine/LoggingManager.h"
-#include "CaledonEngine/Core/GameObject.h"
-#include "CaledonEngine/Core/Transform.h"
-#include "CaledonEngine/Core/Component.h"
+#include "GameObject.h"
+
+#include "Systems/Engine/LoggingManager.h"
+#include "Core/Transform.h"
+#include "Core/Component.h"
 
 /*-----------------------------------
 | --- Public Method Definitions --- |

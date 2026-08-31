@@ -3,9 +3,11 @@
 | Author: Chandler Mays
 ------------------------------*/
 #include "ToolsManager.h"
-#include "CaledonEngine/Systems/Engine/LoggingManager.h"
-#include "CaledonEngine/Systems/Engine/EngineManager.h"
-#include "CaledonEngine/Systems/Input/InputManager.h"
+
+#include "Systems/Engine/LoggingManager.h"
+#include "Systems/Engine/EngineManager.h"
+#include "Systems/Input/InputManager.h"
+
 #include <cassert>
 
 CE::ToolsManager::ToolsManager()

@@ -3,7 +3,7 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
-#include "CaledonEngine/Systems/Rendering/Window.h"
+#include "Systems/Rendering/Window.h"
 
 struct SDL_Window;
 

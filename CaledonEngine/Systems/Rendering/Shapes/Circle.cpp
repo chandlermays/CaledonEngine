@@ -3,7 +3,8 @@
 | Author: Chandler Mays
 ------------------------------*/
 #include "Circle.h"
-#include "CaledonEngine/Systems/Rendering/Renderer.h"
+
+#include "Systems/Rendering/Renderer.h"
 
 /*-----------------------------------
 | --- Public Method Definitions --- |
@@ -25,11 +26,11 @@ void CE::Circle::Render(Renderer* pRenderer, const Rect& destRect, const Color& 
 		return;
 
 	// Calculate the center position of the circle
-	int centerX = destRect.m_x + destRect.m_width / 2;
-	int centerY = destRect.m_y + destRect.m_height / 2;
+	float centerX = destRect.m_x + destRect.m_width / 2.0f;
+	float centerY = destRect.m_y + destRect.m_height / 2.0f;
 
 	// Calculate the radius based on the destination rectangle
-	int scaledRadius = (destRect.m_width < destRect.m_height ? destRect.m_width : destRect.m_height) / 2;
+	float scaledRadius = (destRect.m_width < destRect.m_height ? destRect.m_width : destRect.m_height) / 2.0f;
 
 	pRenderer->DrawCircle(centerX, centerY, scaledRadius, color, m_isFilled);
 }

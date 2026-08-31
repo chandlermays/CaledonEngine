@@ -3,9 +3,10 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
-#include "CaledonEngine/Systems/Rendering/Color.h"
-#include "CaledonEngine/Utilities/Math/Rect.h"
-#include "CaledonEngine/Utilities/Math/Vector2.h"
+#include "Systems/Rendering/Color.h"
+#include "Utilities/Math/Rect.h"
+#include "Utilities/Math/Vector2.h"
+
 #include <memory>
 
 namespace CE
@@ -29,7 +30,7 @@ namespace CE
 		virtual void BeginFrame() = 0;															// Prepares the Renderer for a new frame
 		virtual void EndFrame() = 0;															// Finalizes the rendering process for the current frame
 
-		virtual void RenderCopy(Texture* pTexture, Rect* pSrc, Rect* pDest) = 0;				// Renders a texture to the screen
+		virtual void RenderTexture(Texture* pTexture, Rect* pSrc, Rect* pDest) = 0;				// Renders a texture to the screen
 		virtual std::shared_ptr<Texture> CreateTexture(Image* pImage) = 0;						// Creates a Texture from a loaded Image
 
 		virtual void SetTextureColorMod(Texture* pTexture, uint8_t r,
@@ -39,13 +40,13 @@ namespace CE
 
 		virtual void DrawRect(const Rect& rect, const Color& color, bool filled) = 0;			// Draws an outlined rectangle
 
-		virtual void DrawCircle(int centerX, int centerY, int radius,
+		virtual void DrawCircle(float centerX, float centerY, float radius,
 			const Color& color, bool filled) = 0;												// Draws an outlined circle
 
-		virtual void DrawTriangle(const Vector2i& v1, const Vector2i& v2,
-			const Vector2i& v3, const Color& color, bool filled) = 0;							// Draws an outlined triangle
+		virtual void DrawTriangle(const Vector2f& v1, const Vector2f& v2,
+			const Vector2f& v3, const Color& color, bool filled) = 0;							// Draws an outlined triangle
 
-		virtual void DrawCapsule(int centerX, int centerY, int width, int height,
+		virtual void DrawCapsule(float centerX, float centerY, float width, float height,
 			const Color& color, bool filled) = 0;												// Draws an outlined capsule
 
 		virtual void* GetNativeHandle() const = 0;												// Returns the native Renderer handle

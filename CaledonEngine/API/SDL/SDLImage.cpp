@@ -2,9 +2,10 @@
 | File: SDLImage.cpp
 | Author: Chandler Mays
 ------------------------------*/
-#include "SDL.h"
-#include "SDL_image.h"
 #include "SDLImage.h"
+
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_image.h>
 
 /*-----------------------------------
 | --- Public Method Definitions --- |
@@ -30,7 +31,7 @@ CE::SDLImage::~SDLImage()
 {
 	if (m_pSurface)
 	{
-		SDL_FreeSurface(m_pSurface);
+		SDL_DestroySurface(m_pSurface);
 	}
 }
 

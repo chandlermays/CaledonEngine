@@ -3,6 +3,7 @@
 | Author: Chandler Mays
 ------------------------------*/
 #include "LoggingManager.h"
+
 #include <iostream>
 
 /*-----------------------------------

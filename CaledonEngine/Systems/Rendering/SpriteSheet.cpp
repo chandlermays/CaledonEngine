@@ -3,8 +3,10 @@
 | Author: Chandler Mays
 ------------------------------*/
 #include "SpriteSheet.h"
-#include "CaledonEngine/Systems/Rendering/Texture.h"
-#include "CaledonEngine/Systems/Rendering/Sprite.h"
+
+#include "Systems/Rendering/Texture.h"
+#include "Systems/Rendering/Sprite.h"
+
 #include <algorithm>
 
 /*-----------------------------------

@@ -3,7 +3,7 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
-#include "CaledonEngine/Systems/Rendering/Shapes/Shape.h"
+#include "Systems/Rendering/Shapes/Shape.h"
 
 namespace CE
 {
