@@ -25,7 +25,7 @@ namespace CE
 		SpriteType m_type;																					// The type of the sprite
 
 		std::shared_ptr<Texture> m_pTexture;																// The texture of the sprite
-		Rect m_textureRect;																					// The rectangle defining the texture area
+		RectInt m_textureRect;																				// The rectangle defining the texture area
 		Vector2f m_pivot;																					// The pivot point of the sprite
 
 		std::unique_ptr<Shape> m_pShape;																	// The shape of the sprite
@@ -41,7 +41,7 @@ namespace CE
 		Sprite& operator=(Sprite&&) = delete;																// Prevent move-assignment
 
 		static std::unique_ptr<Sprite> CreateFromTexture(std::shared_ptr<Texture> pTexture,
-			const Rect& textureRect = Rect(), const Vector2f& pivot = Vector2f(0.5f, 0.5f),
+			const RectInt& textureRect = RectInt(), const Vector2f& pivot = Vector2f(0.5f, 0.5f),
 			int pixelsPerUnit = 100);																		// Creates a sprite from a texture
 
 		static std::unique_ptr<Sprite> CreateFromShape(std::unique_ptr<Shape> pShape,
@@ -52,7 +52,7 @@ namespace CE
 
 		SpriteType GetType() const;																			// Returns the type of the sprite
 		Texture* GetTexture() const;																		// Returns the texture of the sprite
-		const Rect& GetTextureRect() const;																	// Returns the rectangle defining the texture area
+		const RectInt& GetTextureRect() const;																// Returns the rectangle defining the texture area
 		Vector2f GetTextureRectOffset() const;																// Returns the offset of the texture rectangle
 		const Vector2f& GetPivot() const;																	// Returns the pivot point of the sprite
 		Shape* GetShape() const;																			// Returns the shape of the sprite

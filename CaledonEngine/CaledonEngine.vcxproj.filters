@@ -59,6 +59,9 @@
     <Filter Include="Source Files\Utilities\ThirdParty">
       <UniqueIdentifier>{6d74333d-3fd0-4412-87ff-7546a9149911}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Systems\Physics\Components">
+      <UniqueIdentifier>{646f6633-fd97-401f-bac9-4ad7b1559f0c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Component.cpp">
@@ -180,6 +183,12 @@
     </ClCompile>
     <ClCompile Include="Systems\Rendering\SpriteSheet.cpp">
       <Filter>Source Files\Systems\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Physics\Components\Collider2D.cpp">
+      <Filter>Source Files\Systems\Physics\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Physics\Components\BoxCollider2D.cpp">
+      <Filter>Source Files\Systems\Physics\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -335,6 +344,15 @@
     </ClInclude>
     <ClInclude Include="Systems\Engine\IUpdatable.h">
       <Filter>Source Files\Systems\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Physics\Components\Collider2D.h">
+      <Filter>Source Files\Systems\Physics\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Physics\CollisionManager.h">
+      <Filter>Source Files\Systems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Physics\Components\BoxCollider2D.h">
+      <Filter>Source Files\Systems\Physics\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

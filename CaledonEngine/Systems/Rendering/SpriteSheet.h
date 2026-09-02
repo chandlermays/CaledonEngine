@@ -29,7 +29,7 @@ namespace CE
 		SpriteSheet(SpriteSheet&&) = delete;																				// Prevent move-construction
 		SpriteSheet& operator=(SpriteSheet&&) = delete;																		// Prevent move-assignment
 
-		Rect GetFrameRect(int index) const;																					// Returns the rectangle of the specified frame index
+		RectInt GetFrameRect(int index) const;																				// Returns the rectangle of the specified frame index
 		std::unique_ptr<Sprite> CreateSprite(int index, const Vector2f& pivot = Vector2f(0.5f, 0.5f),
 			int pixelsPerUnit = 100) const;																					// Creates a sprite from the specified frame index
 

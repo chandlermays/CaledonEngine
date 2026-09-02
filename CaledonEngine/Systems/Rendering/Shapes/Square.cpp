@@ -19,7 +19,7 @@ CE::Square::Square(const Color& color, int size, bool isFilled)
 /*------------------------------------------------------------------------------
 | --- Render: Draws the square onto the screen using the provided Renderer --- |
 ------------------------------------------------------------------------------*/
-void CE::Square::Render(Renderer* pRenderer, const Rect& destRect, const Color& color) const
+void CE::Square::Render(Renderer* pRenderer, const RectFloat& destRect, const Color& color) const
 {
     if (!pRenderer)
         return;

@@ -20,7 +20,7 @@ CE::Capsule::Capsule(const Color& color, int width, int height, bool isFilled)
 /*-------------------------------------------------------------------------------
 | --- Render: Draws the capsule onto the screen using the provided Renderer --- |
 -------------------------------------------------------------------------------*/
-void CE::Capsule::Render(Renderer* pRenderer, const Rect& destRect, const Color& color) const
+void CE::Capsule::Render(Renderer* pRenderer, const RectFloat& destRect, const Color& color) const
 {
 	if (!pRenderer)
 		return;

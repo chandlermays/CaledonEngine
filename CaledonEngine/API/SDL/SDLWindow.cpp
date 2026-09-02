@@ -31,9 +31,9 @@ CE::SDLWindow::~SDLWindow()
 ------------------------------------------------------*/
 bool CE::SDLWindow::Initialize()
 {
-	if (SDL_Init(SDL_INIT_VIDEO) != 0)
+	if (!SDL_Init(SDL_INIT_VIDEO))
 	{
-		CE_LOG("SDLWindow::Initialize - SDL could not initialize! SDL_Error: {}", SDL_GetError());		// FIX: SDL_GetError doesn't actually display any error.
+		CE_LOG("SDLWindow::Initialize - SDL could not initialize! SDL_Error: {}", SDL_GetError());
 		return false;
 	}
 
@@ -50,6 +50,8 @@ bool CE::SDLWindow::Initialize()
 		CE_LOG("SDLWindow::Initialize - Window could not be created! SDL_Error: {}", SDL_GetError());
 		return false;
 	}
+
+	SDL_SetWindowPosition(m_pWindow, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 
 	return true;
 }
@@ -101,14 +103,7 @@ void CE::SDLWindow::SetSize(int width, int height)
 void CE::SDLWindow::SetFullscreen(bool isFullscreen)
 {
 	m_isFullscreen = isFullscreen;
-	if (m_isFullscreen)
-	{
-		SDL_SetWindowFullscreen(m_pWindow, SDL_WINDOW_FULLSCREEN);
-	}
-	else
-	{
-		SDL_SetWindowFullscreen(m_pWindow, 0);
-	}
+	SDL_SetWindowFullscreen(m_pWindow, m_isFullscreen);
 }
 
 /*--------------------------------

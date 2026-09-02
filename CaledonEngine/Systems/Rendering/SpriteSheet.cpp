@@ -30,7 +30,7 @@ CE::SpriteSheet::SpriteSheet(std::shared_ptr<Texture> pTexture, int frameWidth, 
 /*--------------------------------------------------------------------------
 | --- GetFrameRect: Returns the rectangle of the specified frame index --- |
 --------------------------------------------------------------------------*/
-CE::Rect CE::SpriteSheet::GetFrameRect(int index) const
+CE::RectInt CE::SpriteSheet::GetFrameRect(int index) const
 {
 	if (index < 0)
 		index = 0;
@@ -38,7 +38,7 @@ CE::Rect CE::SpriteSheet::GetFrameRect(int index) const
 	int column = index % m_columns;
 	int row = index / m_columns;
 
-	return Rect(column * m_frameWidth, row * m_frameHeight, m_frameWidth, m_frameHeight);
+	return RectInt(column * m_frameWidth, row * m_frameHeight, m_frameWidth, m_frameHeight);
 }
 
 /*-----------------------------------------------------------------------

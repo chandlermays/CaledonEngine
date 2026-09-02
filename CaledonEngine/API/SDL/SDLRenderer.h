@@ -12,36 +12,36 @@ namespace CE
 	class SDLRenderer : public Renderer
 	{
 	private:
-		SDL_Renderer* m_pRenderer;																	// Pointer to the SDL Renderer
+		SDL_Renderer* m_pRenderer;																		// Pointer to the SDL Renderer
 
 	public:
-		SDLRenderer();																				// Constructor
-		~SDLRenderer() override;																	// Destructor
+		SDLRenderer();																					// Constructor
+		~SDLRenderer() override;																		// Destructor
 
-		bool Initialize(Window* pWindow) override;													// Prepares the SDL Renderer for use
-		void Shutdown() override;																	// Cleans up the SDL Renderer
-		void BeginFrame() override;																	// Prepares the SDL Renderer for a new frame
-		void EndFrame() override;																	// Finalizes the rendering process for the current frame
+		bool Initialize(Window* pWindow) override;														// Prepares the SDL Renderer for use
+		void Shutdown() override;																		// Cleans up the SDL Renderer
+		void BeginFrame() override;																		// Prepares the SDL Renderer for a new frame
+		void EndFrame() override;																		// Finalizes the rendering process for the current frame
 
-		virtual void RenderTexture(Texture* pTexture, Rect* pSrc, Rect* pDest) override;			// Renders a texture to the screen
-		std::shared_ptr<Texture> CreateTexture(Image* pImage) override;								// Creates a Texture from a loaded Image
+		virtual void RenderTexture(Texture* pTexture, RectInt* pSrc, RectFloat* pDest) override;		// Renders a texture to the screen
+		std::shared_ptr<Texture> CreateTexture(Image* pImage) override;									// Creates a Texture from a loaded Image
 
 		virtual void SetTextureColorMod(Texture* pTexture, uint8_t r,
-			uint8_t g, uint8_t b) override;															// Sets the color modulation for a texture
+			uint8_t g, uint8_t b) override;																// Sets the color modulation for a texture
 
-		virtual void SetTextureAlphaMod(Texture* pTexture, uint8_t a) override;						// Sets the alpha modulation for a texture
+		virtual void SetTextureAlphaMod(Texture* pTexture, uint8_t a) override;							// Sets the alpha modulation for a texture
 
-		virtual void DrawRect(const Rect& rect, const Color& color, bool filled) override;			// Draws a rectangle to the screen
+		virtual void DrawRect(const RectFloat& rect, const Color& color, bool filled) override;			// Draws a rectangle to the screen
 
 		virtual void DrawCircle(float centerX, float centerY, float radius,
-			const Color& color, bool filled) override;												// Draws a circle to the screen
+			const Color& color, bool filled) override;													// Draws a circle to the screen
 
 		virtual void DrawTriangle(const Vector2f& v1, const Vector2f& v2,
-			const Vector2f& v3, const Color& color, bool filled) override;							// Draws a triangle to the screen
+			const Vector2f& v3, const Color& color, bool filled) override;								// Draws a triangle to the screen
 
 		virtual void DrawCapsule(float centerX, float centerY, float width, float height,
-			const Color& color, bool filled) override;												// Draws a capsule to the screen
+			const Color& color, bool filled) override;													// Draws a capsule to the screen
 
-		void* GetNativeHandle() const override;														// Returns the native renderer handle
+		void* GetNativeHandle() const override;															// Returns the native renderer handle
 	};
 }

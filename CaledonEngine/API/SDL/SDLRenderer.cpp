@@ -10,6 +10,7 @@
 #include "API/SDL/SDLTexture.h"
 
 #include <SDL3/SDL.h>
+#include <limits>
 
 /*-----------------------------------
 | --- Public Method Definitions --- |
@@ -41,7 +42,7 @@ bool CE::SDLRenderer::Initialize(Window* pWindow)
     if (!pSDLWindow)
         return false;
 
-	m_pRenderer = SDL_CreateRenderer(pSDLWindow, nullptr);
+	m_pRenderer = SDL_CreateRenderer(pSDLWindow, NULL);
     if (!m_pRenderer)
         return false;
 
@@ -86,7 +87,7 @@ void CE::SDLRenderer::EndFrame()
 /*-----------------------------------------------------
 | --- RenderCopy: Renders a texture to the screen --- |
 -----------------------------------------------------*/
-void CE::SDLRenderer::RenderTexture(Texture* pTexture, Rect* pSrc, Rect* pDest)
+void CE::SDLRenderer::RenderTexture(Texture* pTexture, RectInt* pSrc, RectFloat* pDest)
 {
     if (!m_pRenderer || !pTexture || !pDest)
         return;
@@ -96,10 +97,10 @@ void CE::SDLRenderer::RenderTexture(Texture* pTexture, Rect* pSrc, Rect* pDest)
 	SDL_FRect destRect;
     if (pSrc)
     {
-        srcRect.x = pSrc->m_x;
-        srcRect.y = pSrc->m_y;
-        srcRect.w = pSrc->m_width;
-        srcRect.h = pSrc->m_height;
+        srcRect.x = static_cast<float>(pSrc->m_x);
+        srcRect.y = static_cast<float>(pSrc->m_y);
+        srcRect.w = static_cast<float>(pSrc->m_width);
+        srcRect.h = static_cast<float>(pSrc->m_height);
     }
 
 	destRect.x = pDest->m_x;
@@ -164,7 +165,7 @@ void CE::SDLRenderer::SetTextureAlphaMod(Texture* pTexture, uint8_t a)
 /*---------------------------------------------------
 | --- DrawRect: Draws a rectangle to the screen --- |
 ---------------------------------------------------*/
-void CE::SDLRenderer::DrawRect(const Rect& rect, const Color& color, bool filled)
+void CE::SDLRenderer::DrawRect(const RectFloat& rect, const Color& color, bool filled)
 {
 	if (!m_pRenderer)
 		return;
@@ -269,24 +270,26 @@ void CE::SDLRenderer::DrawTriangle(const Vector2f& v1, const Vector2f& v2, const
 
 	if (filled)
 	{
-		// Draw filled triangle
-		int minY = std::min(std::min(v1.y, v2.y), v3.y);
-		int maxY = std::max(std::max(v1.y, v2.y), v3.y);
+		int minY = static_cast<int>(std::min({ v1.y, v2.y, v3.y }));
+		int maxY = static_cast<int>(std::max({ v1.y, v2.y, v3.y }));
 
 		for (int y = minY; y <= maxY; ++y)
 		{
-			int minX = INT_MAX;
-			int maxX = INT_MIN;
+			float fy = static_cast<float>(y);
+			float minX = std::numeric_limits<float>::max();
+			float maxX = std::numeric_limits<float>::lowest();
+			bool foundEdge = false;
 
 			auto checkEdge = [&](const Vector2f& p1, const Vector2f& p2)
 				{
-					if ((p1.y <= y && p2.y >= y) || (p2.y <= y && p1.y >= y))
+					if ((p1.y <= fy && p2.y >= fy) || (p2.y <= fy && p1.y >= fy))
 					{
 						if (p2.y != p1.y)
 						{
-							int x = p1.x + (y - p1.y) * (p2.x - p1.x) / (p2.y - p1.y);
+							float x = p1.x + (fy - p1.y) * (p2.x - p1.x) / (p2.y - p1.y);
 							minX = std::min(minX, x);
 							maxX = std::max(maxX, x);
+							foundEdge = true;
 						}
 					}
 				};
@@ -295,15 +298,14 @@ void CE::SDLRenderer::DrawTriangle(const Vector2f& v1, const Vector2f& v2, const
 			checkEdge(v2, v3);
 			checkEdge(v3, v1);
 
-			if (minX != INT_MAX && maxX != INT_MIN)
+			if (foundEdge)
 			{
-				SDL_RenderLine(m_pRenderer, minX, y, maxX, y);
+				SDL_RenderLine(m_pRenderer, minX, fy, maxX, fy);
 			}
 		}
 	}
 	else
 	{
-		// Draw outlined triangle
 		SDL_RenderLine(m_pRenderer, v1.x, v1.y, v2.x, v2.y);
 		SDL_RenderLine(m_pRenderer, v2.x, v2.y, v3.x, v3.y);
 		SDL_RenderLine(m_pRenderer, v3.x, v3.y, v1.x, v1.y);
@@ -335,7 +337,7 @@ void CE::SDLRenderer::DrawCapsule(float centerX, float centerY, float width, flo
 		if (filled)
 		{
 			// Middle rectangle
-			Rect middleRect(centerX - radius, topY, width, rectHeight);
+			RectFloat middleRect(centerX - radius, topY, width, rectHeight);
 			DrawRect(middleRect, color, true);
 		}
 		else
@@ -364,7 +366,7 @@ void CE::SDLRenderer::DrawCapsule(float centerX, float centerY, float width, flo
 		if (filled)
 		{
 			// Middle rectangle
-			Rect middleRect(leftX, centerY - radius, rectWidth, height);
+			RectFloat middleRect(leftX, centerY - radius, rectWidth, height);
 			DrawRect(middleRect, color, true);
 		}
 		else

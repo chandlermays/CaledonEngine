@@ -20,7 +20,7 @@ CE::Circle::Circle(const Color& color, int radius, bool isFilled)
 /*------------------------------------------------------------------------------
 | --- Render: Draws the circle onto the screen using the provided Renderer --- |
 ------------------------------------------------------------------------------*/
-void CE::Circle::Render(Renderer* pRenderer, const Rect& destRect, const Color& color) const
+void CE::Circle::Render(Renderer* pRenderer, const RectFloat& destRect, const Color& color) const
 {
 	if (pRenderer == nullptr)
 		return;

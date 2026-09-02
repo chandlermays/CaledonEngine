@@ -18,7 +18,7 @@ namespace CE
 	class Renderer
 	{
 	public:
-		Renderer() = default;
+		Renderer() = default;																	// Constructor
 		virtual ~Renderer() = default;															// Destructor
 		Renderer(const Renderer&) = delete;														// Prevent copy-construction
 		Renderer& operator=(const Renderer&) = delete;											// Prevent copy-assignment
@@ -30,7 +30,7 @@ namespace CE
 		virtual void BeginFrame() = 0;															// Prepares the Renderer for a new frame
 		virtual void EndFrame() = 0;															// Finalizes the rendering process for the current frame
 
-		virtual void RenderTexture(Texture* pTexture, Rect* pSrc, Rect* pDest) = 0;				// Renders a texture to the screen
+		virtual void RenderTexture(Texture* pTexture, RectInt* pSrc, RectFloat* pDest) = 0;		// Renders a texture to the screen
 		virtual std::shared_ptr<Texture> CreateTexture(Image* pImage) = 0;						// Creates a Texture from a loaded Image
 
 		virtual void SetTextureColorMod(Texture* pTexture, uint8_t r,
@@ -38,7 +38,7 @@ namespace CE
 
 		virtual void SetTextureAlphaMod(Texture* pTexture, uint8_t a) = 0;						// Sets the alpha modulation for a texture
 
-		virtual void DrawRect(const Rect& rect, const Color& color, bool filled) = 0;			// Draws an outlined rectangle
+		virtual void DrawRect(const RectFloat& rect, const Color& color, bool filled) = 0;		// Draws an outlined rectangle
 
 		virtual void DrawCircle(float centerX, float centerY, float radius,
 			const Color& color, bool filled) = 0;												// Draws an outlined circle

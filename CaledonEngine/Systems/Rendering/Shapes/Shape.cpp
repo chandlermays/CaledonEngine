@@ -79,7 +79,7 @@ CE::ShapeType CE::Shape::GetShapeType() const
 /*----------------------------------------------------------------
 | --- GetBounds: Returns the bounding rectangle of the shape --- |
 ----------------------------------------------------------------*/
-CE::Rect CE::Shape::GetBounds() const
+CE::RectInt CE::Shape::GetBounds() const
 {
 	return m_bounds;
 }

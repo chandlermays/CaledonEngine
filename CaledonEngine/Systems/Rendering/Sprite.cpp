@@ -31,7 +31,7 @@ CE::Sprite::~Sprite() = default;
 /*------------------------------------------------------------
 | --- CreateFromTexture: Creates a sprite from a texture --- |
 ------------------------------------------------------------*/
-std::unique_ptr<CE::Sprite> CE::Sprite::CreateFromTexture(std::shared_ptr<Texture> pTexture, const Rect& textureRect, const Vector2f& pivot, int pixelsPerUnit)
+std::unique_ptr<CE::Sprite> CE::Sprite::CreateFromTexture(std::shared_ptr<Texture> pTexture, const RectInt& textureRect, const Vector2f& pivot, int pixelsPerUnit)
 {
     std::unique_ptr<Sprite> sprite = std::make_unique<Sprite>();
 	sprite->m_type = SpriteType::kTexture;
@@ -43,7 +43,7 @@ std::unique_ptr<CE::Sprite> CE::Sprite::CreateFromTexture(std::shared_ptr<Textur
     {
         if (textureRect.m_width == 0 && textureRect.m_height == 0)
         {
-			sprite->m_textureRect = Rect(0, 0, pTexture->GetWidth(), pTexture->GetHeight());
+			sprite->m_textureRect = RectInt(0, 0, pTexture->GetWidth(), pTexture->GetHeight());
         }
         else
         {
@@ -126,7 +126,7 @@ CE::Texture* CE::Sprite::GetTexture() const
 /*-------------------------------------------------------------------------
 | --- GetTextureRect: Returns the rectangle defining the texture area --- |
 -------------------------------------------------------------------------*/
-const CE::Rect& CE::Sprite::GetTextureRect() const
+const CE::RectInt& CE::Sprite::GetTextureRect() const
 {
 	return m_textureRect;
 }
@@ -137,8 +137,8 @@ const CE::Rect& CE::Sprite::GetTextureRect() const
 CE::Vector2f CE::Sprite::GetTextureRectOffset() const
 {
     Vector2f offset;
-	offset.x = -m_pivot.x * m_textureRect.m_width;
-	offset.y = -m_pivot.y * m_textureRect.m_height;
+	offset.x = -m_pivot.x * static_cast<float>(m_textureRect.m_width);
+	offset.y = -m_pivot.y * static_cast<float>(m_textureRect.m_height);
 	return offset;
 }
 

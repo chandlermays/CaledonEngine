@@ -71,8 +71,8 @@ void CE::SpriteComponent::Render()
 
 	const Transform& transform = m_pOwner->GetTransform();
 
-	const int x = static_cast<int>(transform.GetPosition().x);
-	const int y = static_cast<int>(transform.GetPosition().y);
+	const float x = transform.GetPosition().x;
+	const float y = transform.GetPosition().y;
 
 	const float sx = transform.GetScale().x;
 	const float sy = transform.GetScale().y;
@@ -80,16 +80,15 @@ void CE::SpriteComponent::Render()
 	const float scaleX = (sx != 0.0f ? sx : 1.0f);
 	const float scaleY = (sy != 0.0f ? sy : 1.0f);
 
-	const Vector2f& spriteSize = m_pSprite->GetSize();
 	const Vector2f& pivot = m_pSprite->GetPivot();
 
-	int pixelWidth = static_cast<int>(m_pSprite->GetPixelWidth() * scaleX);
-	int pixelHeight = static_cast<int>(m_pSprite->GetPixelHeight() * scaleY);
+	float pixelWidth = m_pSprite->GetPixelWidth() * scaleX;
+	float pixelHeight = m_pSprite->GetPixelHeight() * scaleY;
 
-	int offsetX = static_cast<int>(-pivot.x * pixelWidth);
-	int offsetY = static_cast<int>(-pivot.y * pixelHeight);
+	float offsetX = -pivot.x * pixelWidth;
+	float offsetY = -pivot.y * pixelHeight;
 
-	Rect destRect
+	RectFloat destRect
 	{
 		x + offsetX,
 		y + offsetY,
@@ -102,7 +101,7 @@ void CE::SpriteComponent::Render()
 		Texture* pTexture = m_pSprite->GetTexture();
 		if (pTexture)
 		{
-			Rect srcRect = m_pSprite->GetTextureRect();
+			RectInt srcRect = m_pSprite->GetTextureRect();
 
 			if (m_color != Color::White())
 			{
