@@ -190,6 +190,9 @@
     <ClCompile Include="Systems\Physics\Components\BoxCollider2D.cpp">
       <Filter>Source Files\Systems\Physics\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Systems\Physics\CollisionManager.cpp">
+      <Filter>Source Files\Systems\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\GameObject.h">

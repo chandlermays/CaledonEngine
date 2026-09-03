@@ -28,7 +28,7 @@ CE::SDLWindow::~SDLWindow()
 
 /*-------------------------------------------------------
 | --- Initialize: Prepares the 'SDL' Window for use --- |
-------------------------------------------------------*/
+-------------------------------------------------------*/
 bool CE::SDLWindow::Initialize()
 {
 	if (!SDL_Init(SDL_INIT_VIDEO))

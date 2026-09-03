@@ -5,10 +5,11 @@
 #include "EngineManager.h"
 #include "LoggingManager.h"
 
+#include "Systems/Physics/CollisionManager.h"
 #include "Systems/Rendering/GraphicsManager.h"
 #include "Systems/Resources/ResourceManager.h"
-#include "Systems/Scene/SceneManager.h"
 #include "Systems/Input/InputManager.h"
+#include "Systems/Scene/SceneManager.h"
 #include "Systems/Tools/ToolsManager.h"
 
 #include <chrono>
@@ -105,6 +106,7 @@ void CE::EngineManager::Shutdown()
 	m_pGraphicsManager = nullptr;
 	m_pResourceManager = nullptr;
 	m_pSceneManager = nullptr;
+	m_pCollisionManager = nullptr;
 	m_pInputManager = nullptr;
 	m_pToolsManager = nullptr;
 
@@ -133,6 +135,14 @@ CE::ResourceManager* CE::EngineManager::GetResourceManager() const
 CE::SceneManager* CE::EngineManager::GetSceneManager() const
 {
 	return m_pSceneManager;
+}
+
+/*------------------------------------------------------------------------
+| --- GetCollisionManager: Returns a pointer to the CollisionManager --- |
+------------------------------------------------------------------------*/
+CE::CollisionManager* CE::EngineManager::GetCollisionManager() const
+{
+	return m_pCollisionManager;
 }
 
 /*----------------------------------------------------------------
@@ -164,6 +174,7 @@ CE::EngineManager::EngineManager()
 	, m_pGraphicsManager{ nullptr }
 	, m_pResourceManager{ nullptr }
 	, m_pSceneManager{ nullptr }
+	, m_pCollisionManager{ nullptr }
 	, m_pInputManager{ nullptr }
 	, m_pToolsManager{ nullptr }
 {
@@ -178,6 +189,10 @@ CE::EngineManager::EngineManager()
 	auto pScene = std::make_unique<SceneManager>();
 	m_pSceneManager = pScene.get();
 	RegisterManager(std::move(pScene));
+
+	auto pCollision = std::make_unique<CollisionManager>();
+	m_pCollisionManager = pCollision.get();
+	RegisterManager(std::move(pCollision));
 
 	auto pInput = std::make_unique<InputManager>();
 	m_pInputManager = pInput.get();

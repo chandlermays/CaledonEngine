@@ -4,7 +4,7 @@
 ------------------------------*/
 #include "Collider2D.h"
 #include "Systems/Engine/EngineManager.h"
-// #include "Systems/Physics/CollisionManager.h"		// once it exists — see "what's next" below
+#include "Systems/Physics/CollisionManager.h"
 
 /*--------------------------------------------------------------------
 | --- Constructor: Constructs the Collider2D with default values --- |
@@ -19,13 +19,11 @@ CE::Collider2D::Collider2D()
 -------------------------------------------------------*/
 CE::Collider2D::~Collider2D()
 {
-	// Unregister defensively — EngineManager may already be mid-shutdown, in which case
-	// GetCollisionManager() returns nullptr rather than a stale pointer.
-	// auto* pCollisionManager = EngineManager::GetInstance().GetCollisionManager();
-	// if (pCollisionManager)
-	// {
-	// 	pCollisionManager->RemoveActiveCollider(this);
-	// }
+	auto* pCollisionManager = EngineManager::GetInstance().GetCollisionManager();
+	if (pCollisionManager)
+	{
+		pCollisionManager->RemoveActiveCollider(this);
+	}
 }
 
 /*-----------------------------------------------------
@@ -35,15 +33,13 @@ bool CE::Collider2D::Initialize()
 {
 	RecalculateBounds();
 
-	// auto* pCollisionManager = EngineManager::GetInstance().GetCollisionManager();
-	// if (pCollisionManager)
-	// {
-	// 	pCollisionManager->AddActiveCollider(this);
-	// 	return true;
-	// }
-	// return false;
-
-	return true;		// placeholder until CollisionManager exists
+	auto* pCollisionManager = EngineManager::GetInstance().GetCollisionManager();
+	if (pCollisionManager)
+	{
+		pCollisionManager->AddActiveCollider(this);
+		return true;
+	}
+	return false;
 }
 
 /*-------------------------------------------------------------------------------------

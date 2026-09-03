@@ -18,70 +18,76 @@ namespace CE
 		static_assert(std::is_arithmetic<T>::value, "Vector2 can only be instantiated with arithmetic types (int, float, double, etc.)");
 
 	public:
-		static constexpr size_t N = 2;																				// Number of components in the vector
+		static constexpr size_t N = 2;			// Number of components in the vector
 
-		T x;																										// The x component of the vector
-		T y;																										// The y component of the vector
+		T x;									// The x component of the vector
+		T y;									// The y component of the vector
 
-		constexpr inline Vector2()																					// Default constructor initializes the vector to (0, 0)
+		/*----------------------
+		| --- Constructors --- |
+		----------------------*/
+		constexpr inline Vector2()										// Default constructor initializes the vector to (0, 0)
 			: x{ 0 }
 			, y{ 0 }
 		{ }
 
-		constexpr inline Vector2(const Vector2& other) = default;													// Copy constructor
+		constexpr inline Vector2(const Vector2& other) = default;		// Copy constructor
 
-		constexpr inline Vector2(const T x, const T y)																// Constructor that initializes the vector with specified x and y values
+		constexpr inline Vector2(const T x, const T y)					// Constructor that initializes the vector with specified x and y values
 			: x{ x }
 			, y{ y }
 		{ }
 
-		constexpr inline explicit Vector2(const T uniformValue)														// Constructor that initializes both components of the vector to the same value
+		constexpr inline explicit Vector2(const T uniformValue)			// Constructor that initializes both components of the vector to the same value
 			: x{ uniformValue }
 			, y{ uniformValue }
 		{ }
 
-		constexpr inline Vector2& operator=(const Vector2& other) = default;													// Copy assignment operator
+		/*--------------------
+		| --- Operators  --- |
+		--------------------*/
+		constexpr inline Vector2& operator=(const Vector2& other) = default;														// Copy assignment operator
 
-		constexpr inline bool operator==(const Vector2 other) const			{ return (x == other.x && y == other.y); }			// Compare two vectors for equality
-		constexpr inline bool operator!=(const Vector2 other) const			{ return !(*this == other); }						// Compare two vectors for inequality
-		constexpr inline bool operator<(const Vector2 other) const			{ return (x < other.x && y < other.y); }			// Compare if this vector is less than another vector (component-wise)
-		constexpr inline bool operator>(const Vector2 other) const			{ return (x > other.x && y > other.y); }			// Compare if this vector is greater than another vector (component-wise)
-		constexpr inline bool operator<=(const Vector2 other) const			{ return (x <= other.x && y <= other.y); }			// Compare if this vector is less than or equal to another vector (component-wise)
-		constexpr inline bool operator>=(const Vector2 other) const			{ return (x >= other.x && y >= other.y); }			// Compare if this vector is greater than or equal to another vector (component-wise)
+		constexpr inline bool operator==(const Vector2 other) const			{ return (x == other.x && y == other.y); }				// Compare two vectors for equality
+		constexpr inline bool operator!=(const Vector2 other) const			{ return !(*this == other); }							// Compare two vectors for inequality
+		constexpr inline bool operator<(const Vector2 other) const			{ return (x < other.x && y < other.y); }				// Compare if this vector is less than another vector (component-wise)
+		constexpr inline bool operator>(const Vector2 other) const			{ return (x > other.x && y > other.y); }				// Compare if this vector is greater than another vector (component-wise)
+		constexpr inline bool operator<=(const Vector2 other) const			{ return (x <= other.x && y <= other.y); }				// Compare if this vector is less than or equal to another vector (component-wise)
+		constexpr inline bool operator>=(const Vector2 other) const			{ return (x >= other.x && y >= other.y); }				// Compare if this vector is greater than or equal to another vector (component-wise)
 
-		constexpr inline T operator[](const size_t index) const				{ assert(index < 2); return *(&x + index); }		// Access vector components by index (0 for x, 1 for y)
-		constexpr inline T& operator[](const size_t index)					{ assert(index < 2); return *(&x + index); }		// Access vector components by index (0 for x, 1 for y)
+		constexpr inline T operator[](const size_t index) const				{ assert(index < 2); return (index == 0) ? x : y; }		// Access vector components by index (0 for x, 1 for y)
+		constexpr inline T& operator[](const size_t index)					{ assert(index < 2); return (index == 0) ? x : y; }		// Access vector components by index (0 for x, 1 for y)
 
-		constexpr inline Vector2 operator-() const							{ return { -x, -y }; }								// Negate the vector (unary minus)
-		constexpr inline Vector2 operator+(const Vector2 other) const		{ return { x + other.x, y + other.y }; }			// Add two vectors component-wise
-		constexpr inline Vector2 operator-(const Vector2 other) const		{ return { x - other.x, y - other.y }; }			// Subtract two vectors component-wise
-		constexpr inline Vector2 operator*(const Vector2 other) const		{ return { x * other.x, y * other.y }; }			// Multiply two vectors component-wise
-		constexpr inline Vector2 operator/(const Vector2 other) const		{ return { x / other.x, y / other.y }; }			// Divide two vectors component-wise
+		constexpr inline Vector2 operator-() const							{ return { -x, -y }; }									// Negate the vector (unary minus)
+		constexpr inline Vector2 operator+(const Vector2 other) const		{ return { x + other.x, y + other.y }; }				// Add two vectors component-wise
+		constexpr inline Vector2 operator-(const Vector2 other) const		{ return { x - other.x, y - other.y }; }				// Subtract two vectors component-wise
+		constexpr inline Vector2 operator*(const Vector2 other) const		{ return { x * other.x, y * other.y }; }				// Multiply two vectors component-wise
+		constexpr inline Vector2 operator/(const Vector2 other) const		{ return { x / other.x, y / other.y }; }				// Divide two vectors component-wise
 
-		constexpr inline Vector2 operator+(const T scalar) const			{ return { x + scalar, y + scalar }; }				// Add a scalar to each component of this vector
-		constexpr inline Vector2 operator-(const T scalar) const			{ return { x - scalar, y - scalar }; }				// Subtract a scalar from each component of this vector
-		constexpr inline Vector2 operator*(const T scalar) const			{ return { x * scalar, y * scalar }; }				// Multiply each component of this vector by a scalar
-		constexpr inline Vector2 operator/(const T scalar) const			{ return { x / scalar, y / scalar }; }				// Divide each component of this vector by a scalar
+		constexpr inline Vector2 operator+(const T scalar) const			{ return { x + scalar, y + scalar }; }					// Add a scalar to each component of this vector
+		constexpr inline Vector2 operator-(const T scalar) const			{ return { x - scalar, y - scalar }; }					// Subtract a scalar from each component of this vector
+		constexpr inline Vector2 operator*(const T scalar) const			{ return { x * scalar, y * scalar }; }					// Multiply each component of this vector by a scalar
+		constexpr inline Vector2 operator/(const T scalar) const			{ return { x / scalar, y / scalar }; }					// Divide each component of this vector by a scalar
 
-		constexpr inline Vector2& operator+=(const Vector2 other)			{ return *this = *this + other; }					// Add another vector to this vector component-wise and assign the result to this vector
-		constexpr inline Vector2& operator-=(const Vector2 other)			{ return *this = *this - other; }					// Subtract another vector from this vector component-wise and assign the result to this vector
-		constexpr inline Vector2& operator*=(const Vector2 other)			{ return *this = *this * other; }					// Multiply this vector by another vector component-wise and assign the result to this vector
-		constexpr inline Vector2& operator/=(const Vector2 other)			{ return *this = *this / other; }					// Divide this vector by another vector component-wise and assign the result to this vector
+		constexpr inline Vector2& operator+=(const Vector2 other)			{ return *this = *this + other; }						// Add another vector to this vector component-wise and assign the result to this vector
+		constexpr inline Vector2& operator-=(const Vector2 other)			{ return *this = *this - other; }						// Subtract another vector from this vector component-wise and assign the result to this vector
+		constexpr inline Vector2& operator*=(const Vector2 other)			{ return *this = *this * other; }						// Multiply this vector by another vector component-wise and assign the result to this vector
+		constexpr inline Vector2& operator/=(const Vector2 other)			{ return *this = *this / other; }						// Divide this vector by another vector component-wise and assign the result to this vector
 
-		constexpr inline Vector2& operator+=(const T scalar)				{ return *this = *this + scalar; }					// Add a scalar to each component of this vector and assign the result to this vector
-		constexpr inline Vector2& operator-=(const T scalar)				{ return *this = *this - scalar; }					// Subtract a scalar from each component of this vector and assign the result to this vector
-		constexpr inline Vector2& operator*=(const T scalar)				{ return *this = *this * scalar; }					// Multiply each component of this vector by a scalar and assign the result to this vector
-		constexpr inline Vector2& operator/=(const T scalar)				{ return *this = *this / scalar; }					// Divide each component of this vector by a scalar and assign the result to this vector
+		constexpr inline Vector2& operator+=(const T scalar)				{ return *this = *this + scalar; }						// Add a scalar to each component of this vector and assign the result to this vector
+		constexpr inline Vector2& operator-=(const T scalar)				{ return *this = *this - scalar; }						// Subtract a scalar from each component of this vector and assign the result to this vector
+		constexpr inline Vector2& operator*=(const T scalar)				{ return *this = *this * scalar; }						// Multiply each component of this vector by a scalar and assign the result to this vector
+		constexpr inline Vector2& operator/=(const T scalar)				{ return *this = *this / scalar; }						// Divide each component of this vector by a scalar and assign the result to this vector
 
-		static constexpr inline Vector2 Up()					{ return { 0, 1 }; }								// Returns a vector pointing upwards (0, 1)
-		static constexpr inline Vector2 Down()					{ return { 0, -1 }; }								// Returns a vector pointing downwards (0, -1)
-		static constexpr inline Vector2 Left()					{ return { -1, 0 }; }								// Returns a vector pointing leftwards (-1, 0)
-		static constexpr inline Vector2 Right()					{ return { 1, 0 }; }								// Returns a vector pointing rightwards (1, 0)
-		static constexpr inline Vector2 One()					{ return { 1, 1 }; }								// Returns a vector with all components set to 1 (1, 1)
-		static constexpr inline Vector2 Zero()					{ return { 0, 0 }; }								// Returns a vector with all components set to 0 (0, 0)
+		static constexpr inline Vector2 Up()								{ return { 0, 1 }; }									// Returns a vector pointing upwards (0, 1)
+		static constexpr inline Vector2 Down()								{ return { 0, -1 }; }									// Returns a vector pointing downwards (0, -1)
+		static constexpr inline Vector2 Left()								{ return { -1, 0 }; }									// Returns a vector pointing leftwards (-1, 0)
+		static constexpr inline Vector2 Right()								{ return { 1, 0 }; }									// Returns a vector pointing rightwards (1, 0)
+		static constexpr inline Vector2 One()								{ return { 1, 1 }; }									// Returns a vector with all components set to 1 (1, 1)
+		static constexpr inline Vector2 Zero()								{ return { 0, 0 }; }									// Returns a vector with all components set to 0 (0, 0)
 
-		constexpr inline T X() const							{ return x; }										// Get the x component of the vector
-		constexpr inline T Y() const							{ return y; }										// Get the y component of the vector
+		constexpr inline T X() const										{ return x; }											// Get the x component of the vector
+		constexpr inline T Y() const										{ return y; }											// Get the y component of the vector
 
 		/*-----------------------------------------------------
 		| --- Magnitude: Returns the length of the vector --- |

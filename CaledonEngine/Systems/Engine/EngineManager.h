@@ -15,6 +15,7 @@ namespace CE
 	class GraphicsManager;
 	class ResourceManager;
 	class SceneManager;
+	class CollisionManager;
 	class InputManager;
 	class ToolsManager;
 
@@ -28,6 +29,7 @@ namespace CE
 		GraphicsManager* m_pGraphicsManager;								// Pointer to the graphics manager
 		ResourceManager* m_pResourceManager;								// Pointer to the resource manager
 		SceneManager* m_pSceneManager;										// Pointer to the scene manager
+		CollisionManager* m_pCollisionManager;								// Pointer to the collision manager
 		InputManager* m_pInputManager;										// Pointer to the input manager
 		ToolsManager* m_pToolsManager;										// Pointer to the tools manager
 
@@ -56,6 +58,7 @@ namespace CE
 		GraphicsManager* GetGraphicsManager() const;						// Returns a pointer to the GraphicsManager
 		ResourceManager* GetResourceManager() const;						// Returns a pointer to the ResourceManager
 		SceneManager* GetSceneManager() const;								// Returns a pointer to the SceneManager
+		CollisionManager* GetCollisionManager() const;						// Returns a pointer to the CollisionManager
 		InputManager* GetInputManager() const;								// Returns a pointer to the InputManager
 		ToolsManager* GetToolsManager() const;								// Returns a pointer to the ToolsManager
 	};
