@@ -1,6 +1,7 @@
 #include "ComponentFactory.h"
 
 #include "Systems/Rendering/Components/SpriteComponent.h"
+#include "Systems/Physics/Components/BoxCollider2D.h"
 #include "Systems/Rendering/Shapes/Square.h"
 #include "Systems/Rendering/Shapes/Circle.h"
 #include "Systems/Rendering/Shapes/Triangle.h"
@@ -26,6 +27,11 @@ void CE::ComponentFactory::CreateComponent(GameObject* pGameObject, const std::s
 		AddSpriteComponent(pGameObject, pElement);
 		return;
 	}
+	else if (componentID == "BoxCollider2D")
+	{
+		AddBoxCollider2DComponent(pGameObject, pElement);
+		return;
+	}
 
 	// Fall back to any component types the Game project has registered
 	auto& registry = GetRegistry();
@@ -46,7 +52,8 @@ void CE::ComponentFactory::CreateComponent(GameObject* pGameObject, const std::s
 bool CE::ComponentFactory::IsEngineComponent(const std::string& componentID)
 {
 	static const std::unordered_set<std::string> engineComponents = {
-			"SpriteComponent"
+			"SpriteComponent",
+			"BoxCollider2D"
 	};
 
 	return engineComponents.find(componentID) != engineComponents.end();
@@ -143,6 +150,35 @@ void CE::ComponentFactory::AddSpriteComponent(GameObject* pGameObject, tinyxml2:
 	}
 
 	pGameObject->AddComponent(pSpriteCmp);
+}
+
+/*---------------------------------------------------------------------------------------
+| --- AddBoxCollider2DComponent: Attach a BoxCollider2D Component to the GameObject --- |
+---------------------------------------------------------------------------------------*/
+void CE::ComponentFactory::AddBoxCollider2DComponent(GameObject* pGameObject, tinyxml2::XMLElement* pElement)
+{
+	BoxCollider2D* pCollider = new BoxCollider2D();
+
+	const char* pSize = pElement->Attribute("size");
+	if (pSize)
+	{
+		Vector2f size = Vector2f::One();
+		sscanf_s(pSize, "%f,%f", &size.x, &size.y);
+		pCollider->SetSize(size);
+	}
+
+	const char* pOffset = pElement->Attribute("offset");
+	if (pOffset)
+	{
+		Vector2f offset = Vector2f::Zero();
+		sscanf_s(pOffset, "%f,%f", &offset.x, &offset.y);
+		pCollider->SetOffset(offset);
+	}
+
+	pCollider->SetEdgeRadius(pElement->FloatAttribute("edgeRadius", 0.0f));
+	pCollider->SetTrigger(pElement->BoolAttribute("isTrigger", false));
+
+	pGameObject->AddComponent(pCollider);
 }
 
 /*------------------------------------------------------------------------------

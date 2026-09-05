@@ -20,6 +20,7 @@ namespace CE
 
 	private:
 		void AddSpriteComponent(GameObject* pGameObject, tinyxml2::XMLElement* pElement);									// Attach a Sprite Component to the GameObject
+		void AddBoxCollider2DComponent(GameObject* pGameObject, tinyxml2::XMLElement* pElement);							// Attach a BoxCollider2D Component to the GameObject)
 		static std::unordered_map<std::string, CreatorFunc>& GetRegistry();													// Returns the registry of Game-defined component creators
 
 	public:
