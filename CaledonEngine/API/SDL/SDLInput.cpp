@@ -5,6 +5,7 @@
 #include "SDLInput.h"
 
 #include <SDL3/SDL.h>
+#include <ImGUI/imgui_impl_sdl3.h>
 
 /*-----------------------------------
 | --- Public Method Definitions --- |
@@ -134,6 +135,8 @@ bool CE::SDLInput::ProcessEvents()
 	SDL_Event event;
 	while (SDL_PollEvent(&event) != 0)
 	{
+		ImGui_ImplSDL3_ProcessEvent(&event);
+
 		switch (event.type)
 		{
 			// Window Event: Closing the Window

@@ -90,6 +90,8 @@
     <ClCompile Include="Utilities\ImGUI\imgui.cpp" />
     <ClCompile Include="Utilities\ImGUI\imgui_demo.cpp" />
     <ClCompile Include="Utilities\ImGUI\imgui_draw.cpp" />
+    <ClCompile Include="Utilities\ImGUI\imgui_impl_sdl3.cpp" />
+    <ClCompile Include="Utilities\ImGUI\imgui_impl_sdlrenderer3.cpp" />
     <ClCompile Include="Utilities\ImGUI\imgui_tables.cpp" />
     <ClCompile Include="Utilities\ImGUI\imgui_widgets.cpp" />
     <ClCompile Include="Utilities\ThirdParty\CaledonZlib.cpp" />

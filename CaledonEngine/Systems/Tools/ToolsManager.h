@@ -30,5 +30,7 @@ namespace CE
 		void Update(float) override;
 		void Render() override;
 		void Shutdown() override;
+
+		DebugOverlay& GetDebugOverlay() { return m_debugOverlay; }
 	};
 }

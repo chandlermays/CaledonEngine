@@ -3,12 +3,15 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
+#include <functional>
+#include <vector>
 
 namespace CE
 {
 	class DebugOverlay
 	{
 	private:
+		std::vector<std::function<void()>> m_panelCallbacks;
 		bool m_isVisible;
 
 	public:
@@ -23,6 +26,8 @@ namespace CE
 		void Render();
 		void Shutdown();
 
+		void AddPanel(std::function<void()> drawCallback);
+		void SetVisible(bool isVisible);
 		void ToggleVisibility();
 		bool IsVisible() const;
 	};
