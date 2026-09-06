@@ -1,13 +1,29 @@
+/*------------------------------
+| File: HierarchyPanel.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "HierarchyPanel.h"
-#include "Systems/Engine/EngineManager.h"
-#include "Systems/Scene/SceneManager.h"
-#include "Core/Scene.h"
-#include "Core/GameObject.h"
 
-#include <ImGUI/imgui.h>
+#include "CaledonEngine/Systems/Engine/EngineManager.h"
+#include "CaledonEngine/Systems/Scene/SceneManager.h"
+#include "CaledonEngine/Core/Scene.h"
+#include "CaledonEngine/Core/GameObject.h"
 
-HierarchyPanel::HierarchyPanel() : m_createdCount{ 0 } {}
+#include <CaledonEngine/lib/ImGUI/imgui.h>
 
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
+/*------------------------------------------------------------------------
+| --- Constructor: Constructs the HierarchyPanel with default values --- |
+------------------------------------------------------------------------*/
+HierarchyPanel::HierarchyPanel()
+	: m_createdCount{ 0 }
+{ }
+
+/*----------------------------------------------------------------------------------------------
+| --- Draw: Draws the Hierarchy panel to create and store GameObjects in the current scene --- |
+----------------------------------------------------------------------------------------------*/
 void HierarchyPanel::Draw()
 {
 	CE::SceneManager* pSceneManager = CE::EngineManager::GetInstance().GetSceneManager();
@@ -25,7 +41,7 @@ void HierarchyPanel::Draw()
 	if (ImGui::Button("Create GameObject"))
 	{
 		auto pNewObject = std::make_unique<CE::GameObject>();
-		pNewObject->SetName("GameObject (" + std::to_string(m_createdCount++) + ")");
+		pNewObject->SetName("GameObject (" + std::to_string(++m_createdCount) + ")");
 		CE::GameObject* pRef = pNewObject.get();
 		pScene->AddGameObject(std::move(pNewObject));
 		pRef->Initialize();
@@ -41,6 +57,13 @@ void HierarchyPanel::Draw()
 	ImGui::End();
 }
 
+
+/*------------------------------------
+| --- Private Method Definitions --- |
+------------------------------------*/
+/*-----------------------------------------------------------------------------
+| --- DrawGameObjectNode: Draws a single GameObject node in the hierarchy --- |
+-----------------------------------------------------------------------------*/
 void HierarchyPanel::DrawGameObjectNode(CE::GameObject* pGameObject)
 {
 	if (!pGameObject)

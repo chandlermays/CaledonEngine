@@ -1,3 +1,7 @@
+/*------------------------------
+| File: Main.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "Editor.h"
 
 int main()

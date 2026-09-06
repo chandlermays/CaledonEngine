@@ -6,6 +6,9 @@
 #include "Systems/Engine/EngineManager.h"
 #include "Systems/Physics/CollisionManager.h"
 
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
 /*--------------------------------------------------------------------
 | --- Constructor: Constructs the Collider2D with default values --- |
 --------------------------------------------------------------------*/

@@ -1,3 +1,7 @@
+/*------------------------------
+| File: ComponentFactory.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include <string>
 #include <unordered_map>

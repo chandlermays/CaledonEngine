@@ -1,3 +1,7 @@
+/*------------------------------
+| File: ComponentFactory.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "ComponentFactory.h"
 
 #include "Systems/Rendering/Components/SpriteComponent.h"
@@ -14,9 +18,9 @@
 
 using namespace tinyxml2;
 
-/*-------------------------------------
-| --- Public Function Definitions --- |
--------------------------------------*/
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
 /*----------------------------------------------------------------
 | --- CreateComponent: Create a Component for the GameObject --- |
 ----------------------------------------------------------------*/
@@ -68,9 +72,9 @@ void CE::ComponentFactory::RegisterComponent(const std::string& componentID, Cre
 }
 
 
-/*--------------------------------------
-| --- Private Function Definitions --- |
---------------------------------------*/
+/*------------------------------------
+| --- Private Method Definitions --- |
+------------------------------------*/
 /*-------------------------------------------------------------------------
 | --- AddSpriteComponent: Attach a Sprite Component to the GameObject --- |
 -------------------------------------------------------------------------*/

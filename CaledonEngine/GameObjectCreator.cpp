@@ -1,3 +1,7 @@
+/*------------------------------
+| File: GameObjectCreator.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "GameObjectCreator.h"
 
 #include "Core/GameObject.h"
@@ -85,9 +89,9 @@ std::vector<CE::GameObject*> CE::GameObjectCreator::CreateGameObjects(const std:
 
 
 
-/*--------------------------------------
-| --- Private Function Definitions --- |
---------------------------------------*/
+/*------------------------------------
+| --- Private Method Definitions --- |
+------------------------------------*/
 /*--------------------------------------------------------------------------
 | --- CreateGameObject: Create a GameObject from an XML Element (Root) --- |
 --------------------------------------------------------------------------*/

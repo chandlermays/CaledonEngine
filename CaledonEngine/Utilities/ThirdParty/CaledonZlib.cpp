@@ -1,3 +1,7 @@
+/*------------------------------
+| File: CaledonZlib.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "CaledonZLib.h"
 
 #include <fstream>
@@ -65,10 +69,12 @@ struct DataHeader
 
 static constexpr uint32_t kDataSignature = 67324752;
 
-/*---------------------
-| --- Constructor --- |
----------------------*/
-
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
+/*---------------------------------------------------------------------
+| --- Constructor: Constructs the CaledonZlib with default values --- |
+---------------------------------------------------------------------*/
 CE::CaledonZLib::CaledonZLib()
 {
 	std::fstream fileStream;
@@ -191,7 +197,6 @@ CE::CaledonZLib::CaledonZLib()
 /*--------------------------------------------------------------------
 | --- GetUncompressedData: Get the Data from the Associated File --- |
 --------------------------------------------------------------------*/
-
 std::string CE::CaledonZLib::GetUncompressedData(const std::string& filePath) const
 {
 	auto it = m_uncompressedData.find(filePath);

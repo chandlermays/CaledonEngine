@@ -1,3 +1,7 @@
+/*------------------------------
+| File: ResourceManager.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "ResourceManager.h"
 
 #include "API/SDL/SDLImage.h"

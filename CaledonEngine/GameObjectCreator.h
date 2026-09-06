@@ -1,3 +1,7 @@
+/*------------------------------
+| File: GameObjectCreator.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "Utilities/CaledonParser.h"
 

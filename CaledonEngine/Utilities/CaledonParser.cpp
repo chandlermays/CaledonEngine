@@ -1,3 +1,7 @@
+/*------------------------------
+| File: CaledonParser.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "CaledonParser.h"
 
 #include "Systems/Engine/LoggingManager.h"
