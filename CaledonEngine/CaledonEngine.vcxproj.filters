@@ -199,6 +199,9 @@
     <ClCompile Include="Utilities\ImGUI\imgui_impl_sdlrenderer3.cpp">
       <Filter>Source Files\Utilities\ImGUI</Filter>
     </ClCompile>
+    <ClCompile Include="BuiltInComponents.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\GameObject.h">
@@ -362,6 +365,12 @@
     </ClInclude>
     <ClInclude Include="Systems\Physics\Components\BoxCollider2D.h">
       <Filter>Source Files\Systems\Physics\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentTypeInfo.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BuiltInComponents.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

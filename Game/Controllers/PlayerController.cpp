@@ -84,6 +84,31 @@ void PlayerController::OnMoveVertical(float value)
     m_verticalInput = value;
 }
 
+/*-------------------------------------------------------------
+| --- GetTypeName: Returns the type name of the Component --- |
+-------------------------------------------------------------*/
+const std::string& PlayerController::GetTypeName() const
+{
+	static const std::string typeName = "PlayerController";
+	return typeName;
+}
+
+/*-------------------------------------------------------------
+| --- SetMoveSpeed: Sets the movement speed of the player --- |
+-------------------------------------------------------------*/
+void PlayerController::SetMoveSpeed(float speed)
+{
+	m_moveSpeed = speed;
+}
+
+/*----------------------------------------------------------------
+| --- GetMoveSpeed: Returns the movement speed of the player --- |
+----------------------------------------------------------------*/
+float PlayerController::GetMoveSpeed() const
+{
+	return m_moveSpeed;
+}
+
 
 /*------------------------------------
 | --- Private Method Definitions --- |

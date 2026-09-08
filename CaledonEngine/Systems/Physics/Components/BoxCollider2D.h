@@ -28,5 +28,7 @@ namespace CE
 
 		void SetEdgeRadius(float radius);										// Sets the radius of the rounded edges of the box collider
 		float GetEdgeRadius() const;											// Returns the radius of the rounded edges of the box collider
+
+		const std::string& GetTypeName() const override;						// Returns the type name of the Component
 	};
 }

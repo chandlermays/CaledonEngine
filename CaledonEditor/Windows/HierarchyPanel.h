@@ -19,6 +19,11 @@ private:
 
 public:
 	HierarchyPanel();														// Constructor
+	~HierarchyPanel() = default;											// Destructor
+	HierarchyPanel(const HierarchyPanel&) = delete;							// Prevent copy-construction
+	HierarchyPanel& operator=(const HierarchyPanel&) = delete;				// Prevent copy-assignment
+	HierarchyPanel(HierarchyPanel&&) = delete;								// Prevent move-construction
+	HierarchyPanel& operator=(HierarchyPanel&&) = delete;					// Prevent move-assignment
 
 	void Draw();															// Draws the Hierarchy panel to create and store GameObjects in the current scene
 };

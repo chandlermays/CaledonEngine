@@ -76,12 +76,23 @@ void Game::Run()
 -----------------------------------------------------------------------------------------------*/
 void Game::RegisterGameComponents()
 {
-	CE::ComponentFactory::RegisterComponent("PlayerController",
-		[this](CE::GameObject*, tinyxml2::XMLElement*) -> CE::Component*
+	auto createPlayerController = [this]() -> CE::Component*
 		{
 			PlayerController* pController = new PlayerController();
 			pController->SetInputActions(m_pInputActions);
 			return pController;
+		};
+
+	CE::ComponentFactory::RegisterComponent("PlayerController", "PacMan",
+		[createPlayerController](CE::GameObject*, tinyxml2::XMLElement*) -> CE::Component*
+		{
+			return createPlayerController();
+		},
+		createPlayerController,
+		{
+			CE::MakeProperty<PlayerController>("Move Speed",
+				[](const PlayerController* p) -> CE::PropertyValue { return p->GetMoveSpeed(); },
+				[](PlayerController* p, const CE::PropertyValue& v) { p->SetMoveSpeed(std::get<float>(v)); })
 		});
 }
 

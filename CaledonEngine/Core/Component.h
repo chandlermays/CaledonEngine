@@ -29,6 +29,8 @@ namespace CE
 		virtual void Update(float) {};														// Updates the Component, if applicable
 		virtual void Render() {};															// Renders the Component, if applicable
 
+		virtual const std::string& GetTypeName() const = 0;									// Returns the type name of the Component
+
 		GameObject* GetOwner() const;														// Returns a pointer to the owning GameObject
 		void SetOwner(GameObject* owner);													// Sets the owning GameObject
 

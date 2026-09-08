@@ -27,6 +27,15 @@ CE::Transform::Transform(const Vector2f& position, float rotation, const Vector2
 	, m_scale{ scale }
 {}
 
+/*-------------------------------------------------------------
+| --- GetTypeName: Returns the type name of the Component --- |
+-------------------------------------------------------------*/
+const std::string& CE::Transform::GetTypeName() const
+{
+	static const std::string typeName = "Transform";
+	return typeName;
+}
+
 /*---------------------------------------------------------
 | --- GetPosition: Returns the position of the object --- |
 ---------------------------------------------------------*/

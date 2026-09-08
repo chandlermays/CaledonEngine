@@ -81,3 +81,12 @@ float CE::BoxCollider2D::GetEdgeRadius() const
 {
 	return m_edgeRadius;
 }
+
+/*-------------------------------------------------------------
+| --- GetTypeName: Returns the type name of the Component --- |
+-------------------------------------------------------------*/
+const std::string& CE::BoxCollider2D::GetTypeName() const
+{
+	static const std::string typeName = "BoxCollider2D";
+	return typeName;
+}

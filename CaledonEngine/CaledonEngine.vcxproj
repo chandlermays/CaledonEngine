@@ -56,6 +56,7 @@
     <ClCompile Include="API\SDL\SDLRenderer.cpp" />
     <ClCompile Include="API\SDL\SDLTexture.cpp" />
     <ClCompile Include="API\SDL\SDLWindow.cpp" />
+    <ClCompile Include="BuiltInComponents.cpp" />
     <ClCompile Include="ComponentFactory.cpp" />
     <ClCompile Include="Core\Component.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
@@ -103,7 +104,9 @@
     <ClInclude Include="API\SDL\SDLRenderer.h" />
     <ClInclude Include="API\SDL\SDLTexture.h" />
     <ClInclude Include="API\SDL\SDLWindow.h" />
+    <ClInclude Include="BuiltInComponents.h" />
     <ClInclude Include="ComponentFactory.h" />
+    <ClInclude Include="ComponentTypeInfo.h" />
     <ClInclude Include="Core\Component.h" />
     <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\Scene.h" />

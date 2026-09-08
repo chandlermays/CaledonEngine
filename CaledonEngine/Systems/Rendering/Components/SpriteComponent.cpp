@@ -192,6 +192,15 @@ void CE::SpriteComponent::SetColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 	m_color.a = a;
 }
 
+/*-------------------------------------------------------------
+| --- GetTypeName: Returns the type name of the Component --- |
+-------------------------------------------------------------*/
+const std::string& CE::SpriteComponent::GetTypeName() const
+{
+	static const std::string typeName = "SpriteComponent";
+	return typeName;
+}
+
 /*---------------------------------------------------------------
 | --- GetSpriteSheet: Returns a pointer to the sprite sheet --- |
 ---------------------------------------------------------------*/

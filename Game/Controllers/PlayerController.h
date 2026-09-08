@@ -34,4 +34,8 @@ public:
 
 	void OnMoveHorizontal(float value);											// Handles horizontal movement input
 	void OnMoveVertical(float value);											// Handles vertical movement input
+
+	const std::string& GetTypeName() const override;							// Returns the type name of the Component
+	void SetMoveSpeed(float speed);												// Sets the movement speed of the player
+	float GetMoveSpeed() const;													// Returns the movement speed of the player
 };

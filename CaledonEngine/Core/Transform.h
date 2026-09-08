@@ -24,6 +24,8 @@ namespace CE
 		Transform(Transform&&) = delete;															// Prevent move-construction
 		Transform& operator=(Transform&&) = delete;													// Prevent move-assignment
 
+		const std::string& GetTypeName() const override;											// Returns the type name of the Component
+
 		const Vector2f& GetPosition() const;														// Returns the position of the object
 		void SetPosition(const Vector2f& position);													// Sets the position of the object
 

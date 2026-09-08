@@ -39,6 +39,7 @@ namespace CE
 		void SetColor(const Color& color);															// Sets the color of the sprite
 		void SetColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a);									// Sets the color of the sprite
 
+		const std::string& GetTypeName() const override;											// Returns the type name of the Component
 		SpriteSheet* GetSpriteSheet() const;														// Returns a pointer to the sprite sheet
 		Sprite* GetSprite() const;																	// Returns a pointer to the sprite
 		const Color& GetColor() const;																// Returns the color of the sprite

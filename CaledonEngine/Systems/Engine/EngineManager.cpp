@@ -11,6 +11,7 @@
 #include "Systems/Input/InputManager.h"
 #include "Systems/Scene/SceneManager.h"
 #include "Systems/Tools/ToolsManager.h"
+#include "BuiltInComponents.h"
 
 #include <chrono>
 
@@ -44,6 +45,8 @@ bool CE::EngineManager::Initialize()
 	{
 		return false;
 	}
+
+	BuiltInComponents::RegisterAll();
 
 	bool success = true;
 	for (const auto& manager : m_pManagers)
