@@ -88,14 +88,14 @@
     <ClCompile Include="Systems\Tools\DebugOverlay.cpp" />
     <ClCompile Include="Systems\Tools\ToolsManager.cpp" />
     <ClCompile Include="Utilities\CaledonParser.cpp" />
-    <ClCompile Include="Utilities\ImGUI\imgui.cpp" />
-    <ClCompile Include="Utilities\ImGUI\imgui_demo.cpp" />
-    <ClCompile Include="Utilities\ImGUI\imgui_draw.cpp" />
-    <ClCompile Include="Utilities\ImGUI\imgui_impl_sdl3.cpp" />
-    <ClCompile Include="Utilities\ImGUI\imgui_impl_sdlrenderer3.cpp" />
-    <ClCompile Include="Utilities\ImGUI\imgui_tables.cpp" />
-    <ClCompile Include="Utilities\ImGUI\imgui_widgets.cpp" />
     <ClCompile Include="Utilities\ThirdParty\CaledonZlib.cpp" />
+    <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui.cpp" />
+    <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui_demo.cpp" />
+    <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui_draw.cpp" />
+    <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui_impl_sdl3.cpp" />
+    <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui_impl_sdlrenderer3.cpp" />
+    <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui_tables.cpp" />
+    <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui_widgets.cpp" />
     <ClCompile Include="Utilities\ThirdParty\tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +151,7 @@
     <ClInclude Include="Systems\Tools\ToolsManager.h" />
     <ClInclude Include="Utilities\APIConfig.h" />
     <ClInclude Include="Utilities\CaledonParser.h" />
+    <ClInclude Include="Utilities\Math\Constants.h" />
     <ClInclude Include="Utilities\Math\Rect.h" />
     <ClInclude Include="Utilities\Math\Vector2.h" />
     <ClInclude Include="Utilities\ThirdParty\CaledonZlib.h" />

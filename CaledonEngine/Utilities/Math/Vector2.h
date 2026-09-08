@@ -3,6 +3,8 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
+#include "Constants.h"
+
 #include <cmath>
 #include <algorithm>
 #include <cassert>
@@ -175,7 +177,7 @@ namespace CE
 		-----------------------------------------------------------------------------*/
 		inline Vector2 Rotate(const T angleDegrees) const
 		{
-			T radians = angleDegrees * (3.14159265358979323846f / 180.0f);
+			T radians = angleDegrees * static_cast<T>(CE::Math::DEG2RAD);
 			T cosA = static_cast<T>(std::cos(radians));
 			T sinA = static_cast<T>(std::sin(radians));
 
@@ -187,7 +189,7 @@ namespace CE
 		--------------------------------------------------------------------------*/
 		static inline T Angle(const Vector2& from, const Vector2& to)
 		{
-			return std::acos(Dot(from, to) / (from.Magnitude() * to.Magnitude())) * (180.0f / 3.14159265358979323846f);
+			return std::acos(Dot(from, to) / (from.Magnitude() * to.Magnitude())) * static_cast<T>(CE::Math::RAD2DEG);
 		}
 
 		/*------------------------------------------------------------------------------

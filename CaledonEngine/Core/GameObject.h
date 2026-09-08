@@ -79,6 +79,7 @@ namespace CE
 		template<typename T>
 		std::vector<T*> GetComponentsInParent() const;
 
+		const std::vector<Component*>& GetAllComponents() const;						// Returns a vector of pointers to all Components attached to this GameObject
 		void AddComponent(Component* pComponent);										// Adds a component to this GameObject
 		void RemoveComponent(Component* pComponent);									// Removes a component from this GameObject
 

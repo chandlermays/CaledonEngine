@@ -19,7 +19,7 @@ namespace CE
 
 	public:
 		Window(const std::string& title = "Caledon Engine",
-			int width = 1080, int height = 720, bool isFullscreen = false);		// Constructor
+			int width = 1280, int height = 720, bool isFullscreen = false);		// Constructor
 
 		virtual ~Window() = default;											// Destructor
 		Window(const Window&) = delete;											// Prevent copy-construction

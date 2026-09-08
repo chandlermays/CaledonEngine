@@ -213,6 +213,14 @@ CE::Transform& CE::GameObject::GetTransform()
 	return *m_pTransform;
 }
 
+/*---------------------------------------------------------------------------------------------------
+| --- GetAllComponents: Gets a vector of pointers to all Components attached to this GameObject --- |
+---------------------------------------------------------------------------------------------------*/
+const std::vector<CE::Component*>& CE::GameObject::GetAllComponents() const
+{
+	return m_components;
+}
+
 /*-----------------------------------------------------------
 | --- AddComponent: Adds a component to this GameObject --- |
 -----------------------------------------------------------*/

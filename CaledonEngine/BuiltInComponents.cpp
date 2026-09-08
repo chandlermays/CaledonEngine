@@ -14,6 +14,74 @@
 
 using namespace tinyxml2;
 
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
+/*----------------------------------------------------------------------------------
+| --- RegisterAll: Registers all built-in components with the ComponentFactory --- |
+----------------------------------------------------------------------------------*/
+void CE::BuiltInComponents::RegisterAll()
+{
+	// TODO: Register other built-in components here as needed
+
+	ComponentFactory::RegisterComponent("SpriteComponent", "Engine",
+		CreateSpriteComponentFromXml,
+		[]() -> Component*
+		{
+			SpriteComponent* pSprite = new SpriteComponent();
+			pSprite->SetSprite(Sprite::CreateFromShape(std::make_unique<Square>(Color::White(), 50)));
+			return pSprite;
+		},
+	{
+		MakeProperty<SpriteComponent>("Color",
+			[](const SpriteComponent* p) -> PropertyValue { return p->GetColor(); },
+			[](SpriteComponent* p, const PropertyValue& v) { p->SetColor(std::get<Color>(v)); })
+	});
+
+		ComponentFactory::RegisterComponent("BoxCollider2D", "Engine",
+			CreateBoxCollider2DFromXml,
+			[]() -> Component* { return new BoxCollider2D(); },
+		{
+			MakeProperty<BoxCollider2D>("Size",
+				[](const BoxCollider2D* p) -> PropertyValue { return p->GetSize(); },
+				[](BoxCollider2D* p, const PropertyValue& v) { p->SetSize(std::get<Vector2f>(v)); }),
+			MakeProperty<BoxCollider2D>("Offset",
+				[](const BoxCollider2D* p) -> PropertyValue { return p->GetOffset(); },
+				[](BoxCollider2D* p, const PropertyValue& v) { p->SetOffset(std::get<Vector2f>(v)); }),
+			MakeProperty<BoxCollider2D>("Edge Radius",
+				[](const BoxCollider2D* p) -> PropertyValue { return p->GetEdgeRadius(); },
+				[](BoxCollider2D* p, const PropertyValue& v) { p->SetEdgeRadius(std::get<float>(v)); }),
+			MakeProperty<BoxCollider2D>("Is Trigger",
+				[](const BoxCollider2D* p) -> PropertyValue { return p->IsTrigger(); },
+				[](BoxCollider2D* p, const PropertyValue& v) { p->SetTrigger(std::get<bool>(v)); })
+		});
+
+		// Transform is never looked up via CreateComponent — GameObject's own constructor always
+		// builds one directly — but registering it anyway lets the Inspector show its properties
+		// through the same generic path as everything else, rather than special-casing it.
+		ComponentFactory::RegisterComponent("Transform", "Engine",
+			nullptr,		// never XML-dispatched
+			nullptr,		// never "Add Component"-able — every GameObject already has exactly one
+			{
+				MakeProperty<Transform>("Position",
+					[](const Transform* p) -> PropertyValue { return p->GetPosition(); },
+					[](Transform* p, const PropertyValue& v) { p->SetPosition(std::get<Vector2f>(v)); }),
+				MakeProperty<Transform>("Rotation",
+					[](const Transform* p) -> PropertyValue { return p->GetRotation(); },
+					[](Transform* p, const PropertyValue& v) { p->SetRotation(std::get<float>(v)); }),
+				MakeProperty<Transform>("Scale",
+					[](const Transform* p) -> PropertyValue { return p->GetScale(); },
+					[](Transform* p, const PropertyValue& v) { p->SetScale(std::get<Vector2f>(v)); })
+			});
+}
+
+
+/*------------------------------------
+| --- Private Method Definitions --- |
+------------------------------------*/
+/*-------------------------------------------------------------------------------------
+| --- CreateSpriteComponentFromXml: Creates a SpriteComponent from an XML element --- |
+-------------------------------------------------------------------------------------*/
 CE::Component* CE::BuiltInComponents::CreateSpriteComponentFromXml(GameObject*, tinyxml2::XMLElement* pElement)
 {
 	const char* pSpritesheet = pElement->Attribute("spritesheet");
@@ -89,6 +157,9 @@ CE::Component* CE::BuiltInComponents::CreateSpriteComponentFromXml(GameObject*, 
 	return pSpriteCmp;
 }
 
+/*---------------------------------------------------------------------------------
+| --- CreateBoxCollider2DFromXml: Creates a BoxCollider2D from an XML element --- |
+---------------------------------------------------------------------------------*/
 CE::Component* CE::BuiltInComponents::CreateBoxCollider2DFromXml(GameObject*, tinyxml2::XMLElement* pElement)
 {
 	BoxCollider2D* pCollider = new BoxCollider2D();
@@ -113,52 +184,4 @@ CE::Component* CE::BuiltInComponents::CreateBoxCollider2DFromXml(GameObject*, ti
 	pCollider->SetTrigger(pElement->BoolAttribute("isTrigger", false));
 
 	return pCollider;
-}
-
-void CE::BuiltInComponents::RegisterAll()
-{
-	ComponentFactory::RegisterComponent("SpriteComponent", "Engine",
-		CreateSpriteComponentFromXml,
-		[]() -> Component* { return new SpriteComponent(); },
-		{
-			MakeProperty<SpriteComponent>("Color",
-				[](const SpriteComponent* p) -> PropertyValue { return p->GetColor(); },
-				[](SpriteComponent* p, const PropertyValue& v) { p->SetColor(std::get<Color>(v)); })
-		});
-
-		ComponentFactory::RegisterComponent("BoxCollider2D", "Engine",
-			CreateBoxCollider2DFromXml,
-			[]() -> Component* { return new BoxCollider2D(); },
-		{
-			MakeProperty<BoxCollider2D>("Size",
-				[](const BoxCollider2D* p) -> PropertyValue { return p->GetSize(); },
-				[](BoxCollider2D* p, const PropertyValue& v) { p->SetSize(std::get<Vector2f>(v)); }),
-			MakeProperty<BoxCollider2D>("Offset",
-				[](const BoxCollider2D* p) -> PropertyValue { return p->GetOffset(); },
-				[](BoxCollider2D* p, const PropertyValue& v) { p->SetOffset(std::get<Vector2f>(v)); }),
-			MakeProperty<BoxCollider2D>("Edge Radius",
-				[](const BoxCollider2D* p) -> PropertyValue { return p->GetEdgeRadius(); },
-				[](BoxCollider2D* p, const PropertyValue& v) { p->SetEdgeRadius(std::get<float>(v)); }),
-			MakeProperty<BoxCollider2D>("Is Trigger",
-				[](const BoxCollider2D* p) -> PropertyValue { return p->IsTrigger(); },
-				[](BoxCollider2D* p, const PropertyValue& v) { p->SetTrigger(std::get<bool>(v)); })
-		});
-
-		// Transform is never looked up via CreateComponent — GameObject's own constructor always
-		// builds one directly — but registering it anyway lets the Inspector show its properties
-		// through the same generic path as everything else, rather than special-casing it.
-		ComponentFactory::RegisterComponent("Transform", "Engine",
-			nullptr,		// never XML-dispatched
-			nullptr,		// never "Add Component"-able — every GameObject already has exactly one
-			{
-				MakeProperty<Transform>("Position",
-					[](const Transform* p) -> PropertyValue { return p->GetPosition(); },
-					[](Transform* p, const PropertyValue& v) { p->SetPosition(std::get<Vector2f>(v)); }),
-				MakeProperty<Transform>("Rotation",
-					[](const Transform* p) -> PropertyValue { return p->GetRotation(); },
-					[](Transform* p, const PropertyValue& v) { p->SetRotation(std::get<float>(v)); }),
-				MakeProperty<Transform>("Scale",
-					[](const Transform* p) -> PropertyValue { return p->GetScale(); },
-					[](Transform* p, const PropertyValue& v) { p->SetScale(std::get<Vector2f>(v)); })
-			});
 }

@@ -22,12 +22,21 @@
     <ClCompile Include="Windows\HierarchyPanel.cpp">
       <Filter>Source Files\Windows</Filter>
     </ClCompile>
+    <ClCompile Include="Windows\InspectorPanel.cpp">
+      <Filter>Source Files\Windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor\Editor.h">
       <Filter>Source Files\Editor</Filter>
     </ClInclude>
     <ClInclude Include="Windows\HierarchyPanel.h">
+      <Filter>Source Files\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\EditorContext.h">
+      <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Windows\InspectorPanel.h">
       <Filter>Source Files\Windows</Filter>
     </ClInclude>
   </ItemGroup>

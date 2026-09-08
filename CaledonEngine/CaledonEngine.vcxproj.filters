@@ -38,9 +38,6 @@
     <Filter Include="Source Files\API\SDL">
       <UniqueIdentifier>{ab4089fc-2576-4dd3-b5ed-8b26518095e3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Utilities\ImGUI">
-      <UniqueIdentifier>{80885ef5-bd62-459e-b05b-601b94d41bde}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Systems\Tools">
       <UniqueIdentifier>{1a9739c0-f551-46e1-a9c9-7d346f611656}</UniqueIdentifier>
     </Filter>
@@ -61,6 +58,9 @@
     </Filter>
     <Filter Include="Source Files\Systems\Physics\Components">
       <UniqueIdentifier>{646f6633-fd97-401f-bac9-4ad7b1559f0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities\ThirdParty\ImGUI">
+      <UniqueIdentifier>{786fcfa3-d786-4b0a-ae02-59d29d8ba24a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -121,21 +121,6 @@
     <ClCompile Include="Systems\Rendering\Sprite.cpp">
       <Filter>Source Files\Systems\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities\ImGUI\imgui.cpp">
-      <Filter>Source Files\Utilities\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities\ImGUI\imgui_demo.cpp">
-      <Filter>Source Files\Utilities\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities\ImGUI\imgui_draw.cpp">
-      <Filter>Source Files\Utilities\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities\ImGUI\imgui_tables.cpp">
-      <Filter>Source Files\Utilities\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities\ImGUI\imgui_widgets.cpp">
-      <Filter>Source Files\Utilities\ImGUI</Filter>
-    </ClCompile>
     <ClCompile Include="Systems\Tools\DebugOverlay.cpp">
       <Filter>Source Files\Systems\Tools</Filter>
     </ClCompile>
@@ -193,14 +178,29 @@
     <ClCompile Include="Systems\Physics\CollisionManager.cpp">
       <Filter>Source Files\Systems\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities\ImGUI\imgui_impl_sdl3.cpp">
-      <Filter>Source Files\Utilities\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities\ImGUI\imgui_impl_sdlrenderer3.cpp">
-      <Filter>Source Files\Utilities\ImGUI</Filter>
-    </ClCompile>
     <ClCompile Include="BuiltInComponents.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui.cpp">
+      <Filter>Source Files\Utilities\ThirdParty\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui_demo.cpp">
+      <Filter>Source Files\Utilities\ThirdParty\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui_draw.cpp">
+      <Filter>Source Files\Utilities\ThirdParty\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui_impl_sdl3.cpp">
+      <Filter>Source Files\Utilities\ThirdParty\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui_impl_sdlrenderer3.cpp">
+      <Filter>Source Files\Utilities\ThirdParty\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui_tables.cpp">
+      <Filter>Source Files\Utilities\ThirdParty\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui_widgets.cpp">
+      <Filter>Source Files\Utilities\ThirdParty\ImGUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -371,6 +371,9 @@
     </ClInclude>
     <ClInclude Include="BuiltInComponents.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Math\Constants.h">
+      <Filter>Source Files\Utilities\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

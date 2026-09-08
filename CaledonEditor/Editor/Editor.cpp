@@ -44,7 +44,8 @@ bool Editor::Initialize()
 	if (pToolsManager)
 	{
 		pToolsManager->GetDebugOverlay().SetVisible(true);
-		pToolsManager->GetDebugOverlay().AddPanel([this]() { m_hierarchyPanel.Draw(); });
+		pToolsManager->GetDebugOverlay().AddPanel([this]() { m_hierarchyPanel.Draw(m_editorContext); });
+		pToolsManager->GetDebugOverlay().AddPanel([this]() { m_inspectorPanel.Draw(m_editorContext); });
 	}
 
 	CreateEmptyScene();
