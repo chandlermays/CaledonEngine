@@ -83,7 +83,7 @@ void Game::RegisterGameComponents()
 			return pController;
 		};
 
-	CE::ComponentFactory::RegisterComponent("PlayerController", "PacMan",
+	CE::ComponentFactory::RegisterComponent("PlayerController", "Game",
 		[createPlayerController](CE::GameObject*, tinyxml2::XMLElement*) -> CE::Component*
 		{
 			return createPlayerController();
