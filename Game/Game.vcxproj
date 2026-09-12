@@ -887,15 +887,11 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Controllers\PlayerController.cpp" />
     <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Game\Main.cpp" />
-    <ClCompile Include="Input\GameInputActions.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Controllers\PlayerController.h" />
     <ClInclude Include="Game\Game.h" />
-    <ClInclude Include="Input\GameInputActions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -13,8 +13,7 @@
 #include "CaledonEngine/Core/GameObject.h"
 #include "CaledonEngine/ComponentFactory.h"
 #include "CaledonEngine/GameObjectCreator.h"
-
-#include "Controllers/PlayerController.h"
+#include "CaledonEngine/DynamicLibraryInterface.h"
 
 /*-----------------------------------
 | --- Public Method Definitions --- |
@@ -42,14 +41,16 @@ Game::~Game()
 bool Game::Initialize()
 {
 	m_pEngineManager = &CE::EngineManager::GetInstance();
-
 	if (!m_pEngineManager->Initialize())
 		return false;
 
 	m_pGameObjectCreator = new CE::GameObjectCreator();
 
-	m_pInputActions = new GameInputActions();
-	m_pInputActions->Initialize();
+	if (!LoadGameModule())
+	{
+		CE_LOG("Game::Initialize - Failed to load .dll");
+		return false;
+	}
 
 	m_pEngineManager->GetInputManager()->SetInputActions(m_pInputActions);
 	RegisterGameComponents();
@@ -71,29 +72,46 @@ void Game::Run()
 /*------------------------------------
 | --- Private Method Definitions --- |
 ------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------
+| --- LoadGameModule: Loads the game module and retrieves the input actions and component registration functions --- |
+--------------------------------------------------------------------------------------------------------------------*/
+bool Game::LoadGameModule()
+{
+	if (!m_dynamicLibrary.Load("PacManModule.dll"))
+	{
+		CE_LOG("Game::LoadGameModule - Could not load .dll");
+		return false;
+	}
+
+	auto createInputActions = reinterpret_cast<CE::DynamicLibraryInterface::CreateInputActionsFunc>(
+		m_dynamicLibrary.GetFunctionAddress(CE::DynamicLibraryInterface::kCreateInputActionsFunctionName));
+
+	if (!createInputActions)
+	{
+		CE_LOG("Game::LoadGameModule - Module is missing '{}'", CE::DynamicLibraryInterface::kCreateInputActionsFunctionName);
+		return false;
+	}
+
+	m_pInputActions = createInputActions();
+	return m_pInputActions != nullptr;
+}
+
 /*-----------------------------------------------------------------------------------------------
 | --- RegisterGameComponents: Registers Game-side component types with the ComponentFactory --- |
 -----------------------------------------------------------------------------------------------*/
 void Game::RegisterGameComponents()
 {
-	auto createPlayerController = [this]() -> CE::Component*
-		{
-			PlayerController* pController = new PlayerController();
-			pController->SetInputActions(m_pInputActions);
-			return pController;
-		};
+	auto registerComponents = reinterpret_cast<CE::DynamicLibraryInterface::RegisterComponentsFunc>(
+		m_dynamicLibrary.GetFunctionAddress(CE::DynamicLibraryInterface::kRegisterComponentsFunctionName));
 
-	CE::ComponentFactory::RegisterComponent("PlayerController", "Game",
-		[createPlayerController](CE::GameObject*, tinyxml2::XMLElement*) -> CE::Component*
-		{
-			return createPlayerController();
-		},
-		createPlayerController,
-		{
-			CE::MakeProperty<PlayerController>("Move Speed",
-				[](const PlayerController* p) -> CE::PropertyValue { return p->GetMoveSpeed(); },
-				[](PlayerController* p, const CE::PropertyValue& v) { p->SetMoveSpeed(std::get<float>(v)); })
-		});
+	if (registerComponents)
+	{
+		registerComponents(&CE::ComponentFactory::RegisterComponent);
+	}
+	else
+	{
+		CE_LOG("Game::RegisterGameComponents - Module is missing '{}'", CE::DynamicLibraryInterface::kRegisterComponentsFunctionName);
+	}
 }
 
 /*-----------------------------------------------------------------------------
@@ -163,4 +181,6 @@ void Game::Shutdown()
 		m_pEngineManager->Shutdown();
 		m_pEngineManager = nullptr;
 	}
+
+	m_dynamicLibrary.Unload();
 }

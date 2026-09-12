@@ -1,5 +1,7 @@
 #include "ComponentFactory.h"
 #include "Core/GameObject.h"
+#include "Core/Component.h"
+#include "Systems/Engine/LoggingManager.h"
 #include "Utilities/ThirdParty/tinyxml2.h"
 
 /*-----------------------------------
@@ -15,6 +17,12 @@ void CE::ComponentFactory::CreateComponent(GameObject* pGameObject, const std::s
 	if (it == registry.end() || !it->second.xmlCreator)
 		return;
 
+	if (!it->second.allowMultiple && HasComponentOfType(pGameObject, componentID))
+	{
+		CE_LOG("ComponentFactory::CreateComponent - '{}' already exists on '{}' and does not allow multiple instances; skipping.", componentID, pGameObject->GetName());
+		return;
+	}
+
 	Component* pComponent = it->second.xmlCreator(pGameObject, pElement);
 	if (pComponent)
 	{
@@ -26,13 +34,14 @@ void CE::ComponentFactory::CreateComponent(GameObject* pGameObject, const std::s
 | --- RegisterComponent: Register a component type with the factory --- |
 -----------------------------------------------------------------------*/
 void CE::ComponentFactory::RegisterComponent(const std::string& typeName, const std::string& category,
-	XmlCreatorFunc xmlCreator, DefaultCreatorFunc defaultCreator, std::vector<PropertyDescriptor> properties)
+	XmlCreatorFunc xmlCreator, DefaultCreatorFunc defaultCreator, std::vector<PropertyDescriptor> properties, bool allowMultiple)
 {
 	RegistryEntry entry;
 	entry.category = category;
 	entry.xmlCreator = std::move(xmlCreator);
 	entry.defaultCreator = std::move(defaultCreator);
 	entry.properties = std::move(properties);
+	entry.allowMultiple = allowMultiple;
 	GetRegistry()[typeName] = std::move(entry);
 }
 
@@ -61,6 +70,24 @@ bool CE::ComponentFactory::IsEngineComponent(const std::string& componentID)
 {
 	const RegistryEntry* pEntry = GetTypeInfo(componentID);
 	return pEntry && pEntry->category == "Engine";
+}
+
+/*----------------------------------------------------------------------------------------------
+| --- HasComponentOfType: Returns true if the GameObject has a component of the given type --- |
+----------------------------------------------------------------------------------------------*/
+bool CE::ComponentFactory::HasComponentOfType(const GameObject* pGameObject, const std::string& typeName)
+{
+	if (!pGameObject)
+		return false;
+
+	for (Component* pComponent : pGameObject->GetAllComponents())
+	{
+		if (pComponent && pComponent->GetTypeName() == typeName)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 

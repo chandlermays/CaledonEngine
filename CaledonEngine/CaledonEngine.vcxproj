@@ -87,6 +87,7 @@
     <ClCompile Include="Systems\Scene\SceneManager.cpp" />
     <ClCompile Include="Systems\Tools\DebugOverlay.cpp" />
     <ClCompile Include="Systems\Tools\ToolsManager.cpp" />
+    <ClCompile Include="DynamicLibrary.cpp" />
     <ClCompile Include="Utilities\CaledonParser.cpp" />
     <ClCompile Include="Utilities\ThirdParty\CaledonZlib.cpp" />
     <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui.cpp" />
@@ -116,6 +117,7 @@
     <ClInclude Include="DataStructures\DynamicStack.h" />
     <ClInclude Include="DataStructures\Queue.h" />
     <ClInclude Include="DataStructures\Stack.h" />
+    <ClInclude Include="DynamicLibraryInterface.h" />
     <ClInclude Include="GameObjectCreator.h" />
     <ClInclude Include="Systems\Engine\EngineManager.h" />
     <ClInclude Include="Systems\Engine\IRenderable.h" />
@@ -149,6 +151,7 @@
     <ClInclude Include="Systems\Scene\SceneManager.h" />
     <ClInclude Include="Systems\Tools\DebugOverlay.h" />
     <ClInclude Include="Systems\Tools\ToolsManager.h" />
+    <ClInclude Include="DynamicLibrary.h" />
     <ClInclude Include="Utilities\APIConfig.h" />
     <ClInclude Include="Utilities\CaledonParser.h" />
     <ClInclude Include="Utilities\Math\Constants.h" />

@@ -178,14 +178,18 @@ void InspectorPanel::DrawAddComponentMenu(CE::GameObject* pGameObject)
 
 		for (const auto& [category, typeNames] : categorized)
 		{
+			ImGui::Separator();
 			ImGui::Text("%s", category.c_str());
 			ImGui::Separator();
 
+
 			for (const std::string& typeName : typeNames)
 			{
-				if (ImGui::MenuItem(typeName.c_str()))
+				const CE::ComponentFactory::RegistryEntry* pEntry = CE::ComponentFactory::GetTypeInfo(typeName);
+				bool alreadyPresent = pEntry && !pEntry->allowMultiple && CE::ComponentFactory::HasComponentOfType(pGameObject, typeName);
+
+				if (ImGui::MenuItem(typeName.c_str(), nullptr, false, !alreadyPresent))
 				{
-					const CE::ComponentFactory::RegistryEntry* pEntry = CE::ComponentFactory::GetTypeInfo(typeName);
 					if (pEntry && pEntry->defaultCreator)
 					{
 						CE::Component* pNewComponent = pEntry->defaultCreator();

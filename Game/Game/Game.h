@@ -3,13 +3,16 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
-#include "Input/GameInputActions.h"
+#include "CaledonEngine/DynamicLibrary.h"
+
+#include <string>
 
 namespace CE
 {
 	class EngineManager;
 	class GameObjectCreator;
 	class Scene;
+	class InputActions;
 }
 
 class Game
@@ -17,8 +20,10 @@ class Game
 private:
 	CE::EngineManager* m_pEngineManager;												// Pointer to the Engine Manager
 	CE::GameObjectCreator* m_pGameObjectCreator;										// Pointer to the Game Object Creator
-	GameInputActions* m_pInputActions;													// Pointer to the Game Input Actions
+	CE::InputActions* m_pInputActions;													// Pointer to the Game Input Actions
+	CE::DynamicLibrary m_dynamicLibrary;												// Dynamic library for loading the game module
 
+	bool LoadGameModule();																// Loads the game module and retrieves the input actions and component registration functions
 	void RegisterGameComponents();														// Registers Game-side component types with the ComponentFactory
 	void CreateScenes();																// Constructs and configures all game scenes and objects
 	void LoadScenes(const std::string& masterXmlPath);									// Loads all GameObjects listed in a master XML file into a scene

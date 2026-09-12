@@ -36,11 +36,12 @@ void CE::BuiltInComponents::RegisterAll()
 		MakeProperty<SpriteComponent>("Color",
 			[](const SpriteComponent* p) -> PropertyValue { return p->GetColor(); },
 			[](SpriteComponent* p, const PropertyValue& v) { p->SetColor(std::get<Color>(v)); })
-	});
+	},
+		false);	// SpriteComponent is not allowed to have multiple instances on the same GameObject
 
-		ComponentFactory::RegisterComponent("BoxCollider2D", "Engine",
-			CreateBoxCollider2DFromXml,
-			[]() -> Component* { return new BoxCollider2D(); },
+	ComponentFactory::RegisterComponent("BoxCollider2D", "Engine",
+		CreateBoxCollider2DFromXml,
+		[]() -> Component* { return new BoxCollider2D(); },
 		{
 			MakeProperty<BoxCollider2D>("Size",
 				[](const BoxCollider2D* p) -> PropertyValue { return p->GetSize(); },
@@ -56,6 +57,10 @@ void CE::BuiltInComponents::RegisterAll()
 				[](BoxCollider2D* p, const PropertyValue& v) { p->SetTrigger(std::get<bool>(v)); })
 		});
 
+		// Components are allowed to have multiple instances on the same GameObject by default.
+		// Explicitly set flag to 'false' for components that should not allow multiple instances.
+
+		//---------------------------------------------------------------------------------------
 		// Transform is never looked up via CreateComponent — GameObject's own constructor always
 		// builds one directly — but registering it anyway lets the Inspector show its properties
 		// through the same generic path as everything else, rather than special-casing it.

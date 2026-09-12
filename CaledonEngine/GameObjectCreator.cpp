@@ -25,15 +25,14 @@ CE::GameObjectCreator::GameObjectCreator()
 	: m_pComponentFactory{ new CE::ComponentFactory() }
 { }
 
-/*--------------------
-| --- Destructor --- |
---------------------*/
+/*-------------------------------------------------------
+| --- Destructor: Cleans up any allocated resources --- |
+-------------------------------------------------------*/
 CE::GameObjectCreator::~GameObjectCreator()
 {
 	delete m_pComponentFactory;
 	m_pComponentFactory = nullptr;
 }
-
 
 /*----------------------------------------------------------------
 | --- CreateGameObject: Create a GameObject from an XML File --- |
@@ -95,7 +94,6 @@ std::vector<CE::GameObject*> CE::GameObjectCreator::CreateGameObjects(const std:
 /*--------------------------------------------------------------------------
 | --- CreateGameObject: Create a GameObject from an XML Element (Root) --- |
 --------------------------------------------------------------------------*/
-
 CE::GameObject* CE::GameObjectCreator::ParseGameObject(XMLElement* pElement)
 {
 	// Create the parent GameObject

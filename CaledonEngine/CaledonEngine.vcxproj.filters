@@ -202,6 +202,9 @@
     <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui_widgets.cpp">
       <Filter>Source Files\Utilities\ThirdParty\ImGUI</Filter>
     </ClCompile>
+    <ClCompile Include="DynamicLibrary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\GameObject.h">
@@ -374,6 +377,12 @@
     </ClInclude>
     <ClInclude Include="Utilities\Math\Constants.h">
       <Filter>Source Files\Utilities\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicLibrary.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicLibraryInterface.h">
+      <Filter>Source Files\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

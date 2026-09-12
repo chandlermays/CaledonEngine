@@ -226,11 +226,11 @@ const std::vector<CE::Component*>& CE::GameObject::GetAllComponents() const
 -----------------------------------------------------------*/
 void CE::GameObject::AddComponent(CE::Component* pComponent)
 {
-	if (pComponent != nullptr)
-	{
-		m_components.emplace_back(pComponent);
-		pComponent->SetOwner(this);
-	}
+	if (pComponent == nullptr)
+		return;
+
+	pComponent->SetOwner(this);
+	m_components.emplace_back(pComponent);
 }
 
 /*-------------------------------------------------------------------

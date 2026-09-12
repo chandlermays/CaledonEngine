@@ -13,10 +13,10 @@ namespace CE
 	class BuiltInComponents
 	{
 	public:
-		static void RegisterAll();		// Registers every Engine-owned Component type with ComponentFactory
+		static void RegisterAll();																							// Registers all built-in components with the ComponentFactory
 
 	private:
-		static Component* CreateSpriteComponentFromXml(GameObject* pGameObject, tinyxml2::XMLElement* pElement);
-		static Component* CreateBoxCollider2DFromXml(GameObject* pGameObject, tinyxml2::XMLElement* pElement);
+		static Component* CreateSpriteComponentFromXml(GameObject* pGameObject, tinyxml2::XMLElement* pElement);			// Creates a SpriteComponent from an XML element
+		static Component* CreateBoxCollider2DFromXml(GameObject* pGameObject, tinyxml2::XMLElement* pElement);				// Creates a BoxCollider2D from an XML element
 	};
 }
