@@ -5,7 +5,10 @@
 #include <unordered_map>
 #include <functional>
 
-namespace tinyxml2 { class XMLElement; }
+namespace tinyxml2
+{ 
+	class XMLElement;
+}
 
 namespace CE
 {
@@ -18,8 +21,8 @@ namespace CE
 		using XmlCreatorFunc = std::function<Component* (GameObject*, tinyxml2::XMLElement*)>;				// Constructs from XML data
 		using DefaultCreatorFunc = std::function<Component* ()>;											// Constructs a blank instance — used by Editor's Add Component
 
-		using RegisterFunc = void(*)(const std::string&, const std::string&,								// Register a component type with the factory
-			XmlCreatorFunc, DefaultCreatorFunc, std::vector<PropertyDescriptor>, bool);
+		using RegisterFunc = std::function<void(const std::string&, const std::string&, XmlCreatorFunc,		// Registers a component type with the factory
+			DefaultCreatorFunc, std::vector<PropertyDescriptor>, bool)>;
 
 		struct RegistryEntry
 		{
@@ -39,6 +42,8 @@ namespace CE
 		static void RegisterComponent(const std::string& typeName, const std::string& category,								// Register a component type with the factory
 			XmlCreatorFunc xmlCreator, DefaultCreatorFunc defaultCreator = nullptr,
 			std::vector<PropertyDescriptor> properties = {}, bool allowMultiple = true);
+
+		static void UnregisterComponent(const std::string& typeName);														// Unregisters a component type from the factory
 
 		static const RegistryEntry* GetTypeInfo(const std::string& typeName);												// Returns a pointer to the RegistryEntry for the given component type, or nullptr if not found
 		static const std::unordered_map<std::string, RegistryEntry>& GetAllRegisteredTypes();								// Returns a const reference to the registry of all registered component types

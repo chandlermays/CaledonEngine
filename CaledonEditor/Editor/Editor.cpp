@@ -7,9 +7,12 @@
 #include "CaledonEngine/Systems/Engine/EngineManager.h"
 #include "CaledonEngine/Systems/Engine/LoggingManager.h"
 #include "CaledonEngine/Systems/Input/InputManager.h"
+#include "CaledonEngine/Systems/Resources/ResourceManager.h"
 #include "CaledonEngine/Systems/Scene/SceneManager.h"
 #include "CaledonEngine/Systems/Tools/ToolsManager.h"
 #include "CaledonEngine/Core/Scene.h"
+#include "CaledonEngine/Core/GameObject.h"
+#include "CaledonEngine/GameObjectCreator.h"
 #include "CaledonEngine/ComponentFactory.h"
 #include "CaledonEngine/DynamicLibraryInterface.h"
 
@@ -29,48 +32,41 @@ Editor::Editor()
 -------------------------------------------------------*/
 Editor::~Editor()
 {
-	if (m_pInputActions)
-	{
-		delete m_pInputActions;
-		m_pInputActions = nullptr;
-	}
+	UnloadProject();
 
 	if (m_pEngineManager)
 	{
 		m_pEngineManager->Shutdown();
 	}
-
-	m_dynamicLibrary.Unload();
 }
 
 /*-------------------------------------------------
 | --- Initialize: Prepares the Editor for use --- |
 -------------------------------------------------*/
-bool Editor::Initialize()
+bool Editor::Initialize(const std::string& initialProjectPath)
 {
 	m_pEngineManager = &CE::EngineManager::GetInstance();
 	if (!m_pEngineManager->Initialize())
 		return false;
 
-	if (!LoadGameModule())
-	{
-		CE_LOG("Editor::Initialize - No game module loaded; only Engine components will be available.");
-	}
-	else
-	{
-		m_pEngineManager->GetInputManager()->SetInputActions(m_pInputActions);
-		RegisterGameComponents();
-	}
-
 	CE::ToolsManager* pToolsManager = m_pEngineManager->GetToolsManager();
 	if (pToolsManager)
 	{
 		pToolsManager->GetDebugOverlay().SetVisible(true);
+		pToolsManager->GetDebugOverlay().AddPanel([this]() { m_projectPanel.Draw([this](const std::string& path) { OpenProject(path); }); });
 		pToolsManager->GetDebugOverlay().AddPanel([this]() { m_hierarchyPanel.Draw(m_editorContext); });
 		pToolsManager->GetDebugOverlay().AddPanel([this]() { m_inspectorPanel.Draw(m_editorContext); });
 	}
 
-	CreateEmptyScene();
+	if (!initialProjectPath.empty())
+	{
+		OpenProject(initialProjectPath);
+	}
+	else
+	{
+		CE_LOG("Editor::Initialize - No project specified on launch; use the Project panel to open one.");
+		CreateEmptyScene();
+	}
 
 	return true;
 }
@@ -87,41 +83,146 @@ void Editor::Run()
 /*------------------------------------
 | --- Private Method Definitions --- |
 ------------------------------------*/
-/*--------------------------------------------------------------------------------------------------------------------
-| --- LoadGameModule: Loads the game module and retrieves the input actions and component registration functions --- |
---------------------------------------------------------------------------------------------------------------------*/
-bool Editor::LoadGameModule()
+/*-------------------------------------------------------------------
+| --- OpenProject: Opens a project from the specified file path --- |
+-------------------------------------------------------------------*/
+bool Editor::OpenProject(const std::string& projectFilePath)
 {
-	if (!m_dynamicLibrary.Load("PacManModule.dll"))		// TODO: This should not be hard-coded in the Editor
+	UnloadProject();
+
+	Project newProject;
+	if (!newProject.Load(projectFilePath))
+	{
+		CE_LOG("Editor::OpenProject - Failed to load project file '{}'", projectFilePath);
+		CreateEmptyScene();
 		return false;
+	}
 
-	auto createInputActions = reinterpret_cast<CE::DynamicLibraryInterface::CreateInputActionsFunc>(
-		m_dynamicLibrary.GetFunctionAddress(CE::DynamicLibraryInterface::kCreateInputActionsFunctionName));
+	m_project = newProject;
 
-	if (!createInputActions)
-		return false;
+	if (!m_dynamicLibrary.Load(m_project.GetModulePath()))
+	{
+		CE_LOG("Editor::OpenProject - Failed to load module '{}'; continuing with Engine components only.", m_project.GetModulePath());
+	}
+	else
+	{
+		auto createInputActions = reinterpret_cast<CE::DynamicLibraryInterface::CreateInputActionsFunc>(
+			m_dynamicLibrary.GetFunctionAddress(CE::DynamicLibraryInterface::kCreateInputActionsFunctionName));
 
-	m_pInputActions = createInputActions();
-	return m_pInputActions != nullptr;
+		if (createInputActions)
+		{
+			m_pInputActions = createInputActions();
+			m_pEngineManager->GetInputManager()->SetInputActions(m_pInputActions);
+		}
+
+		auto registerComponents = reinterpret_cast<CE::DynamicLibraryInterface::RegisterComponentsFunc>(
+			m_dynamicLibrary.GetFunctionAddress(CE::DynamicLibraryInterface::kRegisterComponentsFunctionName));
+
+		if (registerComponents)
+		{
+			CE::ComponentFactory::RegisterFunc recordingRegister =
+				[this](const std::string& typeName, const std::string& category,
+					CE::ComponentFactory::XmlCreatorFunc xmlCreator, CE::ComponentFactory::DefaultCreatorFunc defaultCreator,
+					std::vector<CE::PropertyDescriptor> properties, bool allowMultiple)
+				{
+					m_moduleComponentTypeNames.push_back(typeName);
+					CE::ComponentFactory::RegisterComponent(typeName, category, std::move(xmlCreator), std::move(defaultCreator), std::move(properties), allowMultiple);
+				};
+
+			registerComponents(recordingRegister);
+		}
+	}
+
+	LoadProject();
+	m_projectPanel.SetLoadedProject(m_project.GetName());
+
+	return true;
 }
 
-/*-----------------------------------------------------------------------------------------------
-| --- RegisterGameComponents: Registers Game-side component types with the ComponentFactory --- |
------------------------------------------------------------------------------------------------*/
-void Editor::RegisterGameComponents()
+/*----------------------------------------------------------------------------------------------------------
+| --- UnloadProject: Unloads the currently loaded project, including the game module and input actions --- |
+----------------------------------------------------------------------------------------------------------*/
+void Editor::UnloadProject()
 {
-	auto registerComponents = reinterpret_cast<CE::DynamicLibraryInterface::RegisterComponentsFunc>(
-		m_dynamicLibrary.GetFunctionAddress(CE::DynamicLibraryInterface::kRegisterComponentsFunctionName));
-
-	if (registerComponents)
+	// Destroys every GameObject/Component in every Scene — including anything the module
+	// constructed — while that module is still loaded. Must happen before Unload() below.
+	CE::SceneManager* pSceneManager = m_pEngineManager ? m_pEngineManager->GetSceneManager() : nullptr;
+	if (pSceneManager)
 	{
-		registerComponents(&CE::ComponentFactory::RegisterComponent);
+		pSceneManager->Shutdown();
+	}
+
+	m_editorContext.ClearSelection();
+
+	if (m_pInputActions)
+	{
+		delete m_pInputActions;
+		m_pInputActions = nullptr;
+	}
+
+	// Remove every type the outgoing module contributed — otherwise these entries sit in the
+	// registry with creator/property callables pointing into memory FreeLibrary is about to
+	// unmap, ready to crash (or silently corrupt something) the moment anything tries to use them.
+	for (const std::string& typeName : m_moduleComponentTypeNames)
+	{
+		CE::ComponentFactory::UnregisterComponent(typeName);
+	}
+	m_moduleComponentTypeNames.clear();
+
+	m_dynamicLibrary.Unload();
+}
+
+/*------------------------------------------------------------------------------------------------------
+| --- LoadProject: Loads the currently loaded project, including the game module and input actions --- |
+------------------------------------------------------------------------------------------------------*/
+void Editor::LoadProject()
+{
+	CE::ResourceManager* pResourceManager = m_pEngineManager->GetResourceManager();
+	CE::SceneManager* pSceneManager = m_pEngineManager->GetSceneManager();
+
+	if (!pResourceManager || !pSceneManager || m_project.GetMasterAssetsPath().empty())
+	{
+		CreateEmptyScene();
+		return;
+	}
+
+	auto sceneFiles = pResourceManager->LoadMasterXML(m_project.GetMasterAssetsPath());
+	if (sceneFiles.empty())
+	{
+		CreateEmptyScene();
+		return;
+	}
+
+	CE::GameObjectCreator gameObjectCreator;
+
+	for (const auto& [name, path] : sceneFiles)
+	{
+		std::string fileData = pResourceManager->GetResource(path);
+		if (fileData.empty())
+		{
+			CE_LOG("Editor::LoadProjectScenes - Failed to load scene file '{}' ({})", name, path);
+			continue;
+		}
+
+		auto pScene = std::make_unique<CE::Scene>();
+		pScene->SetName(name);
+
+		std::vector<CE::GameObject*> gameObjects = gameObjectCreator.CreateGameObjects(fileData);
+		for (CE::GameObject* pGameObject : gameObjects)
+		{
+			pScene->AddGameObject(std::unique_ptr<CE::GameObject>(pGameObject));
+		}
+
+		CE::Scene* pSceneRef = pScene.get();
+		pSceneManager->AddScene(std::move(pScene));
+		pSceneManager->SetCurrentScene(pSceneRef);
+		pSceneRef->Initialize();
 	}
 }
 
-/*------------------------------------------------------------------------------
-| --- CreateEmptyScene: Creates an empty scene for the Editor to work with --- |
-------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------------------
+| --- CreateEmptyScene: Creates a new empty scene in the currently loaded project --- |
+-------------------------------------------------------------------------------------*/
 void Editor::CreateEmptyScene()
 {
 	CE::SceneManager* pSceneManager = m_pEngineManager->GetSceneManager();

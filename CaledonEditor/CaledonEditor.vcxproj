@@ -889,14 +889,18 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
   <ItemGroup>
     <ClCompile Include="Editor\Editor.cpp" />
     <ClCompile Include="Editor\Main.cpp" />
+    <ClCompile Include="Editor\Project.cpp" />
     <ClCompile Include="Windows\HierarchyPanel.cpp" />
     <ClCompile Include="Windows\InspectorPanel.cpp" />
+    <ClCompile Include="Windows\ProjectPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor\Editor.h" />
     <ClInclude Include="Editor\EditorContext.h" />
+    <ClInclude Include="Editor\Project.h" />
     <ClInclude Include="Windows\HierarchyPanel.h" />
     <ClInclude Include="Windows\InspectorPanel.h" />
+    <ClInclude Include="Windows\ProjectPanel.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

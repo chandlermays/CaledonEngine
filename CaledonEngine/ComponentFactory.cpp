@@ -45,6 +45,14 @@ void CE::ComponentFactory::RegisterComponent(const std::string& typeName, const 
 	GetRegistry()[typeName] = std::move(entry);
 }
 
+/*----------------------------------------------------------------------------
+| --- UnregisterComponent: Unregisters a component type from the factory --- |
+----------------------------------------------------------------------------*/
+void CE::ComponentFactory::UnregisterComponent(const std::string& typeName)
+{
+	GetRegistry().erase(typeName);
+}
+
 /*-------------------------------------------------------------------------------------------------------------------
 | --- GetTypeInfo: Returns a pointer to the RegistryEntry for the given component type, or nullptr if not found --- |
 -------------------------------------------------------------------------------------------------------------------*/
