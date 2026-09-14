@@ -47,7 +47,7 @@ bool Project::Load(const std::string& projectFilePath)
 		m_masterAssetsPath = pMasterAssets->Attribute("path");
 	}
 
-	// The project file's own directory becomes the working directory for everything
+	// NOTE: The project file's own directory becomes the working directory for everything
 	// downstream — module loading, ResourceManager. Neither needs to change at all;
 	// they just keep using plain relative paths, exactly as Game.exe already does.
 	// This is what makes a project folder self-contained and genuinely portable.
@@ -61,4 +61,38 @@ bool Project::Load(const std::string& projectFilePath)
 	}
 
 	return !m_modulePath.empty();
+}
+
+/*--------------------------------------------------------------------------------------------------
+| --- CreateNew: Creates a new project in the specified root directory with the specified name --- |
+--------------------------------------------------------------------------------------------------*/
+bool Project::CreateNew(const std::string& rootDirectory, const std::string& projectName)
+{
+	CreateDirectoryA(rootDirectory.c_str(), nullptr);
+
+	std::string assetsDirectory = rootDirectory + "\\Assets";
+	CreateDirectoryA(assetsDirectory.c_str(), nullptr);
+
+	std::ofstream masterAssetsFile(assetsDirectory + "\\MasterAssets.xml");
+	if (masterAssetsFile.is_open())
+	{
+		masterAssetsFile << "<MasterAssets>\n</MasterAssets>\n";
+		masterAssetsFile.close();
+	}
+
+	std::string projectFilePath = rootDirectory + "\\" + projectName + ".ceproj";
+	std::ofstream projectFile(projectFilePath);
+	if (!projectFile.is_open())
+	{
+		CE_LOG("Project::CreateNew - Could not create '{}'", projectFilePath);
+		return false;
+	}
+
+	projectFile << "<CaledonProject name=\"" << projectName << "\">\n";
+	projectFile << "\t<Module path=\"" << projectName << "Module.dll\"/>\n";
+	projectFile << "\t<MasterAssets path=\"Assets/MasterAssets.xml\"/>\n";
+	projectFile << "</CaledonProject>\n";
+	projectFile.close();
+
+	return Load(projectFilePath);
 }

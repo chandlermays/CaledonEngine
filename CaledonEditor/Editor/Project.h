@@ -16,12 +16,13 @@ private:
 public:
 	Project() = default;																		// Constructor
 	~Project() = default;																		// Destructor
-	Project(const Project&) = delete;															// Prevent copy-construction
-//	Project& operator=(const Project&) = delete;												// Prevent copy-assignment
-	Project(Project&&) = delete;																// Prevent move-construction
-	Project& operator=(Project&&) = delete;														// Prevent move-assignment
+	Project(const Project&) = default;															// Prevent copy-construction
+	Project& operator=(const Project&) = default;												// Prevent copy-assignment
+	Project(Project&&) noexcept = default;														// Prevent move-construction
+	Project& operator=(Project&&) noexcept = default;											// Prevent move-assignment
 	
 	bool Load(const std::string& projectFilePath);												// Loads the project from the specified file path
+	bool CreateNew(const std::string& rootDirectory, const std::string& projectName);			// Creates a new project in the specified root directory with the specified name
 
 	const std::string& GetName() const					{ return m_name; }						// Returns the name of the project
 	const std::string& GetRootDirectory() const			{ return m_rootDirectory; }				// Returns the root directory of the project

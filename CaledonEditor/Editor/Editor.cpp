@@ -53,7 +53,12 @@ bool Editor::Initialize(const std::string& initialProjectPath)
 	if (pToolsManager)
 	{
 		pToolsManager->GetDebugOverlay().SetVisible(true);
-		pToolsManager->GetDebugOverlay().AddPanel([this]() { m_projectPanel.Draw([this](const std::string& path) { OpenProject(path); }); });
+		pToolsManager->GetDebugOverlay().AddPanel([this]()
+			{
+				m_projectPanel.Draw(
+					[this](const std::string& path) { OpenProject(path); },
+					[this](const std::string& root, const std::string& name) { CreateNewProject(root, name); });
+			});
 		pToolsManager->GetDebugOverlay().AddPanel([this]() { m_hierarchyPanel.Draw(m_editorContext); });
 		pToolsManager->GetDebugOverlay().AddPanel([this]() { m_inspectorPanel.Draw(m_editorContext); });
 	}
@@ -98,11 +103,32 @@ bool Editor::OpenProject(const std::string& projectFilePath)
 		return false;
 	}
 
+	return FinishLoadingProject(newProject);
+}
+
+bool Editor::CreateNewProject(const std::string& rootDirectory, const std::string& projectName)
+{
+	UnloadProject();
+
+	Project newProject;
+	if (!newProject.CreateNew(rootDirectory, projectName))
+	{
+		CE_LOG("Editor::CreateNewProject - Failed to create project '{}' at '{}'", projectName, rootDirectory);
+		CreateEmptyScene();
+		return false;
+	}
+
+	return FinishLoadingProject(newProject);
+}
+
+bool Editor::FinishLoadingProject(const Project& newProject)
+{
 	m_project = newProject;
 
 	if (!m_dynamicLibrary.Load(m_project.GetModulePath()))
 	{
-		CE_LOG("Editor::OpenProject - Failed to load module '{}'; continuing with Engine components only.", m_project.GetModulePath());
+		CE_LOG("Editor::FinishLoadingProject - Failed to load module '{}'; continuing with Engine components only.", m_project.GetModulePath());
+		m_projectPanel.SetModuleStatus(false, "Module not found: " + m_project.GetModulePath());
 	}
 	else
 	{
@@ -131,6 +157,8 @@ bool Editor::OpenProject(const std::string& projectFilePath)
 
 			registerComponents(recordingRegister);
 		}
+
+		m_projectPanel.SetModuleStatus(true, "");
 	}
 
 	LoadProject();
