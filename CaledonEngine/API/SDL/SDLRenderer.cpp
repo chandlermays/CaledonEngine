@@ -61,16 +61,24 @@ void CE::SDLRenderer::Shutdown()
     m_pRenderer = nullptr;
 }
 
-/*-----------------------------------------------------------------
-| --- BeginFrame: Prepares the 'SDL' Renderer for a new frame --- |
------------------------------------------------------------------*/
-void CE::SDLRenderer::BeginFrame()
+/*-------------------------------------------------
+| --- Clear: Clears the current render target --- |
+-------------------------------------------------*/
+void CE::SDLRenderer::Clear()
 {
 	if (!m_pRenderer)
 		return;
 
 	SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 255);
 	SDL_RenderClear(m_pRenderer);
+}
+
+/*-----------------------------------------------------------------
+| --- BeginFrame: Prepares the 'SDL' Renderer for a new frame --- |
+-----------------------------------------------------------------*/
+void CE::SDLRenderer::BeginFrame()
+{
+	Clear();
 }
 
 /*-------------------------------------------------------------------------
@@ -82,6 +90,40 @@ void CE::SDLRenderer::EndFrame()
 		return;
 
 	SDL_RenderPresent(m_pRenderer);
+}
+
+/*-----------------------------------------------------------------------------------------------
+| --- CreateRenderTarget: Creates an off-screen render target with the specified dimensions --- |
+-----------------------------------------------------------------------------------------------*/
+std::shared_ptr<CE::Texture> CE::SDLRenderer::CreateRenderTarget(int width, int height)
+{
+	if (!m_pRenderer || width <= 0 || height <= 0)
+		return nullptr;
+
+	SDL_Texture* pSDLTexture = SDL_CreateTexture(m_pRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height);
+	if (!pSDLTexture)
+		return nullptr;
+
+	auto pTexture = std::make_shared<SDLTexture>();
+	if (!pTexture->Load(pSDLTexture, width, height))
+	{
+		SDL_DestroyTexture(pSDLTexture);
+		return nullptr;
+	}
+
+	return pTexture;
+}
+
+/*-----------------------------------------------------------------------------------
+| --- SetRenderTarget: Sets the current render target to the default backbuffer --- |
+-----------------------------------------------------------------------------------*/
+void CE::SDLRenderer::SetRenderTarget(Texture* pTarget)
+{
+	if (!m_pRenderer)
+		return;
+
+	SDL_Texture* pSDLTexture = pTarget ? static_cast<SDL_Texture*>(pTarget->GetNativeHandle()) : nullptr;
+	SDL_SetRenderTarget(m_pRenderer, pSDLTexture);
 }
 
 /*-----------------------------------------------------

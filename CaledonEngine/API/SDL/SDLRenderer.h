@@ -16,12 +16,16 @@ namespace CE
 
 	public:
 		SDLRenderer();																					// Constructor
-		~SDLRenderer() override;																		// Destructor
+		virtual ~SDLRenderer() override;																// Destructor
 
-		bool Initialize(Window* pWindow) override;														// Prepares the SDL Renderer for use
-		void Shutdown() override;																		// Cleans up the SDL Renderer
-		void BeginFrame() override;																		// Prepares the SDL Renderer for a new frame
-		void EndFrame() override;																		// Finalizes the rendering process for the current frame
+		virtual bool Initialize(Window* pWindow) override;												// Prepares the SDL Renderer for use
+		virtual void Shutdown() override;																// Cleans up the SDL Renderer
+		virtual void Clear() override;																	// Clears the current render target
+		virtual void BeginFrame() override;																// Prepares the SDL Renderer for a new frame
+		virtual void EndFrame() override;																// Finalizes the rendering process for the current frame
+
+		virtual std::shared_ptr<Texture> CreateRenderTarget(int width, int height) override;			// Creates an off-screen render target with the specified dimensions
+		virtual void SetRenderTarget(Texture* pTarget) override;										// Sets the current render target to the default backbuffer
 
 		virtual void RenderTexture(Texture* pTexture, RectInt* pSrc, RectFloat* pDest) override;		// Renders a texture to the screen
 		std::shared_ptr<Texture> CreateTexture(Image* pImage) override;									// Creates a Texture from a loaded Image
@@ -42,6 +46,6 @@ namespace CE
 		virtual void DrawCapsule(float centerX, float centerY, float width, float height,
 			const Color& color, bool filled) override;													// Draws a capsule to the screen
 
-		void* GetNativeHandle() const override;															// Returns the native renderer handle
+		virtual void* GetNativeHandle() const override;													// Returns the native renderer handle
 	};
 }

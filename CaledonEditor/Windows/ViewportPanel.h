@@ -3,39 +3,27 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
-#include <cstdint>
 #include <memory>
 
 namespace CE
 {
 	class Texture;
-	class Image;
+	class SceneManager;
 }
 
 class EditorContext;
-struct SDL_Texture;
 
 class ViewportPanel
 {
 private:
-	SDL_Texture* m_pRenderTarget;										// Off-screen render target for the viewport
-	std::shared_ptr<CE::Texture> m_pViewportTexture;					// Wrapped texture for use with the Renderer API
+	std::shared_ptr<CE::Texture> m_pRenderTexture;
+	int m_width;
+	int m_height;
 
-	int m_viewportWidth;												// Current viewport width in pixels
-	int m_viewportHeight;												// Current viewport height in pixels
-
-	bool CreateRenderTarget(int width, int height);						// Creates an off-screen render target
-	void DestroyRenderTarget();											// Destroys the render target
+	void EnsureRenderTexture(int width, int height, CE::SceneManager* pSceneManager);
 
 public:
-	ViewportPanel();													// Constructor
-	~ViewportPanel();													// Destructor
-	ViewportPanel(const ViewportPanel&) = delete;						// Prevent copy-construction
-	ViewportPanel& operator=(const ViewportPanel&) = delete;			// Prevent copy-assignment
-	ViewportPanel(ViewportPanel&&) = delete;							// Prevent move-construction
-	ViewportPanel& operator=(ViewportPanel&&) = delete;					// Prevent move-assignment
+	ViewportPanel();
 
-	bool Initialize();													// Initializes the ViewportPanel for use
-	void Draw(EditorContext& context);									// Draws the Viewport panel with the rendered scene
-	void Shutdown();													// Cleans up the render target
+	void Draw(EditorContext& context);
 };

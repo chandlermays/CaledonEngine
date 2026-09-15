@@ -6,13 +6,18 @@
 
 #include "Core/Scene.h"
 #include "Systems/Engine/LoggingManager.h"
+#include "Systems/Engine/EngineManager.h"
+#include "Systems/Rendering/GraphicsManager.h"
+#include "Systems/Rendering/Renderer.h"
 
 /*----------------------------------------------------------------------
 | --- Constructor: Constructs the SceneManager with default values --- |
 ----------------------------------------------------------------------*/
 CE::SceneManager::SceneManager()
 	: m_pCurrentScene{ nullptr }
-{}
+	, m_pRenderer{ nullptr }
+	, m_pRenderTarget{ nullptr }
+{ }
 
 /*-------------------------------------------------------
 | --- Destructor: Cleans up any allocated resources --- |
@@ -28,6 +33,9 @@ CE::SceneManager::~SceneManager()
 -------------------------------------------------------*/
 bool CE::SceneManager::Initialize()
 {
+	GraphicsManager* pGraphicsManager = EngineManager::GetInstance().GetGraphicsManager();
+	m_pRenderer = pGraphicsManager ? pGraphicsManager->GetRenderer() : nullptr;
+
 	if (m_pCurrentScene != nullptr)
 	{
 		if (!m_pCurrentScene->Initialize())
@@ -54,9 +62,20 @@ void CE::SceneManager::Update(float deltaTime)
 ------------------------------------------*/
 void CE::SceneManager::Render()
 {
-	if (m_pCurrentScene != nullptr && m_pCurrentScene->IsActive())
+	if (m_pCurrentScene == nullptr || !m_pCurrentScene->IsActive())
+		return;
+
+	if (m_pRenderer && m_pRenderTarget)
 	{
-		m_pCurrentScene->Render();
+		m_pRenderer->SetRenderTarget(m_pRenderTarget);
+		m_pRenderer->Clear();
+	}
+
+	m_pCurrentScene->Render();
+
+	if (m_pRenderer && m_pRenderTarget)
+	{
+		m_pRenderer->SetRenderTarget(nullptr);
 	}
 }
 
@@ -119,4 +138,12 @@ int CE::SceneManager::GetSceneIndex(Scene* pScene) const
 	}
 
 	return -1;
+}
+
+/*----------------------------------------------------------------------------------
+| --- SetRenderTarget: Redirects scene rendering to the given texture, or null --- |
+----------------------------------------------------------------------------------*/
+void CE::SceneManager::SetRenderTarget(Texture* pTarget)
+{
+	m_pRenderTarget = pTarget;
 }
