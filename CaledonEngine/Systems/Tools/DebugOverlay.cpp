@@ -14,11 +14,19 @@
 #include <ImGUI/imgui_impl_sdl3.h>
 #include <ImGUI/imgui_impl_sdlrenderer3.h>
 
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
+/*----------------------------------------------------------------------
+| --- Constructor: Constructs the DebugOverlay with default values --- |
+----------------------------------------------------------------------*/
 CE::DebugOverlay::DebugOverlay()
 	: m_isVisible{ false }
-{
-}
+{ }
 
+/*----------------------------------------------------------
+| --- Initialize: Initializes the DebugOverlay for use --- |
+----------------------------------------------------------*/
 bool CE::DebugOverlay::Initialize()
 {
 	GraphicsManager* pGraphicsManager = EngineManager::GetInstance().GetGraphicsManager();
@@ -45,6 +53,9 @@ bool CE::DebugOverlay::Initialize()
 	return true;
 }
 
+/*-----------------------------------------------------------
+| --- Render: Renders the DebugOverlay if it is visible --- |
+-----------------------------------------------------------*/
 void CE::DebugOverlay::Render()
 {
 	if (!m_isVisible)
@@ -69,6 +80,9 @@ void CE::DebugOverlay::Render()
 	ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), pSDLRenderer);
 }
 
+/*------------------------------------------
+| --- Shutdown: Cleans up the viewport --- |
+------------------------------------------*/
 void CE::DebugOverlay::Shutdown()
 {
 	ImGui_ImplSDLRenderer3_Shutdown();
@@ -76,21 +90,33 @@ void CE::DebugOverlay::Shutdown()
 	ImGui::DestroyContext();
 }
 
+/*-----------------------------------------------------------------------------------------
+| --- AddPanel: Adds a new panel to the DebugOverlay with the specified draw callback --- |
+-----------------------------------------------------------------------------------------*/
 void CE::DebugOverlay::AddPanel(std::function<void()> drawCallback)
 {
 	m_panelCallbacks.push_back(std::move(drawCallback));
 }
 
+/*-------------------------------------------------------------
+| --- SetVisible: Sets the visibility of the DebugOverlay --- |
+-------------------------------------------------------------*/
 void CE::DebugOverlay::SetVisible(bool isVisible)
 {
 	m_isVisible = isVisible;
 }
 
+/*----------------------------------------------------------------------
+| --- ToggleVisibility: Toggles the visibility of the DebugOverlay --- |
+----------------------------------------------------------------------*/
 void CE::DebugOverlay::ToggleVisibility()
 {
 	m_isVisible = !m_isVisible;
 }
 
+/*--------------------------------------------------------------------------
+| --- IsVisible: Returns whether the DebugOverlay is currently visible --- |
+--------------------------------------------------------------------------*/
 bool CE::DebugOverlay::IsVisible() const
 {
 	return m_isVisible;

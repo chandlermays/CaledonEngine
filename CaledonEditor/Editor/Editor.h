@@ -9,6 +9,7 @@
 #include "Windows/HierarchyPanel.h"
 #include "Windows/InspectorPanel.h"
 #include "Windows/ProjectPanel.h"
+#include "Windows/ViewportPanel.h"
 
 #include "CaledonEngine/DynamicLibrary.h"
 
@@ -26,6 +27,7 @@ private:
 	HierarchyPanel m_hierarchyPanel;																// The Hierarchy panel for managing GameObjects in the current scene
 	InspectorPanel m_inspectorPanel;																// The Inspector panel for viewing and editing properties of the selected GameObject
 	ProjectPanel m_projectPanel;																	// The Project panel for loading and managing projects
+	ViewportPanel m_viewportPanel;																	// The Viewport panel for rendering the current scene
 
 	Project m_project;																				// The currently loaded project
 	CE::EngineManager* m_pEngineManager;															// Pointer to the EngineManager

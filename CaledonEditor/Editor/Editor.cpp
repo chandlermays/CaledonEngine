@@ -61,6 +61,7 @@ bool Editor::Initialize(const std::string& initialProjectPath)
 			});
 		pToolsManager->GetDebugOverlay().AddPanel([this]() { m_hierarchyPanel.Draw(m_editorContext); });
 		pToolsManager->GetDebugOverlay().AddPanel([this]() { m_inspectorPanel.Draw(m_editorContext); });
+		pToolsManager->GetDebugOverlay().AddPanel([this]() { m_viewportPanel.Draw(m_editorContext); });
 	}
 
 	if (!initialProjectPath.empty())
@@ -106,6 +107,9 @@ bool Editor::OpenProject(const std::string& projectFilePath)
 	return FinishLoadingProject(newProject);
 }
 
+/*---------------------------------------------------------------------------------------------------------
+| --- CreateNewProject: Creates a new project in the specified root directory with the specified name --- |
+---------------------------------------------------------------------------------------------------------*/
 bool Editor::CreateNewProject(const std::string& rootDirectory, const std::string& projectName)
 {
 	UnloadProject();
@@ -121,6 +125,9 @@ bool Editor::CreateNewProject(const std::string& rootDirectory, const std::strin
 	return FinishLoadingProject(newProject);
 }
 
+/*-----------------------------------------------------------------------------------------------------------------------
+| --- FinishLoadingProject: Finalizes the loading of a project, including loading the game module and input actions --- |
+-----------------------------------------------------------------------------------------------------------------------*/
 bool Editor::FinishLoadingProject(const Project& newProject)
 {
 	m_project = newProject;

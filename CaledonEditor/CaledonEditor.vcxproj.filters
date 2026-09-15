@@ -31,6 +31,9 @@
     <ClCompile Include="Editor\Project.cpp">
       <Filter>Source Files\Editor</Filter>
     </ClCompile>
+    <ClCompile Include="Windows\ViewportPanel.cpp">
+      <Filter>Source Files\Windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor\Editor.h">
@@ -50,6 +53,9 @@
     </ClInclude>
     <ClInclude Include="Editor\Project.h">
       <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Windows\ViewportPanel.h">
+      <Filter>Source Files\Windows</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
