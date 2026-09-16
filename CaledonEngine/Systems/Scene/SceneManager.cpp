@@ -10,6 +10,9 @@
 #include "Systems/Rendering/GraphicsManager.h"
 #include "Systems/Rendering/Renderer.h"
 
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
 /*----------------------------------------------------------------------
 | --- Constructor: Constructs the SceneManager with default values --- |
 ----------------------------------------------------------------------*/

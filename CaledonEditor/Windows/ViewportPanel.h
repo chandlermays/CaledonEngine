@@ -8,7 +8,6 @@
 namespace CE
 {
 	class Texture;
-	class SceneManager;
 }
 
 class EditorContext;
@@ -16,14 +15,19 @@ class EditorContext;
 class ViewportPanel
 {
 private:
-	std::shared_ptr<CE::Texture> m_pRenderTexture;
-	int m_width;
-	int m_height;
+	std::shared_ptr<CE::Texture> m_pRenderTexture;									// The render texture used to display the scene in the viewport
+	int m_width;																	// The width of the render texture
+	int m_height;																	// The height of the render texture
 
-	void EnsureRenderTexture(int width, int height, CE::SceneManager* pSceneManager);
+	void EnsureRenderTexture(int width, int height);								// Ensures that the render texture is created and matches the specified dimensions
 
 public:
-	ViewportPanel();
+	ViewportPanel();																// Constructor
+	~ViewportPanel() = default;														// Destructor
+	ViewportPanel(const ViewportPanel&) = delete;									// Prevent copy-construction
+	ViewportPanel& operator=(const ViewportPanel&) = delete;						// Prevent copy-assignment
+	ViewportPanel(ViewportPanel&&) = delete;										// Prevent move-construction
+	ViewportPanel& operator=(ViewportPanel&&) = delete;								// Prevent move-assignment
 
-	void Draw(EditorContext& context);
+	void Draw(EditorContext& context);												// Draws the viewport panel and handles rendering the scene to the render texture
 };

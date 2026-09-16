@@ -13,32 +13,20 @@
 
 #include <CaledonEngine/lib/ImGUI/imgui.h>
 
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
+/*-----------------------------------------------------------------------
+| --- Constructor: Constructs the ViewportPanel with default values --- |
+-----------------------------------------------------------------------*/
 ViewportPanel::ViewportPanel()
 	: m_width{ 0 }
 	, m_height{ 0 }
-{
-}
+{ }
 
-void ViewportPanel::EnsureRenderTexture(int width, int height, CE::SceneManager* pSceneManager)
-{
-	if (width == m_width && height == m_height && m_pRenderTexture)
-		return;
-
-	CE::GraphicsManager* pGraphicsManager = CE::EngineManager::GetInstance().GetGraphicsManager();
-	CE::Renderer* pRenderer = pGraphicsManager ? pGraphicsManager->GetRenderer() : nullptr;
-	if (!pRenderer)
-		return;
-
-	m_pRenderTexture = pRenderer->CreateRenderTarget(width, height);
-	m_width = width;
-	m_height = height;
-
-	if (pSceneManager)
-	{
-		pSceneManager->SetRenderTarget(m_pRenderTexture.get());
-	}
-}
-
+/*----------------------------------------------------------------------------------------------
+| --- Draw: Draws the viewport panel and handles rendering the scene to the render texture --- |
+----------------------------------------------------------------------------------------------*/
 void ViewportPanel::Draw(EditorContext&)
 {
 	CE::SceneManager* pSceneManager = CE::EngineManager::GetInstance().GetSceneManager();
@@ -58,7 +46,7 @@ void ViewportPanel::Draw(EditorContext&)
 
 	if (width > 0 && height > 0)
 	{
-		EnsureRenderTexture(width, height, pSceneManager);
+		EnsureRenderTexture(width, height);
 
 		if (m_pRenderTexture)
 		{
@@ -68,4 +56,32 @@ void ViewportPanel::Draw(EditorContext&)
 	}
 
 	ImGui::End();
+}
+
+
+/*------------------------------------
+| --- Private Method Definitions --- |
+------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------
+| --- EnsureRenderTexture: Ensures that the render texture is created and matches the specified dimensions --- |
+--------------------------------------------------------------------------------------------------------------*/
+void ViewportPanel::EnsureRenderTexture(int width, int height)
+{
+	if (width == m_width && height == m_height && m_pRenderTexture)
+		return;
+
+	CE::GraphicsManager* pGraphicsManager = CE::EngineManager::GetInstance().GetGraphicsManager();
+	CE::Renderer* pRenderer = pGraphicsManager ? pGraphicsManager->GetRenderer() : nullptr;
+	if (!pRenderer)
+		return;
+
+	m_pRenderTexture = pRenderer->CreateRenderTarget(width, height);
+	m_width = width;
+	m_height = height;
+
+	CE::SceneManager* pSceneManager = CE::EngineManager::GetInstance().GetSceneManager();
+	if (pSceneManager)
+	{
+		pSceneManager->SetRenderTarget(m_pRenderTexture.get());
+	}
 }

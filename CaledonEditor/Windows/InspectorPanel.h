@@ -10,6 +10,7 @@ namespace CE
 	class Component;
 	struct PropertyDescriptor;
 }
+
 class EditorContext;
 
 class InspectorPanel
