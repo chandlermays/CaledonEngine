@@ -116,6 +116,22 @@ void CE::EngineManager::Shutdown()
 	LoggingManager::GetInstance().Shutdown();
 }
 
+/*------------------------------------------------------------------------------
+| --- SetFrameCallback: Sets the callback function to be called each frame --- |
+------------------------------------------------------------------------------*/
+void CE::EngineManager::SetFrameCallback(std::function<void()> callback)
+{
+	m_frameCallback = std::move(callback);
+}
+
+/*-------------------------------------------------------------------------
+| --- ClearFrameCallback: Clears the callback function for each frame --- |
+-------------------------------------------------------------------------*/
+void CE::EngineManager::ClearFrameCallback()
+{
+	m_frameCallback = nullptr;
+}
+
 /*----------------------------------------------------------------------
 | --- GetGraphicsManager: Returns a pointer to the GraphicsManager --- |
 ----------------------------------------------------------------------*/
@@ -180,6 +196,7 @@ CE::EngineManager::EngineManager()
 	, m_pCollisionManager{ nullptr }
 	, m_pInputManager{ nullptr }
 	, m_pToolsManager{ nullptr }
+	, m_frameCallback{ nullptr }
 {
 	auto pGraphics = std::make_unique<GraphicsManager>();
 	m_pGraphicsManager = pGraphics.get();
@@ -248,6 +265,11 @@ void CE::EngineManager::Render()
 	for (IRenderable* pRenderable : m_pRenderables)
 	{
 		pRenderable->Render();
+	}
+
+	if (m_frameCallback)
+	{
+		m_frameCallback();
 	}
 
 	if (m_pGraphicsManager)

@@ -49,20 +49,23 @@ bool Editor::Initialize(const std::string& initialProjectPath)
 	if (!m_pEngineManager->Initialize())
 		return false;
 
-	CE::ToolsManager* pToolsManager = m_pEngineManager->GetToolsManager();
-	if (pToolsManager)
-	{
-		pToolsManager->GetDebugOverlay().SetVisible(true);
-		pToolsManager->GetDebugOverlay().AddPanel([this]()
-			{
-				m_projectPanel.Draw(
-					[this](const std::string& path) { OpenProject(path); },
-					[this](const std::string& root, const std::string& name) { CreateNewProject(root, name); });
-			});
-		pToolsManager->GetDebugOverlay().AddPanel([this]() { m_hierarchyPanel.Draw(m_editorContext); });
-		pToolsManager->GetDebugOverlay().AddPanel([this]() { m_inspectorPanel.Draw(m_editorContext); });
-		pToolsManager->GetDebugOverlay().AddPanel([this]() { m_viewportPanel.Draw(m_editorContext); });
-	}
+	if (!m_editorGUI.Initialize())
+		return false;
+
+	m_pEngineManager->SetFrameCallback([this]()
+		{
+			m_editorGUI.BeginFrame();
+
+			m_projectPanel.Draw(
+				[this](const std::string& path) { OpenProject(path); },
+				[this](const std::string& root, const std::string& name) { CreateNewProject(root, name); });
+
+			m_hierarchyPanel.Draw(m_editorContext);
+			m_inspectorPanel.Draw(m_editorContext);
+			m_viewportPanel.Draw(m_editorContext);
+
+			m_editorGUI.EndFrame();
+		});
 
 	if (!initialProjectPath.empty())
 	{

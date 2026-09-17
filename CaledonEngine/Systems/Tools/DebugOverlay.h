@@ -1,41 +1,30 @@
 /*------------------------------
-| File: DebugOverlap.h
+| File: DebugOverlay.h
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
-#include <functional>
-#include <vector>
-
-// TODO: Rename this class to something more intuitive. This acts as the connection (or middle-man)
-// between the engine and the editor to display ImGUI panels for the CaledonEditor user interface.
-// Should this even be in CaledonEngine? Maybe it should be in CaledonEditor instead...
-// 
-// DebugOverlay's original intention was to be a debug overlay for the engine to display engine-related information,
-// but it has since been repurposed to be a more general-purpose ImGUI panel manager for the editor.
 
 namespace CE
 {
-	class DebugOverlay
-	{
-	private:
-		std::vector<std::function<void()>> m_panelCallbacks;
-		bool m_isVisible;
+    class DebugOverlay
+    {
+    private:
+		bool m_isVisible;                                                       // Flag to indicate if the debug overlay is visible
 
-	public:
-		DebugOverlay();
-		~DebugOverlay() = default;
-		DebugOverlay(const DebugOverlay&) = delete;
-		DebugOverlay& operator=(const DebugOverlay&) = delete;
-		DebugOverlay(DebugOverlay&&) = delete;
-		DebugOverlay& operator=(DebugOverlay&&) = delete;
+    public:
+        DebugOverlay();                                                         // Constructor
+        ~DebugOverlay() = default;                                              // Destructor
+		DebugOverlay(const DebugOverlay&) = delete;                             // Prevent copy-construction
+		DebugOverlay& operator=(const DebugOverlay&) = delete;                  // Prevent copy-assignment
+		DebugOverlay(DebugOverlay&&) = delete;                                  // Prevent move-construction
+		DebugOverlay& operator=(DebugOverlay&&) = delete;                       // Prevent move-assignment
 
-		bool Initialize();
-		void Render();
-		void Shutdown();
+		bool Initialize();                                                      // Initializes the debug overlay for use
+		void Draw();                                                            // Draws the debug overlay if it is visible
+		void Shutdown();                                                        // Shuts down and cleans up the debug overlay
 
-		void AddPanel(std::function<void()> drawCallback);
-		void SetVisible(bool isVisible);
-		void ToggleVisibility();
-		bool IsVisible() const;
-	};
+		void SetVisible(bool isVisible);                                        // Sets the visibility of the debug overlay
+		void ToggleVisibility();												// Toggles the visibility of the debug overlay
+		bool IsVisible() const;													// Returns whether the debug overlay is currently visible
+    };
 }

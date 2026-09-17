@@ -29,55 +29,18 @@ CE::DebugOverlay::DebugOverlay()
 ----------------------------------------------------------*/
 bool CE::DebugOverlay::Initialize()
 {
-	GraphicsManager* pGraphicsManager = EngineManager::GetInstance().GetGraphicsManager();
-	if (!pGraphicsManager)
-		return false;
-
-	Window* pWindow = pGraphicsManager->GetWindow();
-	Renderer* pRenderer = pGraphicsManager->GetRenderer();
-	if (!pWindow || !pRenderer)
-		return false;
-
-	SDL_Window* pSDLWindow = static_cast<SDL_Window*>(pWindow->GetNativeHandle());
-	SDL_Renderer* pSDLRenderer = static_cast<SDL_Renderer*>(pRenderer->GetNativeHandle());
-	if (!pSDLWindow || !pSDLRenderer)
-		return false;
-
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGui::StyleColorsDark();
-
-	ImGui_ImplSDL3_InitForSDLRenderer(pSDLWindow, pSDLRenderer);
-	ImGui_ImplSDLRenderer3_Init(pSDLRenderer);
-
 	return true;
 }
 
-/*-----------------------------------------------------------
-| --- Render: Renders the DebugOverlay if it is visible --- |
------------------------------------------------------------*/
-void CE::DebugOverlay::Render()
+/*-------------------------------------------------------
+| --- Draw: Draws the DebugOverlay if it is visible --- |
+-------------------------------------------------------*/
+void CE::DebugOverlay::Draw()
 {
 	if (!m_isVisible)
 		return;
 
-	GraphicsManager* pGraphicsManager = EngineManager::GetInstance().GetGraphicsManager();
-	Renderer* pRenderer = pGraphicsManager ? pGraphicsManager->GetRenderer() : nullptr;
-	SDL_Renderer* pSDLRenderer = pRenderer ? static_cast<SDL_Renderer*>(pRenderer->GetNativeHandle()) : nullptr;
-	if (!pSDLRenderer)
-		return;
-
-	ImGui_ImplSDLRenderer3_NewFrame();
-	ImGui_ImplSDL3_NewFrame();
-	ImGui::NewFrame();
-
-	for (const auto& panel : m_panelCallbacks)
-	{
-		panel();
-	}
-
-	ImGui::Render();
-	ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), pSDLRenderer);
+	// Hook engine diagnostics here.
 }
 
 /*------------------------------------------
@@ -85,17 +48,7 @@ void CE::DebugOverlay::Render()
 ------------------------------------------*/
 void CE::DebugOverlay::Shutdown()
 {
-	ImGui_ImplSDLRenderer3_Shutdown();
-	ImGui_ImplSDL3_Shutdown();
-	ImGui::DestroyContext();
-}
-
-/*-----------------------------------------------------------------------------------------
-| --- AddPanel: Adds a new panel to the DebugOverlay with the specified draw callback --- |
------------------------------------------------------------------------------------------*/
-void CE::DebugOverlay::AddPanel(std::function<void()> drawCallback)
-{
-	m_panelCallbacks.push_back(std::move(drawCallback));
+	//...
 }
 
 /*-------------------------------------------------------------

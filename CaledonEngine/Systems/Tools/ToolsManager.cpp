@@ -45,7 +45,7 @@ void CE::ToolsManager::Update(float)
 
 void CE::ToolsManager::Render()
 {
-	m_debugOverlay.Render();
+	m_debugOverlay.Draw();
 }
 
 void CE::ToolsManager::Shutdown()

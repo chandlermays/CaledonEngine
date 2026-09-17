@@ -7,8 +7,9 @@
 #include "IRenderable.h"
 #include "IUpdatable.h"
 
-#include <vector>
+#include <functional>
 #include <memory>
+#include <vector>
 
 namespace CE
 {
@@ -35,6 +36,8 @@ namespace CE
 
 		bool m_isRunning;													// Flag to indicate if the engine is running
 
+		std::function<void()> m_frameCallback;								// Callback function for the main loop
+
 		EngineManager();													// Constructor
 
 		void RegisterManager(std::unique_ptr<CE::Manager> pManager);		// Registers a manager with the engine
@@ -55,6 +58,9 @@ namespace CE
 		void Run();															// Main loop that updates and renders all engine subsystem managers
 		void Shutdown() override;											// Shuts down and cleans up all engine subsystem managers
 	
+		void SetFrameCallback(std::function<void()> callback);				// Sets the callback function to be called each frame
+		void ClearFrameCallback();											// Clears the callback function
+
 		GraphicsManager* GetGraphicsManager() const;						// Returns a pointer to the GraphicsManager
 		ResourceManager* GetResourceManager() const;						// Returns a pointer to the ResourceManager
 		SceneManager* GetSceneManager() const;								// Returns a pointer to the SceneManager

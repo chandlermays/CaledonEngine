@@ -135,6 +135,7 @@ bool CE::SDLInput::ProcessEvents()
 	SDL_Event event;
 	while (SDL_PollEvent(&event) != 0)
 	{
+		// TODO: Move this ImGUI Polling into the Editor
 		ImGui_ImplSDL3_ProcessEvent(&event);
 
 		switch (event.type)
