@@ -11,6 +11,9 @@
     <Filter Include="Source Files\Windows">
       <UniqueIdentifier>{61107f4e-f821-40ce-aa06-14ca36bd83e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ThirdParty">
+      <UniqueIdentifier>{ebdbe464-de62-431b-9bf3-e923f70c9d64}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Editor\Main.cpp">
@@ -36,6 +39,27 @@
     </ClCompile>
     <ClCompile Include="Editor\EditorGUI.cpp">
       <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\imgui.cpp">
+      <Filter>Source Files\ThirdParty</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\imgui_demo.cpp">
+      <Filter>Source Files\ThirdParty</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\imgui_draw.cpp">
+      <Filter>Source Files\ThirdParty</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\imgui_impl_sdl3.cpp">
+      <Filter>Source Files\ThirdParty</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\imgui_impl_sdlrenderer3.cpp">
+      <Filter>Source Files\ThirdParty</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\imgui_tables.cpp">
+      <Filter>Source Files\ThirdParty</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\imgui_widgets.cpp">
+      <Filter>Source Files\ThirdParty</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

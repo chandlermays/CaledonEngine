@@ -59,9 +59,6 @@
     <Filter Include="Source Files\Systems\Physics\Components">
       <UniqueIdentifier>{646f6633-fd97-401f-bac9-4ad7b1559f0c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Utilities\ThirdParty\ImGUI">
-      <UniqueIdentifier>{786fcfa3-d786-4b0a-ae02-59d29d8ba24a}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Component.cpp">
@@ -180,27 +177,6 @@
     </ClCompile>
     <ClCompile Include="BuiltInComponents.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui.cpp">
-      <Filter>Source Files\Utilities\ThirdParty\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui_demo.cpp">
-      <Filter>Source Files\Utilities\ThirdParty\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui_draw.cpp">
-      <Filter>Source Files\Utilities\ThirdParty\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui_impl_sdl3.cpp">
-      <Filter>Source Files\Utilities\ThirdParty\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui_impl_sdlrenderer3.cpp">
-      <Filter>Source Files\Utilities\ThirdParty\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui_tables.cpp">
-      <Filter>Source Files\Utilities\ThirdParty\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities\ThirdParty\ImGUI\imgui_widgets.cpp">
-      <Filter>Source Files\Utilities\ThirdParty\ImGUI</Filter>
     </ClCompile>
     <ClCompile Include="DynamicLibrary.cpp">
       <Filter>Source Files</Filter>

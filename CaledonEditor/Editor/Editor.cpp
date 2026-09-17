@@ -55,15 +55,23 @@ bool Editor::Initialize(const std::string& initialProjectPath)
 	m_pEngineManager->SetFrameCallback([this]()
 		{
 			m_editorGUI.BeginFrame();
+			m_editorGUI.BeginDockspace();
 
 			m_projectPanel.Draw(
-				[this](const std::string& path) { OpenProject(path); },
-				[this](const std::string& root, const std::string& name) { CreateNewProject(root, name); });
+				[this](const std::string& path)
+				{
+					OpenProject(path);
+				},
+				[this](const std::string& root, const std::string& name)
+				{
+					CreateNewProject(root, name);
+				});
 
 			m_hierarchyPanel.Draw(m_editorContext);
 			m_inspectorPanel.Draw(m_editorContext);
 			m_viewportPanel.Draw(m_editorContext);
 
+			m_editorGUI.EndDockspace();
 			m_editorGUI.EndFrame();
 		});
 

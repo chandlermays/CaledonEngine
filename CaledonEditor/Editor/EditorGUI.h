@@ -8,6 +8,9 @@ class EditorGUI
 {
 private:
     bool m_isInitialized;
+    bool m_isLayoutInitialized;
+
+    void BuildDefaultLayout();
 
 public:
     EditorGUI();
@@ -21,4 +24,7 @@ public:
     void BeginFrame();
     void EndFrame();
     void Shutdown();
+
+    void BeginDockspace();
+    void EndDockspace();
 };

@@ -233,7 +233,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEngine\lib\ImGUI;$(SolutionDir)CaledonEngine\lib\Lua\include;$(SolutionDir)CaledonEngine\lib\SDL\include;$(SolutionDir)CaledonEngine\lib\SDL_Image\include;$(SolutionDir)CaledonEngine\lib\SDL_TTF\include;$(SolutionDir)CaledonEngine\lib\SDL_Mixer\include;$(SolutionDir)CaledonEngine\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEditor\lib\ImGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -287,7 +287,7 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEngine\lib\ImGUI;$(SolutionDir)CaledonEngine\lib\Lua\include;$(SolutionDir)CaledonEngine\lib\SDL\include;$(SolutionDir)CaledonEngine\lib\SDL_Image\include;$(SolutionDir)CaledonEngine\lib\SDL_TTF\include;$(SolutionDir)CaledonEngine\lib\SDL_Mixer\include;$(SolutionDir)CaledonEngine\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEditor\lib\ImGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -341,7 +341,7 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEngine\lib\ImGUI;$(SolutionDir)CaledonEngine\lib\Lua\include;$(SolutionDir)CaledonEngine\lib\SDL\include;$(SolutionDir)CaledonEngine\lib\SDL_Image\include;$(SolutionDir)CaledonEngine\lib\SDL_TTF\include;$(SolutionDir)CaledonEngine\lib\SDL_Mixer\include;$(SolutionDir)CaledonEngine\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEditor\lib\ImGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -397,7 +397,7 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEngine\lib\ImGUI;$(SolutionDir)CaledonEngine\lib\Lua\include;$(SolutionDir)CaledonEngine\lib\SDL\include;$(SolutionDir)CaledonEngine\lib\SDL_Image\include;$(SolutionDir)CaledonEngine\lib\SDL_TTF\include;$(SolutionDir)CaledonEngine\lib\SDL_Mixer\include;$(SolutionDir)CaledonEngine\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEditor\lib\ImGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -453,7 +453,7 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEngine\lib\ImGUI;$(SolutionDir)CaledonEngine\lib\Lua\include;$(SolutionDir)CaledonEngine\lib\SDL\include;$(SolutionDir)CaledonEngine\lib\SDL_Image\include;$(SolutionDir)CaledonEngine\lib\SDL_TTF\include;$(SolutionDir)CaledonEngine\lib\SDL_Mixer\include;$(SolutionDir)CaledonEngine\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEditor\lib\ImGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -509,7 +509,7 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEngine\lib\ImGUI;$(SolutionDir)CaledonEngine\lib\Lua\include;$(SolutionDir)CaledonEngine\lib\SDL\include;$(SolutionDir)CaledonEngine\lib\SDL_Image\include;$(SolutionDir)CaledonEngine\lib\SDL_TTF\include;$(SolutionDir)CaledonEngine\lib\SDL_Mixer\include;$(SolutionDir)CaledonEngine\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEditor\lib\ImGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -563,7 +563,7 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEngine\lib\ImGUI;$(SolutionDir)CaledonEngine\lib\Lua\include;$(SolutionDir)CaledonEngine\lib\SDL\include;$(SolutionDir)CaledonEngine\lib\SDL_Image\include;$(SolutionDir)CaledonEngine\lib\SDL_TTF\include;$(SolutionDir)CaledonEngine\lib\SDL_Mixer\include;$(SolutionDir)CaledonEngine\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEditor\lib\ImGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -617,7 +617,7 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEngine\lib\ImGUI;$(SolutionDir)CaledonEngine\lib\Lua\include;$(SolutionDir)CaledonEngine\lib\SDL\include;$(SolutionDir)CaledonEngine\lib\SDL_Image\include;$(SolutionDir)CaledonEngine\lib\SDL_TTF\include;$(SolutionDir)CaledonEngine\lib\SDL_Mixer\include;$(SolutionDir)CaledonEngine\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEditor\lib\ImGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -671,7 +671,7 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEngine\lib\ImGUI;$(SolutionDir)CaledonEngine\lib\Lua\include;$(SolutionDir)CaledonEngine\lib\SDL\include;$(SolutionDir)CaledonEngine\lib\SDL_Image\include;$(SolutionDir)CaledonEngine\lib\SDL_TTF\include;$(SolutionDir)CaledonEngine\lib\SDL_Mixer\include;$(SolutionDir)CaledonEngine\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEditor\lib\ImGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -727,7 +727,7 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEngine\lib\ImGUI;$(SolutionDir)CaledonEngine\lib\Lua\include;$(SolutionDir)CaledonEngine\lib\SDL\include;$(SolutionDir)CaledonEngine\lib\SDL_Image\include;$(SolutionDir)CaledonEngine\lib\SDL_TTF\include;$(SolutionDir)CaledonEngine\lib\SDL_Mixer\include;$(SolutionDir)CaledonEngine\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEditor\lib\ImGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -783,7 +783,7 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEngine\lib\ImGUI;$(SolutionDir)CaledonEngine\lib\Lua\include;$(SolutionDir)CaledonEngine\lib\SDL\include;$(SolutionDir)CaledonEngine\lib\SDL_Image\include;$(SolutionDir)CaledonEngine\lib\SDL_TTF\include;$(SolutionDir)CaledonEngine\lib\SDL_Mixer\include;$(SolutionDir)CaledonEngine\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEditor\lib\ImGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -839,7 +839,7 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEngine\lib\ImGUI;$(SolutionDir)CaledonEngine\lib\Lua\include;$(SolutionDir)CaledonEngine\lib\SDL\include;$(SolutionDir)CaledonEngine\lib\SDL_Image\include;$(SolutionDir)CaledonEngine\lib\SDL_TTF\include;$(SolutionDir)CaledonEngine\lib\SDL_Mixer\include;$(SolutionDir)CaledonEngine\lib\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)CaledonEngine\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)CaledonEditor\lib\ImGUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -891,6 +891,13 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
     <ClCompile Include="Editor\Main.cpp" />
     <ClCompile Include="Editor\Project.cpp" />
     <ClCompile Include="Editor\EditorGUI.cpp" />
+    <ClCompile Include="ThirdParty\imgui.cpp" />
+    <ClCompile Include="ThirdParty\imgui_demo.cpp" />
+    <ClCompile Include="ThirdParty\imgui_draw.cpp" />
+    <ClCompile Include="ThirdParty\imgui_impl_sdl3.cpp" />
+    <ClCompile Include="ThirdParty\imgui_impl_sdlrenderer3.cpp" />
+    <ClCompile Include="ThirdParty\imgui_tables.cpp" />
+    <ClCompile Include="ThirdParty\imgui_widgets.cpp" />
     <ClCompile Include="Windows\HierarchyPanel.cpp" />
     <ClCompile Include="Windows\InspectorPanel.cpp" />
     <ClCompile Include="Windows\ProjectPanel.cpp" />
