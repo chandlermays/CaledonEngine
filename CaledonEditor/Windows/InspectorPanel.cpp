@@ -10,7 +10,7 @@
 #include "CaledonEngine/ComponentFactory.h"
 #include "CaledonEngine/ComponentTypeInfo.h"
 
-#include <CaledonEngine/lib/ImGUI/imgui.h>
+#include <ImGUI/imgui.h>
 
 #include <unordered_map>
 #include <vector>

@@ -3,6 +3,7 @@
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
+#include <functional>
 #include <unordered_map>
 
 namespace CE
@@ -67,6 +68,8 @@ namespace CE
 		kNumMouseButtons
 	};
 
+	using EventCallback = std::function<void(const void*)>;
+
 	class Input
 	{
 	protected:
@@ -90,6 +93,8 @@ namespace CE
 		virtual bool Initialize() = 0;										// Prepares the Input System for use
 		virtual void Shutdown() = 0;										// Shuts down the Input System
 		virtual bool ProcessEvents() = 0;									// Processes Input Events
+
+		virtual void SetEventCallback(EventCallback callback) = 0;			// 
 
 		virtual bool IsKeyHeld(KeyCode key) const;							// Returns true if the specified key is currently held down
 		virtual bool IsKeyPressed(KeyCode key) const;						// Returns true if the specified key was pressed this frame

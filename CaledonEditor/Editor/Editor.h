@@ -25,7 +25,7 @@ class Editor
 private:
 	EditorContext m_editorContext;																	// The context for the Editor, managing the selected GameObject
 
-	EditorGUI m_editorGUI;																			//
+	EditorGUI m_editorGUI;																			// 
 	HierarchyPanel m_hierarchyPanel;																// The Hierarchy panel for managing GameObjects in the current scene
 	InspectorPanel m_inspectorPanel;																// The Inspector panel for viewing and editing properties of the selected GameObject
 	ProjectPanel m_projectPanel;																	// The Project panel for loading and managing projects

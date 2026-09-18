@@ -5,7 +5,6 @@
 #include "SDLInput.h"
 
 #include <SDL3/SDL.h>
-#include <ImGUI/imgui_impl_sdl3.h>
 
 /*-----------------------------------
 | --- Public Method Definitions --- |
@@ -135,8 +134,10 @@ bool CE::SDLInput::ProcessEvents()
 	SDL_Event event;
 	while (SDL_PollEvent(&event) != 0)
 	{
-		// TODO: Move this ImGUI Polling into the Editor
-		ImGui_ImplSDL3_ProcessEvent(&event);
+		if (m_eventCallback)
+		{
+			m_eventCallback(&event);
+		}
 
 		switch (event.type)
 		{
@@ -208,4 +209,12 @@ bool CE::SDLInput::ProcessEvents()
 	}
 
 	return false;
+}
+
+/*-------------------------------------------------------------------------
+| --- SetEventCallback: 
+-------------------------------------------------------------------------*/
+void CE::SDLInput::SetEventCallback(EventCallback callback)
+{
+	m_eventCallback = std::move(callback);
 }

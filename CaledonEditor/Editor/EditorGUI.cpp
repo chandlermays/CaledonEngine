@@ -10,21 +10,33 @@
 #include "CaledonEngine/Systems/Rendering/Renderer.h"
 
 #include <SDL3/SDL.h>
-#include <CaledonEngine/lib/ImGUI/imgui.h>
-#include <CaledonEngine/lib/ImGUI/imgui_internal.h>
-#include <CaledonEngine/lib/ImGUI/imgui_impl_sdl3.h>
-#include <CaledonEngine/lib/ImGUI/imgui_impl_sdlrenderer3.h>
+#include <ImGUI/imgui.h>
+#include <ImGUI/imgui_internal.h>
+#include <ImGUI/imgui_impl_sdl3.h>
+#include <ImGUI/imgui_impl_sdlrenderer3.h>
 
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
+/*-------------------------------------------------------------------
+| --- Constructor: Constructs the EditorGUI with default values --- |
+-------------------------------------------------------------------*/
 EditorGUI::EditorGUI()
 	: m_isInitialized{ false }
     , m_isLayoutInitialized{ false }
 { }
 
+/*-------------------------------------------------------
+| --- Destructor: Cleans up any allocated resources --- |
+-------------------------------------------------------*/
 EditorGUI::~EditorGUI()
 {
 	Shutdown();
 }
 
+/*----------------------------------------------------
+| --- Initialize: Prepares the EditorGUI for use --- |
+----------------------------------------------------*/
 bool EditorGUI::Initialize()
 {
     CE::GraphicsManager* graphics = CE::EngineManager::GetInstance().GetGraphicsManager();
@@ -62,6 +74,9 @@ bool EditorGUI::Initialize()
     return true;
 }
 
+/*-------------------------------------------------------------------
+| --- BeginFrame: 
+-------------------------------------------------------------------*/
 void EditorGUI::BeginFrame()
 {
     if (!m_isInitialized)
@@ -72,6 +87,9 @@ void EditorGUI::BeginFrame()
     ImGui::NewFrame();
 }
 
+/*-------------------------------------------------------------------
+| --- EndFrame:
+-------------------------------------------------------------------*/
 void EditorGUI::EndFrame()
 {
     if (!m_isInitialized)
@@ -89,6 +107,20 @@ void EditorGUI::EndFrame()
     }
 }
 
+/*-------------------------------------------------------------------
+| --- ProcessEvent: 
+-------------------------------------------------------------------*/
+void EditorGUI::ProcessEvent(const void* pEvent)
+{
+    if (!m_isInitialized || !pEvent)
+        return;
+
+    ImGui_ImplSDL3_ProcessEvent(static_cast<const SDL_Event*>(pEvent));
+}
+
+/*-------------------------------------------------------------------
+| --- Shutdown:
+-------------------------------------------------------------------*/
 void EditorGUI::Shutdown()
 {
     if (!m_isInitialized)
@@ -100,6 +132,9 @@ void EditorGUI::Shutdown()
     m_isInitialized = false;
 }
 
+/*-------------------------------------------------------------------
+| --- BeginDockspace:
+-------------------------------------------------------------------*/
 void EditorGUI::BeginDockspace()
 {
     if (!m_isInitialized)
@@ -146,6 +181,9 @@ void EditorGUI::BeginDockspace()
     }
 }
 
+/*-------------------------------------------------------------------
+| --- EndDockspace:
+-------------------------------------------------------------------*/
 void EditorGUI::EndDockspace()
 {
     if (!m_isInitialized)
@@ -155,7 +193,12 @@ void EditorGUI::EndDockspace()
 }
 
 
-
+/*------------------------------------
+| --- Private Method Definitions --- |
+------------------------------------*/
+/*-------------------------------------------------------------------
+| --- BuildDefaultLayout: 
+-------------------------------------------------------------------*/
 void EditorGUI::BuildDefaultLayout()
 {
     ImGuiID dockspaceId = ImGui::GetID("CaledonEditorDockspace");

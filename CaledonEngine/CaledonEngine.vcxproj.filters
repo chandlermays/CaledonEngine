@@ -358,7 +358,7 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="DynamicLibraryInterface.h">
-      <Filter>Source Files\Utilities</Filter>
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

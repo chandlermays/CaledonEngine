@@ -10,9 +10,6 @@
 #include "Systems/Rendering/Renderer.h"
 
 #include <SDL3/SDL.h>
-#include <ImGUI/imgui.h>
-#include <ImGUI/imgui_impl_sdl3.h>
-#include <ImGUI/imgui_impl_sdlrenderer3.h>
 
 /*-----------------------------------
 | --- Public Method Definitions --- |

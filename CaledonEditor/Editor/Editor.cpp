@@ -52,6 +52,15 @@ bool Editor::Initialize(const std::string& initialProjectPath)
 	if (!m_editorGUI.Initialize())
 		return false;
 
+	CE::Input* pInputAPI = m_pEngineManager->GetInputManager()->GetInputAPI();
+	if (pInputAPI)
+	{
+		pInputAPI->SetEventCallback([this](const void* pEvent)
+			{
+				m_editorGUI.ProcessEvent(pEvent);
+			});
+	}
+
 	m_pEngineManager->SetFrameCallback([this]()
 		{
 			m_editorGUI.BeginFrame();

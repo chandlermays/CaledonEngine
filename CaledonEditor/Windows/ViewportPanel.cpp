@@ -11,7 +11,7 @@
 #include "CaledonEngine/Systems/Rendering/Texture.h"
 #include "CaledonEngine/Systems/Scene/SceneManager.h"
 
-#include <CaledonEngine/lib/ImGUI/imgui.h>
+#include <ImGUI/imgui.h>
 
 /*-----------------------------------
 | --- Public Method Definitions --- |
