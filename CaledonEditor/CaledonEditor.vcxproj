@@ -888,6 +888,7 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Editor\Editor.cpp" />
+    <ClCompile Include="Editor\EditorSettings.cpp" />
     <ClCompile Include="Editor\Main.cpp" />
     <ClCompile Include="Editor\Project.cpp" />
     <ClCompile Include="Editor\EditorGUI.cpp" />
@@ -906,6 +907,7 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
   <ItemGroup>
     <ClInclude Include="Editor\Editor.h" />
     <ClInclude Include="Editor\EditorContext.h" />
+    <ClInclude Include="Editor\EditorSettings.h" />
     <ClInclude Include="Editor\Project.h" />
     <ClInclude Include="Editor\EditorGUI.h" />
     <ClInclude Include="Windows\HierarchyPanel.h" />

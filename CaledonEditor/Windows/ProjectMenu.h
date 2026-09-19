@@ -10,7 +10,7 @@ class ProjectMenu
 {
 private:
 	char m_openPathBuffer[512];																	// Buffer for the path of the project to open
-	char m_newRootBuffer[512];																	// Buffer for the root directory of the new project to create
+	char m_newLocationBuffer[512];																// Buffer for the location of the new project to create
 	char m_newNameBuffer[128];																	// Buffer for the name of the new project to create
 
 	std::string m_currentProjectName;															// Name of the currently loaded project

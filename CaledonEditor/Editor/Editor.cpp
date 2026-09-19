@@ -4,6 +4,8 @@
 ------------------------------*/
 #include "Editor.h"
 
+#include "EditorSettings.h"
+
 #include "CaledonEngine/Systems/Engine/EngineManager.h"
 #include "CaledonEngine/Systems/Engine/LoggingManager.h"
 #include "CaledonEngine/Systems/Input/InputManager.h"
@@ -45,6 +47,8 @@ Editor::~Editor()
 -------------------------------------------------*/
 bool Editor::Initialize(const std::string& initialProjectPath)
 {
+	Project::CaptureLaunchDirectory();
+
 	m_pEngineManager = &CE::EngineManager::GetInstance();
 	if (!m_pEngineManager->Initialize())
 		return false;
@@ -79,9 +83,13 @@ bool Editor::Initialize(const std::string& initialProjectPath)
 			m_editorGUI.EndFrame();
 		});
 
-	if (!initialProjectPath.empty())
+	std::string effectiveProjectPath = initialProjectPath.empty()
+		? EditorSettings::GetLastProjectPath()
+		: initialProjectPath;
+
+	if (!effectiveProjectPath.empty())
 	{
-		OpenProject(initialProjectPath);
+		OpenProject(effectiveProjectPath);
 	}
 	else
 	{
@@ -121,17 +129,17 @@ bool Editor::OpenProject(const std::string& projectFilePath)
 	return FinishLoadingProject(newProject);
 }
 
-/*---------------------------------------------------------------------------------------------------------
-| --- CreateNewProject: Creates a new project in the specified root directory with the specified name --- |
----------------------------------------------------------------------------------------------------------*/
-bool Editor::CreateNewProject(const std::string& rootDirectory, const std::string& projectName)
+/*---------------------------------------------------------------------------------------------------
+| --- CreateNewProject: Creates a new project in the specified location with the specified name --- |
+---------------------------------------------------------------------------------------------------*/
+bool Editor::CreateNewProject(const std::string& location, const std::string& projectName)
 {
 	UnloadProject();
 
 	Project newProject;
-	if (!newProject.CreateNew(rootDirectory, projectName))
+	if (!newProject.CreateNew(location, projectName))
 	{
-		CE_LOG("Editor::CreateNewProject - Failed to create project '{}' at '{}'", projectName, rootDirectory);
+		CE_LOG("Editor::CreateNewProject - Failed to create project '{}' at '{}'", projectName, location);
 		CreateEmptyScene();
 		return false;
 	}
@@ -184,6 +192,7 @@ bool Editor::FinishLoadingProject(const Project& newProject)
 
 	LoadProject();
 	m_projectMenu.SetLoadedProject(m_project.GetName());
+	EditorSettings::SetLastProjectPath(m_project.GetProjectPath());
 
 	return true;
 }

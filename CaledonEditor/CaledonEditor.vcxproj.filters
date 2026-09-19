@@ -61,6 +61,9 @@
     <ClCompile Include="ThirdParty\imgui_widgets.cpp">
       <Filter>Source Files\ThirdParty</Filter>
     </ClCompile>
+    <ClCompile Include="Editor\EditorSettings.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor\Editor.h">
@@ -85,6 +88,9 @@
       <Filter>Source Files\Windows</Filter>
     </ClInclude>
     <ClInclude Include="Editor\EditorGUI.h">
+      <Filter>Source Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\EditorSettings.h">
       <Filter>Source Files\Editor</Filter>
     </ClInclude>
   </ItemGroup>

@@ -39,7 +39,7 @@ private:
 	std::vector<std::string> m_moduleComponentTypeNames;											// List of component type names registered by the game module
 
 	bool OpenProject(const std::string& projectFilePath);											// Opens a project from the specified file path
-	bool CreateNewProject(const std::string& rootDirectory, const std::string& projectName);		// Creates a new project in the specified root directory with the specified name
+	bool CreateNewProject(const std::string& location, const std::string& projectName);				// Creates a new project in the specified location with the specified name
 	bool FinishLoadingProject(const Project& newProject);											// Finalizes the loading of a project, including loading the game module and input actions
 	void UnloadProject();																			// Unloads the currently loaded project, including the game module and input actions
 	void LoadProject();																				// Loads the currently loaded project, including the game module and input actions

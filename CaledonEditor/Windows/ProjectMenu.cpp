@@ -4,6 +4,8 @@
 ------------------------------*/
 #include "ProjectMenu.h"
 
+#include "Editor/EditorSettings.h"
+
 #include <ImGUI/imgui.h>
 
 /*-----------------------------------
@@ -17,7 +19,7 @@ ProjectMenu::ProjectMenu()
 	, m_isModuleLoaded{ false }
 {
 	m_openPathBuffer[0] = '\0';
-	m_newRootBuffer[0] = '\0';
+	m_newLocationBuffer[0] = '\0';
 	m_newNameBuffer[0] = '\0';
 }
 
@@ -45,23 +47,15 @@ void ProjectMenu::SetModuleStatus(bool isLoaded, const std::string & statusMessa
 void ProjectMenu::DrawMenuBar(std::function<void(const std::string&)> onOpenRequested,
 	std::function<void(const std::string&, const std::string&)> onCreateRequested)
 {
+	bool requestNewProjectPopup = false;
+	bool requestOpenProjectPopup = false;
+
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			if (ImGui::MenuItem("New Project..."))
-			{
-				m_newRootBuffer[0] = '\0';
-				m_newNameBuffer[0] = '\0';
-				ImGui::OpenPopup("New Project");
-			}
-
-			if (ImGui::MenuItem("Open Project..."))
-			{
-				m_openPathBuffer[0] = '\0';
-				ImGui::OpenPopup("Open Project");
-			}
-
+			if (ImGui::MenuItem("New Project...")) { requestNewProjectPopup = true; }
+			if (ImGui::MenuItem("Open Project...")) { requestOpenProjectPopup = true; }
 			ImGui::EndMenu();
 		}
 
@@ -70,6 +64,7 @@ void ProjectMenu::DrawMenuBar(std::function<void(const std::string&)> onOpenRequ
 			: "No project loaded";
 
 		float textWidth = ImGui::CalcTextSize(statusText.c_str()).x;
+
 		ImGui::SetCursorPosX(ImGui::GetWindowWidth() - textWidth - 16.0f);
 
 		if (m_hasProjectLoaded && !m_isModuleLoaded)
@@ -82,6 +77,20 @@ void ProjectMenu::DrawMenuBar(std::function<void(const std::string&)> onOpenRequ
 		}
 
 		ImGui::EndMainMenuBar();
+	}
+
+	if (requestNewProjectPopup)
+	{
+		m_newLocationBuffer[0] = '\0';
+		m_newNameBuffer[0] = '\0';
+		ImGui::OpenPopup("New Project");
+	}
+
+	if (requestOpenProjectPopup)
+	{
+		std::string lastPath = EditorSettings::GetLastProjectPath();
+		strncpy_s(m_openPathBuffer, lastPath.c_str(), sizeof(m_openPathBuffer) - 1);
+		ImGui::OpenPopup("Open Project");
 	}
 
 	DrawNewProjectPopup(onCreateRequested);
@@ -99,16 +108,16 @@ void ProjectMenu::DrawNewProjectPopup(std::function<void(const std::string&, con
 {
 	if (ImGui::BeginPopupModal("New Project", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 	{
-		ImGui::InputText("Root Directory", m_newRootBuffer, sizeof(m_newRootBuffer));
+		ImGui::InputText("Location", m_newLocationBuffer, sizeof(m_newLocationBuffer));
 		ImGui::InputText("Project Name", m_newNameBuffer, sizeof(m_newNameBuffer));
 
 		ImGui::Separator();
 
-		bool canCreate = m_newRootBuffer[0] != '\0' && m_newNameBuffer[0] != '\0';
+		bool canCreate = m_newLocationBuffer[0] != '\0' && m_newNameBuffer[0] != '\0';
 		ImGui::BeginDisabled(!canCreate);
 		if (ImGui::Button("Create"))
 		{
-			onCreateRequested(m_newRootBuffer, m_newNameBuffer);
+			onCreateRequested(m_newLocationBuffer, m_newNameBuffer);
 			ImGui::CloseCurrentPopup();
 		}
 		ImGui::EndDisabled();

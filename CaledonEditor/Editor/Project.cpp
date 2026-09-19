@@ -10,25 +10,42 @@
 #include "CaledonEngine/Utilities/ThirdParty/tinyxml2.h"
 #include <Windows.h>
 
+std::string Project::s_launchDirectory;
+
 /*-----------------------------------
 | --- Public Method Definitions --- |
 -----------------------------------*/
+/*---------------------------------------------------------------------------------
+| --- CaptureLaunchDirectory:
+---------------------------------------------------------------------------------*/
+void Project::CaptureLaunchDirectory()
+{
+	if (!s_launchDirectory.empty())
+		return;
+
+	char buffer[MAX_PATH];
+	DWORD length = GetCurrentDirectoryA(MAX_PATH, buffer);
+	s_launchDirectory = (length > 0) ? std::string(buffer, length) : ".";
+}
+
 /*--------------------------------------------------------------
 | --- Load: Loads the project from the specified file path --- |
 --------------------------------------------------------------*/
 bool Project::Load(const std::string& projectFilePath)
 {
+	std::string resolvedFilePath = ResolveAbsolutePath(projectFilePath);
+
 	CE::CaledonParser parser;
-	if (!parser.LoadFile(projectFilePath))
+	if (!parser.LoadFile(resolvedFilePath))
 	{
-		CE_LOG("Project::Load - Could not open '{}'", projectFilePath);
+		CE_LOG("Project::Load - Could not open '{}'", resolvedFilePath);
 		return false;
 	}
 
 	tinyxml2::XMLElement* pRoot = parser.GetRootElement("CaledonProject");
 	if (!pRoot)
 	{
-		CE_LOG("Project::Load - '{}' is missing the <CaledonProject> root element", projectFilePath);
+		CE_LOG("Project::Load - '{}' is missing the <CaledonProject> root element", resolvedFilePath);
 		return false;
 	}
 
@@ -47,12 +64,9 @@ bool Project::Load(const std::string& projectFilePath)
 		m_masterAssetsPath = pMasterAssets->Attribute("path");
 	}
 
-	// NOTE: The project file's own directory becomes the working directory for everything
-	// downstream — module loading, ResourceManager. Neither needs to change at all;
-	// they just keep using plain relative paths, exactly as Game.exe already does.
-	// This is what makes a project folder self-contained and genuinely portable.
-	size_t lastSlash = projectFilePath.find_last_of("\\/");
-	m_rootDirectory = (lastSlash != std::string::npos) ? projectFilePath.substr(0, lastSlash) : ".";
+	size_t lastSlash = resolvedFilePath.find_last_of("\\/");
+	m_rootDirectory = (lastSlash != std::string::npos) ? resolvedFilePath.substr(0, lastSlash) : ".";
+	m_projectPath = resolvedFilePath;
 
 	if (!SetCurrentDirectoryA(m_rootDirectory.c_str()))
 	{
@@ -63,14 +77,19 @@ bool Project::Load(const std::string& projectFilePath)
 	return !m_modulePath.empty();
 }
 
-/*--------------------------------------------------------------------------------------------------
-| --- CreateNew: Creates a new project in the specified root directory with the specified name --- |
---------------------------------------------------------------------------------------------------*/
-bool Project::CreateNew(const std::string& rootDirectory, const std::string& projectName)
+/*--------------------------------------------------------------------------------------------
+| --- CreateNew: Creates a new project in the specified location with the specified name --- |
+--------------------------------------------------------------------------------------------*/
+bool Project::CreateNew(const std::string& location, const std::string& projectName)
 {
-	CreateDirectoryA(rootDirectory.c_str(), nullptr);
+	std::string resolvedLocation = ResolveAbsolutePath(location);
 
-	std::string assetsDirectory = rootDirectory + "\\Assets";
+	CreateDirectoryA(resolvedLocation.c_str(), nullptr);
+
+	std::string projectDirectory = resolvedLocation + "\\" + projectName;
+	CreateDirectoryA(projectDirectory.c_str(), nullptr);
+
+	std::string assetsDirectory = projectDirectory + "\\Assets";
 	CreateDirectoryA(assetsDirectory.c_str(), nullptr);
 
 	std::ofstream masterAssetsFile(assetsDirectory + "\\MasterAssets.xml");
@@ -80,7 +99,7 @@ bool Project::CreateNew(const std::string& rootDirectory, const std::string& pro
 		masterAssetsFile.close();
 	}
 
-	std::string projectFilePath = rootDirectory + "\\" + projectName + ".ceproj";
+	std::string projectFilePath = projectDirectory + "\\" + projectName + ".ceproj";
 	std::ofstream projectFile(projectFilePath);
 	if (!projectFile.is_open())
 	{
@@ -95,4 +114,17 @@ bool Project::CreateNew(const std::string& rootDirectory, const std::string& pro
 	projectFile.close();
 
 	return Load(projectFilePath);
+}
+
+
+/*------------------------------------
+| --- Private Method Definitions --- |
+------------------------------------*/
+/*---------------------------------------------------------------------------------
+| --- ResolveAbsolutePath:
+---------------------------------------------------------------------------------*/
+std::string Project::ResolveAbsolutePath(const std::string& path)
+{
+	bool isAbsolute = path.size() >= 2 && path[1] == ':';		// "C:\..." — drive-letter form covers the realistic case here
+	return isAbsolute ? path : (s_launchDirectory + "\\" + path);
 }

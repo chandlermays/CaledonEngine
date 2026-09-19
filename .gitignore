@@ -24,6 +24,7 @@ ipch/
 *.tlog
 *.log
 *.cache
+*.recipe
 
 # IDE / Code Editor Tooling
 .vscode/
