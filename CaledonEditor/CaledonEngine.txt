@@ -1,1 +1,0 @@
-Editor::Initialize - No project specified on launch; use the Project panel to open one.

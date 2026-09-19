@@ -64,17 +64,12 @@ bool Editor::Initialize(const std::string& initialProjectPath)
 	m_pEngineManager->SetFrameCallback([this]()
 		{
 			m_editorGUI.BeginFrame();
-			m_editorGUI.BeginDockspace();
 
-			m_projectPanel.Draw(
-				[this](const std::string& path)
-				{
-					OpenProject(path);
-				},
-				[this](const std::string& root, const std::string& name)
-				{
-					CreateNewProject(root, name);
-				});
+			m_projectMenu.DrawMenuBar(
+				[this](const std::string& path) { OpenProject(path); },
+				[this](const std::string& root, const std::string& name) { CreateNewProject(root, name); });
+
+			m_editorGUI.BeginDockspace();
 
 			m_hierarchyPanel.Draw(m_editorContext);
 			m_inspectorPanel.Draw(m_editorContext);
@@ -90,7 +85,6 @@ bool Editor::Initialize(const std::string& initialProjectPath)
 	}
 	else
 	{
-		CE_LOG("Editor::Initialize - No project specified on launch; use the Project panel to open one.");
 		CreateEmptyScene();
 	}
 
@@ -155,7 +149,7 @@ bool Editor::FinishLoadingProject(const Project& newProject)
 	if (!m_dynamicLibrary.Load(m_project.GetModulePath()))
 	{
 		CE_LOG("Editor::FinishLoadingProject - Failed to load module '{}'; continuing with Engine components only.", m_project.GetModulePath());
-		m_projectPanel.SetModuleStatus(false, "Module not found: " + m_project.GetModulePath());
+		m_projectMenu.SetModuleStatus(false, "Module not found: " + m_project.GetModulePath());
 	}
 	else
 	{
@@ -185,11 +179,11 @@ bool Editor::FinishLoadingProject(const Project& newProject)
 			registerComponents(recordingRegister);
 		}
 
-		m_projectPanel.SetModuleStatus(true, "");
+		m_projectMenu.SetModuleStatus(true, "");
 	}
 
 	LoadProject();
-	m_projectPanel.SetLoadedProject(m_project.GetName());
+	m_projectMenu.SetLoadedProject(m_project.GetName());
 
 	return true;
 }

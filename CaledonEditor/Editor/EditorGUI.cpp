@@ -204,43 +204,18 @@ void EditorGUI::BuildDefaultLayout()
     ImGuiID dockspaceId = ImGui::GetID("CaledonEditorDockspace");
 
     ImGui::DockBuilderRemoveNode(dockspaceId);
-    ImGui::DockBuilderAddNode(
-        dockspaceId,
-        ImGuiDockNodeFlags_DockSpace);
-
-    ImGui::DockBuilderSetNodeSize(
-        dockspaceId,
-        ImGui::GetMainViewport()->WorkSize);
+    ImGui::DockBuilderAddNode(dockspaceId, ImGuiDockNodeFlags_DockSpace);
+    ImGui::DockBuilderSetNodeSize(dockspaceId, ImGui::GetMainViewport()->WorkSize);
 
     ImGuiID leftDockId = 0;
     ImGuiID rightDockId = 0;
-    ImGuiID bottomDockId = 0;
     ImGuiID centerDockId = dockspaceId;
 
-    leftDockId = ImGui::DockBuilderSplitNode(
-        centerDockId,
-        ImGuiDir_Left,
-        0.20f,
-        nullptr,
-        &centerDockId);
-
-    rightDockId = ImGui::DockBuilderSplitNode(
-        centerDockId,
-        ImGuiDir_Right,
-        0.22f,
-        nullptr,
-        &centerDockId);
-
-    bottomDockId = ImGui::DockBuilderSplitNode(
-        centerDockId,
-        ImGuiDir_Down,
-        0.20f,
-        nullptr,
-        &centerDockId);
+    leftDockId = ImGui::DockBuilderSplitNode(centerDockId, ImGuiDir_Left, 0.20f, nullptr, &centerDockId);
+    rightDockId = ImGui::DockBuilderSplitNode(centerDockId, ImGuiDir_Right, 0.22f, nullptr, &centerDockId);
 
     ImGui::DockBuilderDockWindow("Hierarchy", leftDockId);
     ImGui::DockBuilderDockWindow("Inspector", rightDockId);
-    ImGui::DockBuilderDockWindow("Project", bottomDockId);
     ImGui::DockBuilderDockWindow("Viewport", centerDockId);
 
     ImGui::DockBuilderFinish(dockspaceId);

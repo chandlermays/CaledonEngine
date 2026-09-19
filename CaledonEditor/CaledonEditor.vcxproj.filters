@@ -28,7 +28,7 @@
     <ClCompile Include="Windows\InspectorPanel.cpp">
       <Filter>Source Files\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="Windows\ProjectPanel.cpp">
+    <ClCompile Include="Windows\ProjectMenu.cpp">
       <Filter>Source Files\Windows</Filter>
     </ClCompile>
     <ClCompile Include="Editor\Project.cpp">
@@ -75,7 +75,7 @@
     <ClInclude Include="Windows\InspectorPanel.h">
       <Filter>Source Files\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="Windows\ProjectPanel.h">
+    <ClInclude Include="Windows\ProjectMenu.h">
       <Filter>Source Files\Windows</Filter>
     </ClInclude>
     <ClInclude Include="Editor\Project.h">
