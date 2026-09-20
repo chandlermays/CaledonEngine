@@ -1,43 +1,20 @@
-/*------------------------------
-| File: GameObjectCreator.cpp
-| Author: Chandler Mays
-------------------------------*/
 #include "GameObjectCreator.h"
 
 #include "Core/GameObject.h"
 #include "Core/Transform.h"
 #include "Systems/Engine/LoggingManager.h"
 #include "Utilities/ThirdParty/tinyxml2.h"
-
 #include "ComponentFactory.h"
-
-#include <string>
 
 using namespace tinyxml2;
 
-/*-----------------------------------
-| --- Public Method Definitions --- |
------------------------------------*/
-/*---------------------------------------------------------------------------
-| --- Constructor: Constructs the GameObjectCreator with default values --- |
----------------------------------------------------------------------------*/
 CE::GameObjectCreator::GameObjectCreator()
-	: m_pComponentFactory{ new CE::ComponentFactory() }
-{ }
+	: m_pComponentFactory{ std::make_unique<CE::ComponentFactory>() }
+{}
 
-/*-------------------------------------------------------
-| --- Destructor: Cleans up any allocated resources --- |
--------------------------------------------------------*/
-CE::GameObjectCreator::~GameObjectCreator()
-{
-	delete m_pComponentFactory;
-	m_pComponentFactory = nullptr;
-}
+CE::GameObjectCreator::~GameObjectCreator() = default;
 
-/*----------------------------------------------------------------
-| --- CreateGameObject: Create a GameObject from an XML File --- |
-----------------------------------------------------------------*/
-CE::GameObject* CE::GameObjectCreator::CreateGameObject(const std::string& fileData)
+std::unique_ptr<CE::GameObject> CE::GameObjectCreator::CreateGameObject(const std::string& fileData)
 {
 	if (!m_parser.Parse(fileData))
 	{
@@ -46,19 +23,15 @@ CE::GameObject* CE::GameObjectCreator::CreateGameObject(const std::string& fileD
 	}
 
 	XMLElement* pRoot = m_parser.GetRootElement("GameObject");
-	if (pRoot == nullptr)
+	if (!pRoot)
 	{
 		CE_LOG("Error: Root element not found");
 		return nullptr;
 	}
-
 	return ParseGameObject(pRoot);
 }
 
-/*-------------------------------------------------------------------------
-| --- CreateGameObjects: Create multiple GameObjects from an XML File --- |
--------------------------------------------------------------------------*/
-std::vector<CE::GameObject*> CE::GameObjectCreator::CreateGameObjects(const std::string& fileData)
+std::vector<std::unique_ptr<CE::GameObject>> CE::GameObjectCreator::CreateGameObjects(const std::string& fileData)
 {
 	if (!m_parser.Parse(fileData))
 	{
@@ -67,91 +40,56 @@ std::vector<CE::GameObject*> CE::GameObjectCreator::CreateGameObjects(const std:
 	}
 
 	XMLElement* pRoot = m_parser.GetRootElement("GameObjects");
-	if (pRoot == nullptr)
+	if (!pRoot)
 	{
 		CE_LOG("Error: Root element not found");
 		return {};
 	}
 
-	std::vector<CE::GameObject*> gameObjects;
-	for (XMLElement* pElement = pRoot->FirstChildElement("GameObject"); pElement != nullptr; pElement = pElement->NextSiblingElement("GameObject"))
+	std::vector<std::unique_ptr<CE::GameObject>> gameObjects;
+	for (XMLElement* pElement = pRoot->FirstChildElement("GameObject"); pElement;
+		pElement = pElement->NextSiblingElement("GameObject"))
 	{
-		CE::GameObject* pGameObject = ParseGameObject(pElement);
-		if (pGameObject)
-		{
-			gameObjects.emplace_back(pGameObject);
-		}
+		if (auto pGameObject = ParseGameObject(pElement))
+			gameObjects.emplace_back(std::move(pGameObject));
 	}
-
 	return gameObjects;
 }
 
-
-
-/*------------------------------------
-| --- Private Method Definitions --- |
-------------------------------------*/
-/*--------------------------------------------------------------------------
-| --- CreateGameObject: Create a GameObject from an XML Element (Root) --- |
---------------------------------------------------------------------------*/
-CE::GameObject* CE::GameObjectCreator::ParseGameObject(XMLElement* pElement)
+std::unique_ptr<CE::GameObject> CE::GameObjectCreator::ParseGameObject(XMLElement* pElement)
 {
-	// Create the parent GameObject
-	CE::GameObject* pGameObject = new GameObject();
+	if (!pElement)
+		return nullptr;
 
-	// Parse the Name of the GameObject
-	const char* pName = pElement->Attribute("name");
-	if (pName)
-	{
+	auto pGameObject = std::make_unique<GameObject>();
+	if (const char* pName = pElement->Attribute("name"))
 		pGameObject->SetName(pName);
-	}
-
-	// Parse the Tag of the GameObject
-	const char* pTag = pElement->Attribute("tag");
-	if (pTag)
-	{
+	if (const char* pTag = pElement->Attribute("tag"))
 		pGameObject->SetTag(pTag);
-	}
 
-	// Parse and Set the Position and Size of the GameObject
 	Vector2f position = Vector2f::Zero();
 	Vector2f size = Vector2f::One();
-
-	const char* pPosition = pElement->Attribute("position");
-	if (pPosition)
-	{
+	if (const char* pPosition = pElement->Attribute("position"))
 		sscanf_s(pPosition, "%f,%f", &position.x, &position.y);
-	}
-
-	const char* pSize = pElement->Attribute("size");
-	if (pSize)
-	{
+	if (const char* pSize = pElement->Attribute("size"))
 		sscanf_s(pSize, "%f,%f", &size.x, &size.y);
-	}
 
 	pGameObject->GetTransform().SetPosition(position);
 	pGameObject->GetTransform().SetScale(size);
 
-	// Attach components to the parent GameObject
-	for (XMLElement* pComponent = pElement->FirstChildElement(); pComponent != nullptr; pComponent = pComponent->NextSiblingElement())
+	for (XMLElement* pComponent = pElement->FirstChildElement(); pComponent;
+		pComponent = pComponent->NextSiblingElement())
 	{
-		std::string componentID = pComponent->Name();
-
-		m_pComponentFactory->CreateComponent(pGameObject, componentID, pComponent);
+		m_pComponentFactory->CreateComponent(pGameObject.get(), pComponent->Name(), pComponent);
 	}
 
-	// Create and add child GameObjects
-	for (XMLElement* pChildElement = pElement->FirstChildElement("GameObject"); pChildElement != nullptr; pChildElement = pChildElement->NextSiblingElement("GameObject"))
+	for (XMLElement* pChildElement = pElement->FirstChildElement("GameObject"); pChildElement;
+		pChildElement = pChildElement->NextSiblingElement("GameObject"))
 	{
-		CE::GameObject* pChildGameObject = ParseGameObject(pChildElement);
-		if (pChildGameObject)
-		{
-			pGameObject->AddChild(pChildGameObject);
-		}
+		if (auto pChild = ParseGameObject(pChildElement))
+			pGameObject->AddChild(std::move(pChild));
 	}
 
-	// Call Initialize() after all components and children are attached
 	pGameObject->Initialize();
-
 	return pGameObject;
 }

@@ -1,32 +1,30 @@
-/*------------------------------
-| File: GameObjectCreator.h
-| Author: Chandler Mays
-------------------------------*/
 #pragma once
 #include "Utilities/CaledonParser.h"
 
-#include <vector>
+#include <memory>
 #include <string>
+#include <vector>
 
 namespace CE
 {
-	class ComponentFactory;																		// Forward Declaration of EngineComponentFactory
-	class GameObject;																			// Forward Declaration of GameObject
+	class ComponentFactory;
+	class GameObject;
 
 	class GameObjectCreator
 	{
 	private:
-		CaledonParser m_parser;																	// Caledon Parser
+		CaledonParser m_parser;
+		std::unique_ptr<ComponentFactory> m_pComponentFactory;
 
-		ComponentFactory* m_pComponentFactory;													// Engine Component Factory
-
-		GameObject* ParseGameObject(tinyxml2::XMLElement* pElement);							// Parse a GameObject from an XML Element (Root)
+		std::unique_ptr<GameObject> ParseGameObject(tinyxml2::XMLElement* pElement);
 
 	public:
-		GameObjectCreator();																	// Constructor
-		~GameObjectCreator();																	// Destructor
+		GameObjectCreator();
+		~GameObjectCreator();
+		GameObjectCreator(const GameObjectCreator&) = delete;
+		GameObjectCreator& operator=(const GameObjectCreator&) = delete;
 
-		GameObject* CreateGameObject(const std::string& fileData);								// Create a GameObject from an XML File
-		std::vector<GameObject*> CreateGameObjects(const std::string& fileData);				// Create multiple GameObjects from an XML File
+		std::unique_ptr<GameObject> CreateGameObject(const std::string& fileData);
+		std::vector<std::unique_ptr<GameObject>> CreateGameObjects(const std::string& fileData);
 	};
 }
