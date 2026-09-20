@@ -1,7 +1,3 @@
-/*------------------------------
-| File: Game.cpp
-| Author: Chandler Mays
-------------------------------*/
 #include "Game.h"
 
 #include "CaledonEngine/Systems/Engine/EngineManager.h"
@@ -10,42 +6,25 @@
 #include "CaledonEngine/Systems/Resources/ResourceManager.h"
 #include "CaledonEngine/Systems/Scene/SceneManager.h"
 #include "CaledonEngine/Core/Scene.h"
-#include "CaledonEngine/Core/GameObject.h"
 #include "CaledonEngine/ComponentFactory.h"
 #include "CaledonEngine/GameObjectCreator.h"
 #include "CaledonEngine/DynamicLibraryInterface.h"
 
-/*-----------------------------------
-| --- Public Method Definitions --- |
------------------------------------*/
-/*-----------------------------------------------------------------------
-| --- Constructor: Constructs the Game instance with default values --- |
------------------------------------------------------------------------*/
 Game::Game()
 	: m_pEngineManager{ nullptr }
 	, m_pGameObjectCreator{ nullptr }
 	, m_pInputActions{ nullptr }
 {}
 
-/*-------------------------------------------------------
-| --- Destructor: Cleans up any allocated resources --- |
--------------------------------------------------------*/
-Game::~Game()
-{
-	Shutdown();
-}
+Game::~Game() { Shutdown(); }
 
-/*----------------------------------------------------------------
-| --- Initialize: Prepares the game by booting up the engine --- |
-----------------------------------------------------------------*/
 bool Game::Initialize()
 {
 	m_pEngineManager = &CE::EngineManager::GetInstance();
 	if (!m_pEngineManager->Initialize())
 		return false;
 
-	m_pGameObjectCreator = new CE::GameObjectCreator();
-
+	m_pGameObjectCreator = std::make_unique<CE::GameObjectCreator>();
 	if (!LoadGameModule())
 	{
 		CE_LOG("Game::Initialize - Failed to load .dll");
@@ -54,27 +33,15 @@ bool Game::Initialize()
 
 	m_pEngineManager->GetInputManager()->SetInputActions(m_pInputActions);
 	RegisterGameComponents();
-
 	return true;
 }
 
-/*----------------------------------------
-| --- Run: Starts the main game loop --- |
-----------------------------------------*/
 void Game::Run()
 {
 	CreateScenes();
-
 	m_pEngineManager->Run();
 }
 
-
-/*------------------------------------
-| --- Private Method Definitions --- |
-------------------------------------*/
-/*--------------------------------------------------------------------------------------------------------------------
-| --- LoadGameModule: Loads the game module and retrieves the input actions and component registration functions --- |
---------------------------------------------------------------------------------------------------------------------*/
 bool Game::LoadGameModule()
 {
 	if (!m_dynamicLibrary.Load("PacManModule.dll"))
@@ -85,7 +52,6 @@ bool Game::LoadGameModule()
 
 	auto createInputActions = reinterpret_cast<CE::DynamicLibraryInterface::CreateInputActionsFunc>(
 		m_dynamicLibrary.GetFunctionAddress(CE::DynamicLibraryInterface::kCreateInputActionsFunctionName));
-
 	if (!createInputActions)
 	{
 		CE_LOG("Game::LoadGameModule - Module is missing '{}'", CE::DynamicLibraryInterface::kCreateInputActionsFunctionName);
@@ -96,46 +62,26 @@ bool Game::LoadGameModule()
 	return m_pInputActions != nullptr;
 }
 
-/*-----------------------------------------------------------------------------------------------
-| --- RegisterGameComponents: Registers Game-side component types with the ComponentFactory --- |
------------------------------------------------------------------------------------------------*/
 void Game::RegisterGameComponents()
 {
 	auto registerComponents = reinterpret_cast<CE::DynamicLibraryInterface::RegisterComponentsFunc>(
 		m_dynamicLibrary.GetFunctionAddress(CE::DynamicLibraryInterface::kRegisterComponentsFunctionName));
-
 	if (registerComponents)
-	{
 		registerComponents(&CE::ComponentFactory::RegisterComponent);
-	}
 	else
-	{
 		CE_LOG("Game::RegisterGameComponents - Module is missing '{}'", CE::DynamicLibraryInterface::kRegisterComponentsFunctionName);
-	}
 }
 
-/*-----------------------------------------------------------------------------
-| --- CreateScenes: Constructs and configures all game scenes and objects --- |
------------------------------------------------------------------------------*/
-void Game::CreateScenes()
-{
-	LoadScenes("Assets/MasterAssets.xml");
-}
+void Game::CreateScenes() { LoadScenes("Assets/MasterAssets.xml"); }
 
-/*------------------------------------------------------------------------------------------
-| --- LoadWorldObjects: Loads all GameObjects listed in a master XML file into a scene --- |
-------------------------------------------------------------------------------------------*/
 void Game::LoadScenes(const std::string& masterXmlPath)
 {
 	CE::ResourceManager* pResourceManager = m_pEngineManager->GetResourceManager();
-	if (!pResourceManager)
+	if (!pResourceManager || !m_pGameObjectCreator)
 		return;
 
 	CE::SceneManager* pSceneManager = m_pEngineManager->GetSceneManager();
-
-	auto sceneFiles = pResourceManager->LoadMasterXML(masterXmlPath);
-
-	for (const auto& [name, path] : sceneFiles)
+	for (const auto& [name, path] : pResourceManager->LoadMasterXML(masterXmlPath))
 	{
 		std::string fileData = pResourceManager->GetResource(path);
 		if (fileData.empty())
@@ -146,12 +92,8 @@ void Game::LoadScenes(const std::string& masterXmlPath)
 
 		auto pScene = std::make_unique<CE::Scene>();
 		pScene->SetName(name);
-
-		std::vector<CE::GameObject*> gameObjects = m_pGameObjectCreator->CreateGameObjects(fileData);
-		for (CE::GameObject* pGameObject : gameObjects)
-		{
-			pScene->AddGameObject(std::unique_ptr<CE::GameObject>(pGameObject));
-		}
+		for (auto& pGameObject : m_pGameObjectCreator->CreateGameObjects(fileData))
+			pScene->AddGameObject(std::move(pGameObject));
 
 		CE::Scene* pSceneRef = pScene.get();
 		pSceneManager->AddScene(std::move(pScene));
@@ -159,28 +101,17 @@ void Game::LoadScenes(const std::string& masterXmlPath)
 	}
 }
 
-/*-----------------------------------------------------------------
-| --- Shutdown: Shuts down the game and engine, and cleans up --- |
------------------------------------------------------------------*/
 void Game::Shutdown()
 {
-	if (m_pGameObjectCreator)
-	{
-		delete m_pGameObjectCreator;
-		m_pGameObjectCreator = nullptr;
-	}
-
-	if (m_pInputActions)
-	{
-		delete m_pInputActions;
-		m_pInputActions = nullptr;
-	}
-
 	if (m_pEngineManager)
 	{
+		// Destroy scene-owned module components while the module is still loaded.
 		m_pEngineManager->Shutdown();
 		m_pEngineManager = nullptr;
 	}
 
+	m_pGameObjectCreator.reset();
+	delete m_pInputActions;
+	m_pInputActions = nullptr;
 	m_dynamicLibrary.Unload();
 }
