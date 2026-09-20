@@ -4,11 +4,15 @@
 ------------------------------*/
 #include "Game.h"
 
+#include "CaledonEngine/Utilities/LeakDetector.h"
+
 /*----------------------------------------------
 | --- Main: Entry point of the application --- |
 ----------------------------------------------*/
 int main()
 {
+	LeakDetector::Start();
+
 	Game game;
 
 	if (!game.Initialize())
@@ -17,6 +21,8 @@ int main()
 	}
 
 	game.Run();
+
+	LeakDetector::Report();
 
 	return 0;
 }

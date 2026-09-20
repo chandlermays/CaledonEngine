@@ -4,6 +4,7 @@
 ------------------------------*/
 #include "ProjectMenu.h"
 
+#include "FileDialog.h"
 #include "Editor/EditorSettings.h"
 
 #include <ImGUI/imgui.h>
@@ -141,6 +142,12 @@ void ProjectMenu::DrawOpenProjectPopup(std::function<void(const std::string&)> o
 	{
 		ImGui::InputText("Project File (.ceproj)", m_openPathBuffer, sizeof(m_openPathBuffer));
 
+		ImGui::SameLine();
+		if (ImGui::Button("Browse..."))
+		{
+			BrowseForOpenPath();
+		}
+
 		ImGui::Separator();
 
 		bool canOpen = m_openPathBuffer[0] != '\0';
@@ -159,5 +166,17 @@ void ProjectMenu::DrawOpenProjectPopup(std::function<void(const std::string&)> o
 		}
 
 		ImGui::EndPopup();
+	}
+}
+
+/*----------------------------------------------------------------------------------------
+| --- DrawOpenProjectPopup:
+----------------------------------------------------------------------------------------*/
+void ProjectMenu::BrowseForOpenPath()
+{
+	std::string selectedPath = FileDialog::BrowseForProjectFile();
+	if (!selectedPath.empty())
+	{
+		strncpy_s(m_openPathBuffer, selectedPath.c_str(), sizeof(m_openPathBuffer) - 1);
 	}
 }

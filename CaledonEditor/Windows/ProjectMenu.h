@@ -20,9 +20,10 @@ private:
 	bool m_isModuleLoaded;																		// Flag indicating whether the module of the currently loaded project is loaded
 
 	void DrawNewProjectPopup(std::function<void(const std::string&,
-		const std::string&)> onCreateRequested);												// 
+		const std::string&)> onCreateRequested);												// Draws the new project creation pop-up dialog, invoking the callback to create a new project
 
-	void DrawOpenProjectPopup(std::function<void(const std::string&)> onOpenRequested);			// 
+	void DrawOpenProjectPopup(std::function<void(const std::string&)> onOpenRequested);			// Draws the open project pop-up dialog, invoking the callback to open a project
+	void BrowseForOpenPath();																	// Opens a native file dialog to browse for a project file path to open
 
 public:
 	ProjectMenu();																				// Constructor
@@ -36,5 +37,5 @@ public:
 	void SetModuleStatus(bool isLoaded, const std::string& statusMessage);						// Sets the status of the module of the currently loaded project
 
 	void DrawMenuBar(std::function<void(const std::string&)> onOpenRequested, 
-		std::function<void(const std::string&, const std::string&)> onCreateRequested);			// 
+		std::function<void(const std::string&, const std::string&)> onCreateRequested);			// Draws the top main menu bar and handles user interactions for project actions
 };

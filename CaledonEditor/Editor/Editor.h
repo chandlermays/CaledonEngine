@@ -25,11 +25,11 @@ class Editor
 private:
 	EditorContext m_editorContext;																	// The context for the Editor, managing the selected GameObject
 
-	EditorGUI m_editorGUI;																			// 
+	EditorGUI m_editorGUI;																			// Handles GUI rendering and event management for the Editor
 	HierarchyPanel m_hierarchyPanel;																// The Hierarchy panel for managing GameObjects in the current scene
 	InspectorPanel m_inspectorPanel;																// The Inspector panel for viewing and editing properties of the selected GameObject
 	ViewportPanel m_viewportPanel;																	// The Viewport panel for rendering the current scene
-	ProjectMenu m_projectMenu;																		//
+	ProjectMenu m_projectMenu;																		// The Project menu for managing project opening, creation, and module status
 
 	Project m_project;																				// The currently loaded project
 	CE::EngineManager* m_pEngineManager;															// Pointer to the EngineManager
