@@ -22,8 +22,9 @@ CE::GameObject::GameObject()
 	, m_pTransform{ nullptr }
 {
 	// Create a new Transform component and add it to the GameObject
-	m_pTransform = new Transform();
-	AddComponent(m_pTransform);
+	auto pTransform = std::make_unique<Transform>();
+	m_pTransform = pTransform.get();
+	AddComponent(std::move(pTransform));
 }
 
 /*-------------------------------------------------------
@@ -40,7 +41,7 @@ CE::GameObject::~GameObject()
 bool CE::GameObject::Initialize()
 {
 	bool success = true;
-	for (Component* pComponent : m_components)
+	for (const auto& pComponent : m_components)
 	{
 		if (pComponent != nullptr && !pComponent->Initialize())
 		{
@@ -59,7 +60,7 @@ void CE::GameObject::Update(float deltaTime)
 	if (!m_isActive)
 		return;
 
-	for (Component* pComponent : m_components)
+	for (const auto& pComponent : m_components)
 	{
 		if (pComponent != nullptr && pComponent->IsActive())
 		{
@@ -67,11 +68,11 @@ void CE::GameObject::Update(float deltaTime)
 		}
 	}
 
-	for (GameObject* child : m_children)
+	for (const auto& pChild : m_children)
 	{
-		if (child != nullptr && child->IsActive())
+		if (pChild != nullptr && pChild->IsActive())
 		{
-			child->Update(deltaTime);
+			pChild->Update(deltaTime);
 		}
 	}
 }
@@ -84,18 +85,18 @@ void CE::GameObject::Render()
 	if (!m_isActive)
 		return;
 
-	for (Component* pComponent : m_components)
+	for (const auto& pComponent : m_components)
 	{
 		if (pComponent != nullptr && pComponent->IsActive())
 		{
 			pComponent->Render();
 		}
 	}
-	for (GameObject* child : m_children)
+	for (const auto& pChild : m_children)
 	{
-		if (child != nullptr && child->IsActive())
+		if (pChild != nullptr && pChild->IsActive())
 		{
-			child->Render();
+			pChild->Render();
 		}
 	}
 }
@@ -119,20 +120,20 @@ void CE::GameObject::SetParent(GameObject* pParent)
 /*------------------------------------------------------------------------------
 | --- GetChildren: Gets a vector of pointers to this GameObject's children --- |
 ------------------------------------------------------------------------------*/
-const std::vector<CE::GameObject*>& CE::GameObject::GetChildren() const
+const std::vector<std::unique_ptr<CE::GameObject>>& CE::GameObject::GetChildren() const
 {
-    return m_children;
+	return m_children;
 }
 
 /*---------------------------------------------------
 | --- AddChild: Adds a child to this GameObject --- |
 ---------------------------------------------------*/
-void CE::GameObject::AddChild(GameObject* pChild)
+void CE::GameObject::AddChild(std::unique_ptr<GameObject> pChild)
 {
 	if (pChild != nullptr)
 	{
-		m_children.emplace_back(pChild);
 		pChild->SetParent(this);
+		m_children.emplace_back(std::move(pChild));
 	}
 }
 
@@ -216,7 +217,7 @@ CE::Transform& CE::GameObject::GetTransform()
 /*---------------------------------------------------------------------------------------------------
 | --- GetAllComponents: Gets a vector of pointers to all Components attached to this GameObject --- |
 ---------------------------------------------------------------------------------------------------*/
-const std::vector<CE::Component*>& CE::GameObject::GetAllComponents() const
+const std::vector<std::unique_ptr<CE::Component>>& CE::GameObject::GetAllComponents() const
 {
 	return m_components;
 }
@@ -224,24 +225,26 @@ const std::vector<CE::Component*>& CE::GameObject::GetAllComponents() const
 /*-----------------------------------------------------------
 | --- AddComponent: Adds a component to this GameObject --- |
 -----------------------------------------------------------*/
-void CE::GameObject::AddComponent(CE::Component* pComponent)
+void CE::GameObject::AddComponent(std::unique_ptr<Component> pComponent)
 {
-	if (pComponent == nullptr)
+	if (!pComponent)
 		return;
 
 	pComponent->SetOwner(this);
-	m_components.emplace_back(pComponent);
+	m_components.emplace_back(std::move(pComponent));
 }
 
 /*-------------------------------------------------------------------
 | --- RemoveComponent: Removes a component from this GameObject --- |
 -------------------------------------------------------------------*/
-void CE::GameObject::RemoveComponent(CE::Component* pComponent)
+void CE::GameObject::RemoveComponent(Component* pComponent)
 {
 	if (pComponent == nullptr || pComponent == m_pTransform)
 		return;
 
-	auto it = std::find(m_components.begin(), m_components.end(), pComponent);
+	auto it = std::find_if(m_components.begin(), m_components.end(),
+		[pComponent](const std::unique_ptr<Component>& p) { return p.get() == pComponent; });
+
 	if (it != m_components.end())
 	{
 		(*it)->SetOwner(nullptr);
@@ -254,18 +257,8 @@ void CE::GameObject::RemoveComponent(CE::Component* pComponent)
 --------------------------------------------------------------*/
 void CE::GameObject::Destroy()
 {
-	for (Component* pComponent : m_components)
-	{
-		delete pComponent;
-		pComponent = nullptr;
-	}
 	m_components.clear();
 	m_pTransform = nullptr;
 
-	for (GameObject* child : m_children)
-	{
-		delete child;
-		child = nullptr;
-	}
 	m_children.clear();
 }

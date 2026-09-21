@@ -265,10 +265,10 @@ void Editor::LoadProject()
 		auto pScene = std::make_unique<CE::Scene>();
 		pScene->SetName(name);
 
-		std::vector<CE::GameObject*> gameObjects = gameObjectCreator.CreateGameObjects(fileData);
-		for (CE::GameObject* pGameObject : gameObjects)
+		std::vector<std::unique_ptr<CE::GameObject>> gameObjects = gameObjectCreator.CreateGameObjects(fileData);
+		for (auto& pGameObject : gameObjects)
 		{
-			pScene->AddGameObject(std::unique_ptr<CE::GameObject>(pGameObject));
+			pScene->AddGameObject(std::move(pGameObject));
 		}
 
 		CE::Scene* pSceneRef = pScene.get();

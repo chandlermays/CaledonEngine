@@ -1,4 +1,9 @@
+/*------------------------------
+| File: ComponentFactory.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "ComponentFactory.h"
+
 #include "Core/GameObject.h"
 #include "Core/Component.h"
 #include "Systems/Engine/LoggingManager.h"
@@ -23,10 +28,10 @@ void CE::ComponentFactory::CreateComponent(GameObject* pGameObject, const std::s
 		return;
 	}
 
-	Component* pComponent = it->second.xmlCreator(pGameObject, pElement);
+	std::unique_ptr<Component> pComponent = it->second.xmlCreator(pGameObject, pElement);
 	if (pComponent)
 	{
-		pGameObject->AddComponent(pComponent);
+		pGameObject->AddComponent(std::move(pComponent));
 	}
 }
 
@@ -88,7 +93,7 @@ bool CE::ComponentFactory::HasComponentOfType(const GameObject* pGameObject, con
 	if (!pGameObject)
 		return false;
 
-	for (Component* pComponent : pGameObject->GetAllComponents())
+	for (const auto& pComponent : pGameObject->GetAllComponents())
 	{
 		if (pComponent && pComponent->GetTypeName() == typeName)
 		{

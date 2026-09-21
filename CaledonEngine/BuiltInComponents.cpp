@@ -1,3 +1,7 @@
+/*------------------------------
+| File: BuiltInComponents.h
+| Author: Chandler Mays
+------------------------------*/
 #include "BuiltInComponents.h"
 
 #include "ComponentFactory.h"
@@ -26,9 +30,9 @@ void CE::BuiltInComponents::RegisterAll()
 
 	ComponentFactory::RegisterComponent("SpriteComponent", "Engine",
 		CreateSpriteComponentFromXml,
-		[]() -> Component*
+		[]() -> std::unique_ptr<Component>
 		{
-			SpriteComponent* pSprite = new SpriteComponent();
+			auto pSprite = std::make_unique<SpriteComponent>();
 			pSprite->SetSprite(Sprite::CreateFromShape(std::make_unique<Square>(Color::White(), 50)));
 			return pSprite;
 		},
@@ -41,7 +45,7 @@ void CE::BuiltInComponents::RegisterAll()
 
 	ComponentFactory::RegisterComponent("BoxCollider2D", "Engine",
 		CreateBoxCollider2DFromXml,
-		[]() -> Component* { return new BoxCollider2D(); },
+		[]() -> std::unique_ptr<Component> { return std::make_unique<BoxCollider2D>(); },
 		{
 			MakeProperty<BoxCollider2D>("Size",
 				[](const BoxCollider2D* p) -> PropertyValue { return p->GetSize(); },
@@ -65,8 +69,8 @@ void CE::BuiltInComponents::RegisterAll()
 		// builds one directly — but registering it anyway lets the Inspector show its properties
 		// through the same generic path as everything else, rather than special-casing it.
 		ComponentFactory::RegisterComponent("Transform", "Engine",
-			nullptr,		// never XML-dispatched
-			nullptr,		// never "Add Component"-able — every GameObject already has exactly one
+			nullptr,
+			nullptr,
 			{
 				MakeProperty<Transform>("Position",
 					[](const Transform* p) -> PropertyValue { return p->GetPosition(); },
@@ -87,7 +91,7 @@ void CE::BuiltInComponents::RegisterAll()
 /*-------------------------------------------------------------------------------------
 | --- CreateSpriteComponentFromXml: Creates a SpriteComponent from an XML element --- |
 -------------------------------------------------------------------------------------*/
-CE::Component* CE::BuiltInComponents::CreateSpriteComponentFromXml(GameObject*, tinyxml2::XMLElement* pElement)
+std::unique_ptr<CE::Component> CE::BuiltInComponents::CreateSpriteComponentFromXml(GameObject*, tinyxml2::XMLElement* pElement)
 {
 	const char* pSpritesheet = pElement->Attribute("spritesheet");
 	int frameWidth = pElement->IntAttribute("frameWidth");
@@ -95,11 +99,11 @@ CE::Component* CE::BuiltInComponents::CreateSpriteComponentFromXml(GameObject*, 
 	float scale = pElement->FloatAttribute("scale");
 	const char* pShapeType = pElement->Attribute("shape");
 
-	SpriteComponent* pSpriteCmp = nullptr;
+	std::unique_ptr<SpriteComponent> pSpriteCmp;
 
 	if (pSpritesheet && frameWidth > 0 && frameHeight > 0)
 	{
-		pSpriteCmp = new SpriteComponent(pSpritesheet, frameWidth, frameHeight, scale);
+		pSpriteCmp = std::make_unique<SpriteComponent>(pSpritesheet, frameWidth, frameHeight, scale);
 
 		XMLElement* pColor = pElement->FirstChildElement("Color");
 		if (pColor != nullptr)
@@ -113,7 +117,7 @@ CE::Component* CE::BuiltInComponents::CreateSpriteComponentFromXml(GameObject*, 
 	}
 	else if (pShapeType)
 	{
-		pSpriteCmp = new SpriteComponent();
+		pSpriteCmp = std::make_unique<SpriteComponent>();
 
 		Color shapeColor = Color::White();
 		XMLElement* pColor = pElement->FirstChildElement("Color");
@@ -156,7 +160,7 @@ CE::Component* CE::BuiltInComponents::CreateSpriteComponentFromXml(GameObject*, 
 	}
 	else
 	{
-		pSpriteCmp = new SpriteComponent();
+		pSpriteCmp = std::make_unique<SpriteComponent>();
 	}
 
 	return pSpriteCmp;
@@ -165,9 +169,9 @@ CE::Component* CE::BuiltInComponents::CreateSpriteComponentFromXml(GameObject*, 
 /*---------------------------------------------------------------------------------
 | --- CreateBoxCollider2DFromXml: Creates a BoxCollider2D from an XML element --- |
 ---------------------------------------------------------------------------------*/
-CE::Component* CE::BuiltInComponents::CreateBoxCollider2DFromXml(GameObject*, tinyxml2::XMLElement* pElement)
+std::unique_ptr<CE::Component> CE::BuiltInComponents::CreateBoxCollider2DFromXml(GameObject*, tinyxml2::XMLElement* pElement)
 {
-	BoxCollider2D* pCollider = new BoxCollider2D();
+	auto pCollider = std::make_unique<BoxCollider2D>();
 
 	const char* pSize = pElement->Attribute("size");
 	if (pSize)

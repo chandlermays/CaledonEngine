@@ -1,4 +1,9 @@
+/*------------------------------
+| File: DynamicLibrary.cpp
+| Author: Chandler Mays
+------------------------------*/
 #include "DynamicLibrary.h"
+
 #include <Windows.h>
 
 /*-----------------------------------

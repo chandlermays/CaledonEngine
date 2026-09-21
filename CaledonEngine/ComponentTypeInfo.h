@@ -1,3 +1,7 @@
+/*------------------------------
+| File: ComponentTypeInfo.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "Systems/Rendering/Color.h"
 #include "Utilities/Math/Vector2.h"

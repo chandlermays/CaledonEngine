@@ -1,4 +1,9 @@
+/*------------------------------
+| File: BuiltInComponents.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
+#include <memory>
 
 namespace tinyxml2
 {
@@ -13,10 +18,10 @@ namespace CE
 	class BuiltInComponents
 	{
 	public:
-		static void RegisterAll();																							// Registers all built-in components with the ComponentFactory
+		static void RegisterAll();																										// Registers all built-in components with the ComponentFactory
 
 	private:
-		static Component* CreateSpriteComponentFromXml(GameObject* pGameObject, tinyxml2::XMLElement* pElement);			// Creates a SpriteComponent from an XML element
-		static Component* CreateBoxCollider2DFromXml(GameObject* pGameObject, tinyxml2::XMLElement* pElement);				// Creates a BoxCollider2D from an XML element
+		static std::unique_ptr<Component> CreateSpriteComponentFromXml(GameObject* pGameObject, tinyxml2::XMLElement* pElement);		// Creates a SpriteComponent from an XML element
+		static std::unique_ptr<Component> CreateBoxCollider2DFromXml(GameObject* pGameObject, tinyxml2::XMLElement* pElement);			// Creates a BoxCollider2D from an XML element
 	};
 }

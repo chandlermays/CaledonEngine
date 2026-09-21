@@ -92,9 +92,9 @@ void HierarchyPanel::DrawGameObjectNode(CE::GameObject* pGameObject, EditorConte
 
 	if (isOpen && !children.empty())
 	{
-		for (CE::GameObject* pChild : children)
+		for (const auto& pChild : children)
 		{
-			DrawGameObjectNode(pChild, context);
+			DrawGameObjectNode(pChild.get(), context);
 		}
 		ImGui::TreePop();
 	}

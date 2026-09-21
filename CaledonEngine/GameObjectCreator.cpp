@@ -37,7 +37,7 @@ CE::GameObjectCreator::~GameObjectCreator()
 /*----------------------------------------------------------------
 | --- CreateGameObject: Create a GameObject from an XML File --- |
 ----------------------------------------------------------------*/
-CE::GameObject* CE::GameObjectCreator::CreateGameObject(const std::string& fileData)
+std::unique_ptr<CE::GameObject> CE::GameObjectCreator::CreateGameObject(const std::string& fileData)
 {
 	if (!m_parser.Parse(fileData))
 	{
@@ -58,7 +58,7 @@ CE::GameObject* CE::GameObjectCreator::CreateGameObject(const std::string& fileD
 /*-------------------------------------------------------------------------
 | --- CreateGameObjects: Create multiple GameObjects from an XML File --- |
 -------------------------------------------------------------------------*/
-std::vector<CE::GameObject*> CE::GameObjectCreator::CreateGameObjects(const std::string& fileData)
+std::vector<std::unique_ptr<CE::GameObject>> CE::GameObjectCreator::CreateGameObjects(const std::string& fileData)
 {
 	if (!m_parser.Parse(fileData))
 	{
@@ -73,13 +73,13 @@ std::vector<CE::GameObject*> CE::GameObjectCreator::CreateGameObjects(const std:
 		return {};
 	}
 
-	std::vector<CE::GameObject*> gameObjects;
+	std::vector<std::unique_ptr<CE::GameObject>> gameObjects;
 	for (XMLElement* pElement = pRoot->FirstChildElement("GameObject"); pElement != nullptr; pElement = pElement->NextSiblingElement("GameObject"))
 	{
-		CE::GameObject* pGameObject = ParseGameObject(pElement);
+		std::unique_ptr<CE::GameObject> pGameObject = ParseGameObject(pElement);
 		if (pGameObject)
 		{
-			gameObjects.emplace_back(pGameObject);
+			gameObjects.emplace_back(std::move(pGameObject));
 		}
 	}
 
@@ -94,26 +94,22 @@ std::vector<CE::GameObject*> CE::GameObjectCreator::CreateGameObjects(const std:
 /*--------------------------------------------------------------------------
 | --- CreateGameObject: Create a GameObject from an XML Element (Root) --- |
 --------------------------------------------------------------------------*/
-CE::GameObject* CE::GameObjectCreator::ParseGameObject(XMLElement* pElement)
+std::unique_ptr<CE::GameObject> CE::GameObjectCreator::ParseGameObject(XMLElement* pElement)
 {
-	// Create the parent GameObject
-	CE::GameObject* pGameObject = new GameObject();
+	auto pGameObject = std::make_unique<GameObject>();
 
-	// Parse the Name of the GameObject
 	const char* pName = pElement->Attribute("name");
 	if (pName)
 	{
 		pGameObject->SetName(pName);
 	}
 
-	// Parse the Tag of the GameObject
 	const char* pTag = pElement->Attribute("tag");
 	if (pTag)
 	{
 		pGameObject->SetTag(pTag);
 	}
 
-	// Parse and Set the Position and Size of the GameObject
 	Vector2f position = Vector2f::Zero();
 	Vector2f size = Vector2f::One();
 
@@ -132,25 +128,21 @@ CE::GameObject* CE::GameObjectCreator::ParseGameObject(XMLElement* pElement)
 	pGameObject->GetTransform().SetPosition(position);
 	pGameObject->GetTransform().SetScale(size);
 
-	// Attach components to the parent GameObject
 	for (XMLElement* pComponent = pElement->FirstChildElement(); pComponent != nullptr; pComponent = pComponent->NextSiblingElement())
 	{
 		std::string componentID = pComponent->Name();
-
-		m_pComponentFactory->CreateComponent(pGameObject, componentID, pComponent);
+		m_pComponentFactory->CreateComponent(pGameObject.get(), componentID, pComponent);
 	}
 
-	// Create and add child GameObjects
 	for (XMLElement* pChildElement = pElement->FirstChildElement("GameObject"); pChildElement != nullptr; pChildElement = pChildElement->NextSiblingElement("GameObject"))
 	{
-		CE::GameObject* pChildGameObject = ParseGameObject(pChildElement);
+		std::unique_ptr<CE::GameObject> pChildGameObject = ParseGameObject(pChildElement);
 		if (pChildGameObject)
 		{
-			pGameObject->AddChild(pChildGameObject);
+			pGameObject->AddChild(std::move(pChildGameObject));
 		}
 	}
 
-	// Call Initialize() after all components and children are attached
 	pGameObject->Initialize();
 
 	return pGameObject;

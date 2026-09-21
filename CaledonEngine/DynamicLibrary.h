@@ -1,3 +1,7 @@
+/*------------------------------
+| File: DynamicLibrary.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include <string>
 

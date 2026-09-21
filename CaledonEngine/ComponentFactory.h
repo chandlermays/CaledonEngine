@@ -1,9 +1,14 @@
+/*------------------------------
+| File: ComponentFactory.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "ComponentTypeInfo.h"
 
+#include <functional>
+#include <memory>
 #include <string>
 #include <unordered_map>
-#include <functional>
 
 namespace tinyxml2
 { 
@@ -18,10 +23,10 @@ namespace CE
 	class ComponentFactory
 	{
 	public:
-		using XmlCreatorFunc = std::function<Component* (GameObject*, tinyxml2::XMLElement*)>;				// Constructs from XML data
-		using DefaultCreatorFunc = std::function<Component* ()>;											// Constructs a blank instance — used by Editor's Add Component
+		using XmlCreatorFunc = std::function<std::unique_ptr<Component>(GameObject*, tinyxml2::XMLElement*)>;				// Constructs from XML data
+		using DefaultCreatorFunc = std::function<std::unique_ptr<Component>()>;												// Constructs a blank instance — used by Editor's Add Component
 
-		using RegisterFunc = std::function<void(const std::string&, const std::string&, XmlCreatorFunc,		// Registers a component type with the factory
+		using RegisterFunc = std::function<void(const std::string&, const std::string&, XmlCreatorFunc,						// Registers a component type with the factory
 			DefaultCreatorFunc, std::vector<PropertyDescriptor>, bool)>;
 
 		struct RegistryEntry

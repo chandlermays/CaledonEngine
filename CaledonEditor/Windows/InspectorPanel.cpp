@@ -42,9 +42,9 @@ void InspectorPanel::Draw(EditorContext& context)
 
 	ImGui::Separator();
 
-	for (CE::Component* pComponent : pGameObject->GetAllComponents())
+	for (const auto& pComponent : pGameObject->GetAllComponents())
 	{
-		DrawComponent(pComponent);
+		DrawComponent(pComponent.get());
 	}
 
 	ImGui::Separator();
@@ -192,9 +192,10 @@ void InspectorPanel::DrawAddComponentMenu(CE::GameObject* pGameObject)
 				{
 					if (pEntry && pEntry->defaultCreator)
 					{
-						CE::Component* pNewComponent = pEntry->defaultCreator();
-						pGameObject->AddComponent(pNewComponent);
-						pNewComponent->Initialize();
+						std::unique_ptr<CE::Component> pNewComponent = pEntry->defaultCreator();
+						CE::Component* pRawComponent = pNewComponent.get();
+						pGameObject->AddComponent(std::move(pNewComponent));
+						pRawComponent->Initialize();
 					}
 				}
 			}

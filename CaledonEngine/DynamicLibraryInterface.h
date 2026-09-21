@@ -1,3 +1,7 @@
+/*------------------------------
+| File: DynamicLibraryInterface.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
 #include "ComponentFactory.h"
 

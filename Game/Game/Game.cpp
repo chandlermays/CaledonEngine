@@ -147,10 +147,10 @@ void Game::LoadScenes(const std::string& masterXmlPath)
 		auto pScene = std::make_unique<CE::Scene>();
 		pScene->SetName(name);
 
-		std::vector<CE::GameObject*> gameObjects = m_pGameObjectCreator->CreateGameObjects(fileData);
-		for (CE::GameObject* pGameObject : gameObjects)
+		std::vector<std::unique_ptr<CE::GameObject>> gameObjects = m_pGameObjectCreator->CreateGameObjects(fileData);
+		for (auto& pGameObject : gameObjects)
 		{
-			pScene->AddGameObject(std::unique_ptr<CE::GameObject>(pGameObject));
+			pScene->AddGameObject(std::move(pGameObject));
 		}
 
 		CE::Scene* pSceneRef = pScene.get();
