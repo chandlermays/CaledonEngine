@@ -181,9 +181,6 @@
     <ClCompile Include="DynamicLibrary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities\LeakDetector.cpp">
-      <Filter>Source Files\Utilities</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\GameObject.h">
@@ -362,9 +359,6 @@
     </ClInclude>
     <ClInclude Include="DynamicLibraryInterface.h">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Utilities\LeakDetector.h">
-      <Filter>Source Files\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

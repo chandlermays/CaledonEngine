@@ -142,7 +142,9 @@ void CE::GameObject::AddChild(std::unique_ptr<GameObject> pChild)
 -----------------------------------------------------------*/
 void CE::GameObject::RemoveChild(GameObject* pChild)
 {
-	auto it = std::find(m_children.begin(), m_children.end(), pChild);
+	auto it = std::find_if(m_children.begin(), m_children.end(),
+		[pChild](const std::unique_ptr<GameObject>& p) { return p.get() == pChild; });
+
 	if (it != m_children.end())
 	{
 		(*it)->SetParent(nullptr);

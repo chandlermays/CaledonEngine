@@ -32,7 +32,7 @@ CE::ResourceManager::ResourceManager()
 -------------------------------------------------------*/
 CE::ResourceManager::~ResourceManager()
 {
-    CE_LOG("GraphicsManager::~GraphicsManager - Shutting down GraphicsManager.");
+    CE_LOG("ResourceManager::~ResourceManager - Shutting down ResourceManager.");
     Shutdown();
 }
 

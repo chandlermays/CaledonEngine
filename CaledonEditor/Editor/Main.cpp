@@ -4,14 +4,10 @@
 ------------------------------*/
 #include "Editor.h"
 
-#include "CaledonEngine/Utilities/LeakDetector.h"
-
 #include <string>
 
 int main(int argc, char* argv[])
 {
-	LeakDetector::Start();
-
 	Editor editor;
 
 	std::string projectPath = (argc > 1) ? argv[1] : "";

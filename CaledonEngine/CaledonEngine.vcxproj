@@ -89,7 +89,6 @@
     <ClCompile Include="Systems\Tools\ToolsManager.cpp" />
     <ClCompile Include="DynamicLibrary.cpp" />
     <ClCompile Include="Utilities\CaledonParser.cpp" />
-    <ClCompile Include="Utilities\LeakDetector.cpp" />
     <ClCompile Include="Utilities\ThirdParty\CaledonZlib.cpp" />
     <ClCompile Include="Utilities\ThirdParty\tinyxml2.cpp" />
   </ItemGroup>
@@ -148,7 +147,6 @@
     <ClInclude Include="DynamicLibrary.h" />
     <ClInclude Include="Utilities\APIConfig.h" />
     <ClInclude Include="Utilities\CaledonParser.h" />
-    <ClInclude Include="Utilities\LeakDetector.h" />
     <ClInclude Include="Utilities\Math\Constants.h" />
     <ClInclude Include="Utilities\Math\Rect.h" />
     <ClInclude Include="Utilities\Math\Vector2.h" />
