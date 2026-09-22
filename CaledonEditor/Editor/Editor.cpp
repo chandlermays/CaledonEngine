@@ -36,6 +36,8 @@ Editor::~Editor()
 {
 	UnloadProject();
 
+	m_editorGUI.Shutdown();
+
 	if (m_pEngineManager)
 	{
 		m_pEngineManager->Shutdown();

@@ -182,5 +182,7 @@ void Game::Shutdown()
 		m_pEngineManager = nullptr;
 	}
 
+	CE::ComponentFactory::Clear();
+
 	m_dynamicLibrary.Unload();
 }

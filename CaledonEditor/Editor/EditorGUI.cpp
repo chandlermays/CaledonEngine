@@ -126,9 +126,16 @@ void EditorGUI::Shutdown()
     if (!m_isInitialized)
         return;
 
+    // 1. Destroy all floating platform windows created by multi-viewports/docking
+    ImGui::DestroyPlatformWindows();
+
+    // 2. Shut down backend implementations (clears backend data on main viewport)
     ImGui_ImplSDLRenderer3_Shutdown();
     ImGui_ImplSDL3_Shutdown();
+
+    // 3. Destroy context safely
     ImGui::DestroyContext();
+
     m_isInitialized = false;
 }
 

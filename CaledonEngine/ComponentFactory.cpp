@@ -103,6 +103,14 @@ bool CE::ComponentFactory::HasComponentOfType(const GameObject* pGameObject, con
 	return false;
 }
 
+/*---------------------------------------------------
+| --- Clear: Clears all of the registry entries --- |
+---------------------------------------------------*/
+void CE::ComponentFactory::Clear()
+{
+	GetRegistry().clear();
+}
+
 
 
 /*------------------------------------

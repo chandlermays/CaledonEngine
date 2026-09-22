@@ -55,5 +55,7 @@ namespace CE
 
 		static bool IsEngineComponent(const std::string& componentID);														// Returns true if the component is an engine component (category == "Engine")
 		static bool HasComponentOfType(const GameObject* pGameObject, const std::string& typeName);							// Returns true if the GameObject has a component of the given type
+
+		static void Clear();																								// Clears all of the registry entries
 	};
 }
