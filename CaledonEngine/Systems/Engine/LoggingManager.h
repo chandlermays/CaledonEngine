@@ -21,7 +21,7 @@ namespace CE
         LoggingManager();                                                                   // Constructor
 
     public:
-        ~LoggingManager();                                                                  // Destructor
+        ~LoggingManager() override;                                                         // Destructor
         LoggingManager(const LoggingManager&) = delete;                                     // Prevent copy-construction
         LoggingManager& operator=(const LoggingManager&) = delete;                          // Prevent copy-assignment
         LoggingManager(LoggingManager&&) = delete;                                          // Prevent move-construction

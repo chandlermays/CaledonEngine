@@ -56,3 +56,16 @@ extern "C" __declspec(dllexport) void RegisterModuleComponents(CE::ComponentFact
 		},
 		false);
 }
+
+/*------------------------------------------------------------------------------------------------
+| --- DestroyModuleInputActions: Deletes the GameInputActions instance created by the module --- |
+------------------------------------------------------------------------------------------------*/
+extern "C" __declspec(dllexport) void DestroyModuleInputActions(CE::InputActions* pInputActions)
+{
+	if (pInputActions == s_pActiveInputActions)
+	{
+		s_pActiveInputActions = nullptr;
+	}
+
+	delete pInputActions;
+}

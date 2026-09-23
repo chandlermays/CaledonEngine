@@ -40,29 +40,12 @@ namespace CE
 		bool IsActive() const;																// Returns whether the Component is active or not
 		void SetActive(bool isActive);														// Sets whether the Component is active or not
 
-		// Returns a reference to a component of type T attached to the same GameObject
-		template<typename T>
-		T* GetComponent() const;
-
-		// Returns a reference to a component of type T attached to same GameObject, or any of its children
-		template<typename T>
-		T* GetComponentInChildren() const;
-
-		// Returns a reference to a component of type T attached to same GameObject, or any of its parents
-		template<typename T>
-		T* GetComponentInParent() const;
-
-		// Returns references to all components of type T attached to the same GameObject
-		template<typename T>
-		std::vector<T*> GetComponents() const;
-
-		// Returns references to all components of type T attached to same GameObject, or any of its children
-		template<typename T>
-		std::vector<T*> GetComponentsInChildren() const;
-
-		// Returns references to all components of type T attached to same GameObject, or any of its parents
-		template<typename T>
-		std::vector<T*> GetComponentsInParent() const;
+		template<typename T> T* GetComponent() const;										// Returns a reference to a component of type T attached to the same GameObject
+		template<typename T> T* GetComponentInChildren() const;								// Returns a reference to a component of type T attached to same GameObject, or any of its children
+		template<typename T> T* GetComponentInParent() const;								// Returns a reference to a component of type T attached to same GameObject, or any of its parents
+		template<typename T> std::vector<T*> GetComponents() const;							// Returns references to all components of type T attached to the same GameObject
+		template<typename T> std::vector<T*> GetComponentsInChildren() const;				// Returns references to all components of type T attached to same GameObject, or any of its children
+		template<typename T> std::vector<T*> GetComponentsInParent() const;					// Returns references to all components of type T attached to same GameObject, or any of its parents
 	};
 }
 

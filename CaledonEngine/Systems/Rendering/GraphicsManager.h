@@ -19,7 +19,7 @@ namespace CE
 
 	public:
 		GraphicsManager();														// Constructor
-		~GraphicsManager();														// Destructor
+		~GraphicsManager() override;											// Destructor
 		GraphicsManager(const GraphicsManager&) = delete;						// Prevent copy-construction
 		GraphicsManager& operator=(const GraphicsManager&) = delete;			// Prevent copy-assignment
 		GraphicsManager(GraphicsManager&&) = delete;							// Prevent move-construction

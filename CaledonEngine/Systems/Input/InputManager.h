@@ -23,7 +23,7 @@ namespace CE
 
 	public:
 		InputManager();															// Constructor
-		~InputManager() = default;												// Destructor
+		~InputManager() override = default;										// Destructor
 		InputManager(const InputManager&) = delete;								// Prevent copy-construction
 		InputManager& operator=(const InputManager&) = delete;					// Prevent copy-assignment
 		InputManager(InputManager&&) = delete;									// Prevent move-construction

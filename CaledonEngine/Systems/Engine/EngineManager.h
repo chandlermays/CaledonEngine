@@ -46,7 +46,7 @@ namespace CE
 		void Render();														// Renders all engine subsystem managers
 
 	public:
-		~EngineManager();													// Destructor
+		~EngineManager() override;											// Destructor
 		EngineManager(const EngineManager&) = delete;						// Prevent copy-construction
 		EngineManager& operator=(const EngineManager&) = delete;			// Prevent copy-assignment
 		EngineManager(EngineManager&&) = delete;							// Prevent move-construction

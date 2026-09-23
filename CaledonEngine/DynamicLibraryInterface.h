@@ -14,10 +14,13 @@ namespace CE
 {
 	namespace DynamicLibraryInterface
 	{
+		inline constexpr const char* kCreateInputActionsFunctionName = "CreateModuleInputActions";
+		using CreateInputActionsFunc = InputActions * (*)();
+
 		inline constexpr const char* kRegisterComponentsFunctionName = "RegisterModuleComponents";
 		using RegisterComponentsFunc = void(*)(ComponentFactory::RegisterFunc);
-
-		inline constexpr const char* kCreateInputActionsFunctionName = "CreateModuleInputActions";
-		using CreateInputActionsFunc = InputActions* (*)();
+		
+		inline constexpr const char* kDestroyInputActionsFunctionName = "DestroyModuleInputActions";
+		using DestroyInputActionsFunc = void(*)(InputActions*);
 	}
 }

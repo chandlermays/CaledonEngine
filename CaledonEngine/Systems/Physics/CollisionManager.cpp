@@ -17,7 +17,7 @@
 -------------------------------------------------------*/
 CE::CollisionManager::~CollisionManager()
 {
-	CE_LOG("EngineManager::~EngineManager - Shutting down EngineManager.");
+	CE_LOG("CollisionManager::~CollisionManager - Shutting down CollisionManager.");
 	Shutdown();
 }
 /*-----------------------------------------------------------

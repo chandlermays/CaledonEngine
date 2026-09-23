@@ -164,22 +164,34 @@ void Game::LoadScenes(const std::string& masterXmlPath)
 -----------------------------------------------------------------*/
 void Game::Shutdown()
 {
-	if (m_pGameObjectCreator)
-	{
-		delete m_pGameObjectCreator;
-		m_pGameObjectCreator = nullptr;
-	}
-
-	if (m_pInputActions)
-	{
-		delete m_pInputActions;
-		m_pInputActions = nullptr;
-	}
-
 	if (m_pEngineManager)
 	{
 		m_pEngineManager->Shutdown();
 		m_pEngineManager = nullptr;
+	}
+
+	if (m_pInputActions)
+	{
+		auto destroyInputActions =
+			reinterpret_cast<CE::DynamicLibraryInterface::DestroyInputActionsFunc>(
+				m_dynamicLibrary.GetFunctionAddress(CE::DynamicLibraryInterface::kDestroyInputActionsFunctionName));
+
+		if (destroyInputActions)
+		{
+			destroyInputActions(m_pInputActions);
+		}
+		else
+		{
+			CE_LOG("Game::Shutdown - Could not find 'DestroyModuleInputActions' in module.");
+		}
+
+		m_pInputActions = nullptr;
+	}
+
+	if (m_pGameObjectCreator)
+	{
+		delete m_pGameObjectCreator;
+		m_pGameObjectCreator = nullptr;
 	}
 
 	CE::ComponentFactory::Clear();
