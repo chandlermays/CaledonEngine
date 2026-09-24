@@ -6,6 +6,7 @@
 #include "CaledonEngine/DynamicLibrary.h"
 
 #include <string>
+#include <memory>
 
 namespace CE
 {
@@ -19,9 +20,10 @@ class Game
 {
 private:
 	CE::EngineManager* m_pEngineManager;												// Pointer to the Engine Manager
-	CE::GameObjectCreator* m_pGameObjectCreator;										// Pointer to the Game Object Creator
 	CE::InputActions* m_pInputActions;													// Pointer to the Game Input Actions
 	CE::DynamicLibrary m_dynamicLibrary;												// Dynamic library for loading the game module
+
+	std::unique_ptr<CE::GameObjectCreator> m_pGameObjectCreator;						// Pointer to the Game Object Creator
 
 	bool LoadGameModule();																// Loads the game module and retrieves the input actions and component registration functions
 	void RegisterGameComponents();														// Registers Game-side component types with the ComponentFactory
@@ -33,10 +35,10 @@ private:
 public:
 	Game();																				// Constructor
 	~Game();																			// Destructor
-	Game(const Game&) = delete;
-	Game& operator=(const Game&) = delete;
-	Game(Game&&) = delete;
-	Game& operator=(Game&&) = delete;
+	Game(const Game&) = delete;															// Prevent copy-construction
+	Game& operator=(const Game&) = delete;												// Prevent copy-assignment
+	Game(Game&&) = delete;																// Prevent move-construction
+	Game& operator=(Game&&) = delete;													// Prevent move-assignment
 
 	bool Initialize();																	// Prepares the game by booting up the engine
 	void Run();																			// Starts the main game loop

@@ -145,9 +145,6 @@
     <ClCompile Include="Systems\Resources\ResourceManager.cpp">
       <Filter>Source Files\Systems\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities\ThirdParty\CaledonZlib.cpp">
-      <Filter>Source Files\Utilities\ThirdParty</Filter>
-    </ClCompile>
     <ClCompile Include="Utilities\ThirdParty\tinyxml2.cpp">
       <Filter>Source Files\Utilities\ThirdParty</Filter>
     </ClCompile>
@@ -305,9 +302,6 @@
     </ClInclude>
     <ClInclude Include="Systems\Resources\ResourceManager.h">
       <Filter>Source Files\Systems\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Utilities\ThirdParty\CaledonZlib.h">
-      <Filter>Source Files\Utilities\ThirdParty</Filter>
     </ClInclude>
     <ClInclude Include="Utilities\ThirdParty\tinyxml2.h">
       <Filter>Source Files\Utilities\ThirdParty</Filter>

@@ -38,6 +38,11 @@ bool CE::SDLTexture::Load(SDL_Texture* pTexture, int width, int height)
     if (!pTexture)
         return false;
 
+    if (m_pTexture && m_pTexture != pTexture)
+    {
+        SDL_DestroyTexture(m_pTexture);
+    }
+
     m_pTexture = pTexture;
     m_width = width;
     m_height = height;

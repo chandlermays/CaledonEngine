@@ -18,22 +18,6 @@ using namespace tinyxml2;
 /*-----------------------------------
 | --- Public Method Definitions --- |
 -----------------------------------*/
-/*---------------------------------------------------------------------------
-| --- Constructor: Constructs the GameObjectCreator with default values --- |
----------------------------------------------------------------------------*/
-CE::GameObjectCreator::GameObjectCreator()
-	: m_pComponentFactory{ new CE::ComponentFactory() }
-{ }
-
-/*-------------------------------------------------------
-| --- Destructor: Cleans up any allocated resources --- |
--------------------------------------------------------*/
-CE::GameObjectCreator::~GameObjectCreator()
-{
-	delete m_pComponentFactory;
-	m_pComponentFactory = nullptr;
-}
-
 /*----------------------------------------------------------------
 | --- CreateGameObject: Create a GameObject from an XML File --- |
 ----------------------------------------------------------------*/
@@ -131,7 +115,7 @@ std::unique_ptr<CE::GameObject> CE::GameObjectCreator::ParseGameObject(XMLElemen
 	for (XMLElement* pComponent = pElement->FirstChildElement(); pComponent != nullptr; pComponent = pComponent->NextSiblingElement())
 	{
 		std::string componentID = pComponent->Name();
-		m_pComponentFactory->CreateComponent(pGameObject.get(), componentID, pComponent);
+		ComponentFactory::CreateComponent(pGameObject.get(), componentID, pComponent);
 	}
 
 	for (XMLElement* pChildElement = pElement->FirstChildElement("GameObject"); pChildElement != nullptr; pChildElement = pChildElement->NextSiblingElement("GameObject"))

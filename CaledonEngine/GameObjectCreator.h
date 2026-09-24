@@ -11,7 +11,6 @@
 
 namespace CE
 {
-	class ComponentFactory;																						// Forward Declaration of EngineComponentFactory
 	class GameObject;																							// Forward Declaration of GameObject
 
 	class GameObjectCreator
@@ -19,13 +18,15 @@ namespace CE
 	private:
 		CaledonParser m_parser;																					// Caledon Parser
 
-		ComponentFactory* m_pComponentFactory;																	// Engine Component Factory
-
 		std::unique_ptr<GameObject> ParseGameObject(tinyxml2::XMLElement* pElement);							// Parse a GameObject from an XML Element (Root)
 
 	public:
-		GameObjectCreator();																					// Constructor
-		~GameObjectCreator();																					// Destructor
+		GameObjectCreator() = default;																			// Constructor
+		~GameObjectCreator() = default;																			// Destructor
+		GameObjectCreator(const GameObjectCreator&) = delete;													// Prevent copy-construction
+		GameObjectCreator& operator=(const GameObjectCreator&) = delete;										// Prevent copy-assignment
+		GameObjectCreator(GameObjectCreator&&) = delete;														// Prevent move-construction
+		GameObjectCreator& operator=(GameObjectCreator&&) = delete;												// Prevent move-assignment
 
 		std::unique_ptr<GameObject> CreateGameObject(const std::string& fileData);								// Create a GameObject from an XML File
 		std::vector<std::unique_ptr<GameObject>> CreateGameObjects(const std::string& fileData);				// Create multiple GameObjects from an XML File

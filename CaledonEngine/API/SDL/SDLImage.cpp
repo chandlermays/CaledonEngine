@@ -40,7 +40,7 @@ CE::SDLImage::~SDLImage()
 ------------------------------------------*/
 int CE::SDLImage::GetW() const
 {
-	return m_pSurface->w;
+	return m_pSurface ? m_pSurface->w : 0;
 }
 
 /*-------------------------------------------
@@ -48,20 +48,19 @@ int CE::SDLImage::GetW() const
 -------------------------------------------*/
 int CE::SDLImage::GetH() const
 {
-	return m_pSurface->h;
+	return m_pSurface ? m_pSurface->h : 0;
 }
 
 /*--------------------------------------------------
 | --- CreateImage: Create an Image from a File --- |
 --------------------------------------------------*/
-CE::SDLImage* CE::SDLImage::CreateImage(const std::string& filePath)
+std::unique_ptr<CE::SDLImage> CE::SDLImage::CreateImage(const std::string& filePath)
 {
-	SDL_Surface* surface = IMG_Load(filePath.c_str());
-	if (!surface)
-	{
+	SDL_Surface* pSurface = IMG_Load(filePath.c_str());
+	if (!pSurface)
 		return nullptr;
-	}
-	return new SDLImage(surface);
+
+	return std::make_unique<SDLImage>(pSurface);
 }
 
 /*---------------------------------------------------------------------

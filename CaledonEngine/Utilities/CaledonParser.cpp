@@ -17,26 +17,19 @@
 | --- Constructor: Constructs the CaledonParser with default values --- |
 -----------------------------------------------------------------------*/
 CE::CaledonParser::CaledonParser()
-    : m_document{ new tinyxml2::XMLDocument() }
+    : m_pDocument{ std::make_unique<tinyxml2::XMLDocument>() }
 { }
 
-/*-------------------------------------------------------
-| --- Destructor: Cleans up any allocated resources --- |
--------------------------------------------------------*/
-CE::CaledonParser::~CaledonParser()
-{
-    delete m_document;
-    m_document = nullptr;
-}
+CE::CaledonParser::~CaledonParser() = default;		// Here, where tinyxml2.h makes XMLDocument complete
 
 /*-------------------------------------------------------------------------
 | --- LoadFile: 
 -------------------------------------------------------------------------*/
 bool CE::CaledonParser::LoadFile(const std::string& filePath)
 {
-    m_document->Clear();
+    m_pDocument->Clear();
 
-    tinyxml2::XMLError result = m_document->LoadFile(filePath.c_str());
+    tinyxml2::XMLError result = m_pDocument->LoadFile(filePath.c_str());
 
     if (result != tinyxml2::XML_SUCCESS)
     {
@@ -51,9 +44,9 @@ bool CE::CaledonParser::LoadFile(const std::string& filePath)
 -------------------------------------------------------------------------*/
 bool CE::CaledonParser::Parse(const std::string& fileData)
 {
-    m_document->Clear();
+    m_pDocument->Clear();
 
-    tinyxml2::XMLError result = m_document->Parse(fileData.c_str());
+    tinyxml2::XMLError result = m_pDocument->Parse(fileData.c_str());
 
     if (result != tinyxml2::XML_SUCCESS)
     {
@@ -68,7 +61,7 @@ bool CE::CaledonParser::Parse(const std::string& fileData)
 -------------------------------------------------------------------------*/
 tinyxml2::XMLElement* CE::CaledonParser::GetRootElement(const std::string& rootName)
 {
-    return m_document->FirstChildElement(rootName.c_str());
+    return m_pDocument->FirstChildElement(rootName.c_str());
 }
 
 /*-------------------------------------------------------------------------

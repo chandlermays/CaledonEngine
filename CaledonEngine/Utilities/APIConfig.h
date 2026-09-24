@@ -4,7 +4,7 @@
 ------------------------------*/
 #pragma once
 
-#if SDL_DEBUG_CE || SDL_NDEBUG_CE
+#if defined(SDL_DEBUG_CE) || defined(SDL_NDEBUG_CE)
 
 #include "API/SDL/SDLWindow.h"
 #include "API/SDL/SDLRenderer.h"
@@ -19,9 +19,9 @@ namespace CE
 	using CEImage = SDLImage;
 }
 
-#elif SFML_DEBUG_CE || SFML_NDEBUG_CE
+#elif defined(SFML_DEBUG_CE) || defined(SFML_NDEBUG_CE)
 
-// SFML includes go here...
+// SFML includes...
 
 namespace CE
 {

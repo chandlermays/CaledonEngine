@@ -11,10 +11,8 @@
 #include <fstream>
 #include <iostream>
 
-#ifdef NDEBUG
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_image.h>
-#endif
 
 /*-----------------------------------
 | --- Public Method Definitions --- |
@@ -40,13 +38,7 @@ CE::ResourceManager::~ResourceManager()
 ------------------------------------------------*/
 bool CE::ResourceManager::Initialize()
 {
-#ifdef NDEBUG
-    // In release mode, the zLib constructor automatically loads and extracts all files
-    // from Assets.zip, so no additional initialization is needed here
-    std::cout << "ResourceManager initialized in Release mode (using zLib)" << std::endl;
-#else
-    std::cout << "ResourceManager initialized in Debug mode (loading files directly)" << std::endl;
-#endif
+    std::cout << "ResourceManager initialized (loading files directly)" << std::endl;
     return true;
 }
 
@@ -71,7 +63,6 @@ void CE::ResourceManager::ClearCache()
 ------------------------------------------------------------*/
 bool CE::ResourceManager::LoadResource(const std::string& fileName, std::string& data)
 {
-    // Check if resource is already loaded
     auto it = m_loadedResources.find(fileName);
     if (it != m_loadedResources.end())
     {
@@ -79,40 +70,33 @@ bool CE::ResourceManager::LoadResource(const std::string& fileName, std::string&
         return true;
     }
 
-    std::string resourceData;
-
-#ifdef NDEBUG
-    // Release mode: Load from zip file using zLib
-    resourceData = m_zLib.GetUncompressedData(fileName);
-    if (resourceData.empty())
-    {
-        std::cout << "Failed to load resource from zip: " << fileName << std::endl;
-        return false;
-    }
-#else
-    // Debug mode: Load from file system directly
-    std::ifstream file(fileName, std::ios::binary);
+    std::ifstream file(fileName, std::ios::binary | std::ios::ate);
     if (!file.is_open())
     {
         std::cout << "Failed to open file: " << fileName << std::endl;
         return false;
     }
 
-    // Read the entire file
-    file.seekg(0, std::ios::end);
-    size_t fileSize = file.tellg();
+    std::streamsize fileSize = file.tellg();
+    if (fileSize < 0)
+    {
+        std::cout << "Failed to determine size of file: " << fileName << std::endl;
+        return false;
+    }
+
     file.seekg(0, std::ios::beg);
 
-    resourceData.resize(fileSize);
-    file.read(&resourceData[0], fileSize);
-    file.close();
-#endif
+    std::string resourceData(static_cast<size_t>(fileSize), '\0');
+    if (fileSize > 0 && !file.read(resourceData.data(), fileSize))
+    {
+        std::cout << "Failed to read file: " << fileName << std::endl;
+        return false;
+    }
 
-    // Store in cache and return
-    m_loadedResources[fileName] = resourceData;
     data = resourceData;
+    m_loadedResources[fileName] = std::move(resourceData);
 
-    std::cout << "Loaded resource: " << fileName << " (" << resourceData.size() << " bytes)" << std::endl;
+    std::cout << "Loaded resource: " << fileName << " (" << data.size() << " bytes)" << std::endl;
     return true;
 }
 
@@ -141,35 +125,9 @@ std::string CE::ResourceManager::GetResource(const std::string& fileName)
 /*-------------------------------------------------
 | --- LoadSurface: Load a Surface from a File --- |
 -------------------------------------------------*/
-CE::Image* CE::ResourceManager::LoadSurface(const std::string& filePath)
+std::unique_ptr<CE::Image> CE::ResourceManager::LoadSurface(const std::string& filePath)
 {
-#ifdef NDEBUG
-    std::string imageData = GetResource(filePath);
-    if (imageData.empty())
-    {
-        std::cout << "Failed to get image data from zip for: " << filePath << std::endl;
-        return nullptr;
-    }
-
-    SDL_IOStream* io = SDL_IOFromMem(const_cast<char*>(imageData.c_str()), imageData.size());
-    if (!io)
-    {
-        std::cout << "Failed to create SDL_IOStream for: " << filePath << std::endl;
-        return nullptr;
-    }
-
-    SDL_Surface* surface = IMG_Load_IO(io, true);
-    if (!surface)
-    {
-        std::cout << "Failed to load surface from zip data for: " << filePath << std::endl;
-        return nullptr;
-    }
-
-    std::cout << "Loaded surface from zip: " << filePath << " (" << surface->w << "x" << surface->h << ")" << std::endl;
-    return new CE::SDLImage(surface);
-
-#else
-    CE::SDLImage* pImage = CE::SDLImage::CreateImage(filePath);
+    std::unique_ptr<CE::SDLImage> pImage = CE::SDLImage::CreateImage(filePath);
     if (!pImage)
     {
         std::cout << "Failed to load image from file: " << filePath << std::endl;
@@ -178,7 +136,6 @@ CE::Image* CE::ResourceManager::LoadSurface(const std::string& filePath)
 
     std::cout << "Loaded surface from file: " << filePath << " (" << pImage->GetW() << "x" << pImage->GetH() << ")" << std::endl;
     return pImage;
-#endif
 }
 
 /*---------------------------------------------------------------------------------------

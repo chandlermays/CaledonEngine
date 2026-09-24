@@ -151,7 +151,7 @@ void CE::SpriteComponent::LoadSpriteSheet(const char* pSheet, int frameWidth, in
 	if (!pRenderer || !pResourceManager)
 		return;
 
-	std::unique_ptr<Image> pImage(pResourceManager->LoadSurface(pSheet));
+	std::unique_ptr<Image> pImage = pResourceManager->LoadSurface(pSheet);
 	if (!pImage)
 		return;
 

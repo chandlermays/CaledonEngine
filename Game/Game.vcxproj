@@ -243,39 +243,22 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
-xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -296,39 +279,22 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
-xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -349,39 +315,22 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
-xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -406,39 +355,22 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
-xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -463,39 +395,22 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
-xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -520,39 +435,22 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
-xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -573,39 +471,22 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
-xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -626,39 +507,22 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
-xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -679,39 +543,22 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
-xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -736,39 +583,22 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
-xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -793,39 +623,22 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
-xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -850,39 +663,22 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)$(ProjectName)\Assets" "$(SolutionDir)Build\Assets" /s /e /i /y
-xcopy "$(SolutionDir)$(ProjectName)\Assets.zip" "$(SolutionDir)Build\" /s /e /i /y
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL\lib\$(Platform)\SDL3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\SDL3_image.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libavif-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libjpeg-9.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libpng16-16.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libtiff-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpdemux-2.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Image\lib\$(Platform)\libwebpmux-3.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\SDL3_mixer.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libgme.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libogg-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopus-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libopusfile-0.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libwavpack-1.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_Mixer\lib\$(Platform)\libxmp.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\SDL3_ttf.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y
-
 xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll" "$(SolutionDir)Build\$(Configuration)\$(ProjectName)\" /d /i /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

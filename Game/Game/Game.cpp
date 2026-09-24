@@ -23,7 +23,6 @@
 -----------------------------------------------------------------------*/
 Game::Game()
 	: m_pEngineManager{ nullptr }
-	, m_pGameObjectCreator{ nullptr }
 	, m_pInputActions{ nullptr }
 {}
 
@@ -44,7 +43,7 @@ bool Game::Initialize()
 	if (!m_pEngineManager->Initialize())
 		return false;
 
-	m_pGameObjectCreator = new CE::GameObjectCreator();
+	m_pGameObjectCreator = std::make_unique<CE::GameObjectCreator>();
 
 	if (!LoadGameModule())
 	{
@@ -190,8 +189,7 @@ void Game::Shutdown()
 
 	if (m_pGameObjectCreator)
 	{
-		delete m_pGameObjectCreator;
-		m_pGameObjectCreator = nullptr;
+		m_pGameObjectCreator.reset();
 	}
 
 	CE::ComponentFactory::Clear();
