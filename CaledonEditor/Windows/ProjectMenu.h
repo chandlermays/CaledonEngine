@@ -33,6 +33,7 @@ public:
 	ProjectMenu(ProjectMenu&&) = delete;														// Prevent move-construction
 	ProjectMenu& operator=(ProjectMenu&&) = delete;												// Prevent move-assignment
 
+	void ClearLoadedProject();
 	void SetLoadedProject(const std::string& projectName);										// Sets the name of the currently loaded project
 	void SetModuleStatus(bool isLoaded, const std::string& statusMessage);						// Sets the status of the module of the currently loaded project
 

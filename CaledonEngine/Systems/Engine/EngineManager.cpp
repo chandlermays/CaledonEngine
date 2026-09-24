@@ -23,7 +23,6 @@
 -------------------------------------------------------*/
 CE::EngineManager::~EngineManager()
 {
-	CE_LOG("EngineManager::~EngineManager - Shutting down EngineManager.");
 	Shutdown();
 }
 
@@ -198,6 +197,8 @@ CE::EngineManager::EngineManager()
 	, m_pToolsManager{ nullptr }
 	, m_frameCallback{ nullptr }
 {
+	(void)LoggingManager::GetInstance();
+
 	auto pGraphics = std::make_unique<GraphicsManager>();
 	m_pGraphicsManager = pGraphics.get();
 	RegisterManager(std::move(pGraphics));

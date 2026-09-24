@@ -29,6 +29,8 @@ CE::DynamicLibrary::~DynamicLibrary()
 -----------------------------------------------------------------*/
 bool CE::DynamicLibrary::Load(const std::string& path)
 {
+	Unload();
+
 	m_pHModule = static_cast<void*>(LoadLibraryA(path.c_str()));
 	return m_pHModule != nullptr;
 }

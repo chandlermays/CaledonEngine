@@ -24,6 +24,17 @@ ProjectMenu::ProjectMenu()
 	m_newNameBuffer[0] = '\0';
 }
 
+/*------------------------------------------------------------------------------
+| --- ClearLoadedProject: Clears the state of the currently loaded project --- |
+------------------------------------------------------------------------------*/
+void ProjectMenu::ClearLoadedProject()
+{
+	m_currentProjectName.clear();
+	m_hasProjectLoaded = false;
+	m_isModuleLoaded = false;
+	m_moduleStatusMessage.clear();
+}
+
 /*-------------------------------------------------------------------------
 | --- SetLoadedProject: Sets the name of the currently loaded project --- |
 -------------------------------------------------------------------------*/

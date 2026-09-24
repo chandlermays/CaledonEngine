@@ -32,7 +32,6 @@ CE::ResourceManager::ResourceManager()
 -------------------------------------------------------*/
 CE::ResourceManager::~ResourceManager()
 {
-    CE_LOG("ResourceManager::~ResourceManager - Shutting down ResourceManager.");
     Shutdown();
 }
 
@@ -56,7 +55,14 @@ bool CE::ResourceManager::Initialize()
 -------------------------------------------------*/
 void CE::ResourceManager::Shutdown()
 {
-    // Clear all loaded resources
+    ClearCache();
+}
+
+/*--------------------------------------------------------------
+| --- ClearCache: Clear the collection of loaded resources --- |
+--------------------------------------------------------------*/
+void CE::ResourceManager::ClearCache()
+{
     m_loadedResources.clear();
 }
 
@@ -145,14 +151,14 @@ CE::Image* CE::ResourceManager::LoadSurface(const std::string& filePath)
         return nullptr;
     }
 
-    SDL_RWops* rw = SDL_RWFromMem(const_cast<char*>(imageData.c_str()), static_cast<int>(imageData.size()));
-    if (!rw)
+    SDL_IOStream* io = SDL_IOFromMem(const_cast<char*>(imageData.c_str()), imageData.size());
+    if (!io)
     {
-        std::cout << "Failed to create SDL_RWops for: " << filePath << std::endl;
+        std::cout << "Failed to create SDL_IOStream for: " << filePath << std::endl;
         return nullptr;
     }
 
-    SDL_Surface* surface = IMG_Load_RW(rw, 1); // 1 means SDL will free the RWops
+    SDL_Surface* surface = IMG_Load_IO(io, true);
     if (!surface)
     {
         std::cout << "Failed to load surface from zip data for: " << filePath << std::endl;

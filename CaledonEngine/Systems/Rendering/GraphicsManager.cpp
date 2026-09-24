@@ -23,7 +23,6 @@ CE::GraphicsManager::GraphicsManager()
 -------------------------------------------------------*/
 CE::GraphicsManager::~GraphicsManager()
 {
-	CE_LOG("GraphicsManager::~GraphicsManager - Shutting down GraphicsManager.");
 	Shutdown();
 }
 

@@ -8,6 +8,8 @@
 #include "Core/Transform.h"
 #include "Core/Component.h"
 
+#include <cassert>
+
 /*-----------------------------------
 | --- Public Method Definitions --- |
 -----------------------------------*/
@@ -49,6 +51,15 @@ bool CE::GameObject::Initialize()
 			success = false;
 		}
 	}
+
+	for (const auto& pChild : m_children)
+	{
+		if (pChild != nullptr && !pChild->Initialize())
+		{
+			success = false;
+		}
+	}
+
 	return success;
 }
 
@@ -213,6 +224,7 @@ const CE::Transform& CE::GameObject::GetTransform() const
 -------------------------------------------------------------*/
 CE::Transform& CE::GameObject::GetTransform()
 {
+	assert(m_pTransform && "GameObject::GetTransform called on a destroyed GameObject.");
 	return *m_pTransform;
 }
 
@@ -259,8 +271,7 @@ void CE::GameObject::RemoveComponent(Component* pComponent)
 --------------------------------------------------------------*/
 void CE::GameObject::Destroy()
 {
+	m_children.clear();
 	m_components.clear();
 	m_pTransform = nullptr;
-
-	m_children.clear();
 }

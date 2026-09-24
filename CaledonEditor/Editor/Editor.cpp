@@ -36,6 +36,7 @@ Editor::~Editor()
 {
 	UnloadProject();
 
+	m_viewportPanel.Shutdown();
 	m_editorGUI.Shutdown();
 
 	if (m_pEngineManager)
@@ -204,32 +205,57 @@ bool Editor::FinishLoadingProject(const Project& newProject)
 ----------------------------------------------------------------------------------------------------------*/
 void Editor::UnloadProject()
 {
-	// Destroys every GameObject/Component in every Scene — including anything the module
-	// constructed — while that module is still loaded. Must happen before Unload() below.
-	CE::SceneManager* pSceneManager = m_pEngineManager ? m_pEngineManager->GetSceneManager() : nullptr;
-	if (pSceneManager)
+	// 1. Unload active scenes and clear context selection before unloading the DLL module
+	if (m_pEngineManager && m_pEngineManager->GetSceneManager())
 	{
-		pSceneManager->Shutdown();
+		m_pEngineManager->GetSceneManager()->UnloadAllScenes();
 	}
 
 	m_editorContext.ClearSelection();
 
+	// Clear cached resources so relative file paths (e.g. Assets/MasterAssets.xml) reload for the next project
+	if (m_pEngineManager && m_pEngineManager->GetResourceManager())
+	{
+		m_pEngineManager->GetResourceManager()->ClearCache();
+	}
+
+	// 2. Detach and safely destroy InputActions through the DLL interface
 	if (m_pInputActions)
 	{
-		delete m_pInputActions;
+		if (m_pEngineManager && m_pEngineManager->GetInputManager())
+		{
+			m_pEngineManager->GetInputManager()->SetInputActions(nullptr);
+		}
+
+		auto destroyInputActions = reinterpret_cast<CE::DynamicLibraryInterface::DestroyInputActionsFunc>(
+			m_dynamicLibrary.GetFunctionAddress(CE::DynamicLibraryInterface::kDestroyInputActionsFunctionName));
+
+		if (destroyInputActions)
+		{
+			destroyInputActions(m_pInputActions);
+		}
+		else
+		{
+			// Fallback cleanup if DLL lookup fails
+			delete m_pInputActions;
+		}
+
 		m_pInputActions = nullptr;
 	}
 
-	// Remove every type the outgoing module contributed — otherwise these entries sit in the
-	// registry with creator/property callables pointing into memory FreeLibrary is about to
-	// unmap, ready to crash (or silently corrupt something) the moment anything tries to use them.
+	// 3. Unregister custom component types from ComponentFactory
 	for (const std::string& typeName : m_moduleComponentTypeNames)
 	{
 		CE::ComponentFactory::UnregisterComponent(typeName);
 	}
 	m_moduleComponentTypeNames.clear();
 
+	// 4. Unload the dynamic library module from process memory
 	m_dynamicLibrary.Unload();
+
+	// 5. Reset project state
+	m_project = Project();
+	m_projectMenu.ClearLoadedProject();
 }
 
 /*------------------------------------------------------------------------------------------------------

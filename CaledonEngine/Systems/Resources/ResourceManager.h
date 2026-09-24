@@ -31,6 +31,8 @@ namespace CE
 		virtual bool Initialize() override;																// Initialize the Resource Manager
 		virtual void Shutdown() override;																// Shutdown the Resource Manager
 
+		void ClearCache();																				// Clear the collection of loaded resources
+
 		bool LoadResource(const std::string& fileName, std::string& data);								// Load the Data of the Associated File
 		std::string GetResource(const std::string& fileName);											// Returns the Data of the Associated File
 

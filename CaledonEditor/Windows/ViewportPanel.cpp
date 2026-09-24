@@ -58,6 +58,22 @@ void ViewportPanel::Draw(EditorContext&)
 	ImGui::End();
 }
 
+/*----------------------------------------------------------
+| --- Shutdown: Cleans up the viewport's render target --- |
+----------------------------------------------------------*/
+void ViewportPanel::Shutdown()
+{
+	CE::SceneManager* pSceneManager = CE::EngineManager::GetInstance().GetSceneManager();
+	if (pSceneManager)
+	{
+		pSceneManager->SetRenderTarget(nullptr);
+	}
+
+	m_pRenderTexture.reset();
+	m_width = 0;
+	m_height = 0;
+}
+
 
 /*------------------------------------
 | --- Private Method Definitions --- |

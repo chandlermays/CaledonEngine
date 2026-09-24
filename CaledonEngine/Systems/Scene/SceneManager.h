@@ -20,10 +20,10 @@ namespace CE
 	{
 	private:
 		std::vector<std::unique_ptr<Scene>> m_pScenes;							// The list of scenes
-		Scene* m_pCurrentScene;													// Pointer to the current scene
+		Scene* m_pCurrentScene;													// Pointer reference to the current scene
 
-		Renderer* m_pRenderer;													// Pointer to the renderer
-		Texture* m_pRenderTarget;												// Pointer to the render target texture
+		Renderer* m_pRenderer;													// Pointer reference to the renderer
+		Texture* m_pRenderTarget;												// Pointer reference to the render target texture
 
 	public:
 		SceneManager();															// Constructor
@@ -38,6 +38,8 @@ namespace CE
 		void Render() override;													// Render the current scene
 		void Shutdown() override;												// Shutdown the SceneManager and clean up resources
 	
+		void UnloadAllScenes();
+
 		void AddScene(std::unique_ptr<Scene> pScene);							// Add a scene to the list of scenes
 		void SetCurrentScene(Scene* pScene);									// Sets the provided scene as the current scene
 		Scene* GetCurrentScene() const;											// Returns the current scene

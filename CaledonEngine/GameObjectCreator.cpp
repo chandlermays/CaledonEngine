@@ -143,7 +143,5 @@ std::unique_ptr<CE::GameObject> CE::GameObjectCreator::ParseGameObject(XMLElemen
 		}
 	}
 
-	pGameObject->Initialize();
-
 	return pGameObject;
 }

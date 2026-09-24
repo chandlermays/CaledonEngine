@@ -1,4 +1,0 @@
-GraphicsManager::~GraphicsManager - Shutting down GraphicsManager.
-ResourceManager::~ResourceManager - Shutting down ResourceManager.
-SceneManager::~SceneManager - Shutting down SceneManager.
-CollisionManager::~CollisionManager - Shutting down CollisionManager.

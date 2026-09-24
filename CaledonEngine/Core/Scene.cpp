@@ -32,15 +32,16 @@ CE::Scene::~Scene()
 ----------------------------------------------------------------*/
 bool CE::Scene::Initialize()
 {
+	bool success = true;
 	for (const auto& pObject : m_gameObjects)
 	{
 		if (pObject != nullptr && !pObject->Initialize())
 		{
-			return false;
+			success = false;
 		}
 	}
 	m_isLoaded = true;
-	return true;
+	return success;
 }
 
 /*--------------------------------------------------------

@@ -27,7 +27,6 @@ CE::SceneManager::SceneManager()
 -------------------------------------------------------*/
 CE::SceneManager::~SceneManager()
 {
-	CE_LOG("SceneManager::~SceneManager - Shutting down SceneManager.");
 	Shutdown();
 }
 
@@ -86,6 +85,16 @@ void CE::SceneManager::Render()
 | --- Shutdown: Shutdown the SceneManager and clean up resources --- |
 --------------------------------------------------------------------*/
 void CE::SceneManager::Shutdown()
+{
+	UnloadAllScenes();
+	m_pRenderer = nullptr;
+	m_pRenderTarget = nullptr;
+}
+
+/*----------------------------------------------------------------------
+| --- UnloadAllScenes: Unloads all loaded scenes and resets states --- |
+----------------------------------------------------------------------*/
+void CE::SceneManager::UnloadAllScenes()
 {
 	m_pScenes.clear();
 	m_pCurrentScene = nullptr;

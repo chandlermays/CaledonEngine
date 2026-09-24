@@ -24,7 +24,6 @@ bool CE::ToolsManager::Initialize()
 	m_pInputManager = EngineManager::GetInstance().GetInputManager();
 	if (!m_pInputManager)
 	{
-		CE_LOG("ToolsManager::Initialize - InputManager is null.");
 		return false;
 	}
 

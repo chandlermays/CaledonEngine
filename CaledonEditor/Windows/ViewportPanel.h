@@ -30,4 +30,5 @@ public:
 	ViewportPanel& operator=(ViewportPanel&&) = delete;								// Prevent move-assignment
 
 	void Draw(EditorContext& context);												// Draws the viewport panel and handles rendering the scene to the render texture
+	void Shutdown();																// Cleans up the viewport's render target
 };

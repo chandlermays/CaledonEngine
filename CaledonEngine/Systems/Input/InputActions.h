@@ -23,7 +23,7 @@ namespace CE
 
 	public:
 		InputActions(const std::string& assetName = "NewInputActions");												// Constructor
-		~InputActions() = default;																					// Destructor
+		virtual ~InputActions() = default;																			// Destructor
 		InputActions(const InputActions&) = delete;																	// Prevent copy-construction
 		InputActions& operator=(const InputActions&) = delete;														// Prevent copy-assignment
 		InputActions(InputActions&&) = delete;																		// Prevent move-construction

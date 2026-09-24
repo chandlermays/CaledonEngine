@@ -20,7 +20,6 @@ CE::LoggingManager::LoggingManager()
 -------------------------------------------------------*/
 CE::LoggingManager::~LoggingManager()
 {
-	CE_LOG("LoggingManager::~LoggingManager - Shutting down LoggingManager.");
 	Shutdown();
 }
 

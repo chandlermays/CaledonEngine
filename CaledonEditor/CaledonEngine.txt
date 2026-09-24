@@ -1,7 +1,3 @@
-Error loading the XML file: C:\Users\chand\OneDrive\Documents\Github Projects\CaledonEngine\CaledonEditor\TestProjects\TestGame01\TestGame01.ceproj
-Project::Load - Could not open 'C:\Users\chand\OneDrive\Documents\Github Projects\CaledonEngine\CaledonEditor\TestProjects\TestGame01\TestGame01.ceproj'
-Editor::OpenProject - Failed to load project file 'C:\Users\chand\OneDrive\Documents\Github Projects\CaledonEngine\CaledonEditor\TestProjects\TestGame01\TestGame01.ceproj'
-GraphicsManager::~GraphicsManager - Shutting down GraphicsManager.
-ResourceManager::~ResourceManager - Shutting down ResourceManager.
-SceneManager::~SceneManager - Shutting down SceneManager.
-EngineManager::~EngineManager - Shutting down EngineManager.
+Editor::FinishLoadingProject - Failed to load module 'TestGame01Module.dll'; continuing with Engine components only.
+Editor::FinishLoadingProject - Failed to load module 'TestGame02Module.dll'; continuing with Engine components only.
+Editor::FinishLoadingProject - Failed to load module 'TestGame01Module.dll'; continuing with Engine components only.
