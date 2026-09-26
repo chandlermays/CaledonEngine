@@ -22,6 +22,18 @@ PlayerController::PlayerController()
 	, m_verticalInput{ 0.0f }
 { }
 
+PlayerController::~PlayerController()
+{
+    if (m_pGameplayActionMap)
+    {
+        CE::InputAction* pMoveH = m_pGameplayActionMap->GetActionByName("MoveHorizontal");
+        if (pMoveH) pMoveH->Unsubscribe(this);
+
+        CE::InputAction* pMoveV = m_pGameplayActionMap->GetActionByName("MoveVertical");
+        if (pMoveV) pMoveV->Unsubscribe(this);
+    }
+}
+
 /*-----------------------------------------------------------
 | --- Initialize: Prepares the PlayerController for use --- |
 -----------------------------------------------------------*/
@@ -126,11 +138,11 @@ void PlayerController::ConfigureInputBindings()
 
     if (pMoveHorizontal)
     {
-        pMoveHorizontal->OnValue([this](float value) { OnMoveHorizontal(value); });
+        pMoveHorizontal->OnValue(this, &PlayerController::OnMoveHorizontal);
     }
 
     if (pMoveVertical)
     {
-        pMoveVertical->OnValue([this](float value) { OnMoveVertical(value); });
+        pMoveVertical->OnValue(this, &PlayerController::OnMoveVertical);
     }
 }

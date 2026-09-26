@@ -32,8 +32,9 @@ CE::InputAction::InputAction(const std::string& name, ActionType type)
     : m_name{ name }
     , m_actionType{ type }
     , m_controlType{ ControlType::kAny }
-	, m_initialStateCheck{ false }
-	, m_isEnabled{ true }
+    , m_initialStateCheck{ false }
+    , m_isEnabled{ true }
+    , m_wasActive{ false}
 {}
 
 /*----------------------------------------------------------------
@@ -161,80 +162,82 @@ void CE::InputAction::AddNegativeBinding(MouseCode mouse)
 	m_compositeBindings[0].m_negativeBindings.emplace_back(mouse);
 }
 
-/*--------------------------------------------------------------------
-| --- OnStarted: Registers a callback for when the action starts --- |
---------------------------------------------------------------------*/
-void CE::InputAction::OnStarted(std::function<void()> callback)
-{
-    m_onStartedCallbacks.emplace_back(callback);
-}
+void CE::InputAction::OnStarted(std::function<void(const Context&)> callback) { m_onStartedCallbacks.push_back({ nullptr, callback }); }
+void CE::InputAction::OnPerformed(std::function<void(const Context&)> callback) { m_onPerformedCallbacks.push_back({ nullptr, callback }); }
+void CE::InputAction::OnCanceled(std::function<void(const Context&)> callback) { m_onCanceledCallbacks.push_back({ nullptr, callback }); }
+void CE::InputAction::OnValue(std::function<void(const Context&)> callback) { m_onValueCallbacks.push_back({ nullptr, callback }); }
 
-/*------------------------------------------------------------------------
-| --- OnPerformed: Registers a callback for when the action performs --- |
-------------------------------------------------------------------------*/
-void CE::InputAction::OnPerformed(std::function<void()> callback)
+/*---------------------------------------------------------------------------------------------
+| --- Unsubscribe: Unsubscribes all callbacks bound to a specific object instance pointer --- |
+---------------------------------------------------------------------------------------------*/
+void CE::InputAction::Unsubscribe(void* pInstance)
 {
-    m_onPerformedCallbacks.emplace_back(callback);
-}
+    if (!pInstance)
+        return;
 
-/*----------------------------------------------------------------------
-| --- OnCanceled: Registers a callback for when the action cancels --- |
-----------------------------------------------------------------------*/
-void CE::InputAction::OnCanceled(std::function<void()> callback)
-{
-    m_onCanceledCallbacks.emplace_back(callback);
+    auto matchesTarget = [pInstance](const CallbackDelegate& delegate) {
+        return delegate.m_pTargetInstance == pInstance;
+        };
+
+    std::erase_if(m_onStartedCallbacks, matchesTarget);
+    std::erase_if(m_onPerformedCallbacks, matchesTarget);
+    std::erase_if(m_onCanceledCallbacks, matchesTarget);
+    std::erase_if(m_onValueCallbacks, matchesTarget);
 }
 
 /*-------------------------------------------------------------------------
-| --- OnValue: Registers a callback for when the action value changes --- |
+| --- Process: Evaluates action state transitions and fires callbacks --- |
 -------------------------------------------------------------------------*/
-void CE::InputAction::OnValue(std::function<void(float)> callback)
+void CE::InputAction::Process(float value)
 {
-    m_onValueCallbacks.emplace_back(callback);
-}
+    bool isActive = (value != 0.0f);
+    Context context{ this, ActionPhase::kStarted, value };
 
-/*--------------------------------------------------------------------------
-| --- InvokeStartedCallbacks: Invokes all registered started callbacks --- |
---------------------------------------------------------------------------*/
-void CE::InputAction::InvokeStartedCallbacks()
-{
-    for (const auto& callback : m_onStartedCallbacks)
+    if (m_actionType == ActionType::kButton)
     {
-        callback();
+        // 1. Pressed Down: Transition from inactive -> active
+        if (isActive && !m_wasActive)
+        {
+            context.m_phase = ActionPhase::kStarted;
+            InvokeStartedCallbacks(context);
+
+            context.m_phase = ActionPhase::kPerformed;
+            InvokePerformedCallbacks(context);
+        }
+        // 2. Released: Transition from active -> inactive
+        else if (!isActive && m_wasActive)
+        {
+            context.m_phase = ActionPhase::kCanceled;
+            InvokeCanceledCallbacks(context);
+        }
     }
-}
-
-/*------------------------------------------------------------------------------
-| --- InvokePerformedCallbacks: Invokes all registered performed callbacks --- |
-------------------------------------------------------------------------------*/
-void CE::InputAction::InvokePerformedCallbacks()
-{
-    for (const auto& callback : m_onPerformedCallbacks)
+    else if (m_actionType == ActionType::kValue)
     {
-        callback();
-	}
-}
+        // 1. Initial Movement: Value moved off 0.0f
+        if (isActive && !m_wasActive)
+        {
+            context.m_phase = ActionPhase::kStarted;
+            InvokeStartedCallbacks(context);
+        }
+        // 2. Returned to Neutral: Value returned to 0.0f
+        else if (!isActive && m_wasActive)
+        {
+            context.m_phase = ActionPhase::kCanceled;
+            InvokeCanceledCallbacks(context);
+        }
 
-/*----------------------------------------------------------------------------
-| --- InvokeCanceledCallbacks: Invokes all registered canceled callbacks --- |
-----------------------------------------------------------------------------*/
-void CE::InputAction::InvokeCanceledCallbacks()
-{
-    for (const auto& callback : m_onCanceledCallbacks)
-    {
-        callback();
-	}
-}
+        // 3. Ongoing Value Update: Fire Performed while active
+        if (isActive)
+        {
+            context.m_phase = ActionPhase::kPerformed;
+            InvokePerformedCallbacks(context);
+        }
 
-/*----------------------------------------------------------------------
-| --- InvokeValueCallbacks: Invokes all registered value callbacks --- |
-----------------------------------------------------------------------*/
-void CE::InputAction::InvokeValueCallbacks(float value)
-{
-    for (const auto& callback : m_onValueCallbacks)
-    {
-        callback(value);
-	}
+        // 4. Value Callbacks: Fire whenever value is processed (active or inactive)
+        InvokeValueCallbacks(context);
+    }
+
+    m_wasActive = isActive;
 }
 
 /*-------------------------------------------------------
@@ -292,3 +295,26 @@ const std::vector<CE::CompositeBinding>& CE::InputAction::GetCompositeBindings()
 {
 	return m_compositeBindings;
 }
+
+
+/*------------------------------------
+| --- Private Method Definitions --- |
+------------------------------------*/
+/*-----------------------------------------------------------------------------
+| --- InvokeCallbacks: Executes registered callbacks for a specific event --- |
+-----------------------------------------------------------------------------*/
+void CE::InputAction::InvokeCallbacks(const std::vector<CallbackDelegate>& callbacks, const Context& context)
+{
+    for (const auto& delegate : callbacks)
+    {
+        if (delegate.m_callback)
+        {
+            delegate.m_callback(context);
+        }
+    }
+}
+
+void CE::InputAction::InvokeStartedCallbacks(const Context& context) { InvokeCallbacks(m_onStartedCallbacks, context); }
+void CE::InputAction::InvokePerformedCallbacks(const Context& context) { InvokeCallbacks(m_onPerformedCallbacks, context); }
+void CE::InputAction::InvokeCanceledCallbacks(const Context& context) { InvokeCallbacks(m_onCanceledCallbacks, context); }
+void CE::InputAction::InvokeValueCallbacks(const Context& context) { InvokeCallbacks(m_onValueCallbacks, context); }

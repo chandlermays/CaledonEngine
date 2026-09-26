@@ -21,7 +21,7 @@ private:
 
 public:
 	PlayerController();															// Constructor
-	~PlayerController() override = default;										// Destructor
+	~PlayerController() override;												// Destructor
 	PlayerController(const PlayerController&) = delete;							// Prevent copy-construction
 	PlayerController& operator=(const PlayerController&) = delete;				// Prevent copy-assignment
 	PlayerController(PlayerController&&) = delete;								// Prevent move-construction

@@ -121,46 +121,30 @@ void CE::InputManager::ProcessAction(InputAction* pAction)
 	if (!pAction || !pAction->IsEnabled())
 		return;
 
-	ActionType type = pAction->GetActionType();
+	float value = 0.0f;
 
-	if (type == ActionType::kValue)
+	if (pAction->GetActionType() == ActionType::kValue)
 	{
-		float value = CalculateAxisValue(pAction);
-		pAction->InvokeValueCallbacks(value);
+		value = CalculateAxisValue(pAction);
 	}
-	else if (type == ActionType::kButton)
+	else
 	{
-		bool isPressed = false;
-
 		const auto& bindings = pAction->GetInputBindings();
 		for (const auto& binding : bindings)
 		{
-			if (binding.m_isMouseButton)
+			bool isHeld = binding.m_isMouseButton
+				? m_pInputAPI->IsMouseButtonHeld(binding.m_mouseCode)
+				: m_pInputAPI->IsKeyHeld(binding.m_keyCode);
+
+			if (isHeld)
 			{
-				if (m_pInputAPI->IsMouseButtonPressed(binding.m_mouseCode))
-				{
-					isPressed = true;
-					break;
-				}
-			}
-			else
-			{
-				if (m_pInputAPI->IsKeyPressed(binding.m_keyCode))
-				{
-					isPressed = true;
-					break;
-				}
+				value = 1.0f;
+				break;
 			}
 		}
-
-		if (isPressed)
-		{
-			pAction->InvokeStartedCallbacks();
-			pAction->InvokePerformedCallbacks();
-		}
-
-		// Additional logic for released state should be added here for Canceled callbacks
 	}
+
+	pAction->Process(value);
 }
 
 /*-------------------------------------------------------------------------------------
