@@ -98,7 +98,7 @@ namespace CE
 		std::vector<CallbackDelegate> m_onCanceledCallbacks;													// Callbacks for when the action cancels
 		std::vector<CallbackDelegate> m_onValueCallbacks;														// Callbacks for when the action value changes
 
-		void InvokeCallbacks(const std::vector<CallbackDelegate>& callbacks, const Context& context);
+		void InvokeCallbacks(const std::vector<CallbackDelegate>& callbacks, const Context& context);			// 
 		void InvokeStartedCallbacks(const Context& context);													// Invokes all registered started callbacks
 		void InvokePerformedCallbacks(const Context& context);													// Invokes all registered performed callbacks
 		void InvokeCanceledCallbacks(const Context& context);													// Invokes all registered canceled callbacks
@@ -130,50 +130,45 @@ namespace CE
 		void AddNegativeBinding(MouseCode mouse);																// Adds a negative mouse binding to a composite binding
 
 		template <typename T>
-		void OnStarted(T* instance, void (T::* memberFunc)(const Context&))
+		void OnStarted(T* pInstance, void (T::* pMemberFunc)(const Context&))
 		{
-			m_onStartedCallbacks.push_back({ instance, [instance, memberFunc](const Context& ctx) { (instance->*memberFunc)(ctx); } });
+			m_onStartedCallbacks.push_back({ pInstance, [pInstance, pMemberFunc](const Context& ctx) { (pInstance->*pMemberFunc)(ctx); } });
 		}
 
 		template <typename T>
-		void OnPerformed(T* instance, void (T::* memberFunc)(const Context&))
+		void OnPerformed(T* pInstance, void (T::* pMemberFunc)(const Context&))
 		{
-			m_onPerformedCallbacks.push_back({ instance, [instance, memberFunc](const Context& ctx) { (instance->*memberFunc)(ctx); } });
+			m_onPerformedCallbacks.push_back({ pInstance, [pInstance, pMemberFunc](const Context& ctx) { (pInstance->*pMemberFunc)(ctx); } });
 		}
 
 		template <typename T>
-		void OnCanceled(T* instance, void (T::* memberFunc)(const Context&))
+		void OnCanceled(T* pInstance, void (T::* pMemberFunc)(const Context&))
 		{
-			m_onCanceledCallbacks.push_back({ instance, [instance, memberFunc](const Context& ctx) { (instance->*memberFunc)(ctx); } });
+			m_onCanceledCallbacks.push_back({ pInstance, [pInstance, pMemberFunc](const Context& ctx) { (pInstance->*pMemberFunc)(ctx); } });
 		}
 
 		template <typename T>
-		void OnValue(T* instance, void (T::* memberFunc)(const Context&))
+		void OnValue(T* pInstance, void (T::* pMemberFunc)(const Context&))
 		{
-			m_onValueCallbacks.push_back({ instance, [instance, memberFunc](const Context& ctx) { (instance->*memberFunc)(ctx); } });
+			m_onValueCallbacks.push_back({ pInstance, [pInstance, pMemberFunc](const Context& ctx) { (pInstance->*pMemberFunc)(ctx); } });
 		}
 
 		// Convenience overload for methods accepting raw float directly (e.g., OnMoveHorizontal(float))
 		template <typename T>
-		void OnValue(T* instance, void (T::* memberFunc)(float))
+		void OnValue(T* pInstance, void (T::* pMemberFunc)(float))
 		{
-			m_onValueCallbacks.push_back({ instance, [instance, memberFunc](const Context& ctx) { (instance->*memberFunc)(ctx.m_value); } });
+			m_onValueCallbacks.push_back({ pInstance, [pInstance, pMemberFunc](const Context& ctx) { (pInstance->*pMemberFunc)(ctx.m_value); } });
 		}
 
-		void OnStarted(ActionCallback callback);
-		void OnPerformed(ActionCallback callback);
-		void OnCanceled(ActionCallback callback);
-		void OnValue(ActionCallback callback);
+		void Unsubscribe(void* pInstance);																		// Unsubscribes all callbacks bound to a specific object instance pointer
+		void Process(float value);																				// Evaluates action state transitions and fires callbacks
 
-		void Unsubscribe(void* instance);											// Unsubscribes all callbacks bound to a specific object instance pointer
-		void Process(float value);													// Evaluates action state transitions and fires callbacks
-
-		const std::string& GetName() const;											// Returns the name of the input action
-		ActionType GetActionType() const;											// Returns the action type of the input action
-		ControlType GetControlType() const;											// Returns the control type of the input action
-		bool GetInitialStateCheck() const;											// Returns the initial state check flag
-		bool IsEnabled() const;														// Returns whether the action is enabled
-		const std::vector<InputBinding>& GetInputBindings() const;					// Returns the input bindings
-		const std::vector<CompositeBinding>& GetCompositeBindings() const;			// Returns the composite bindings
+		const std::string& GetName() const;																		// Returns the name of the input action
+		ActionType GetActionType() const;																		// Returns the action type of the input action
+		ControlType GetControlType() const;																		// Returns the control type of the input action
+		bool GetInitialStateCheck() const;																		// Returns the initial state check flag
+		bool IsEnabled() const;																					// Returns whether the action is enabled
+		const std::vector<InputBinding>& GetInputBindings() const;												// Returns the input bindings
+		const std::vector<CompositeBinding>& GetCompositeBindings() const;										// Returns the composite bindings
 	};
 }

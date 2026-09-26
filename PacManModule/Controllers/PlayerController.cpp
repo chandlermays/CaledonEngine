@@ -22,15 +22,17 @@ PlayerController::PlayerController()
 	, m_verticalInput{ 0.0f }
 { }
 
+/*-------------------------------------------------------
+| --- Destructor: Cleans up any allocated resources --- |
+-------------------------------------------------------*/
 PlayerController::~PlayerController()
 {
-    if (m_pGameplayActionMap)
+    for (CE::InputAction* pAction : m_subscribedActions)
     {
-        CE::InputAction* pMoveH = m_pGameplayActionMap->GetActionByName("MoveHorizontal");
-        if (pMoveH) pMoveH->Unsubscribe(this);
-
-        CE::InputAction* pMoveV = m_pGameplayActionMap->GetActionByName("MoveVertical");
-        if (pMoveV) pMoveV->Unsubscribe(this);
+        if (pAction)
+        {
+            pAction->Unsubscribe(this);
+        }
     }
 }
 
@@ -59,8 +61,19 @@ void PlayerController::Update(float deltaTime)
 
     if (m_horizontalInput != 0.0f || m_verticalInput != 0.0f)
     {
-        float moveX = m_horizontalInput * m_moveSpeed * deltaTime;
-        float moveY = -m_verticalInput * m_moveSpeed * deltaTime;
+        float horizontal = m_horizontalInput;
+        float vertical = m_verticalInput;
+
+        // Clamp the combined input vector's magnitude to 1 so diagonal movement isn't faster than moving along a single axis.
+        float magnitude = std::sqrt(horizontal * horizontal + vertical * vertical);
+        if (magnitude > 1.0f)
+        {
+            horizontal /= magnitude;
+            vertical /= magnitude;
+        }
+
+        float moveX = horizontal * m_moveSpeed * deltaTime;
+        float moveY = -vertical * m_moveSpeed * deltaTime;
 
         CE::Transform& transform = m_pOwner->GetTransform();
         CE::Vector2f currentPosition = transform.GetPosition();
@@ -139,10 +152,12 @@ void PlayerController::ConfigureInputBindings()
     if (pMoveHorizontal)
     {
         pMoveHorizontal->OnValue(this, &PlayerController::OnMoveHorizontal);
+        m_subscribedActions.emplace_back(pMoveHorizontal);
     }
 
     if (pMoveVertical)
     {
         pMoveVertical->OnValue(this, &PlayerController::OnMoveVertical);
+        m_subscribedActions.emplace_back(pMoveVertical);
     }
 }

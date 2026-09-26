@@ -13,6 +13,8 @@ private:
 	GameInputActions* m_pInputActions;											// Pointer to the Game Input Actions
 	CE::InputActionMap* m_pGameplayActionMap;									// Pointer to the Gameplay action map
 	
+	std::vector<CE::InputAction*> m_subscribedActions;							// A list of actions this controller has subscribed to
+
 	float m_moveSpeed;															// Movement speed of the player
 	float m_horizontalInput;													// Current horizontal input value
 	float m_verticalInput;														// Current vertical input value

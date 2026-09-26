@@ -162,11 +162,6 @@ void CE::InputAction::AddNegativeBinding(MouseCode mouse)
 	m_compositeBindings[0].m_negativeBindings.emplace_back(mouse);
 }
 
-void CE::InputAction::OnStarted(std::function<void(const Context&)> callback) { m_onStartedCallbacks.push_back({ nullptr, callback }); }
-void CE::InputAction::OnPerformed(std::function<void(const Context&)> callback) { m_onPerformedCallbacks.push_back({ nullptr, callback }); }
-void CE::InputAction::OnCanceled(std::function<void(const Context&)> callback) { m_onCanceledCallbacks.push_back({ nullptr, callback }); }
-void CE::InputAction::OnValue(std::function<void(const Context&)> callback) { m_onValueCallbacks.push_back({ nullptr, callback }); }
-
 /*---------------------------------------------------------------------------------------------
 | --- Unsubscribe: Unsubscribes all callbacks bound to a specific object instance pointer --- |
 ---------------------------------------------------------------------------------------------*/

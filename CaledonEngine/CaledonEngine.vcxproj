@@ -378,7 +378,7 @@
       </Command>
     </PostBuildEvent>
     <Lib>
-      <AdditionalDependencies>sdl3.lib;sdl3_image.lib;sdl3_ttf.lib;sdl3_mixer.lib;sdl3_net.lib;sfml-audio-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;sfml-system-s-d.lib;sfml-window-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;lua.lib</AdditionalDependencies>
+      <AdditionalDependencies>sfml-audio-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;sfml-system-s-d.lib;sfml-window-s-d.lib;lua.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Debug\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;$(ProjectDir)lib\SFML\lib;$(ProjectDir)lib\zlib\contrib\vstudio\vc14\$(Platform)\ZlibStatDebug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -396,10 +396,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>sdl3.lib;sdl3_image.lib;sdl3_ttf.lib;sdl3_mixer.lib;sdl3_net.lib;sfml-audio-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;sfml-system-s-d.lib;sfml-window-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;lua.lib</AdditionalDependencies>
+      <AdditionalDependencies>sdl3.lib;sdl3_image.lib;sdl3_ttf.lib;sdl3_mixer.lib;sdl3_net.lib;lua.lib</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Debug\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;$(ProjectDir)lib\SFML\lib;$(ProjectDir)lib\zlib\contrib\vstudio\vc14\$(Platform)\ZlibStatDebug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Debug\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_Net\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
       <Command>
@@ -451,7 +451,7 @@
     </PostBuildEvent>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Release\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;$(ProjectDir)lib\SFML\lib;$(ProjectDir)lib\zlib\contrib\vstudio\vc14\$(Platform)\ZlibStatRelease\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sdl3.lib;sdl3_image.lib;sdl3_ttf.lib;sdl3_mixer.lib;sdl3_net.lib;sfml-audio-s.lib;sfml-graphics-s.lib;sfml-network-s.lib;sfml-system-s.lib;sfml-window-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;lua.lib</AdditionalDependencies>
+      <AdditionalDependencies>sfml-audio-s.lib;sfml-graphics-s.lib;sfml-network-s.lib;sfml-system-s.lib;sfml-window-s.lib;lua.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='SDL_Release|Win32'">
@@ -476,7 +476,7 @@
       </Command>
     </PostBuildEvent>
     <Lib>
-      <AdditionalDependencies>sdl3.lib;sdl3_image.lib;sdl3_ttf.lib;sdl3_mixer.lib;sdl3_net.lib;sfml-audio-s.lib;sfml-graphics-s.lib;sfml-network-s.lib;sfml-system-s.lib;sfml-window-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;lua.lib</AdditionalDependencies>
+      <AdditionalDependencies>sdl3.lib;sdl3_image.lib;sdl3_ttf.lib;sdl3_mixer.lib;sdl3_net.lib;lua.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Release\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;$(ProjectDir)lib\SFML\lib\;$(ProjectDir)lib\zlib\contrib\vstudio\vc14\$(Platform)\ZlibStatRelease\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -512,7 +512,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>sdl3.lib;sdl3_image.lib;sdl3_ttf.lib;sdl3_mixer.lib;sdl3_net.lib;sfml-audio-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;sfml-system-s-d.lib;sfml-window-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;lua.lib</AdditionalDependencies>
+      <AdditionalDependencies>sfml-audio-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;sfml-system-s-d.lib;sfml-window-s-d.lib;lua.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Debug\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_Net\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;$(ProjectDir)lib\SFML\lib;$(ProjectDir)lib\zlib\contrib\vstudio\vc14\$(Platform)\ZlibStatDebug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -536,10 +536,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>sdl3.lib;sdl3_image.lib;sdl3_ttf.lib;sdl3_mixer.lib;sdl3_net.lib;sfml-audio-s-d.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;sfml-system-s-d.lib;sfml-window-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;lua.lib</AdditionalDependencies>
+      <AdditionalDependencies>sdl3.lib;sdl3_image.lib;sdl3_ttf.lib;sdl3_mixer.lib;sdl3_net.lib;lua.lib</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Debug\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_Net\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;$(ProjectDir)lib\SFML\lib;$(ProjectDir)lib\zlib\contrib\vstudio\vc14\$(Platform)\ZlibStatDebug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Debug\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_Net\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
       <Command>
@@ -586,7 +586,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>sdl3.lib;sdl3_image.lib;sdl3_ttf.lib;sdl3_mixer.lib;sdl3_net.lib;sfml-audio-s.lib;sfml-graphics-s.lib;sfml-network-s.lib;sfml-system-s.lib;sfml-window-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;lua.lib</AdditionalDependencies>
+      <AdditionalDependencies>sfml-audio-s.lib;sfml-graphics-s.lib;sfml-network-s.lib;sfml-system-s.lib;sfml-window-s.lib;lua.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Release\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_Net\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;$(ProjectDir)lib\SFML\lib;$(ProjectDir)lib\zlib\contrib\vstudio\vc14\$(Platform)\ZlibStatRelease\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -614,7 +614,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>sdl3.lib;sdl3_image.lib;sdl3_ttf.lib;sdl3_mixer.lib;sdl3_net.lib;sfml-audio-s.lib;sfml-graphics-s.lib;sfml-network-s.lib;sfml-system-s.lib;sfml-window-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;ws2_32.lib;lua.lib</AdditionalDependencies>
+      <AdditionalDependencies>sdl3.lib;sdl3_image.lib;sdl3_ttf.lib;sdl3_mixer.lib;sdl3_net.lib;lua.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)lib\Lua\lib\$(Platform)\Release\;$(ProjectDir)lib\SDL\lib\$(Platform)\;$(ProjectDir)lib\SDL_Image\lib\$(Platform)\;$(ProjectDir)lib\SDL_Mixer\lib\$(Platform)\;$(ProjectDir)lib\SDL_Net\lib\$(Platform)\;$(ProjectDir)lib\SDL_TTF\lib\$(Platform)\;$(ProjectDir)lib\SFML\lib\;$(ProjectDir)lib\zlib\contrib\vstudio\vc14\$(Platform)\ZlibStatRelease\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
