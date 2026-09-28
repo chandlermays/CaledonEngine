@@ -3,32 +3,21 @@
 | Author: Chandler Mays
 ------------------------------*/
 #include "BoxCollider2D.h"
+
 #include "Core/GameObject.h"
 #include "Core/Transform.h"
 
+/*-----------------------------------
+| --- Public Method Definitions --- |
+-----------------------------------*/
 /*-----------------------------------------------------------------------
 | --- Constructor: Constructs the BoxCollider2D with default values --- |
 -----------------------------------------------------------------------*/
 CE::BoxCollider2D::BoxCollider2D()
 	: Collider2D()
 	, m_size{ 1.0f, 1.0f }
-	, m_edgeRadius{ 0.0f }
+	, m_edgeRadius{ 1.0f }
 { }
-
-/*------------------------------------------------------------------------------------------------------------------------
-| --- RecalculateBounds: Recalculates the AABB based on the GameObject's transform and the box collider's properties --- |
-------------------------------------------------------------------------------------------------------------------------*/
-void CE::BoxCollider2D::RecalculateBounds()
-{
-	if (!m_pOwner)
-		return;
-
-	Vector2f worldPosition = m_pOwner->GetTransform().GetPosition() + m_offset;
-	Vector2f halfSize = m_size / 2.0f;
-
-	m_bounds.min = worldPosition - halfSize;
-	m_bounds.max = worldPosition + halfSize;
-}
 
 /*---------------------------------------------------------------------------------------------------------------
 | --- ClosestPoint: Returns the closest point on the box collider's surface to a given point in world space --- |
@@ -89,4 +78,24 @@ const std::string& CE::BoxCollider2D::GetTypeName() const
 {
 	static const std::string typeName = "BoxCollider2D";
 	return typeName;
+}
+
+
+
+/*--------------------------------------
+| --- Protected Method Definitions --- |
+--------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------------
+| --- RecalculateBounds: Recalculates the AABB based on the GameObject's transform and the box collider's properties --- |
+------------------------------------------------------------------------------------------------------------------------*/
+void CE::BoxCollider2D::RecalculateBounds()
+{
+	if (!m_pOwner)
+		return;
+
+	Vector2f worldPosition = m_pOwner->GetTransform().GetPosition() + m_offset;
+	Vector2f halfSize = m_size / 2.0f;
+
+	m_bounds.min = worldPosition - halfSize;
+	m_bounds.max = worldPosition + halfSize;
 }

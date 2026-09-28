@@ -15,6 +15,7 @@
 CE::Collider2D::Collider2D()
 	: Component()
 	, m_isTrigger{ false }
+	, m_pAttachedMaterial{ nullptr }
 { }
 
 /*-------------------------------------------------------
@@ -61,6 +62,29 @@ float CE::Collider2D::Distance(const Vector2f& point) const
 	return Vector2f::Distance(point, ClosestPoint(point));
 }
 
+CE::ColliderDistance2D CE::Collider2D::Distance(const Collider2D& other) const
+{
+	if (Overlaps(other))
+		return ResolveOverlapDistance(other);
+
+	Vector2f thisPoint = GetBounds().GetCenter();
+	Vector2f otherPoint = other.GetBounds().GetCenter();
+
+	constexpr int kClosestPointIterations = 4;
+	for (int i = 0; i < kClosestPointIterations; ++i)
+	{
+		thisPoint = ClosestPoint(otherPoint);
+		otherPoint = other.ClosestPoint(thisPoint);
+	}
+
+	float distance = Vector2f::Distance(thisPoint, otherPoint);
+	Vector2f normal = (distance > std::numeric_limits<float>::epsilon())
+		? (thisPoint - otherPoint) / distance
+		: Vector2f::Zero();
+
+	return ColliderDistance2D(thisPoint, otherPoint, normal, distance, false);
+}
+
 /*------------------------------------------------------------------------------------------------
 | --- GetBounds: Returns the Axis-Aligned Bounding Box (AABB) of the collider in world space --- |
 ------------------------------------------------------------------------------------------------*/
@@ -100,6 +124,54 @@ void CE::Collider2D::SetOffset(const Vector2f& offset)
 {
 	m_offset = offset;
 	RecalculateBounds();
+}
+
+/*--------------------------------------------------------------------------------------------------------------------
+| --- GetFriction: Returns the friction of a collider; used to control how a collision response reduces velocity --- |
+--------------------------------------------------------------------------------------------------------------------*/
+float CE::Collider2D::GetFriction() const
+{
+	return ResolveMaterial().GetFriction();
+}
+
+/*--------------------------------------------------------------------------------------------------------------------
+| --- GetBounciness: Returns the bounciness of a collider; used to control how "elastic" a collision response is --- |
+--------------------------------------------------------------------------------------------------------------------*/
+float CE::Collider2D::GetBounciness() const
+{
+	return ResolveMaterial().GetBounciness();
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+| --- GetFrictionCombo: Determines how the effective friction is calculated when two Collider2D come into contact --- |
+---------------------------------------------------------------------------------------------------------------------*/
+CE::PhysicsMaterialCombine2D CE::Collider2D::GetFrictionCombine() const
+{
+	return ResolveMaterial().GetFrictionCombine();
+}
+
+/*---------------------------------------------------------------------------------------------------------------------
+| --- GetBounceCombo: Determines how the effective bounciness is calculated when two Collider2D come into contact --- |
+---------------------------------------------------------------------------------------------------------------------*/
+CE::PhysicsMaterialCombine2D CE::Collider2D::GetBounceCombine() const
+{
+	return ResolveMaterial().GetBounceCombine();
+}
+
+/*-------------------------------------------------------------------------------------------
+| --- GetSharedMaterial: Returns the PhysicsMaterial2D that is applied to this collider --- |
+-------------------------------------------------------------------------------------------*/
+CE::PhysicsMaterial2D* CE::Collider2D::GetSharedMaterial() const
+{
+	return m_pAttachedMaterial;
+}
+
+/*-------------------------------------------------------------------------------------
+| --- SetSharedMaterial: Sets a PhysicsMaterial2D to be assigned to this collider --- |
+-------------------------------------------------------------------------------------*/
+void CE::Collider2D::SetSharedMaterial(PhysicsMaterial2D* pMaterial)
+{
+	m_pAttachedMaterial = pMaterial;
 }
 
 /*--------------------------------------------------------------------------------------
@@ -148,4 +220,31 @@ void CE::Collider2D::InvokeUpdate(Collider2D* pOther)
 void CE::Collider2D::InvokeExit(Collider2D* pOther)
 {
 	for (const auto& callback : m_onExitCallbacks) { callback(pOther); }
+}
+
+
+
+/*------------------------------------
+| --- Private Method Definitions --- |
+------------------------------------*/
+/*------------------------------------------------------------------------------------
+| --- ResolveMaterial: Returns the effective PhysicsMaterial2D for this collider --- |
+------------------------------------------------------------------------------------*/
+const CE::PhysicsMaterial2D& CE::Collider2D::ResolveMaterial() const
+{
+	if (m_pAttachedMaterial)
+		return *m_pAttachedMaterial;
+
+	// TODO: Once RigidBody2D exists, check m_pOwner's attached RigidBody2D for a material here
+	
+	return PhysicsMaterial2D::GetDefault();
+}
+
+CE::ColliderDistance2D CE::Collider2D::ResolveOverlapDistance(const Collider2D& other) const
+{
+	const AABB2D& boundsA = GetBounds();
+	const AABB2D& boundsB = other.GetBounds();
+
+	float overlapX = std::min(boundsA.max.x, boundsB.max.x) - std::max(boundsA.min.x, boundsB.min.x);
+	//...
 }

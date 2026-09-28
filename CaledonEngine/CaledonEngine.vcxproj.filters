@@ -59,6 +59,12 @@
     <Filter Include="Source Files\Systems\Physics\Components">
       <UniqueIdentifier>{646f6633-fd97-401f-bac9-4ad7b1559f0c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Systems\Physics\Materials">
+      <UniqueIdentifier>{a425222c-cf56-4aa4-b186-e1c00c924388}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Systems\Physics\Types">
+      <UniqueIdentifier>{277ea68b-c716-4f36-821b-437d229d239f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Component.cpp">
@@ -177,6 +183,12 @@
     </ClCompile>
     <ClCompile Include="DynamicLibrary.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Physics\Components\CircleCollider2D.cpp">
+      <Filter>Source Files\Systems\Physics\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Physics\Materials\PhysicsMaterial2D.cpp">
+      <Filter>Source Files\Systems\Physics\Materials</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -353,6 +365,39 @@
     </ClInclude>
     <ClInclude Include="DynamicLibraryInterface.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Physics\Components\CircleCollider2D.h">
+      <Filter>Source Files\Systems\Physics\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Physics\Components\RigidBody2D.h">
+      <Filter>Source Files\Systems\Physics\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Physics\Materials\PhysicsMaterial2D.h">
+      <Filter>Source Files\Systems\Physics\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Physics\Types\BodyType2D.h">
+      <Filter>Source Files\Systems\Physics\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Physics\Types\BodyConstraints2D.h">
+      <Filter>Source Files\Systems\Physics\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Physics\Types\BodyInterpolation2D.h">
+      <Filter>Source Files\Systems\Physics\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Physics\Types\ForceMode2D.h">
+      <Filter>Source Files\Systems\Physics\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Physics\Types\SlideResults2D.h">
+      <Filter>Source Files\Systems\Physics\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Physics\Types\SlideConfig2D.h">
+      <Filter>Source Files\Systems\Physics\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Physics\Types\ColliderDistance2D.h">
+      <Filter>Source Files\Systems\Physics\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Physics\Materials\PhysicsMaterialCombine2D.h">
+      <Filter>Source Files\Systems\Physics\Materials</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

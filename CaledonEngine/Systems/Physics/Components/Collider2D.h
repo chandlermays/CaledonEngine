@@ -5,10 +5,24 @@
 #pragma once
 #include "Core/Component.h"
 #include "Systems/Physics/AABB2D.h"
+#include "Systems/Physics/Materials/PhysicsMaterial2D.h"
+#include "Systems/Physics/Materials/PhysicsMaterialCombine2D.h"
+#include "Systems/Physics/Types/ColliderDistance2D.H"
 #include "Utilities/Math/Vector2.h"
 
 #include <functional>
 #include <vector>
+
+// The parent class for collider types used with 2D gameplay. Provides methods to define the shape and physical behavior
+// for 2D object interactions, used to detect collisions, and trigger events in 2D game environments.
+
+// The Collider2D class serves as a parent class for various two-dimenstional collider components that efine the physical boundaries of objects.
+// These colliders enable interaction with other objects in a 2D physics simulation. They play a key role in detecting collisions and managing
+// interactions, and setting up triggers for events when objects overlap or make contact with each other.
+
+// To use these collider components, add them to GameObjects and configure them to match physical boundaries. While they are not necessary for static
+// or trigger objects, you can add a Rigidbody2D components to enable dynamic interactions and movement. The recommended best practice is to properly
+// configure size, position, and type because it is crucial o avoid inaccurate collision detefction or unintended behavior.
 
 namespace CE
 {
@@ -21,6 +35,7 @@ namespace CE
 		AABB2D m_bounds;																	// The Axis-Aligned Bounding Box (AABB) of the collider in world space
 		Vector2f m_offset;																	// Offset of the collider's bounds relative to the GameObject's position
 		bool m_isTrigger;																	// Whether the collider is a trigger (does not cause physical collisions, only events)
+		PhysicsMaterial2D* m_pAttachedMaterial;												// Pointer to the PhysicsMaterial2D explicitly assigned to this collider
 
 		std::vector<CollisionCallback> m_onEnterCallbacks;									// Callbacks to invoke when a collision starts
 		std::vector<CollisionCallback> m_onUpdateCallbacks;									// Callbacks to invoke when a collision is ongoing
@@ -28,6 +43,10 @@ namespace CE
 
 		virtual void RecalculateBounds() = 0;												// Recalculates the AABB based on the GameObject's transform and any collider-specific properties
 
+	private:
+		const PhysicsMaterial2D& ResolveMaterial() const;									// Returns the effective PhysicsMaterial2D for this collider
+		ColliderDistance2D ResolveOverlapDistance(const Collider2D& other) const;
+	
 	public:
 		Collider2D();																		// Constructor
 		~Collider2D() override;																// Destructor
@@ -41,6 +60,7 @@ namespace CE
 
 		virtual Vector2f ClosestPoint(const Vector2f& point) const = 0;						// Returns the closest point on the collider's surface to a given point in world space
 		float Distance(const Vector2f& point) const;										// Returns the distance from a given point in world space to the closest point on the collider's surface
+		ColliderDistance2D Distance(const Collider2D& other) const;
 
 		virtual bool Overlaps(const Collider2D& other) const = 0;							// Returns true if this collider overlaps with another collider
 
@@ -52,6 +72,14 @@ namespace CE
 		const Vector2f& GetOffset() const;													// Returns the offset of the collider's bounds relative to the GameObject's position
 		void SetOffset(const Vector2f& offset);												// Sets the offset of the collider's bounds relative to the GameObject's position and recalculates the bounds
 
+		float GetFriction() const;															// Returns the friction of a collider; used to control how a collision response reduces velocity
+		float GetBounciness() const;														// Returns the bounciness of a collider; used to control how "elastic" a collision response is
+		PhysicsMaterialCombine2D GetFrictionCombine() const;								// Determines how the effective friction is calculated when two Collider2D come into contact
+		PhysicsMaterialCombine2D GetBounceCombine() const;									// Determines how the effective bounciness is calculated when two Collider2D come into contact
+
+		PhysicsMaterial2D* GetSharedMaterial() const;										// Returns the PhysicsMaterial2D that is applied to this collider
+		void SetSharedMaterial(PhysicsMaterial2D* pMaterial);								// Sets a PhysicalMaterial2D to be assigned to this collider
+
 		void OnCollisionEnter(CollisionCallback callback);									// Registers a callback to be invoked when a collision starts
 		void OnCollisionUpdate(CollisionCallback callback);									// Registers a callback to be invoked when a collision is ongoing
 		void OnCollisionExit(CollisionCallback callback);									// Registers a callback to be invoked when a collision ends
@@ -61,3 +89,7 @@ namespace CE
 		void InvokeExit(Collider2D* pOther);												// Invokes all registered collision exit callbacks with the other collider as an argument
 	};
 }
+
+// Properties to add to the base Collider2D class:
+// ----------------------------------------------------
+// Rigidbody2D attachedRigidbody						:			the Rigidbody2D attached to the Collider2D
