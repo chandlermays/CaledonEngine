@@ -274,4 +274,5 @@ void CE::GameObject::Destroy()
 	m_children.clear();
 	m_components.clear();
 	m_pTransform = nullptr;
+	m_pParent = nullptr;
 }

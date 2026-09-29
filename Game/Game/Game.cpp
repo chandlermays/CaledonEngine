@@ -127,14 +127,12 @@ void Game::CreateScenes()
 void Game::LoadScenes(const std::string& masterXmlPath)
 {
 	CE::ResourceManager* pResourceManager = m_pEngineManager->GetResourceManager();
-	if (!pResourceManager)
+	if (!pResourceManager || !m_pGameObjectCreator)
 		return;
 
 	CE::SceneManager* pSceneManager = m_pEngineManager->GetSceneManager();
 
-	auto sceneFiles = pResourceManager->LoadMasterXML(masterXmlPath);
-
-	for (const auto& [name, path] : sceneFiles)
+	for (const auto& [name, path] : pResourceManager->LoadMasterXML(masterXmlPath);)
 	{
 		std::string fileData = pResourceManager->GetResource(path);
 		if (fileData.empty())
@@ -146,8 +144,7 @@ void Game::LoadScenes(const std::string& masterXmlPath)
 		auto pScene = std::make_unique<CE::Scene>();
 		pScene->SetName(name);
 
-		std::vector<std::unique_ptr<CE::GameObject>> gameObjects = m_pGameObjectCreator->CreateGameObjects(fileData);
-		for (auto& pGameObject : gameObjects)
+		for (auto& pGameObject : m_pGameObjectCreator->CreateGameObjects(fileData))
 		{
 			pScene->AddGameObject(std::move(pGameObject));
 		}

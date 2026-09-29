@@ -133,8 +133,10 @@
     <ClInclude Include="Systems\Physics\Materials\PhysicsMaterialCombine2D.h" />
     <ClInclude Include="Systems\Physics\Types\BodyConstraints2D.h" />
     <ClInclude Include="Systems\Physics\Types\BodyInterpolation2D.h" />
+    <ClInclude Include="Systems\Physics\Types\BodySleepMode2D.h" />
     <ClInclude Include="Systems\Physics\Types\BodyType2D.h" />
     <ClInclude Include="Systems\Physics\Types\ColliderDistance2D.h" />
+    <ClInclude Include="Systems\Physics\Types\CollisionDetectionMode2D.h" />
     <ClInclude Include="Systems\Physics\Types\ForceMode2D.h" />
     <ClInclude Include="Systems\Physics\Types\SlideConfig2D.h" />
     <ClInclude Include="Systems\Physics\Types\SlideResults2D.h" />

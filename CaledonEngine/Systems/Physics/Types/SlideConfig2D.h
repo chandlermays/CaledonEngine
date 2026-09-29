@@ -4,12 +4,28 @@
 ------------------------------*/
 #pragma once
 
-// Struct (SlideConfig)
-// The configuration that controls how a RigidBody2D.Slide method behaves
-//
-// Properties:
-// Vec2 gravity							:			the gravity to be applied to the slide position
-// float gravitySlipAngle				:			when the gravity movement causes a contact with a Collider2D, slippage may occur if the surface angle is greater than this angle
-// int maxIterations					:			controls the maximum number of iterations to perform when determining how a RigidBody2D will slide
-// Collider2D selectedCollider			:			the specific Collider2D attached to this RigidBody2D to be used to detect contacts
-// Vec2 startPosition					:			the start position to slide the RigidBody2D from
+#include "Utilities/Math/Vector2.h"
+
+// The configuration that controls how RigidBody2D::Slide behaves
+
+namespace CE
+{
+	class Collider2D;
+
+	struct SlideConfig2D
+	{
+		Vector2f gravity;								// The gravity to be applied to the slide position
+		float gravitySlipAngle;							// When gravity movement causes a contact with a Collider2D, slippage may occur if the surface angle is greater than this angle
+		int maxIterations;								// Controls the maximum number of iterations to perform when determining how a RigidBody2D will slide
+		Collider2D* selectedCollider;					// The specific Collider2D attached to this RigidBody2D used to detect contacts
+		Vector2f startPosition;							// The start position to slide the RigidBody2D from
+
+		constexpr SlideConfig2D()						// Constructor
+			: gravity{}
+			, gravitySlipAngle{ 0.0f }
+			, maxIterations{ 1 }
+			, selectedCollider{ nullptr }
+			, startPosition{}
+		{}
+	};
+}

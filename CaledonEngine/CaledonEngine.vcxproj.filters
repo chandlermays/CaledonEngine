@@ -399,6 +399,12 @@
     <ClInclude Include="Systems\Physics\Materials\PhysicsMaterialCombine2D.h">
       <Filter>Source Files\Systems\Physics\Materials</Filter>
     </ClInclude>
+    <ClInclude Include="Systems\Physics\Types\CollisionDetectionMode2D.h">
+      <Filter>Source Files\Systems\Physics\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Physics\Types\BodySleepMode2D.h">
+      <Filter>Source Files\Systems\Physics\Types</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\Component.inl">

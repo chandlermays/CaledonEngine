@@ -67,7 +67,7 @@ void InspectorPanel::DrawComponent(CE::Component* pComponent)
 		return;
 
 	const std::string& typeName = pComponent->GetTypeName();
-	const CE::ComponentFactory::RegistryEntry* pTypeInfo = CE::ComponentFactory::GetTypeInfo(typeName);
+	const auto* pTypeInfo = CE::ComponentFactory::GetTypeInfo(typeName);
 
 	ImGui::PushID(pComponent);
 
@@ -79,7 +79,7 @@ void InspectorPanel::DrawComponent(CE::Component* pComponent)
 		}
 		else
 		{
-			for (const CE::PropertyDescriptor& property : pTypeInfo->properties)
+			for (const auto& property : pTypeInfo->properties)
 			{
 				DrawProperty(pComponent, property);
 			}
@@ -140,6 +140,7 @@ void InspectorPanel::DrawProperty(CE::Component* pComponent, const CE::PropertyD
 				static_cast<std::uint8_t>(components[1] * 255.0f),
 				static_cast<std::uint8_t>(components[2] * 255.0f),
 				static_cast<std::uint8_t>(components[3] * 255.0f));
+
 			property.setter(pComponent, newColor);
 		}
 	}
@@ -165,42 +166,41 @@ void InspectorPanel::DrawAddComponentMenu(CE::GameObject* pGameObject)
 		ImGui::OpenPopup("AddComponentPopup");
 	}
 
-	if (ImGui::BeginPopup("AddComponentPopup"))
+	if (!ImGui::BeginPopup("AddComponentPopup"))
+		return;
+
+	std::unordered_map<std::string, std::vector<std::string>> categorized;
+	for (const auto& [typeName, entry] : CE::ComponentFactory::GetAllRegisteredTypes())
 	{
-		std::unordered_map<std::string, std::vector<std::string>> categorized;
-		for (const auto& [typeName, entry] : CE::ComponentFactory::GetAllRegisteredTypes())
+		if (entry.defaultCreator)		// Types with no default constructor (e.g. Transform) aren't offered here
 		{
-			if (entry.defaultCreator)		// Types with no default constructor (e.g. Transform) aren't offered here
-			{
-				categorized[entry.category].push_back(typeName);
-			}
+			categorized[entry.category].push_back(typeName);
 		}
+	}
 
-		for (const auto& [category, typeNames] : categorized)
+	for (const auto& [category, typeNames] : categorized)
+	{
+		ImGui::Separator();
+		ImGui::Text("%s", category.c_str());
+		ImGui::Separator();
+
+		for (const std::string& typeName : typeNames)
 		{
-			ImGui::Separator();
-			ImGui::Text("%s", category.c_str());
-			ImGui::Separator();
+			const auto* pEntry = CE::ComponentFactory::GetTypeInfo(typeName);
+			bool alreadyPresent = pEntry && !pEntry->allowMultiple && CE::ComponentFactory::HasComponentOfType(pGameObject, typeName);
 
-
-			for (const std::string& typeName : typeNames)
+			if (ImGui::MenuItem(typeName.c_str(), nullptr, false, !alreadyPresent) && pEntry && pEntry->defaultCreator)
 			{
-				const CE::ComponentFactory::RegistryEntry* pEntry = CE::ComponentFactory::GetTypeInfo(typeName);
-				bool alreadyPresent = pEntry && !pEntry->allowMultiple && CE::ComponentFactory::HasComponentOfType(pGameObject, typeName);
-
-				if (ImGui::MenuItem(typeName.c_str(), nullptr, false, !alreadyPresent))
+				std::unique_ptr<CE::Component> pNewComponent(pEntry->defaultCreator());
+				if (pNewComponent)
 				{
-					if (pEntry && pEntry->defaultCreator)
-					{
-						std::unique_ptr<CE::Component> pNewComponent = pEntry->defaultCreator();
-						CE::Component* pRawComponent = pNewComponent.get();
-						pGameObject->AddComponent(std::move(pNewComponent));
-						pRawComponent->Initialize();
-					}
+					CE::Component* pComponent = pNewComponent.get();
+					pGameObject->AddComponent(std::move(pNewComponent));
+					pComponent->Initialize();
 				}
 			}
 		}
-
-		ImGui::EndPopup();
 	}
+
+	ImGui::EndPopup();
 }

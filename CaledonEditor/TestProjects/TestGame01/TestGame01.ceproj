@@ -1,4 +1,0 @@
-<CaledonProject name="TestGame01">
-	<Module path="TestGame01Module.dll"/>
-	<MasterAssets path="Assets/MasterAssets.xml"/>
-</CaledonProject>

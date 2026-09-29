@@ -59,8 +59,8 @@ namespace CE
 		void Update(float deltaTime) override;												// Updates the Collider2D's bounds based on the GameObject's transform
 
 		virtual Vector2f ClosestPoint(const Vector2f& point) const = 0;						// Returns the closest point on the collider's surface to a given point in world space
-		float Distance(const Vector2f& point) const;										// Returns the distance from a given point in world space to the closest point on the collider's surface
 		ColliderDistance2D Distance(const Collider2D& other) const;
+		float Distance(const Vector2f& point) const;										// Returns the distance from a given point in world space to the closest point on the collider's surface
 
 		virtual bool Overlaps(const Collider2D& other) const = 0;							// Returns true if this collider overlaps with another collider
 

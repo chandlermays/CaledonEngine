@@ -20,32 +20,32 @@ namespace CE
 		// Destructor
 
 		// Properties:
-		// angularDamping					:				the angular damping of the RigidBody2D angular velocity
-		// angularVelocity					:				angular velocity in degrees per second
-		// bodyType							:				the physical behavior type of the RigidBody2D
-		// centerOfMass						:				the center of mass of the RigidBody2D in local space
-		// colliderCount					:				returns the number of Collider2D attached to this RigidBody2D
-		// collisionDetectionMode			:				the method used by the physics engine to check if two objects have collided
-		// constraints						:				controls which degrees of freedom are allowed for the simulation of this RigidBody2D
-		// freezeRotation					:				controls whether physics will change the rotation of the object
-		// gravityScale						:				the degree to which this object is affected by gravity
-		// inertia							:				the RigidBody2D's resistance to changes in angular velocity (rotation)
-		// interpolation					:				physics interpolation used between updates
-		// linearDamping					:				the linear damping of the RigidBody2D linear velocity
-		// linearVelocity					:				the liner velocity of the RigidBody2D represents the rate of change over time of the UnnamedClass position in world-units
-		// linearVelocityX					:				the X component of the linear velocity of the RigidBody2D in world-units per second
-		// linearVelocityY					:				the Y component of the linear velocity of the RigidBody2D in world-units per second
-		// localToWorldMatrix				:				the transformation matrix used to transform the RigidBody2D to world space
-		// mass								:				the mass of the RigidBody2D
-		// position							:				the position of the RigidBody2D
-		// rotation							:				the rotation of the RigidBody2D
-		// sharedMaterial					:				the PhysicsMaterial2D that is applied to all Collider2D attached to this RigidBody2D
-		// simulated						:				indicates whether the RigidBody2D should be simulated or not by the physics system
-		// sleepMode						:				the sleep state that the RigidBody2D will initially be in
-		// totalForce						:				the total amount of force that has been explicitly applied to this RigidBody2D since the last physics simulation step
-		// totalTorque						:				the total amount of torque that has been explicitly applied to this RigidBody2D since the last physics simulation step
-		// useFullKinematicContacts			:				should kinematic/kinematic and kinematic/static collisions be allowed?
-		// worldCenterOfMass				:				the center of mass of the RigidBody2D in world space
+		// float angularDamping											:				the angular damping of the RigidBody2D angular velocity
+		// float angularVelocity										:				angular velocity in degrees per second
+		// BodyType2D bodyType											:				the physical behavior type of the RigidBody2D
+		// Vec2 centerOfMass											:				the center of mass of the RigidBody2D in local space
+		// int colliderCount											:				returns the number of Collider2D attached to this RigidBody2D
+		// CollisionDetectionMode2D collisionDetectionMode				:				the method used by the physics engine to check if two objects have collided
+		// BodyConstraints2D constraints								:				controls which degrees of freedom are allowed for the simulation of this RigidBody2D
+		// bool freezeRotation											:				controls whether physics will change the rotation of the object
+		// float gravityScale											:				the degree to which this object is affected by gravity
+		// float inertia												:				the RigidBody2D's resistance to changes in angular velocity (rotation)
+		// BodyInterpolation2D interpolation							:				physics interpolation used between updates
+		// float linearDamping											:				the linear damping of the RigidBody2D linear velocity
+		// Vec2 linearVelocity											:				the liner velocity of the RigidBody2D represents the rate of change over time of the UnnamedClass position in world-units
+		// float linearVelocityX										:				the X component of the linear velocity of the RigidBody2D in world-units per second
+		// float linearVelocityY										:				the Y component of the linear velocity of the RigidBody2D in world-units per second
+		// (ignore) localToWorldMatrix									:				the transformation matrix used to transform the RigidBody2D to world space
+		// float mass													:				the mass of the RigidBody2D
+		// Vec2 position												:				the position of the RigidBody2D
+		// float rotation												:				the rotation of the RigidBody2D
+		// PhysicsMaterial2D sharedMaterial								:				the PhysicsMaterial2D that is applied to all Collider2D attached to this RigidBody2D
+		// bool simulated												:				indicates whether the RigidBody2D should be simulated or not by the physics system
+		// BodySleepMode2D sleepMode									:				the sleep state that the RigidBody2D will initially be in
+		// Vec2 totalForce												:				the total amount of force that has been explicitly applied to this RigidBody2D since the last physics simulation step
+		// float totalTorque											:				the total amount of torque that has been explicitly applied to this RigidBody2D since the last physics simulation step
+		// bool useFullKinematicContacts								:				should kinematic/kinematic and kinematic/static collisions be allowed?
+		// Vec2 worldCenterOfMass										:				the center of mass of the RigidBody2D in world space
 
 		// Public Methods:
 		// void AddForce(Vec2 force, enum = enum.Force)												:				apply a force to the RigidBody2D

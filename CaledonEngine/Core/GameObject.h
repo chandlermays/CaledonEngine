@@ -81,11 +81,8 @@ namespace CE
 	{
 		for (const auto& pComponent : m_components)
 		{
-			T* pResult = dynamic_cast<T*>(pComponent.get());
-			if (pResult != nullptr)
-			{
+			if (T* pResult = dynamic_cast<T*>(pComponent.get()))
 				return pResult;
-			}
 		}
 		return nullptr;
 	}
@@ -96,21 +93,14 @@ namespace CE
 	template<typename T>
 	inline T* GameObject::GetComponentInChildren() const
 	{
-		T* pComponent = GetComponent<T>();
-		if (pComponent != nullptr)
-		{
+		if (T* pComponent = GetComponent<T>())
 			return pComponent;
-		}
 
 		for (const auto& pChild : m_children)
 		{
-			pComponent = pChild->GetComponentInChildren<T>();
-			if (pComponent != nullptr)
-			{
+			if (T* pComponent = pChild->GetComponentInChildren<T>())
 				return pComponent;
-			}
 		}
-
 		return nullptr;
 	}
 
@@ -120,18 +110,10 @@ namespace CE
 	template<typename T>
 	inline T* GameObject::GetComponentInParent() const
 	{
-		T* pComponent = GetComponent<T>();
-		if (pComponent != nullptr)
-		{
+		if (T* pComponent = GetComponent<T>())
 			return pComponent;
-		}
 
-		if (m_pParent != nullptr)
-		{
-			return m_pParent->GetComponentInParent<T>();
-		}
-
-		return nullptr;
+		return m_pParent ? m_pParent->GetComponentInParent<T>() : nullptr;
 	}
 
 	/*---------------------------------------------------------------------------------------------------
@@ -141,11 +123,9 @@ namespace CE
 	inline std::vector<T*> GameObject::GetComponents() const
 	{
 		std::vector<T*> components;
-
 		for (const auto& pComponent : m_components)
 		{
-			T* pResult = dynamic_cast<T*>(pComponent.get());
-			if (pResult != nullptr)
+			if (T* pResult = dynamic_cast<T*>(pComponent.get()))
 			{
 				components.emplace_back(pResult);
 			}
@@ -159,23 +139,12 @@ namespace CE
 	template<typename T>
 	inline std::vector<T*> GameObject::GetComponentsInChildren() const
 	{
-		std::vector<T*> components;
-
-		for (const auto& pComponent : m_components)
-		{
-			T* pResult = dynamic_cast<T*>(pComponent.get());
-			if (pResult != nullptr)
-			{
-				components.emplace_back(pResult);
-			}
-		}
-
+		std::vector<T*> components = GetComponents<T>();
 		for (const auto& pChild : m_children)
 		{
 			std::vector<T*> childComponents = pChild->GetComponentsInChildren<T>();
 			components.insert(components.end(), childComponents.begin(), childComponents.end());
 		}
-
 		return components;
 	}
 
@@ -185,23 +154,12 @@ namespace CE
 	template<typename T>
 	inline std::vector<T*> GameObject::GetComponentsInParent() const
 	{
-		std::vector<T*> components;
-
-		for (const auto& pComponent : m_components)
-		{
-			T* pResult = dynamic_cast<T*>(pComponent.get());
-			if (pResult != nullptr)
-			{
-				components.emplace_back(pResult);
-			}
-		}
-
-		if (m_pParent != nullptr)
+		std::vector<T*> components = GetComponents<T>();
+		if (m_pParent)
 		{
 			std::vector<T*> parentComponents = m_pParent->GetComponentsInParent<T>();
 			components.insert(components.end(), parentComponents.begin(), parentComponents.end());
 		}
-
 		return components;
 	}
 }

@@ -19,7 +19,7 @@ void CE::ComponentFactory::CreateComponent(GameObject* pGameObject, const std::s
 {
 	auto& registry = GetRegistry();
 	auto it = registry.find(componentID);
-	if (it == registry.end() || !it->second.xmlCreator)
+	if (!pGameObject || it == registry.end() || !it->second.xmlCreator)
 		return;
 
 	if (!it->second.allowMultiple && HasComponentOfType(pGameObject, componentID))
