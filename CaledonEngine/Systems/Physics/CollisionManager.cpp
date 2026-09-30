@@ -4,8 +4,6 @@
 ------------------------------*/
 #include "CollisionManager.h"
 #include "Core/GameObject.h"
-#include "Core/Transform.h"
-#include "Systems/Engine/LoggingManager.h"
 
 #include <algorithm>
 
@@ -19,6 +17,7 @@ CE::CollisionManager::~CollisionManager()
 {
 	Shutdown();
 }
+
 /*-----------------------------------------------------------
 | --- Initialize: Prepares the CollisionManager for use --- |
 -----------------------------------------------------------*/
@@ -27,12 +26,67 @@ bool CE::CollisionManager::Initialize()
 	return true;
 }
 
-/*--------------------------------------------------------------------------------------------
-| --- Update: Updates the collision system, checking for overlaps and invoking callbacks --- |
---------------------------------------------------------------------------------------------*/
-void CE::CollisionManager::Update(float)
+/*-----------------------------------------------------------------
+| --- Shutdown: Cleans up and shuts down the collision system --- |
+-----------------------------------------------------------------*/
+void CE::CollisionManager::Shutdown()
 {
+	m_activeColliders.clear();
 	m_currentOverlaps.clear();
+	m_previousOverlaps.clear();
+}
+
+/*------------------------------------------------------------------------------------------------
+| --- RefreshAllBounds: Recalculates every active collider's bounds from its current Transform --- |
+------------------------------------------------------------------------------------------------*/
+void CE::CollisionManager::RefreshAllBounds() const
+{
+	for (Collider2D* pCollider : m_activeColliders)
+	{
+		if (pCollider && pCollider->GetOwner())
+		{
+			pCollider->RefreshBounds();
+		}
+	}
+}
+
+/*--------------------------------------------------------------------------------------------------------
+| --- QueryContacts: Contacts of one collider against every other active collider. The normal points --- |
+| --- from the other collider toward pCollider, so GetMTV() moves pCollider out. Does not refresh    --- |
+| --- bounds: the caller refreshes pCollider after moving it (and calls RefreshAllBounds once).      --- |
+--------------------------------------------------------------------------------------------------------*/
+std::vector<CE::Contact2D> CE::CollisionManager::QueryContacts(Collider2D* pCollider) const
+{
+	std::vector<Contact2D> contacts;
+
+	if (!pCollider || !pCollider->IsActive() || !pCollider->GetOwner())
+		return contacts;
+
+	for (Collider2D* pOther : m_activeColliders)
+	{
+		if (!pOther || pOther == pCollider || !pOther->IsActive() || !pOther->GetOwner())
+			continue;
+
+		Contact2D contact;
+		if (TryBuildContact(pCollider, pOther, contact))
+		{
+			contacts.push_back(contact);
+		}
+	}
+
+	return contacts;
+}
+
+/*------------------------------------------------------------------------------------------------------
+| --- DetectContacts: Refreshes bounds, then returns every overlapping collider pair as a contact --- |
+------------------------------------------------------------------------------------------------------*/
+std::vector<CE::Contact2D> CE::CollisionManager::DetectContacts() const
+{
+	// Bounds follow Transforms, and Transforms move during the physics step (and in gameplay Update),
+	// so refresh first; otherwise contacts would be computed from last frame's positions.
+	RefreshAllBounds();
+
+	std::vector<Contact2D> contacts;
 
 	for (size_t i = 0; i < m_activeColliders.size(); ++i)
 	{
@@ -46,60 +100,61 @@ void CE::CollisionManager::Update(float)
 			if (!pB || !pB->IsActive() || !pB->GetOwner())
 				continue;
 
-			// Broad-phase: cheap AABB test first
-			if (!pA->GetBounds().Overlaps(pB->GetBounds()))
-				continue;
-
-			// Narrow-phase: exact shape test — identical to broad-phase for two boxes today
-			// (a box's true shape IS its AABB), starts to matter once CircleCollider2D exists.
-			if (!pA->Overlaps(*pB))
-				continue;
-
-			ColliderPair pair = MakePair(pA, pB);
-			m_currentOverlaps.insert(pair);
-
-			bool wasOverlapping = m_previousOverlaps.count(pair) > 0;
-			bool isTriggerPair = pA->IsTrigger() || pB->IsTrigger();
-
-			if (wasOverlapping)
+			Contact2D contact;
+			if (TryBuildContact(pA, pB, contact))
 			{
-				pA->InvokeUpdate(pB);
-				pB->InvokeUpdate(pA);
-			}
-			else
-			{
-				pA->InvokeEnter(pB);
-				pB->InvokeEnter(pA);
-			}
-
-			// Any pair involving a trigger is overlap-only; only solid-vs-solid gets pushed apart.
-			if (!isTriggerPair)
-			{
-				ResolveCollision(pA, pB);
+				contacts.push_back(contact);
 			}
 		}
 	}
 
+	return contacts;
+}
+
+/*------------------------------------------------------------------------------------------------------
+| --- DispatchContactEvents: Invokes Enter / Update / Exit callbacks from the given contact list --- |
+------------------------------------------------------------------------------------------------------*/
+void CE::CollisionManager::DispatchContactEvents(const std::vector<Contact2D>& contacts)
+{
+	m_currentOverlaps.clear();
+
+	for (const Contact2D& contact : contacts)
+	{
+		Collider2D* pA = contact.pColliderA;
+		Collider2D* pB = contact.pColliderB;
+
+		ColliderPair pair = MakePair(pA, pB);
+		m_currentOverlaps.insert(pair);
+
+		if (m_previousOverlaps.count(pair) > 0)
+		{
+			pA->InvokeUpdate(pB);
+			pB->InvokeUpdate(pA);
+		}
+		else
+		{
+			pA->InvokeEnter(pB);
+			pB->InvokeEnter(pA);
+		}
+	}
+
+	// Collect exits first: callbacks can destroy colliders, which purges the overlap sets mid-iteration
+	std::vector<ColliderPair> exited;
 	for (const ColliderPair& pair : m_previousOverlaps)
 	{
 		if (m_currentOverlaps.find(pair) == m_currentOverlaps.end())
 		{
-			pair.first->InvokeExit(pair.second);
-			pair.second->InvokeExit(pair.first);
+			exited.push_back(pair);
 		}
 	}
 
-	m_previousOverlaps = std::move(m_currentOverlaps);
-}
+	for (const ColliderPair& pair : exited)
+	{
+		pair.first->InvokeExit(pair.second);
+		pair.second->InvokeExit(pair.first);
+	}
 
-/*-----------------------------------------------------------------
-| --- Shutdown: Cleans up and shuts down the collision system --- |
------------------------------------------------------------------*/
-void CE::CollisionManager::Shutdown()
-{
-	m_activeColliders.clear();
-	m_currentOverlaps.clear();
-	m_previousOverlaps.clear();
+	m_previousOverlaps = std::move(m_currentOverlaps);
 }
 
 /*----------------------------------------------------------------------------
@@ -124,22 +179,15 @@ void CE::CollisionManager::RemoveActiveCollider(Collider2D* pCollider)
 		m_activeColliders.erase(it);
 	}
 
-	// Purge any tracked overlap state involving this collider — otherwise a destroyed
-	// collider could trigger a phantom OnCollisionExit next frame against something
-	// that no longer exists.
+	// Purge any tracked overlap state involving this collider so a destroyed collider
+	// can't trigger a phantom OnCollisionExit against something that no longer exists.
 	auto involvesCollider = [pCollider](const ColliderPair& pair)
 		{
 			return pair.first == pCollider || pair.second == pCollider;
 		};
 
-	for (auto it2 = m_currentOverlaps.begin(); it2 != m_currentOverlaps.end(); )
-	{
-		it2 = involvesCollider(*it2) ? m_currentOverlaps.erase(it2) : std::next(it2);
-	}
-	for (auto it2 = m_previousOverlaps.begin(); it2 != m_previousOverlaps.end(); )
-	{
-		it2 = involvesCollider(*it2) ? m_previousOverlaps.erase(it2) : std::next(it2);
-	}
+	std::erase_if(m_currentOverlaps, involvesCollider);
+	std::erase_if(m_previousOverlaps, involvesCollider);
 }
 
 
@@ -154,43 +202,54 @@ CE::CollisionManager::ColliderPair CE::CollisionManager::MakePair(Collider2D* pA
 	return (pA < pB) ? ColliderPair(pA, pB) : ColliderPair(pB, pA);
 }
 
-/*---------------------------------------------------------------------------------------------------------------
-| --- ResolveCollision: Resolves the collision between two colliders, applying a simple separation response --- |
----------------------------------------------------------------------------------------------------------------*/
-void CE::CollisionManager::ResolveCollision(Collider2D* pA, Collider2D* pB)
+/*----------------------------------------------------------------------------------------------
+| --- TryBuildContact: Broad-phase AABB test, then narrow-phase shape test, then builds the contact --- |
+----------------------------------------------------------------------------------------------*/
+bool CE::CollisionManager::TryBuildContact(Collider2D* pA, Collider2D* pB, Contact2D& out)
 {
-	// Minimum-translation-vector separation along whichever axis has less overlap.
-	// Honest simplification worth naming: with no Rigidbody/velocity/static-vs-dynamic
-	// concept in the engine yet, this just splits the correction evenly between both
-	// objects — a working first pass, not a final physics model.
+	if (!pA->GetBounds().Overlaps(pB->GetBounds()))
+		return false;
+
+	if (!pA->Overlaps(*pB))
+		return false;
+
+	return BuildContact(pA, pB, out);
+}
+
+/*------------------------------------------------------------------------------------------------------
+| --- BuildContact: Minimum-translation contact for an overlapping pair. Normal points from B to A, --- |
+| --- depth is the penetration along the axis of least overlap.                                     --- |
+| --- AABB-based, so exact for box-vs-box only; switch to Collider2D::Distance(other) once the      --- |
+| --- shape-aware overlap distance is finished (needed for CircleCollider2D).                       --- |
+------------------------------------------------------------------------------------------------------*/
+bool CE::CollisionManager::BuildContact(Collider2D* pA, Collider2D* pB, Contact2D& out)
+{
 	const AABB2D& boundsA = pA->GetBounds();
 	const AABB2D& boundsB = pB->GetBounds();
 
-	float overlapX = std::min(boundsA.max.x, boundsB.max.x) - std::max(boundsA.min.x, boundsB.min.x);
-	float overlapY = std::min(boundsA.max.y, boundsB.max.y) - std::max(boundsA.min.y, boundsB.min.y);
+	const float overlapX = std::min(boundsA.max.x, boundsB.max.x) - std::max(boundsA.min.x, boundsB.min.x);
+	const float overlapY = std::min(boundsA.max.y, boundsB.max.y) - std::max(boundsA.min.y, boundsB.min.y);
 
-	if (overlapX <= 0.0f || overlapY <= 0.0f)
-		return;
+	if (overlapX < 0.0f || overlapY < 0.0f)
+		return false;
 
-	Vector2f centerA = boundsA.GetCenter();
-	Vector2f centerB = boundsB.GetCenter();
-	Vector2f pushDirection;
-	float pushAmount;
+	const Vector2f centerA = boundsA.GetCenter();
+	const Vector2f centerB = boundsB.GetCenter();
+
+	Vector2f normal;
+	float depth;
 
 	if (overlapX < overlapY)
 	{
-		pushAmount = overlapX * 0.5f;
-		pushDirection = { (centerA.x < centerB.x) ? -1.0f : 1.0f, 0.0f };
+		depth = overlapX;
+		normal = { (centerA.x < centerB.x) ? -1.0f : 1.0f, 0.0f };
 	}
 	else
 	{
-		pushAmount = overlapY * 0.5f;
-		pushDirection = { 0.0f, (centerA.y < centerB.y) ? -1.0f : 1.0f };
+		depth = overlapY;
+		normal = { 0.0f, (centerA.y < centerB.y) ? -1.0f : 1.0f };
 	}
 
-	Transform& transformA = pA->GetOwner()->GetTransform();
-	Transform& transformB = pB->GetOwner()->GetTransform();
-
-	transformA.SetPosition(transformA.GetPosition() + pushDirection * pushAmount);
-	transformB.SetPosition(transformB.GetPosition() - pushDirection * pushAmount);
+	out = Contact2D(pA, pB, normal, depth, pA->IsTrigger() || pB->IsTrigger());
+	return true;
 }

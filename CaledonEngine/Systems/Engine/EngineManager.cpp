@@ -6,6 +6,7 @@
 #include "LoggingManager.h"
 
 #include "Systems/Physics/CollisionManager.h"
+#include "Systems/Physics/PhysicsManager.h"
 #include "Systems/Rendering/GraphicsManager.h"
 #include "Systems/Resources/ResourceManager.h"
 #include "Systems/Input/InputManager.h"
@@ -13,6 +14,7 @@
 #include "Systems/Tools/ToolsManager.h"
 #include "BuiltInComponents.h"
 
+#include <algorithm>
 #include <chrono>
 
 /*-----------------------------------
@@ -66,13 +68,17 @@ bool CE::EngineManager::Initialize()
 void CE::EngineManager::Run()
 {
 	auto lastFrameTime = std::chrono::high_resolution_clock::now();
+	float accumulator = 0.0f;
 
 	while (m_isRunning)
 	{
 		auto thisFrameTime = std::chrono::high_resolution_clock::now();
 		std::chrono::duration<float> frameDuration = thisFrameTime - lastFrameTime;
-		float deltaTime = frameDuration.count();
 		lastFrameTime = thisFrameTime;
+
+		// Clamp long frames (file dialogs, window drags, breakpoints) so they can't teleport gameplay
+		// or trigger a burst of catch-up physics steps.
+		float deltaTime = std::min(frameDuration.count(), kMaxFrameTime);
 
 		bool quitRequested = m_pInputManager->ProcessEvents();
 
@@ -82,7 +88,19 @@ void CE::EngineManager::Run()
 			break;
 		}
 
+		// Variable-rate gameplay update (e.g. PlayerController sets velocity), then fixed-rate physics, then render
 		Update(deltaTime);
+
+		accumulator += deltaTime;
+		while (accumulator >= kFixedDeltaTime)
+		{
+			if (m_pPhysicsManager)
+			{
+				m_pPhysicsManager->Step(kFixedDeltaTime);
+			}
+			accumulator -= kFixedDeltaTime;
+		}
+
 		Render();
 	}
 }
@@ -109,6 +127,7 @@ void CE::EngineManager::Shutdown()
 	m_pResourceManager = nullptr;
 	m_pSceneManager = nullptr;
 	m_pCollisionManager = nullptr;
+	m_pPhysicsManager = nullptr;
 	m_pInputManager = nullptr;
 	m_pToolsManager = nullptr;
 
@@ -163,6 +182,14 @@ CE::CollisionManager* CE::EngineManager::GetCollisionManager() const
 	return m_pCollisionManager;
 }
 
+/*--------------------------------------------------------------------
+| --- GetPhysicsManager: Returns a pointer to the PhysicsManager --- |
+--------------------------------------------------------------------*/
+CE::PhysicsManager* CE::EngineManager::GetPhysicsManager() const
+{
+	return m_pPhysicsManager;
+}
+
 /*----------------------------------------------------------------
 | --- GetInputManager: Returns a pointer to the InputManager --- |
 ----------------------------------------------------------------*/
@@ -193,6 +220,7 @@ CE::EngineManager::EngineManager()
 	, m_pResourceManager{ nullptr }
 	, m_pSceneManager{ nullptr }
 	, m_pCollisionManager{ nullptr }
+	, m_pPhysicsManager{ nullptr }
 	, m_pInputManager{ nullptr }
 	, m_pToolsManager{ nullptr }
 	, m_frameCallback{ nullptr }
@@ -214,6 +242,10 @@ CE::EngineManager::EngineManager()
 	auto pCollision = std::make_unique<CollisionManager>();
 	m_pCollisionManager = pCollision.get();
 	RegisterManager(std::move(pCollision));
+
+	auto pPhysics = std::make_unique<PhysicsManager>();
+	m_pPhysicsManager = pPhysics.get();
+	RegisterManager(std::move(pPhysics));
 
 	auto pInput = std::make_unique<InputManager>();
 	m_pInputManager = pInput.get();

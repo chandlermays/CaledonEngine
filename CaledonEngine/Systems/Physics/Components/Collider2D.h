@@ -57,6 +57,7 @@ namespace CE
 
 		bool Initialize() override;															// Prepares the Collider2D for use
 		void Update(float deltaTime) override;												// Updates the Collider2D's bounds based on the GameObject's transform
+		void RefreshBounds();
 
 		virtual Vector2f ClosestPoint(const Vector2f& point) const = 0;						// Returns the closest point on the collider's surface to a given point in world space
 		ColliderDistance2D Distance(const Collider2D& other) const;

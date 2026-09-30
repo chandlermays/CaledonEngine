@@ -30,6 +30,5 @@ namespace CE
 		float GetRadius() const;													// Returns the radius of the circle collider
 
 		const std::string& GetTypeName() const override;							// Returns the type name of the Component
-
-	}
+	};
 }

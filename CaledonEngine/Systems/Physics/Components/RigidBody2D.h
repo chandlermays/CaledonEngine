@@ -11,6 +11,8 @@
 #include "Systems/Physics/Types/BodySleepMode2D.h"
 #include "Systems/Physics/Types/CollisionDetectionMode2D.h"
 #include "Systems/Physics/Types/ForceMode2D.h"
+#include "Systems/Physics/Types/SlideConfig2D.h"
+#include "Systems/Physics/Types/SlideResults2D.h"
 #include "Utilities/Math/Vector2.h"
 
 // Provides physics movement and other dyanmics, and the ability to attach Collider2D to it
@@ -23,6 +25,7 @@
 namespace CE
 {
 	class PhysicsMaterial2D;
+	class CollisionManager;
 
 	class RigidBody2D : public Component
 	{
@@ -50,17 +53,20 @@ namespace CE
 		bool m_isSleeping;																											// Whether this RigidBody2D is currently asleep
 
 		PhysicsMaterial2D* m_pSharedMaterial;																						// The Material applied to all attached colliders
+		CollisionManager* m_pCollisionManager;																						// Pointer to the Collision Manager
 
 		void ApplyConstraintsToVelocity();																							// Zeroes velocity componens hat are frozen by the constraints
 		void ClearAccumulators();																									// Clears the accumulated force and torque
 
 	public:
 		RigidBody2D();																												// Constructor
-		~RigidBody2D() override = default;																							// Destructor
+		~RigidBody2D() override;																									// Destructor
 		RigidBody2D(const RigidBody2D&) = delete;																					// Prevents copy-construction
 		RigidBody2D& operator=(const RigidBody2D&) = delete;																		// Prevents copy-assignment
 		RigidBody2D(RigidBody2D&&) = delete;																						// Prevents move-construction
 		RigidBody2D& operator=(RigidBody2D&&) = delete;																				// Prevents move-assignment
+
+		bool Initialize() override;																									// Prepares the RigidBody2D for use
 
 		const std::string& GetTypeName() const override;																			// Returns the type name of this Component
 
@@ -102,6 +108,9 @@ namespace CE
 		float GetAngularDamping() const;																							// Returns the damping applied to the angular velocity
 		void SetAngularDamping(float damping);																						// Sets the damping applied to the angular velocity
 
+		float GetGravityScale() const;																								// Returns the gravity scale
+		void SetGravityScale(float scale);																							// Sets the gravity scale
+
 		float GetMass() const;																										// Returns the mass of this RigidBody2D
 		void SetMass(float mass);																									// Sets the mass of this RigidBody2D
 
@@ -126,7 +135,7 @@ namespace CE
 		void SetUseFullKinematicContacts(bool use);																					// Sets whether kinematic/kinematic and kinematic/static contacts are allowed or not
 
 		PhysicsMaterial2D* GetSharedMaterial() const;																				// Returns the shared material of this RigidBody2D
-		void SetSharedMaterial(PhysicsMaterial2D& pMaterial);																		// Sets the shared material of this RigidBody2D
+		void SetSharedMaterial(PhysicsMaterial2D* pMaterial);																		// Sets the shared material of this RigidBody2D
 
 		int GetColliderCount() const;																								// Returns the number of Collider2D on the same GameObject
 
@@ -146,70 +155,23 @@ namespace CE
 		Vector2f GetRelativePoint(const Vector2f& localPoint) const;																// Converts a local-space point to world space
 		Vector2f GetVector(const Vector2f& worldVector) const;																		// Converts a world-space vector to local space
 		Vector2f GetRelativeVector(const Vector2f& localVector) const;																// Converts a local-space vector to world space
-		Vector2f GetPointVector(const Vector2f& worldPoint) const;																	// Returns the velocity of the body at a world-space point
+		Vector2f GetPointVelocity(const Vector2f& worldPoint) const;																// Returns the velocity of the body at a world-space point
 		Vector2f GetRelativePointVelocity(const Vector2f& localPoint) const;														// Returns the velocity of the body at a local-space point
+
+		SlideResults2D Slide(const Vector2f& velocity, float deltaTime, const SlideConfig2D& config);								// Slide this RigidBody2D using the specified velocity and configuration integrated over deltaTime
 
 		bool IsAwake() const;																										// Returns whether this RigidBody2D is awake or not
 		bool IsSleeping() const;																									// Returns whether this RigidBody2D is sleeping or not
 		void Sleep();																												// Puts this RigidBody2D to sleep
 		void WakeUp();																												// Wakes this RigidBody2D
 
-		// Properties:
-		// float angularDamping											:				the angular damping of the RigidBody2D angular velocity
-		// float angularVelocity										:				angular velocity in degrees per second
-		// BodyType2D bodyType											:				the physical behavior type of the RigidBody2D
-		// Vec2 centerOfMass											:				the center of mass of the RigidBody2D in local space
-		// int colliderCount											:				returns the number of Collider2D attached to this RigidBody2D
-		// CollisionDetectionMode2D collisionDetectionMode				:				the method used by the physics engine to check if two objects have collided
-		// BodyConstraints2D constraints								:				controls which degrees of freedom are allowed for the simulation of this RigidBody2D
-		// bool freezeRotation											:				controls whether physics will change the rotation of the object
-		// float gravityScale											:				the degree to which this object is affected by gravity
-		// float inertia												:				the RigidBody2D's resistance to changes in angular velocity (rotation)
-		// BodyInterpolation2D interpolation							:				physics interpolation used between updates
-		// float linearDamping											:				the linear damping of the RigidBody2D linear velocity
-		// Vec2 linearVelocity											:				the liner velocity of the RigidBody2D represents the rate of change over time of the UnnamedClass position in world-units
-		// float linearVelocityX										:				the X component of the linear velocity of the RigidBody2D in world-units per second
-		// float linearVelocityY										:				the Y component of the linear velocity of the RigidBody2D in world-units per second
-		// (ignore) localToWorldMatrix									:				the transformation matrix used to transform the RigidBody2D to world space
-		// float mass													:				the mass of the RigidBody2D
-		// Vec2 position												:				the position of the RigidBody2D
-		// float rotation												:				the rotation of the RigidBody2D
-		// PhysicsMaterial2D sharedMaterial								:				the PhysicsMaterial2D that is applied to all Collider2D attached to this RigidBody2D
-		// bool simulated												:				indicates whether the RigidBody2D should be simulated or not by the physics system
-		// BodySleepMode2D sleepMode									:				the sleep state that the RigidBody2D will initially be in
-		// Vec2 totalForce												:				the total amount of force that has been explicitly applied to this RigidBody2D since the last physics simulation step
-		// float totalTorque											:				the total amount of torque that has been explicitly applied to this RigidBody2D since the last physics simulation step
-		// bool useFullKinematicContacts								:				should kinematic/kinematic and kinematic/static collisions be allowed?
-		// Vec2 worldCenterOfMass										:				the center of mass of the RigidBody2D in world space
-
 		// Public Methods:
-		// void AddForce(Vec2 force, enum = enum.Force)												:				apply a force to the RigidBody2D
-		// void AddForceAtPosition(Vec2 force, Vec2 pos, enum = enum.Force)							:				apply a force at a given position in space
-		// void AddForceX(float force, enum = enum.Force)											:				adds a force to the X component of the linearVelocity only leaving the Y component of the world space untouched
-		// void AddForceY(float force, enum = enum.Force)											:				adds a force to the Y component of the linearVelocity only leaving the X component of the world space untouched
-		// void AddRelativeForce(Vec2 relativeForce, enum = enum.Force)								:				adds a force to the local space linearVelocity (i.e. the force is applied in the rotated coordinate space of the RigidBody2D)
-		// void AddRelativeForceX(float force, enum = enum.Force)									:				adds a force to the X component of the linearVelocity in the local space only leaving the Y component of the local space untouched
-		// void AddRelativeForceY(float force, enum = enum.Force)									:				adds a force to the Y component of the linearVelocity in the local space only leaving the X component of the local space untouched
-		// void AddTorque(float torque, enum = enum.Force)											:				apply a torque to the RigidBody2D's center of mass
 		// Vec2 ClosestPoint(Vec2 pos)																:				returns a point on the perimeter of all enabled Colliders attached to this RigidBody2D that is closest to the specified position
 		// ColliderDistance2D Distance(Collider2D collider)											:				calculates the minimum distance of this collider against all Collider2D attached to this RigidBody2D
-		// Vec2 GetPoint(Vec2 point)																:				get a local space point given the point in global space
-		// Vec2 GetPointVelocity(Vec2 point)														:				the velocity of the RigidBody2D at the point in global space
-		// Vec2 GetRelativePoint(Vec2 relativePoint)												:				get a global space point given the point in local space
-		// Vec2 GetRelativePointVelocity(Vec2 relativePoint)										:				the velocity of the RigidBody2D at the point in local space
-		// Vec2 GetVector(Vec2 vector)																:				get a local space vector given the vector in global space
-		// Vec2 GetRelativeVector(Vec2 relativeVector)												:				get a global space vector given the vector in local space
-		// bool IsAwake()																			:				is the RigidBody2D "awake"?
-		// bool IsSleeping()																		:				is the RigidBody2D "sleeping"?
-		// bool IsTouching(Collider2D collider)														:				checks whether the collider is touching any of the collider(s) attached to this RigidBody2D or not
 		// void MovePosition(Vec2 pos)																:				moves the RigidBody2D to position
 		// void MovePositionAndRotation(Vec2 pos, float angle)										:				moves the RigidBody2D to position and rotates by angle
 		// void MoveRotation(float angle)															:				rotates the RigidBody2D to the specified angle
 		// int Overlap(Vec2 pos, float angle, List<Collider2D> results)								:				get a list of all Colliders that overlap all Colliders attached to this RigidBody2D
 		// bool OverlapPoint(Vec2 point)															:				check if any of the RigidBody2D colliders overlap a point in space
-		// void SetRotation(float angle)															:				sets the rotation of the RigidBody2D to angle (given in degrees)
-		// void Sleep()																				:				make the RigidBody2D "sleep"
-		// SlideResults2D Slide(Vec2 velocity, float deltaTime, SlideConfig slideConfig)			:				slide the RigidBody2D using the specified velocity integrated over deltaTime using the configuration specified by SlideConfig.
-		// void WakeUp()																			:				disables the "sleeping" state of a RigidBody2D
 	};
 }

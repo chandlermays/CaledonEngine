@@ -74,7 +74,9 @@
     <ClCompile Include="Systems\Physics\Components\BoxCollider2D.cpp" />
     <ClCompile Include="Systems\Physics\Components\CircleCollider2D.cpp" />
     <ClCompile Include="Systems\Physics\Components\Collider2D.cpp" />
+    <ClCompile Include="Systems\Physics\Components\RigidBody2D.cpp" />
     <ClCompile Include="Systems\Physics\Materials\PhysicsMaterial2D.cpp" />
+    <ClCompile Include="Systems\Physics\PhysicsManager.cpp" />
     <ClCompile Include="Systems\Rendering\Components\SpriteComponent.cpp" />
     <ClCompile Include="Systems\Rendering\GraphicsManager.cpp" />
     <ClCompile Include="Systems\Rendering\Shapes\Capsule.cpp" />
@@ -131,12 +133,14 @@
     <ClInclude Include="Systems\Physics\Components\RigidBody2D.h" />
     <ClInclude Include="Systems\Physics\Materials\PhysicsMaterial2D.h" />
     <ClInclude Include="Systems\Physics\Materials\PhysicsMaterialCombine2D.h" />
+    <ClInclude Include="Systems\Physics\PhysicsManager.h" />
     <ClInclude Include="Systems\Physics\Types\BodyConstraints2D.h" />
     <ClInclude Include="Systems\Physics\Types\BodyInterpolation2D.h" />
     <ClInclude Include="Systems\Physics\Types\BodySleepMode2D.h" />
     <ClInclude Include="Systems\Physics\Types\BodyType2D.h" />
     <ClInclude Include="Systems\Physics\Types\ColliderDistance2D.h" />
     <ClInclude Include="Systems\Physics\Types\CollisionDetectionMode2D.h" />
+    <ClInclude Include="Systems\Physics\Types\Contact2D.h" />
     <ClInclude Include="Systems\Physics\Types\ForceMode2D.h" />
     <ClInclude Include="Systems\Physics\Types\SlideConfig2D.h" />
     <ClInclude Include="Systems\Physics\Types\SlideResults2D.h" />

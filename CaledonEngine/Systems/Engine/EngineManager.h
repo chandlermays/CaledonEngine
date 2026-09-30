@@ -1,5 +1,5 @@
 /*------------------------------
-| File: EngineManager.h 
+| File: EngineManager.h
 | Author: Chandler Mays
 ------------------------------*/
 #pragma once
@@ -17,6 +17,7 @@ namespace CE
 	class ResourceManager;
 	class SceneManager;
 	class CollisionManager;
+	class PhysicsManager;
 	class InputManager;
 	class ToolsManager;
 
@@ -31,8 +32,12 @@ namespace CE
 		ResourceManager* m_pResourceManager;								// Pointer to the resource manager
 		SceneManager* m_pSceneManager;										// Pointer to the scene manager
 		CollisionManager* m_pCollisionManager;								// Pointer to the collision manager
+		PhysicsManager* m_pPhysicsManager;									// Pointer to the physics manager
 		InputManager* m_pInputManager;										// Pointer to the input manager
 		ToolsManager* m_pToolsManager;										// Pointer to the tools manager
+
+		static constexpr float kFixedDeltaTime = 1.0f / 60.0f;				// Physics step length in seconds (60 Hz)
+		static constexpr float kMaxFrameTime = 0.25f;						// Longest frame time fed to the loop; stops a stall from causing a burst of catch-up steps
 
 		bool m_isRunning;													// Flag to indicate if the engine is running
 
@@ -57,7 +62,7 @@ namespace CE
 		bool Initialize() override;											// Initializes all engine subsystem managers
 		void Run();															// Main loop that updates and renders all engine subsystem managers
 		void Shutdown() override;											// Shuts down and cleans up all engine subsystem managers
-	
+
 		void SetFrameCallback(std::function<void()> callback);				// Sets the callback function to be called each frame
 		void ClearFrameCallback();											// Clears the callback function
 
@@ -65,6 +70,7 @@ namespace CE
 		ResourceManager* GetResourceManager() const;						// Returns a pointer to the ResourceManager
 		SceneManager* GetSceneManager() const;								// Returns a pointer to the SceneManager
 		CollisionManager* GetCollisionManager() const;						// Returns a pointer to the CollisionManager
+		PhysicsManager* GetPhysicsManager() const;							// Returns a pointer to the PhysicsManager
 		InputManager* GetInputManager() const;								// Returns a pointer to the InputManager
 		ToolsManager* GetToolsManager() const;								// Returns a pointer to the ToolsManager
 	};

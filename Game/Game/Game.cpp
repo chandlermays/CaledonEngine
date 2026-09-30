@@ -132,7 +132,7 @@ void Game::LoadScenes(const std::string& masterXmlPath)
 
 	CE::SceneManager* pSceneManager = m_pEngineManager->GetSceneManager();
 
-	for (const auto& [name, path] : pResourceManager->LoadMasterXML(masterXmlPath);)
+	for (const auto& [name, path] : pResourceManager->LoadMasterXML(masterXmlPath))
 	{
 		std::string fileData = pResourceManager->GetResource(path);
 		if (fileData.empty())

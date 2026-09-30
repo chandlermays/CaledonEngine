@@ -190,6 +190,12 @@
     <ClCompile Include="Systems\Physics\Materials\PhysicsMaterial2D.cpp">
       <Filter>Source Files\Systems\Physics\Materials</Filter>
     </ClCompile>
+    <ClCompile Include="Systems\Physics\Components\RigidBody2D.cpp">
+      <Filter>Source Files\Systems\Physics\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\Physics\PhysicsManager.cpp">
+      <Filter>Source Files\Systems\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\GameObject.h">
@@ -403,6 +409,12 @@
       <Filter>Source Files\Systems\Physics\Types</Filter>
     </ClInclude>
     <ClInclude Include="Systems\Physics\Types\BodySleepMode2D.h">
+      <Filter>Source Files\Systems\Physics\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Physics\PhysicsManager.h">
+      <Filter>Source Files\Systems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Physics\Types\Contact2D.h">
       <Filter>Source Files\Systems\Physics\Types</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,6 +6,15 @@
 
 #include "CaledonEngine/Core/GameObject.h"
 #include "CaledonEngine/Core/Transform.h"
+#include "CaledonEngine/Systems/Engine/LoggingManager.h"
+#include "CaledonEngine/Systems/Physics/Components/RigidBody2D.h"
+
+#include <cmath>
+
+namespace
+{
+    constexpr int kSlideIterations = 4;		// Contact resolutions per Slide; 2+ lets the player slide around a corner instead of stopping at it
+}
 
 /*-----------------------------------
 | --- Public Method Definitions --- |
@@ -19,7 +28,8 @@ PlayerController::PlayerController()
     , m_pGameplayActionMap{ nullptr }
     , m_moveSpeed{ 100.0f }
     , m_horizontalInput{ 0.0f }
-	, m_verticalInput{ 0.0f }
+    , m_verticalInput{ 0.0f }
+    , m_hasWarnedMissingBody{ false }
 { }
 
 /*-------------------------------------------------------
@@ -59,30 +69,45 @@ void PlayerController::Update(float deltaTime)
     if (!m_pOwner)
         return;
 
-    if (m_horizontalInput != 0.0f || m_verticalInput != 0.0f)
-    {
-        float horizontal = m_horizontalInput;
-        float vertical = m_verticalInput;
+    if (m_horizontalInput == 0.0f && m_verticalInput == 0.0f)
+        return;
 
-        // Clamp the combined input vector's magnitude to 1 so diagonal movement isn't faster than moving along a single axis.
-        float magnitude = std::sqrt(horizontal * horizontal + vertical * vertical);
-        if (magnitude > 1.0f)
+    float horizontal = m_horizontalInput;
+    float vertical = m_verticalInput;
+
+    // Clamp the combined input vector's magnitude to 1 so diagonal movement isn't faster than moving along a single axis.
+    float magnitude = std::sqrt(horizontal * horizontal + vertical * vertical);
+    if (magnitude > 1.0f)
+    {
+        horizontal /= magnitude;
+        vertical /= magnitude;
+    }
+
+    // Screen-space Y points down, so positive vertical input moves toward negative Y.
+    const CE::Vector2f velocity{ horizontal * m_moveSpeed, -vertical * m_moveSpeed };
+
+    CE::RigidBody2D* pBody = GetComponent<CE::RigidBody2D>();
+    if (!pBody)
+    {
+        // No RigidBody2D on this GameObject, so there is nothing to slide with: move freely (no collision) and say so once.
+        if (!m_hasWarnedMissingBody)
         {
-            horizontal /= magnitude;
-            vertical /= magnitude;
+            CE_LOG("PlayerController::Update - '{}' has no RigidBody2D; moving without collision.", m_pOwner->GetName());
+            m_hasWarnedMissingBody = true;
         }
 
-        float moveX = horizontal * m_moveSpeed * deltaTime;
-        float moveY = -vertical * m_moveSpeed * deltaTime;
-
         CE::Transform& transform = m_pOwner->GetTransform();
-        CE::Vector2f currentPosition = transform.GetPosition();
-
-        currentPosition.x += moveX;
-        currentPosition.y += moveY;
-
-        transform.SetPosition(currentPosition);
+        transform.SetPosition(transform.GetPosition() + velocity * deltaTime);
+        return;
     }
+
+    // Slide only calculates the target position; applying it is our job.
+    CE::SlideConfig2D config;
+    config.startPosition = pBody->GetPosition();
+    config.maxIterations = kSlideIterations;
+
+    const CE::SlideResults2D results = pBody->Slide(velocity, deltaTime, config);
+    pBody->SetPosition(results.position);
 }
 
 /*-------------------------------------------------------------------------------
@@ -114,8 +139,8 @@ void PlayerController::OnMoveVertical(float value)
 -------------------------------------------------------------*/
 const std::string& PlayerController::GetTypeName() const
 {
-	static const std::string typeName = "PlayerController";
-	return typeName;
+    static const std::string typeName = "PlayerController";
+    return typeName;
 }
 
 /*-------------------------------------------------------------
@@ -123,7 +148,7 @@ const std::string& PlayerController::GetTypeName() const
 -------------------------------------------------------------*/
 void PlayerController::SetMoveSpeed(float speed)
 {
-	m_moveSpeed = speed;
+    m_moveSpeed = speed;
 }
 
 /*----------------------------------------------------------------
@@ -131,7 +156,7 @@ void PlayerController::SetMoveSpeed(float speed)
 ----------------------------------------------------------------*/
 float PlayerController::GetMoveSpeed() const
 {
-	return m_moveSpeed;
+    return m_moveSpeed;
 }
 
 
