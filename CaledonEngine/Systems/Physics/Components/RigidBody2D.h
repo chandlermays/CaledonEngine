@@ -10,6 +10,7 @@
 #include "Systems/Physics/Types/BodyInterpolation2D.h"
 #include "Systems/Physics/Types/BodySleepMode2D.h"
 #include "Systems/Physics/Types/CollisionDetectionMode2D.h"
+#include "Systems/Physics/Types/ColliderDistance2D.h"
 #include "Systems/Physics/Types/ForceMode2D.h"
 #include "Systems/Physics/Types/SlideConfig2D.h"
 #include "Systems/Physics/Types/SlideResults2D.h"

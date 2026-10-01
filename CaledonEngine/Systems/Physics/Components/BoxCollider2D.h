@@ -20,7 +20,7 @@ namespace CE
 		BoxCollider2D();														// Constructor
 		~BoxCollider2D() override = default;									// Destructor
 
-		Vector2f ClosestPoint(const Vector2f& point) const override;			// Returns the closest point on the box collider's surface to a given point in world space
+		Vector2f ClosestPoint(const Vector2f& position) const override;			// Returns the closest point on the box collider's surface to a given position in world space
 		bool Overlaps(const Collider2D& other) const override;					// Returns true if this box collider overlaps with another collider
 		bool IsAxisAlignedBox() const override { return true; }					// Returns true since this collider is an axis-aligned box (AABB)
 

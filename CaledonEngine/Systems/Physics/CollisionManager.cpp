@@ -189,6 +189,14 @@ void CE::CollisionManager::RemoveActiveCollider(Collider2D* pCollider)
 	std::erase_if(m_previousOverlaps, involvesCollider);
 }
 
+/*---------------------------------------------------------------------------------------
+| --- GetActiveColliders: Returns a const reference to the list of active colliders --- |
+---------------------------------------------------------------------------------------*/
+const std::vector<CE::Collider2D*>& CE::CollisionManager::GetActiveColliders() const
+{
+	return m_activeColliders;
+}
+
 
 
 /*------------------------------------

@@ -71,10 +71,9 @@ namespace
 -----------------------------------------------------------------------*/
 CE::PhysicsManager::PhysicsManager()
 	: m_pCollisionManager{ nullptr }
-	, m_gravity{ 0.0f, 0.0f }
+	, m_gravity{ 0.0f, 9.81f }
 	, m_solverIterations{ kDefaultSolverIterations }
-{
-}
+{ }
 
 /*-------------------------------------------------------
 | --- Destructor: Cleans up any allocated resources --- |

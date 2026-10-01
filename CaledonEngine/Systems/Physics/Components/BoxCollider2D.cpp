@@ -19,15 +19,37 @@ CE::BoxCollider2D::BoxCollider2D()
 	, m_edgeRadius{ 1.0f }
 { }
 
-/*---------------------------------------------------------------------------------------------------------------
-| --- ClosestPoint: Returns the closest point on the box collider's surface to a given point in world space --- |
----------------------------------------------------------------------------------------------------------------*/
-CE::Vector2f CE::BoxCollider2D::ClosestPoint(const Vector2f& point) const
+/*------------------------------------------------------------------------------------------------------------------
+| --- ClosestPoint: Returns the closest point on the box collider's surface to a given position in world space --- |
+------------------------------------------------------------------------------------------------------------------*/
+CE::Vector2f CE::BoxCollider2D::ClosestPoint(const Vector2f& position) const
 {
-	// Treats the box as sharp-cornered — doesn't yet account for edgeRadius rounding
-	// the corners inward. Correct rounded-box closest-point math needs a corner-region
-	// check; flagging as a known simplification rather than rushing it now.
-	return Vector2f::Clamp(point, m_bounds.min, m_bounds.max);
+	// Fallback to sharp-cornered math if edge radius is not used
+	if (m_edgeRadius <= 0.0f)
+		return Vector2f::Clamp(position, m_bounds.min, m_bounds.max);
+
+	const Vector2f center = m_bounds.GetCenter();
+	const Vector2f extents = m_bounds.GetExtents();
+	const Vector2f offset = position - center;
+
+	// Shrink the outer bounds by the edge radius to define the inner sharp box
+	const Vector2f innerExtents = Vector2f::Max(extents - m_edgeRadius, Vector2f::Zero());
+
+	// Find the closest point in/on the inner box relative to the center
+	const Vector2f clampedOffset = Vector2f::Clamp(offset, -innerExtents, innerExtents);
+
+	// Calculate the vector from the inner box's surface to the target point
+	const Vector2f toPoint = offset - clampedOffset;
+	const float sqrDistance = toPoint.SqrMagnitude();
+
+	// If the distance is within the edge radius, the point is inside the solid rounded box
+	if (sqrDistance <= m_edgeRadius * m_edgeRadius)
+		return position;
+
+	// Otherwise, project the point onto the rounded boundary
+	const Vector2f surfaceOffset = clampedOffset + toPoint * (m_edgeRadius / std::sqrt(sqrDistance));
+
+	return center + surfaceOffset;
 }
 
 /*------------------------------------------------------------------------------------
