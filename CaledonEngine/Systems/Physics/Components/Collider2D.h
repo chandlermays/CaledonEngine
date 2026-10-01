@@ -29,65 +29,68 @@ namespace CE
 	class Collider2D : public Component
 	{
 	public:
-		using CollisionCallback = std::function<void(Collider2D*)>;							// Type alias for a collision callback function that takes a pointer to another Collider2D as an argument
+		using CollisionCallback = std::function<void(Collider2D*)>;									// Type alias for a collision callback function that takes a pointer to another Collider2D as an argument
 
 	protected:
-		AABB2D m_bounds;																	// The Axis-Aligned Bounding Box (AABB) of the collider in world space
-		Vector2f m_offset;																	// Offset of the collider's bounds relative to the GameObject's position
-		bool m_isTrigger;																	// Whether the collider is a trigger (does not cause physical collisions, only events)
-		PhysicsMaterial2D* m_pAttachedMaterial;												// Pointer to the PhysicsMaterial2D explicitly assigned to this collider
+		AABB2D m_bounds;																			// The Axis-Aligned Bounding Box (AABB) of the collider in world space
+		Vector2f m_offset;																			// Offset of the collider's bounds relative to the GameObject's position
+		bool m_isTrigger;																			// Whether the collider is a trigger (does not cause physical collisions, only events)
+		PhysicsMaterial2D* m_pAttachedMaterial;														// Pointer to the PhysicsMaterial2D explicitly assigned to this collider
 
-		std::vector<CollisionCallback> m_onEnterCallbacks;									// Callbacks to invoke when a collision starts
-		std::vector<CollisionCallback> m_onUpdateCallbacks;									// Callbacks to invoke when a collision is ongoing
-		std::vector<CollisionCallback> m_onExitCallbacks;									// Callbacks to invoke when a collision ends
+		std::vector<CollisionCallback> m_onEnterCallbacks;											// Callbacks to invoke when a collision starts
+		std::vector<CollisionCallback> m_onUpdateCallbacks;											// Callbacks to invoke when a collision is ongoing
+		std::vector<CollisionCallback> m_onExitCallbacks;											// Callbacks to invoke when a collision ends
 
-		virtual void RecalculateBounds() = 0;												// Recalculates the AABB based on the GameObject's transform and any collider-specific properties
+		virtual void RecalculateBounds() = 0;														// Recalculates the AABB based on the GameObject's transform and any collider-specific properties
+		virtual ColliderDistance2D ResolveOverlapDistance(const Collider2D& other) const;			// Returns the distance, closest points, and overlap information between this collider and another collider
 
 	private:
-		const PhysicsMaterial2D& ResolveMaterial() const;									// Returns the effective PhysicsMaterial2D for this collider
-		ColliderDistance2D ResolveOverlapDistance(const Collider2D& other) const;
+		const PhysicsMaterial2D& ResolveMaterial() const;											// Returns the effective PhysicsMaterial2D for this collider
 	
 	public:
-		Collider2D();																		// Constructor
-		~Collider2D() override;																// Destructor
-		Collider2D(const Collider2D&) = delete;												// Prevent copy-construction
-		Collider2D& operator=(const Collider2D&) = delete;									// Prevent copy-assignment
-		Collider2D(Collider2D&&) = delete;													// Prevent move-construction
-		Collider2D& operator=(Collider2D&&) = delete;										// Prevent move-assignment
+		Collider2D();																				// Constructor
+		~Collider2D() override;																		// Destructor
+		Collider2D(const Collider2D&) = delete;														// Prevent copy-construction
+		Collider2D& operator=(const Collider2D&) = delete;											// Prevent copy-assignment
+		Collider2D(Collider2D&&) = delete;															// Prevent move-construction
+		Collider2D& operator=(Collider2D&&) = delete;												// Prevent move-assignment
 
-		bool Initialize() override;															// Prepares the Collider2D for use
-		void Update(float deltaTime) override;												// Updates the Collider2D's bounds based on the GameObject's transform
+		bool Initialize() override;																	// Prepares the Collider2D for use
+		void Update(float deltaTime) override;														// Updates the Collider2D's bounds based on the GameObject's transform
 		void RefreshBounds();
 
-		virtual Vector2f ClosestPoint(const Vector2f& point) const = 0;						// Returns the closest point on the collider's surface to a given point in world space
+		virtual Vector2f ClosestPoint(const Vector2f& point) const = 0;								// Returns the closest point on the collider's surface to a given point in world space
 		ColliderDistance2D Distance(const Collider2D& other) const;
-		float Distance(const Vector2f& point) const;										// Returns the distance from a given point in world space to the closest point on the collider's surface
+		float Distance(const Vector2f& point) const;												// Returns the distance from a given point in world space to the closest point on the collider's surface
 
-		virtual bool Overlaps(const Collider2D& other) const = 0;							// Returns true if this collider overlaps with another collider
+		virtual bool IsAxisAlignedBox() const { return false; }										// Returns true if the collider is an axis-aligned box (AABB), false otherwise
+		bool OverlapPoint(const Vector2f& point) const;												// Returns true if a given point in world space is inside the collider's bounds
 
-		const AABB2D& GetBounds() const;													// Returns the Axis-Aligned Bounding Box (AABB) of the collider in world space
+		virtual bool Overlaps(const Collider2D& other) const = 0;									// Returns true if this collider overlaps with another collider
 
-		bool IsTrigger() const;																// Returns whether the collider is a trigger (does not cause physical collisions, only events)
-		void SetTrigger(bool isTrigger);													// Sets whether the collider is a trigger (does not cause physical collisions, only events)
+		const AABB2D& GetBounds() const;															// Returns the Axis-Aligned Bounding Box (AABB) of the collider in world space
 
-		const Vector2f& GetOffset() const;													// Returns the offset of the collider's bounds relative to the GameObject's position
-		void SetOffset(const Vector2f& offset);												// Sets the offset of the collider's bounds relative to the GameObject's position and recalculates the bounds
+		bool IsTrigger() const;																		// Returns whether the collider is a trigger (does not cause physical collisions, only events)
+		void SetTrigger(bool isTrigger);															// Sets whether the collider is a trigger (does not cause physical collisions, only events)
 
-		float GetFriction() const;															// Returns the friction of a collider; used to control how a collision response reduces velocity
-		float GetBounciness() const;														// Returns the bounciness of a collider; used to control how "elastic" a collision response is
-		PhysicsMaterialCombine2D GetFrictionCombine() const;								// Determines how the effective friction is calculated when two Collider2D come into contact
-		PhysicsMaterialCombine2D GetBounceCombine() const;									// Determines how the effective bounciness is calculated when two Collider2D come into contact
+		const Vector2f& GetOffset() const;															// Returns the offset of the collider's bounds relative to the GameObject's position
+		void SetOffset(const Vector2f& offset);														// Sets the offset of the collider's bounds relative to the GameObject's position and recalculates the bounds
 
-		PhysicsMaterial2D* GetSharedMaterial() const;										// Returns the PhysicsMaterial2D that is applied to this collider
-		void SetSharedMaterial(PhysicsMaterial2D* pMaterial);								// Sets a PhysicalMaterial2D to be assigned to this collider
+		float GetFriction() const;																	// Returns the friction of a collider; used to control how a collision response reduces velocity
+		float GetBounciness() const;																// Returns the bounciness of a collider; used to control how "elastic" a collision response is
+		PhysicsMaterialCombine2D GetFrictionCombine() const;										// Determines how the effective friction is calculated when two Collider2D come into contact
+		PhysicsMaterialCombine2D GetBounceCombine() const;											// Determines how the effective bounciness is calculated when two Collider2D come into contact
 
-		void OnCollisionEnter(CollisionCallback callback);									// Registers a callback to be invoked when a collision starts
-		void OnCollisionUpdate(CollisionCallback callback);									// Registers a callback to be invoked when a collision is ongoing
-		void OnCollisionExit(CollisionCallback callback);									// Registers a callback to be invoked when a collision ends
+		PhysicsMaterial2D* GetSharedMaterial() const;												// Returns the PhysicsMaterial2D that is applied to this collider
+		void SetSharedMaterial(PhysicsMaterial2D* pMaterial);										// Sets a PhysicalMaterial2D to be assigned to this collider
 
-		void InvokeEnter(Collider2D* pOther);												// Invokes all registered collision enter callbacks with the other collider as an argument
-		void InvokeUpdate(Collider2D* pOther);												// Invokes all registered collision update callbacks with the other collider as an argument
-		void InvokeExit(Collider2D* pOther);												// Invokes all registered collision exit callbacks with the other collider as an argument
+		void OnCollisionEnter(CollisionCallback callback);											// Registers a callback to be invoked when a collision starts
+		void OnCollisionUpdate(CollisionCallback callback);											// Registers a callback to be invoked when a collision is ongoing
+		void OnCollisionExit(CollisionCallback callback);											// Registers a callback to be invoked when a collision ends
+
+		void InvokeEnter(Collider2D* pOther);														// Invokes all registered collision enter callbacks with the other collider as an argument
+		void InvokeUpdate(Collider2D* pOther);														// Invokes all registered collision update callbacks with the other collider as an argument
+		void InvokeExit(Collider2D* pOther);														// Invokes all registered collision exit callbacks with the other collider as an argument
 	};
 }
 

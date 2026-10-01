@@ -17,38 +17,44 @@
 
 namespace
 {
-	constexpr float kMinMass = 0.0001f;				// Smallest allowed mass/inertia; keeps force / mass finite
+	constexpr float kMinMass = 0.0001f;					// Smallest allowed mass/inertia; keeps force / mass finite
 }
 
 namespace
 {
-	constexpr float kContactSkin = 0.001f;			// Penetration at or below this counts as touching, not blocked
-	constexpr float kMinSubStep = 0.01f;			// Smallest sub-step length; guards degenerate (near-zero-size) colliders
-	constexpr int kMaxLoopsPerIteration = 64;		// Bounds worst-case sub-stepping cost per allowed iteration
-	constexpr float kSlideEpsilon = 1e-5f;			// Displacement below this is treated as zero
+	constexpr float kContactSkin = 0.001f;				// Penetration at or below this counts as touching, not blocked
+	constexpr float kMinSubStep = 0.01f;				// Smallest sub-step length; guards degenerate (near-zero-size) colliders
+	constexpr int kMaxLoopsPerIteration = 64;			// Bounds worst-case sub-stepping cost per allowed iteration
+	constexpr float kSlideEpsilon = 1e-5f;				// Displacement below this is treated as zero
 
-	/*------------------------------------------------------------------------------------------------
+	/*----------------------------------------------------------------------------------------------------
 	| --- ScopedTransformPosition: Restores the Transform (and refreshes the collider) on scope exit --- |
-	------------------------------------------------------------------------------------------------*/
+	----------------------------------------------------------------------------------------------------*/
 	class ScopedTransformPosition
 	{
 	private:
 		CE::Transform& m_transform;
-		CE::Collider2D& m_collider;
-		CE::Vector2f m_original;
+		std::vector<CE::Collider2D*> m_colliders;
+		CE::Vector2f m_originalPosition;
+		float m_originalRotation;
 
 	public:
-		ScopedTransformPosition(CE::Transform& transform, CE::Collider2D& collider)
+		ScopedTransformPosition(CE::Transform& transform, std::vector<CE::Collider2D*> colliders)
 			: m_transform{ transform }
-			, m_collider{ collider }
-			, m_original{ transform.GetPosition() }
-		{
-		}
+			, m_colliders{ std::move(colliders) }
+			, m_originalPosition{ transform.GetPosition() }
+			, m_originalRotation{ transform.GetRotation() }
+		{ }
 
 		~ScopedTransformPosition()
 		{
-			m_transform.SetPosition(m_original);
-			m_collider.RefreshBounds();
+			m_transform.SetPosition(m_originalPosition);
+			m_transform.SetRotation(m_originalRotation);
+
+			for (CE::Collider2D* pCollider : m_colliders)
+			{
+				pCollider->RefreshBounds();
+			}
 		}
 
 		ScopedTransformPosition(const ScopedTransformPosition&) = delete;
@@ -57,40 +63,33 @@ namespace
 
 	struct SlideContext
 	{
-		CE::CollisionManager& collisionManager;		// Source of contacts
-		CE::Collider2D& collider;					// The collider being slid
-		CE::Transform& transform;					// Temporarily moved to test candidate positions
-		const CE::GameObject* pOwner;				// Colliders on this GameObject never block the slide
-		float maxSubStep;							// Longest single move between overlap tests
-		int maxIterations;							// Maximum number of contact resolutions
+		CE::CollisionManager& collisionManager;			// Source of contacts
+		CE::Collider2D& collider;						// The collider being slid
+		CE::Transform& transform;						// Temporarily moved to test candidate positions
+		const CE::GameObject* pOwner;					// Colliders on this GameObject never block the slide
+		float maxSubStep;								// Longest single move between overlap tests
+		int maxIterations;								// Maximum number of contact resolutions
 	};
 
-	/*--------------------------------------------------------------------------------------------------------
-	| --- SlidePass: Moves 'position' by 'remaining' in sub-steps. On the first blocking contact of a --- |
-	| --- sub-step it depenetrates along the contact MTV, then removes the part of the remaining move --- |
-	| --- pointing into the surface. If pUp is given (gravity pass), a contact whose surface angle    --- |
-	| --- from 'up' is within slipAngleDegrees anchors the body instead of sliding. Returns the       --- |
-	| --- number of contact resolutions used.                                                         --- |
-	--------------------------------------------------------------------------------------------------------*/
-	int SlidePass(const SlideContext& ctx, CE::Vector2f& position, CE::Vector2f& remaining,
-		const CE::Vector2f* pUp, float slipAngleDegrees)
+	/*---------------------------------------------------------------------------------------------------------------
+	| --- SlidePass: Attempts to move the collider along the remaining vector, sliding along surfaces as needed --- |
+	---------------------------------------------------------------------------------------------------------------*/
+	int SlidePass(const SlideContext& context, CE::Vector2f& position, CE::Vector2f& remaining, const CE::Vector2f* pUp, float slipAngleDegrees)
 	{
 		int iterations = 0;
 		int loops = 0;
-		const int maxLoops = kMaxLoopsPerIteration * (ctx.maxIterations + 1);
+		const int maxLoops = kMaxLoopsPerIteration * (context.maxIterations + 1);
 
-		while (iterations < ctx.maxIterations
-			&& remaining.SqrMagnitude() > kSlideEpsilon * kSlideEpsilon
-			&& loops++ < maxLoops)
+		while (iterations < context.maxIterations && remaining.SqrMagnitude() > kSlideEpsilon * kSlideEpsilon && loops++ < maxLoops)
 		{
 			const float length = remaining.Magnitude();
-			const CE::Vector2f step = (length > ctx.maxSubStep) ? remaining * (ctx.maxSubStep / length) : remaining;
+			const CE::Vector2f step = (length > context.maxSubStep) ? remaining * (context.maxSubStep / length) : remaining;
 			const CE::Vector2f candidate = position + step;
 
-			ctx.transform.SetPosition(candidate);
-			ctx.collider.RefreshBounds();
+			context.transform.SetPosition(candidate);
+			context.collider.RefreshBounds();
 
-			const std::vector<CE::Contact2D> contacts = ctx.collisionManager.QueryContacts(&ctx.collider);
+			const std::vector<CE::Contact2D> contacts = context.collisionManager.QueryContacts(&context.collider);
 
 			const CE::Contact2D* pDeepest = nullptr;
 			for (const CE::Contact2D& contact : contacts)
@@ -98,7 +97,7 @@ namespace
 				if (contact.isTrigger || contact.depth <= kContactSkin)
 					continue;
 
-				if (contact.pColliderB->GetOwner() == ctx.pOwner)
+				if (contact.pColliderB->GetOwner() == context.pOwner)
 					continue;
 
 				if (!pDeepest || contact.depth > pDeepest->depth)
@@ -148,9 +147,9 @@ namespace
 /*-----------------------------------
 | --- Public Method Definitions --- |
 -----------------------------------*/
-/*-------------------------------------------------------------------
+/*---------------------------------------------------------------------
 | --- Constructor: Constructs the RigidBody2D with default values --- |
--------------------------------------------------------------------*/
+---------------------------------------------------------------------*/
 CE::RigidBody2D::RigidBody2D()
 	: Component()
 	, m_bodyType{ BodyType2D::Dynamic }
@@ -171,13 +170,16 @@ CE::RigidBody2D::RigidBody2D()
 	, m_isSimulated{ true }
 	, m_useFullKinematicContacts{ false }
 	, m_isSleeping{ false }
+	, m_hasPendingPosition{ false }
+	, m_pendingPosition{ 0.0f, 0.0f }
+	, m_hasPendingRotation{ false }
+	, m_pendingRotation{ 0.0f }
 	, m_pSharedMaterial{ nullptr }
 	, m_pCollisionManager{ nullptr }
-{
-}
+{ }
 
 /*-------------------------------------------------------
-| --- Destructor: Unregisters from the PhysicsManager --- |
+| --- Destructor: Cleans up any allocated resources --- |
 -------------------------------------------------------*/
 CE::RigidBody2D::~RigidBody2D()
 {
@@ -188,9 +190,9 @@ CE::RigidBody2D::~RigidBody2D()
 	}
 }
 
-/*---------------------------------------------------------------------------------------
-| --- Initialize: Registers with the PhysicsManager and applies the initial sleep mode --- |
----------------------------------------------------------------------------------------*/
+/*------------------------------------------------------
+| --- Initialize: Prepares the RigidBody2D for use --- |
+------------------------------------------------------*/
 bool CE::RigidBody2D::Initialize()
 {
 	m_pCollisionManager = EngineManager::GetInstance().GetCollisionManager();
@@ -202,9 +204,13 @@ bool CE::RigidBody2D::Initialize()
 	pPhysicsManager->AddBody(this);
 
 	if (m_sleepMode == BodySleepMode2D::StartAsleep)
+	{
 		Sleep();
+	}
 	else
+	{
 		WakeUp();
+	}
 
 	return true;
 }
@@ -218,13 +224,15 @@ const std::string& CE::RigidBody2D::GetTypeName() const
 	return typeName;
 }
 
-/*----------------------------------------------------------------------------------------------------------
+/*---------------------------------------------------------------------------------------------------------
 | --- Step: Integrates forces, gravity, damping, and velocity into the Transform for one physics step --- |
-----------------------------------------------------------------------------------------------------------*/
+---------------------------------------------------------------------------------------------------------*/
 void CE::RigidBody2D::Step(float deltaTime, const Vector2f& gravity)
 {
 	if (!m_isSimulated || !m_pOwner || deltaTime <= 0.0f)
 		return;
+
+	ApplyPendingMoves();
 
 	if (m_isSleeping)
 		return;
@@ -258,11 +266,17 @@ void CE::RigidBody2D::Step(float deltaTime, const Vector2f& gravity)
 	ClearAccumulators();
 }
 
-/*----------------------------------------------------
-| --- GetBodyType / SetBodyType: The body's type --- |
-----------------------------------------------------*/
-CE::BodyType2D CE::RigidBody2D::GetBodyType() const { return m_bodyType; }
+/*-----------------------------------------------------------------------------
+| --- GetBodyType: Returns the physical behavior type of this RigidBody2D --- |
+-----------------------------------------------------------------------------*/
+CE::BodyType2D CE::RigidBody2D::GetBodyType() const 
+{ 
+	return m_bodyType;
+}
 
+/*--------------------------------------------------------------------------
+| --- SetBodyType: Sets the physical behavior type of this RigidBody2D --- |
+--------------------------------------------------------------------------*/
 void CE::RigidBody2D::SetBodyType(BodyType2D type)
 {
 	m_bodyType = type;
@@ -276,156 +290,381 @@ void CE::RigidBody2D::SetBodyType(BodyType2D type)
 	}
 }
 
-/*---------------------------------------------------------------
-| --- Constraints: Which degrees of freedom are frozen --- |
----------------------------------------------------------------*/
-CE::BodyConstraints2D CE::RigidBody2D::GetConstraints() const { return m_constraints; }
+/*-------------------------------------------------------------------------------------
+| --- GetConstraints: Returns the degrees of freedom allowed for this RigidBody2D --- |
+-------------------------------------------------------------------------------------*/
+CE::BodyConstraints2D CE::RigidBody2D::GetConstraints() const
+{
+	return m_constraints;
+}
 
+/*----------------------------------------------------------------------------------
+| --- SetConstraints: Sets the degrees of freedom allowed for this RigidBody2D --- |
+----------------------------------------------------------------------------------*/
 void CE::RigidBody2D::SetConstraints(BodyConstraints2D constraints)
 {
 	m_constraints = constraints;
 	ApplyConstraintsToVelocity();
 }
 
+/*------------------------------------------------------------------------------------
+| --- GetFreezeRotation: Returns whether rotation is frozen for this RigidBody2D --- |
+------------------------------------------------------------------------------------*/
 bool CE::RigidBody2D::GetFreezeRotation() const
 {
 	return HasFlag(m_constraints, BodyConstraints2D::FreezeRotation);
 }
 
+/*---------------------------------------------------------------------------------
+| --- SetFreezeRotation: Sets whether rotation is frozen for this RigidBody2D --- |
+---------------------------------------------------------------------------------*/
 void CE::RigidBody2D::SetFreezeRotation(bool freeze)
 {
 	if (freeze)
+	{
 		m_constraints |= BodyConstraints2D::FreezeRotation;
+	}
 	else
+	{
 		m_constraints &= ~BodyConstraints2D::FreezeRotation;
+	}
 
 	ApplyConstraintsToVelocity();
 }
 
-/*------------------------------------------------
-| --- Simple mode properties (get / set) --- |
-------------------------------------------------*/
-CE::BodyInterpolation2D CE::RigidBody2D::GetInterpolation() const { return m_interpolation; }
-void CE::RigidBody2D::SetInterpolation(BodyInterpolation2D mode) { m_interpolation = mode; }
+/*---------------------------------------------------------------------------------------
+| --- GetInterpolation: Returns the physics interpolation mode for this RigidBody2D --- |
+---------------------------------------------------------------------------------------*/
+CE::BodyInterpolation2D CE::RigidBody2D::GetInterpolation() const
+{
+	return m_interpolation;
+}
 
-CE::BodySleepMode2D CE::RigidBody2D::GetSleepMode() const { return m_sleepMode; }
-void CE::RigidBody2D::SetSleepMode(BodySleepMode2D mode) { m_sleepMode = mode; }
+/*------------------------------------------------------------------------------------
+| --- SetInterpolation: Sets the physics interpolation mode for this RigidBody2D --- |
+------------------------------------------------------------------------------------*/
+void CE::RigidBody2D::SetInterpolation(BodyInterpolation2D mode)
+{
+	m_interpolation = mode;
+}
 
-CE::CollisionDetectionMode2D CE::RigidBody2D::GetCollisionDetectionMode() const { return m_collisionDetectionMode; }
-void CE::RigidBody2D::SetCollisionDetectionMode(CollisionDetectionMode2D mode) { m_collisionDetectionMode = mode; }
+/*-------------------------------------------------------------------
+| --- GetSleepMode: Returns the sleep mode for this RigidBody2D --- |
+-------------------------------------------------------------------*/
+CE::BodySleepMode2D CE::RigidBody2D::GetSleepMode() const
+{
+	return m_sleepMode;
+}
 
-/*------------------------------------------------------------
-| --- Velocity: Linear (whole / X / Y) and angular values --- |
-------------------------------------------------------------*/
-const CE::Vector2f& CE::RigidBody2D::GetLinearVelocity() const { return m_linearVelocity; }
+/*----------------------------------------------------------------
+| --- SetSleepMode: Sets the sleep mode for this RigidBody2D --- |
+----------------------------------------------------------------*/
+void CE::RigidBody2D::SetSleepMode(BodySleepMode2D mode)
+{
+	m_sleepMode = mode;
+}
 
+/*----------------------------------------------------------------------------------------------
+| --- GetCollisionDetectionMode: Returns the collision detection mode for this RigidBody2D --- |
+----------------------------------------------------------------------------------------------*/
+CE::CollisionDetectionMode2D CE::RigidBody2D::GetCollisionDetectionMode() const
+{
+	return m_collisionDetectionMode;
+}
+
+/*-------------------------------------------------------------------------------------------
+| --- SetCollisionDetectionMode: Sets the collision detection mode for this RigidBody2D --- |
+-------------------------------------------------------------------------------------------*/
+void CE::RigidBody2D::SetCollisionDetectionMode(CollisionDetectionMode2D mode)
+{ 
+	m_collisionDetectionMode = mode;
+}
+
+/*----------------------------------------------------------------------------
+| --- GetLinearVelocity: Returns the linear velocity of this RigidBody2D --- |
+----------------------------------------------------------------------------*/
+const CE::Vector2f& CE::RigidBody2D::GetLinearVelocity() const
+{
+	return m_linearVelocity;
+}
+
+/*-------------------------------------------------------------------------
+| --- SetLinearVelocity: Sets the linear velocity of this RigidBody2D --- |
+-------------------------------------------------------------------------*/
 void CE::RigidBody2D::SetLinearVelocity(const Vector2f& velocity)
 {
 	m_linearVelocity = velocity;
 	ApplyConstraintsToVelocity();
 }
 
-float CE::RigidBody2D::GetLinearVelocityX() const { return m_linearVelocity.x; }
+/*-----------------------------------------------------------------------------------------
+| --- GetLinearVelocityX: Returns the linear velocity X component of this RigidBody2D --- |
+-----------------------------------------------------------------------------------------*/
+float CE::RigidBody2D::GetLinearVelocityX() const
+{
+	return m_linearVelocity.x;
+}
 
+/*--------------------------------------------------------------------------------------
+| --- SetLinearVelocityX: Sets the linear velocity X component of this RigidBody2D --- |
+--------------------------------------------------------------------------------------*/
 void CE::RigidBody2D::SetLinearVelocityX(float x)
 {
 	m_linearVelocity.x = x;
 	ApplyConstraintsToVelocity();
 }
 
-float CE::RigidBody2D::GetLinearVelocityY() const { return m_linearVelocity.y; }
+/*-----------------------------------------------------------------------------------------
+| --- GetLinearVelocityY: Returns the linear velocity Y component of this RigidBody2D --- |
+-----------------------------------------------------------------------------------------*/
+float CE::RigidBody2D::GetLinearVelocityY() const
+{
+	return m_linearVelocity.y;
+}
 
+/*--------------------------------------------------------------------------------------
+| --- SetLinearVelocityY: Sets the linear velocity Y component of this RigidBody2D --- |
+--------------------------------------------------------------------------------------*/
 void CE::RigidBody2D::SetLinearVelocityY(float y)
 {
 	m_linearVelocity.y = y;
 	ApplyConstraintsToVelocity();
 }
 
-float CE::RigidBody2D::GetAngularVelocity() const { return m_angularVelocity; }
+/*------------------------------------------------------------------------------
+| --- GetAngularVelocity: Returns the angular velocity of this RigidBody2D --- |
+------------------------------------------------------------------------------*/
+float CE::RigidBody2D::GetAngularVelocity() const
+{
+	return m_angularVelocity;
+}
 
+/*---------------------------------------------------------------------------
+| --- SetAngularVelocity: Sets the angular velocity of this RigidBody2D --- |
+---------------------------------------------------------------------------*/
 void CE::RigidBody2D::SetAngularVelocity(float velocity)
 {
 	m_angularVelocity = velocity;
 	ApplyConstraintsToVelocity();
 }
 
-/*--------------------------------------------------------------
-| --- Damping, gravity scale, mass, inertia (get / set) --- |
---------------------------------------------------------------*/
-float CE::RigidBody2D::GetLinearDamping() const { return m_linearDamping; }
-void CE::RigidBody2D::SetLinearDamping(float damping) { m_linearDamping = std::max(damping, 0.0f); }
+/*--------------------------------------------------------------------------
+| --- GetLinearDamping: Returns the linear damping of this RigidBody2D --- |
+--------------------------------------------------------------------------*/
+float CE::RigidBody2D::GetLinearDamping() const
+{ 
+	return m_linearDamping;
+}
 
-float CE::RigidBody2D::GetAngularDamping() const { return m_angularDamping; }
-void CE::RigidBody2D::SetAngularDamping(float damping) { m_angularDamping = std::max(damping, 0.0f); }
+/*-----------------------------------------------------------------------
+| --- SetLinearDamping: Sets the linear damping of this RigidBody2D --- |
+-----------------------------------------------------------------------*/
+void CE::RigidBody2D::SetLinearDamping(float damping)
+{
+	m_linearDamping = std::max(damping, 0.0f);
+}
 
-float CE::RigidBody2D::GetGravityScale() const { return m_gravityScale; }
-void CE::RigidBody2D::SetGravityScale(float scale) { m_gravityScale = scale; }
+/*----------------------------------------------------------------------------
+| --- GetAngularDamping: Returns the angular damping of this RigidBody2D --- |
+----------------------------------------------------------------------------*/
+float CE::RigidBody2D::GetAngularDamping() const
+{
+	return m_angularDamping;
+}
 
-float CE::RigidBody2D::GetMass() const { return m_mass; }
-void CE::RigidBody2D::SetMass(float mass) { m_mass = std::max(mass, kMinMass); }
+/*-------------------------------------------------------------------------
+| --- SetAngularDamping: Sets the angular damping of this RigidBody2D --- |
+-------------------------------------------------------------------------*/
+void CE::RigidBody2D::SetAngularDamping(float damping)
+{
+	m_angularDamping = std::max(damping, 0.0f);
+}
 
-float CE::RigidBody2D::GetInertia() const { return m_inertia; }
-void CE::RigidBody2D::SetInertia(float inertia) { m_inertia = std::max(inertia, kMinMass); }
+/*------------------------------------------------------------------------
+| --- GetGravityScale: Returns the gravity scale of this RigidBody2D --- |
+------------------------------------------------------------------------*/
+float CE::RigidBody2D::GetGravityScale() const
+{
+	return m_gravityScale;
+}
+
+/*---------------------------------------------------------------------
+| --- SetGravityScale: Sets the gravity scale of this RigidBody2D --- |
+---------------------------------------------------------------------*/
+void CE::RigidBody2D::SetGravityScale(float scale)
+{
+	m_gravityScale = scale;
+}
+
+/*-------------------------------------------------------
+| --- GetMass: Returns the mass of this RigidBody2D --- |
+-------------------------------------------------------*/
+float CE::RigidBody2D::GetMass() const
+{
+	return m_mass;
+}
+
+/*----------------------------------------------------
+| --- SetMass: Sets the mass of this RigidBody2D --- |
+----------------------------------------------------*/
+void CE::RigidBody2D::SetMass(float mass)
+{
+	m_mass = std::max(mass, kMinMass);
+}
+
+/*-------------------------------------------------------------
+| --- GetInertia: Returns the inertia of this RigidBody2D --- |
+-------------------------------------------------------------*/
+float CE::RigidBody2D::GetInertia() const
+{
+	return m_inertia;
+}
 
 /*----------------------------------------------------------
-| --- Center of mass (local and world) --- |
+| --- SetInertia: Sets the inertia of this RigidBody2D --- |
 ----------------------------------------------------------*/
-const CE::Vector2f& CE::RigidBody2D::GetCenterOfMass() const { return m_centerOfMass; }
-void CE::RigidBody2D::SetCenterOfMass(const Vector2f& centerOfMass) { m_centerOfMass = centerOfMass; }
+void CE::RigidBody2D::SetInertia(float inertia)
+{ 
+	m_inertia = std::max(inertia, kMinMass);
+}
 
+/*----------------------------------------------------------------------------------------
+| --- GetCenterOfMass: Returns the center of mass of this RigidBody2D in local space --- |
+----------------------------------------------------------------------------------------*/
+const CE::Vector2f& CE::RigidBody2D::GetCenterOfMass() const
+{
+	return m_centerOfMass;
+}
+
+/*-------------------------------------------------------------------------------------
+| --- SetCenterOfMass: Sets the center of mass of this RigidBody2D in local space --- |
+-------------------------------------------------------------------------------------*/
+void CE::RigidBody2D::SetCenterOfMass(const Vector2f& centerOfMass)
+{
+	m_centerOfMass = centerOfMass;
+}
+
+/*---------------------------------------------------------------------------------------------
+| --- GetWorldCenterOfMass: Returns the center of mass of this RigidBody2D in world space --- |
+---------------------------------------------------------------------------------------------*/
 CE::Vector2f CE::RigidBody2D::GetWorldCenterOfMass() const
 {
 	return GetRelativePoint(m_centerOfMass);
 }
 
-/*--------------------------------------------------------------------------
-| --- Position / Rotation: Forwarded to the owner's Transform --- |
---------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------
+| --- GetPosition: Returns the position of this RigidBody2D in world space --- |
+------------------------------------------------------------------------------*/
 CE::Vector2f CE::RigidBody2D::GetPosition() const
 {
 	return m_pOwner ? m_pOwner->GetTransform().GetPosition() : Vector2f::Zero();
 }
 
+/*---------------------------------------------------------------------------
+| --- SetPosition: Sets the position of this RigidBody2D in world space --- |
+---------------------------------------------------------------------------*/
 void CE::RigidBody2D::SetPosition(const Vector2f& position)
 {
 	if (m_pOwner)
+	{
 		m_pOwner->GetTransform().SetPosition(position);
+	}
 }
 
+/*------------------------------------------------------------------------------
+| --- GetRotation: Returns the rotation of this RigidBody2D in world space --- |
+------------------------------------------------------------------------------*/
 float CE::RigidBody2D::GetRotation() const
 {
 	return m_pOwner ? m_pOwner->GetTransform().GetRotation() : 0.0f;
 }
 
+/*---------------------------------------------------------------------------
+| --- SetRotation: Sets the rotation of this RigidBody2D in world space --- |
+---------------------------------------------------------------------------*/
 void CE::RigidBody2D::SetRotation(float angle)
 {
 	if (m_pOwner)
+	{
 		m_pOwner->GetTransform().SetRotation(angle);
+	}
 }
 
-/*------------------------------------------------------------------
-| --- Flags, material, collider count (get / set) --- |
-------------------------------------------------------------------*/
-bool CE::RigidBody2D::IsSimulated() const { return m_isSimulated; }
-void CE::RigidBody2D::SetSimulated(bool simulated) { m_isSimulated = simulated; }
+/*---------------------------------------------------------------------------
+| --- IsSimulated: Returns whether this RigidBody2D is simulated or not --- |
+---------------------------------------------------------------------------*/
+bool CE::RigidBody2D::IsSimulated() const
+{
+	return m_isSimulated;
+}
 
-bool CE::RigidBody2D::GetUseFullKinematicContacts() const { return m_useFullKinematicContacts; }
-void CE::RigidBody2D::SetUseFullKinematicContacts(bool use) { m_useFullKinematicContacts = use; }
+/*-------------------------------------------------------------------------
+| --- SetSimulated: Sets whether this RigidBody2D is simulated or not --- |
+-------------------------------------------------------------------------*/
+void CE::RigidBody2D::SetSimulated(bool simulated)
+{
+	m_isSimulated = simulated;
+}
 
-CE::PhysicsMaterial2D* CE::RigidBody2D::GetSharedMaterial() const { return m_pSharedMaterial; }
-void CE::RigidBody2D::SetSharedMaterial(PhysicsMaterial2D* pMaterial) { m_pSharedMaterial = pMaterial; }
+/*---------------------------------------------------------------------------------------------------------------------------
+| --- GetUseFullKinematicContacts: Returns whether kinematic/kinematic and kinematic/static contacts are allowed or not --- |
+---------------------------------------------------------------------------------------------------------------------------*/
+bool CE::RigidBody2D::GetUseFullKinematicContacts() const
+{
+	return m_useFullKinematicContacts;
+}
 
+/*------------------------------------------------------------------------------------------------------------------------
+| --- SetUseFullKinematicContacts: Sets whether kinematic/kinematic and kinematic/static contacts are allowed or not --- |
+------------------------------------------------------------------------------------------------------------------------*/
+void CE::RigidBody2D::SetUseFullKinematicContacts(bool use)
+{
+	m_useFullKinematicContacts = use;
+}
+
+/*------------------------------------------------------------------------------------------------------
+| --- GetSharedMaterial: Returns the PhysicsMaterial2D shared by all colliders on this RigidBody2D --- |
+------------------------------------------------------------------------------------------------------*/
+CE::PhysicsMaterial2D* CE::RigidBody2D::GetSharedMaterial() const
+{
+	return m_pSharedMaterial;
+}
+
+/*---------------------------------------------------------------------------------------------------
+| --- SetSharedMaterial: Sets the PhysicsMaterial2D shared by all colliders on this RigidBody2D --- |
+---------------------------------------------------------------------------------------------------*/
+void CE::RigidBody2D::SetSharedMaterial(PhysicsMaterial2D* pMaterial)
+{
+	m_pSharedMaterial = pMaterial;
+}
+
+/*-----------------------------------------------------------------------------------
+| --- GetColliderCount: Returns the number of Collider2D on the same GameObject --- |
+-----------------------------------------------------------------------------------*/
 int CE::RigidBody2D::GetColliderCount() const
 {
 	return static_cast<int>(GetComponents<Collider2D>().size());
 }
 
-const CE::Vector2f& CE::RigidBody2D::GetTotalForce() const { return m_totalForce; }
-float CE::RigidBody2D::GetTotalTorque() const { return m_totalTorque; }
+/*------------------------------------------------------------------------------------------------------------
+| --- GetTotalForce: Returns the total force applied to this RigidBody2D during the current physics step --- |
+------------------------------------------------------------------------------------------------------------*/
+const CE::Vector2f& CE::RigidBody2D::GetTotalForce() const
+{
+	return m_totalForce;
+}
 
-/*-------------------------------------------------------------------------------
-| --- AddForce: Applies a force (or instant impulse) in world space --- |
--------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------
+| --- GetTotalTorque: Returns the total torque applied to this RigidBody2D during the current physics step --- |
+--------------------------------------------------------------------------------------------------------------*/
+float CE::RigidBody2D::GetTotalTorque() const
+{
+	return m_totalTorque;
+}
+
+/*-------------------------------------------------------------------
+| --- AddForce: Applies a world-space force to this RigidBody2D --- |
+-------------------------------------------------------------------*/
 void CE::RigidBody2D::AddForce(const Vector2f& force, ForceMode2D mode)
 {
 	if (m_bodyType != BodyType2D::Dynamic || !m_isSimulated)
@@ -444,23 +683,49 @@ void CE::RigidBody2D::AddForce(const Vector2f& force, ForceMode2D mode)
 	}
 }
 
-void CE::RigidBody2D::AddForceX(float force, ForceMode2D mode) { AddForce(Vector2f(force, 0.0f), mode); }
-void CE::RigidBody2D::AddForceY(float force, ForceMode2D mode) { AddForce(Vector2f(0.0f, force), mode); }
+/*-------------------------------------------------------------------------------------
+| --- AddForceX: Applies a world-space force to this RigidBody2D along the X-axis --- |
+-------------------------------------------------------------------------------------*/
+void CE::RigidBody2D::AddForceX(float force, ForceMode2D mode)
+{ 
+	AddForce(Vector2f(force, 0.0f), mode);
+}
 
-/*--------------------------------------------------------------------------------
-| --- AddRelativeForce: Applies a force in the body's rotated (local) space --- |
---------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------------------
+| --- AddForceY: Applies a world-space force to this RigidBody2D along the Y-axis --- |
+-------------------------------------------------------------------------------------*/
+void CE::RigidBody2D::AddForceY(float force, ForceMode2D mode)
+{ 
+	AddForce(Vector2f(0.0f, force), mode);
+}
+
+/*---------------------------------------------------------------------------
+| --- AddRelativeForce: Applies a local-space force to this RigidBody2D --- |
+---------------------------------------------------------------------------*/
 void CE::RigidBody2D::AddRelativeForce(const Vector2f& relativeForce, ForceMode2D mode)
 {
 	AddForce(GetRelativeVector(relativeForce), mode);
 }
 
-void CE::RigidBody2D::AddRelativeForceX(float force, ForceMode2D mode) { AddRelativeForce(Vector2f(force, 0.0f), mode); }
-void CE::RigidBody2D::AddRelativeForceY(float force, ForceMode2D mode) { AddRelativeForce(Vector2f(0.0f, force), mode); }
+/*---------------------------------------------------------------------------------------------
+| --- AddRelativeForceX: Applies a local-space force to this RigidBody2D along the X-axis --- |
+---------------------------------------------------------------------------------------------*/
+void CE::RigidBody2D::AddRelativeForceX(float force, ForceMode2D mode)
+{
+	AddRelativeForce(Vector2f(force, 0.0f), mode);
+}
 
-/*------------------------------------------------------------------------------------
-| --- AddForceAtPosition: Applies a force at a world position (adds torque too) --- |
-------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------
+| --- AddRelativeForceY: Applies a local-space force to this RigidBody2D along the Y-axis --- |
+---------------------------------------------------------------------------------------------*/
+void CE::RigidBody2D::AddRelativeForceY(float force, ForceMode2D mode)
+{
+	AddRelativeForce(Vector2f(0.0f, force), mode);
+}
+
+/*-------------------------------------------------------------------------------------
+| --- AddForceAtPosition: Applies a force to this RigidBody2D at a world position --- |
+-------------------------------------------------------------------------------------*/
 void CE::RigidBody2D::AddForceAtPosition(const Vector2f& force, const Vector2f& position, ForceMode2D mode)
 {
 	if (m_bodyType != BodyType2D::Dynamic || !m_isSimulated)
@@ -473,9 +738,9 @@ void CE::RigidBody2D::AddForceAtPosition(const Vector2f& force, const Vector2f& 
 	AddTorque(Vector2f::Cross(leverArm, force), mode);
 }
 
-/*----------------------------------------------------------------------
-| --- AddTorque: Applies a torque about the center of mass --- |
-----------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------
+| --- AddTorque: Applies a torque to this RigidBody2D around its center of mass --- |
+-----------------------------------------------------------------------------------*/
 void CE::RigidBody2D::AddTorque(float torque, ForceMode2D mode)
 {
 	if (m_bodyType != BodyType2D::Dynamic || !m_isSimulated)
@@ -494,67 +759,60 @@ void CE::RigidBody2D::AddTorque(float torque, ForceMode2D mode)
 	}
 }
 
-/*-----------------------------------------------------------------------------------------------
-| --- Space conversion helpers: rotation + translation only (Transform scale is not applied) --- |
------------------------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------------------------
+| --- GetPoint: Returns a world-space point converted to local-space relative to this RigidBody2D --- |
+-----------------------------------------------------------------------------------------------------*/
 CE::Vector2f CE::RigidBody2D::GetPoint(const Vector2f& worldPoint) const
 {
 	return (worldPoint - GetPosition()).Rotate(-GetRotation());
 }
 
+/*-------------------------------------------------------------------------------------------------------------
+| --- GetRelativePoint: Returns a local-space point converted to world-space relative to this RigidBody2D --- |
+-------------------------------------------------------------------------------------------------------------*/
 CE::Vector2f CE::RigidBody2D::GetRelativePoint(const Vector2f& localPoint) const
 {
 	return GetPosition() + localPoint.Rotate(GetRotation());
 }
 
+/*-------------------------------------------------------------------------------------------------------
+| --- GetVector: Returns a world-space vector converted to local-space relative to this RigidBody2D --- |
+-------------------------------------------------------------------------------------------------------*/
 CE::Vector2f CE::RigidBody2D::GetVector(const Vector2f& worldVector) const
 {
 	return worldVector.Rotate(-GetRotation());
 }
 
+/*---------------------------------------------------------------------------------------------------------------
+| --- GetRelativeVector: Returns a local-space vector converted to world-space relative to this RigidBody2D --- |
+---------------------------------------------------------------------------------------------------------------*/
 CE::Vector2f CE::RigidBody2D::GetRelativeVector(const Vector2f& localVector) const
 {
 	return localVector.Rotate(GetRotation());
 }
 
-/*--------------------------------------------------------------------------------
-| --- GetPointVelocity: Velocity of the body at a point (v + w x r) --- |
---------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------
+| --- GetPointVelocity: Returns the velocity of a point in world space on this RigidBody2D --- |
+----------------------------------------------------------------------------------------------*/
 CE::Vector2f CE::RigidBody2D::GetPointVelocity(const Vector2f& worldPoint) const
 {
 	const Vector2f leverArm = worldPoint - GetWorldCenterOfMass();
 	const float angularVelocityRadians = m_angularVelocity * Math::DEG2RAD;
+
 	return m_linearVelocity + leverArm.Perpendicular() * angularVelocityRadians;
 }
 
+/*------------------------------------------------------------------------------------------------------
+| --- GetRelativePointVelocity: Returns the velocity of a point in local space on this RigidBody2D --- |
+------------------------------------------------------------------------------------------------------*/
 CE::Vector2f CE::RigidBody2D::GetRelativePointVelocity(const Vector2f& localPoint) const
 {
 	return GetPointVelocity(GetRelativePoint(localPoint));
 }
 
-/*-------------------------------------------------------------
-| --- Sleep state: IsAwake / IsSleeping / Sleep / WakeUp --- |
--------------------------------------------------------------*/
-bool CE::RigidBody2D::IsAwake() const { return !m_isSleeping; }
-bool CE::RigidBody2D::IsSleeping() const { return m_isSleeping; }
-
-void CE::RigidBody2D::Sleep()
-{
-	m_isSleeping = true;
-	m_linearVelocity = Vector2f::Zero();
-	m_angularVelocity = 0.0f;
-	ClearAccumulators();
-}
-
-void CE::RigidBody2D::WakeUp()
-{
-	m_isSleeping = false;
-}
-
-
-/*----------------------------------------------------------------------------------------------------
-| --- Slide: Calculates where the body ends up after sliding along surfaces (does not move it) --- |
-----------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------
+| --- Slide: Slide this RigidBody2D using the specified velocity and configuration integrated over deltaTime --- |
+----------------------------------------------------------------------------------------------------------------*/
 CE::SlideResults2D CE::RigidBody2D::Slide(const Vector2f& velocity, float deltaTime, const SlideConfig2D& config)
 {
 	SlideResults2D results;
@@ -576,7 +834,7 @@ CE::SlideResults2D CE::RigidBody2D::Slide(const Vector2f& velocity, float deltaT
 	}
 
 	Transform& transform = m_pOwner->GetTransform();
-	ScopedTransformPosition restoreTransform(transform, *pCollider);		// Candidate positions are tested by moving the Transform; restored on return
+	ScopedTransformPosition restoreTransform(transform, std::vector<Collider2D*>{ pCollider });		// Candidate positions are tested by moving the Transform; restored on return
 
 	pCollisionManager->RefreshAllBounds();
 
@@ -610,12 +868,210 @@ CE::SlideResults2D CE::RigidBody2D::Slide(const Vector2f& velocity, float deltaT
 	return results;
 }
 
+/*------------------------------------------------------------------------
+| --- MovePosition: Moves this RigidBody2D to the specified position --- |
+------------------------------------------------------------------------*/
+void CE::RigidBody2D::MovePosition(const Vector2f& position)
+{
+	m_pendingPosition = position;
+	m_hasPendingPosition = true;
+	WakeUp();
+}
+
+/*-----------------------------------------------------------------------
+| --- MoveRotation: Rotates this RigidBody2D to the specified angle --- |
+-----------------------------------------------------------------------*/
+void CE::RigidBody2D::MoveRotation(float angle)
+{
+	m_pendingRotation = angle;
+	m_hasPendingRotation = true;
+	WakeUp();
+}
+
+/*------------------------------------------------------------------------------------------------------
+| --- MovePositionAndRotation: Moves this RigidBody2D to the specified position and rotation angle --- |
+------------------------------------------------------------------------------------------------------*/
+void CE::RigidBody2D::MovePositionAndRotation(const Vector2f & position, float angle)
+{
+	MovePosition(position);
+	MoveRotation(angle);
+}
+
+/*---------------------------------------------------------------------------------------------------------------------------------------
+| --- ClosestPoint: Returns a point on the perimeter of all enabled colliders on this RigidBody2D closest to the specified position --- |
+---------------------------------------------------------------------------------------------------------------------------------------*/
+CE::Vector2f CE::RigidBody2D::ClosestPoint(const Vector2f & position) const
+{
+	Vector2f closest = position;
+	float closestSqrDistance = std::numeric_limits<float>::max();
+
+	for (Collider2D* pCollider : GetComponents<Collider2D>())
+	{
+		if (!pCollider->IsActive())
+			continue;
+
+		const Vector2f point = pCollider->ClosestPoint(position);
+		const float sqrDistance = Vector2f::SqrDistance(position, point);
+
+		if (sqrDistance < closestSqrDistance)
+		{
+			closestSqrDistance = sqrDistance;
+			closest = point;
+		}
+	}
+
+	return closest;
+}
+
+/*------------------------------------------------------------------------------------------------------------------------
+| --- Distance: Calculates the minimum distance of this collider against all Collider2D attached to this RigidBody2D --- |
+------------------------------------------------------------------------------------------------------------------------*/
+CE::ColliderDistance2D CE::RigidBody2D::Distance(const Collider2D& collider) const
+{
+	ColliderDistance2D best;
+
+	for (Collider2D* pCollider : GetComponents<Collider2D>())
+	{
+		if (!pCollider->IsActive() || pCollider == &collider)
+			continue;
+
+		const ColliderDistance2D candidate = pCollider->Distance(collider);
+
+		if (candidate.isValid && (!best.isValid || candidate.distance < best.distance))
+		{
+			best = candidate;
+		}
+	}
+
+	return best;
+}
+
+/*--------------------------------------------------------------------------------------------------
+| --- IsTouching: Returns whether this RigidBody2D is touching the specified Collider2D or not --- |
+--------------------------------------------------------------------------------------------------*/
+bool CE::RigidBody2D::IsTouching(const Collider2D& collider) const
+{
+	if (collider.IsTrigger())
+		return false;
+
+	for (Collider2D* pCollider : GetComponents<Collider2D>())
+	{
+		if (!pCollider->IsActive() || pCollider->IsTrigger() || pCollider == &collider)
+			continue;
+
+		if (pCollider->Overlaps(collider))
+			return true;
+	}
+
+	return false;
+}
+
+/*----------------------------------------------------------------------------------------
+| --- OverlapPoint: Checks if any of the attached colliders overlap a point in space --- |
+----------------------------------------------------------------------------------------*/
+bool CE::RigidBody2D::OverlapPoint(const Vector2f& point) const
+{
+	for (Collider2D* pCollider : GetComponents<Collider2D>())
+	{
+		if (pCollider->IsActive() && pCollider->OverlapPoint(point))
+			return true;
+	}
+
+	return false;
+}
+
+/*----------------------------------------------------------------------------------------------------------
+| --- Overlap: Returns a list of all colliders that overlap all attached colliders of this RigidBody2D --- |
+----------------------------------------------------------------------------------------------------------*/
+int CE::RigidBody2D::Overlap(const Vector2f& position, float angle, std::vector<Collider2D*>& results) const
+{
+	results.clear();
+
+	if (!m_pOwner || !m_pCollisionManager)
+		return 0;
+
+	std::vector<Collider2D*> attached = GetComponents<Collider2D>();
+	if (attached.empty())
+		return 0;
+
+	Transform& transform = m_pOwner->GetTransform();
+	ScopedTransformPosition restoreTransform(transform, attached);		// Candidate positions are tested by moving the Transform; restored on return
+
+	m_pCollisionManager->RefreshAllBounds();
+
+	transform.SetPosition(position);
+	transform.SetRotation(angle);
+
+	for (Collider2D* pCollider : attached)
+	{
+		pCollider->RefreshBounds();
+	}
+
+	for (Collider2D* pCollider : attached)
+	{
+		if (!pCollider->IsActive())
+			continue;
+
+		for (const Contact2D& contact : m_pCollisionManager->QueryContacts(pCollider))
+		{
+			Collider2D* pOther = contact.pColliderB;
+
+			if (pOther->GetOwner() == m_pOwner)
+				continue;
+
+			if (std::find(results.begin(), results.end(), pOther) == results.end())
+			{
+				results.push_back(pOther);
+			}
+		}
+	}
+
+	return static_cast<int>(results.size());
+}
+
+/*-------------------------------------------------------------------
+| --- IsAwake: Returns whether this RigidBody2D is awake or not --- |
+-------------------------------------------------------------------*/
+bool CE::RigidBody2D::IsAwake() const
+{
+	return !m_isSleeping;
+}
+
+/*-------------------------------------------------------------------------
+| --- IsSleeping: Returns whether this RigidBody2D is sleeping or not --- |
+-------------------------------------------------------------------------*/
+bool CE::RigidBody2D::IsSleeping() const
+{
+	return m_isSleeping;
+}
+
+/*-------------------------------------------------------------------------------
+| --- Sleep: Puts this RigidBody2D to sleep, stopping all motion and forces --- |
+-------------------------------------------------------------------------------*/
+void CE::RigidBody2D::Sleep()
+{
+	m_isSleeping = true;
+	m_linearVelocity = Vector2f::Zero();
+	m_angularVelocity = 0.0f;
+	ClearAccumulators();
+}
+
+/*------------------------------------------------------------------------------
+| --- WakeUp: Wakes this RigidBody2D up, allowing it to be simulated again --- |
+------------------------------------------------------------------------------*/
+void CE::RigidBody2D::WakeUp()
+{
+	m_isSleeping = false;
+}
+
+
+
 /*------------------------------------
 | --- Private Method Definitions --- |
 ------------------------------------*/
-/*----------------------------------------------------------------------------------
-| --- ApplyConstraintsToVelocity: Zeroes velocity that the constraints freeze --- |
-----------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------
+| --- ApplyConstraintsToVelocity: Applies the constraints to the linear and angular velocity of this RigidBody2D --- |
+--------------------------------------------------------------------------------------------------------------------*/
 void CE::RigidBody2D::ApplyConstraintsToVelocity()
 {
 	if (HasFlag(m_constraints, BodyConstraints2D::FreezePositionX))
@@ -628,11 +1084,32 @@ void CE::RigidBody2D::ApplyConstraintsToVelocity()
 		m_angularVelocity = 0.0f;
 }
 
-/*-----------------------------------------------------------------
-| --- ClearAccumulators: Clears accumulated force and torque --- |
------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------------
+| --- ClearAccumulators: Clears the accumulated force and torque applied to this RigidBody2D since the last physics step --- |
+----------------------------------------------------------------------------------------------------------------------------*/
 void CE::RigidBody2D::ClearAccumulators()
 {
 	m_totalForce = Vector2f::Zero();
 	m_totalTorque = 0.0f;
+}
+
+/*-------------------------------------------------------------------------------------------------------------------------
+| --- ApplyPendingMoves: Applies any pending position and rotation changes to this RigidBody2D after the physics step --- |
+-------------------------------------------------------------------------------------------------------------------------*/
+void CE::RigidBody2D::ApplyPendingMoves()
+{
+	if (!m_pOwner)
+		return;
+
+	if (m_hasPendingPosition)
+	{
+		SetPosition(m_pendingPosition);
+		m_hasPendingPosition = false;
+	}
+
+	if (m_hasPendingRotation)
+	{
+		SetRotation(m_pendingRotation);
+		m_hasPendingRotation = false;
+	}
 }

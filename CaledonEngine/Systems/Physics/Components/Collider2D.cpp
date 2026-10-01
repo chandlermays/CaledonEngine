@@ -6,6 +6,24 @@
 #include "Systems/Engine/EngineManager.h"
 #include "Systems/Physics/CollisionManager.h"
 
+#include <algorithm>
+#include <limits>
+
+namespace
+{
+	/*-------------------------------------------------------------------------------------------
+	| --- Flip: Re-expresses a separation from the other collider's point of view (A <-> B) --- |
+	-------------------------------------------------------------------------------------------*/
+
+	CE::ColliderDistance2D Flip(const CE::ColliderDistance2D& distance)
+	{
+		if (!distance.isValid)
+			return distance;
+
+		return CE::ColliderDistance2D(distance.pointB, distance.pointA, -distance.normal, distance.distance, distance.isOverlapped);
+	}
+}
+
 /*-----------------------------------
 | --- Public Method Definitions --- |
 -----------------------------------*/
@@ -54,6 +72,14 @@ void CE::Collider2D::Update(float)
 	RecalculateBounds();
 }
 
+/*--------------------------------------------------------------------------------------------
+| --- RefreshBounds: Updates the Collider2D's bounds based on the GameObject's transform --- |
+--------------------------------------------------------------------------------------------*/
+void CE::Collider2D::RefreshBounds()
+{
+	RecalculateBounds();
+}
+
 /*-------------------------------------------------------------------------------------------------------------------------
 | --- Distance: Returns the distance from a given point in world space to the closest point on the collider's surface --- |
 -------------------------------------------------------------------------------------------------------------------------*/
@@ -62,10 +88,27 @@ float CE::Collider2D::Distance(const Vector2f& point) const
 	return Vector2f::Distance(point, ClosestPoint(point));
 }
 
+/*----------------------------------------------------------------------------------------------------
+| --- OverlapPoint: Returns true if a given point in world space is inside the collider's bounds --- |
+----------------------------------------------------------------------------------------------------*/
+bool CE::Collider2D::OverlapPoint(const Vector2f& point) const
+{
+	return Vector2f::SqrDistance(point, ClosestPoint(point)) <= 0.0f;
+}
+
+/*----------------------------------------------------------------------------------------------------------------------------
+| --- Distance: Returns the distance, closest points, and overlap information between this collider and another collider --- |
+----------------------------------------------------------------------------------------------------------------------------*/
 CE::ColliderDistance2D CE::Collider2D::Distance(const Collider2D& other) const
 {
 	if (Overlaps(other))
+	{
+		if (IsAxisAlignedBox() && !other.IsAxisAlignedBox())
+		{
+			return Flip(other.ResolveOverlapDistance(*this));
+		}
 		return ResolveOverlapDistance(other);
+	}
 
 	Vector2f thisPoint = GetBounds().GetCenter();
 	Vector2f otherPoint = other.GetBounds().GetCenter();
@@ -240,11 +283,58 @@ const CE::PhysicsMaterial2D& CE::Collider2D::ResolveMaterial() const
 	return PhysicsMaterial2D::GetDefault();
 }
 
+
+
+/*--------------------------------------
+| --- Protected Method Definitions --- |
+--------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------------------------------
+| --- ResolveOverlapDistance: Returns the distance, closest points, and overlap information between this collider and another collider --- |
+------------------------------------------------------------------------------------------------------------------------------------------*/
 CE::ColliderDistance2D CE::Collider2D::ResolveOverlapDistance(const Collider2D& other) const
 {
 	const AABB2D& boundsA = GetBounds();
 	const AABB2D& boundsB = other.GetBounds();
 
-	float overlapX = std::min(boundsA.max.x, boundsB.max.x) - std::max(boundsA.min.x, boundsB.min.x);
-	//...
+	const float overlapMinX = std::max(boundsA.min.x, boundsB.min.x);
+	const float overlapMaxX = std::min(boundsA.max.x, boundsB.max.x);
+	const float overlapMinY = std::max(boundsA.min.y, boundsB.min.y);
+	const float overlapMaxY = std::min(boundsA.max.y, boundsB.max.y);
+
+	const float overlapX = overlapMaxX - overlapMinX;
+	const float overlapY = overlapMaxY - overlapMinY;
+
+	if (overlapX < 0.0f || overlapY < 0.0f)
+		return ColliderDistance2D();
+	
+	const Vector2f centerA = boundsA.GetCenter();
+	const Vector2f centerB = boundsB.GetCenter();
+
+	// Separate along the axis of least overlap; the points sit mid-way along the shared span of the other axis
+	const float midX = (overlapMinX + overlapMaxX) * 0.5f;
+	const float midY = (overlapMinY + overlapMaxY) * 0.5f;
+
+	Vector2f normal;
+	Vector2f pointA;
+	Vector2f pointB;
+	float depth;
+
+	if (overlapX < overlapY)
+	{
+		depth = overlapX;
+		const bool thisIsRight = centerA.x >= centerB.x;
+		normal = { thisIsRight ? 1.0f : -1.0f, 0.0f };
+		pointA = { thisIsRight ? boundsA.min.x : boundsA.max.x, midY };
+		pointB = { thisIsRight ? boundsB.max.x : boundsB.min.x, midY };
+	}
+	else
+	{
+		depth = overlapY;
+		const bool thisIsAbove = centerA.y >= centerB.y;
+		normal = { 0.0f, thisIsAbove ? 1.0f : -1.0f };
+		pointA = { midX, thisIsAbove ? boundsA.min.y : boundsA.max.y };
+		pointB = { midX, thisIsAbove ? boundsB.max.y : boundsB.min.y };
+	}
+
+	return ColliderDistance2D(pointA, pointB, normal, -depth, depth > 0.0f);
 }

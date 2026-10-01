@@ -26,6 +26,7 @@ namespace CE
 {
 	class PhysicsMaterial2D;
 	class CollisionManager;
+	class Collider2D;
 
 	class RigidBody2D : public Component
 	{
@@ -52,11 +53,17 @@ namespace CE
 		bool m_useFullKinematicContacts;																							// Whether kinematic/kinematic and kinematic/static contacts are allowed
 		bool m_isSleeping;																											// Whether this RigidBody2D is currently asleep
 
+		bool m_hasPendingPosition;																									// Whether this RigidBody2D has a pending position update
+		Vector2f m_pendingPosition;																									// The pending position update for this RigidBody2D
+		bool m_hasPendingRotation;																									// Whether this RigidBody2D has a pending rotation update
+		float m_pendingRotation;																									// The pending rotation update for this RigidBody2D
+
 		PhysicsMaterial2D* m_pSharedMaterial;																						// The Material applied to all attached colliders
 		CollisionManager* m_pCollisionManager;																						// Pointer to the Collision Manager
 
-		void ApplyConstraintsToVelocity();																							// Zeroes velocity componens hat are frozen by the constraints
-		void ClearAccumulators();																									// Clears the accumulated force and torque
+		void ApplyConstraintsToVelocity();																							// Applies the constraints to the linear and angular velocity of this RigidBody2D
+		void ClearAccumulators();																									// Clears the accumulated force and torque applied to this RigidBody2D since the last physics step
+		void ApplyPendingMoves();																									// Applies any pending position and rotation changes to this RigidBody2D after the physics step
 
 	public:
 		RigidBody2D();																												// Constructor
@@ -134,44 +141,45 @@ namespace CE
 		bool GetUseFullKinematicContacts() const;																					// Returns whether kinematic/kinematic and kinematic/static contacts are allowed or not
 		void SetUseFullKinematicContacts(bool use);																					// Sets whether kinematic/kinematic and kinematic/static contacts are allowed or not
 
-		PhysicsMaterial2D* GetSharedMaterial() const;																				// Returns the shared material of this RigidBody2D
-		void SetSharedMaterial(PhysicsMaterial2D* pMaterial);																		// Sets the shared material of this RigidBody2D
+		PhysicsMaterial2D* GetSharedMaterial() const;																				// Returns the PhysicsMaterial2D shared by all colliders on this RigidBody2D
+		void SetSharedMaterial(PhysicsMaterial2D* pMaterial);																		// Sets the PhysicsMaterial2D shared by all colliders on this RigidBody2D
 
 		int GetColliderCount() const;																								// Returns the number of Collider2D on the same GameObject
 
-		const Vector2f& GetTotalForce() const;																						// Returns the force applied since the last physics step
-		float GetTotalTorque() const;																								// Returns the torque applied since the last physics step
+		const Vector2f& GetTotalForce() const;																						// Returns the total force applied to this RigidBody2D during the current physics step
+		float GetTotalTorque() const;																								// Returns the total torque applied to this RigidBody2D during the current physics step
 
-		void AddForce(const Vector2f& force, ForceMode2D mode = ForceMode2D::Force);												// Applies a force (or instant impulse) in world space
-		void AddForceX(float force, ForceMode2D mode = ForceMode2D::Force);															// Applies a world-space force along X only
-		void AddForceY(float force, ForceMode2D mode = ForceMode2D::Force);															// Applies a world-space force along Y only
-		void AddRelativeForce(const Vector2f& relativeForce, ForceMode2D mode = ForceMode2D::Force);								// Applies a force in this RigidBody2D's rotated (local) space
-		void AddRelativeForceX(float force, ForceMode2D mode = ForceMode2D::Force);													// Applies a local-space force along X only
-		void AddRelativeForceY(float force, ForceMode2D mode = ForceMode2D::Force);													// Applies a local-space force along Y only
-		void AddForceAtPosition(const Vector2f& force, const Vector2f& position, ForceMode2D mode = ForceMode2D::Force);			// Applies a force at a world position
-		void AddTorque(float torque, ForceMode2D mode = ForceMode2D::Force);														// Applies a torque about the center of mass
+		void AddForce(const Vector2f& force, ForceMode2D mode = ForceMode2D::Force);												// Applies a world-space force to this RigidBody2D
+		void AddForceX(float force, ForceMode2D mode = ForceMode2D::Force);															// Applies a world-space force to this RigidBody2D along the X-axis
+		void AddForceY(float force, ForceMode2D mode = ForceMode2D::Force);															// Applies a world-space force to this RigidBody2D along the Y-axis
+		void AddRelativeForce(const Vector2f& relativeForce, ForceMode2D mode = ForceMode2D::Force);								// Applies a local-space force to this RigidBody2D
+		void AddRelativeForceX(float force, ForceMode2D mode = ForceMode2D::Force);													// Applies a local-space force to this RigidBody2D along the X-axis
+		void AddRelativeForceY(float force, ForceMode2D mode = ForceMode2D::Force);													// Applies a local-space force to this RigidBody2D along the Y-axis
+		void AddForceAtPosition(const Vector2f& force, const Vector2f& position, ForceMode2D mode = ForceMode2D::Force);			// Applies a force to this RigidBody2D at a world position
+		void AddTorque(float torque, ForceMode2D mode = ForceMode2D::Force);														// Applies a torque to this RigidBody2D around its center of mass
 		
-		Vector2f GetPoint(const Vector2f& worldPoint) const;																		// Converts a world-space point to local space
-		Vector2f GetRelativePoint(const Vector2f& localPoint) const;																// Converts a local-space point to world space
-		Vector2f GetVector(const Vector2f& worldVector) const;																		// Converts a world-space vector to local space
-		Vector2f GetRelativeVector(const Vector2f& localVector) const;																// Converts a local-space vector to world space
-		Vector2f GetPointVelocity(const Vector2f& worldPoint) const;																// Returns the velocity of the body at a world-space point
-		Vector2f GetRelativePointVelocity(const Vector2f& localPoint) const;														// Returns the velocity of the body at a local-space point
+		Vector2f GetPoint(const Vector2f& worldPoint) const;																		// Returns a world-space point converted to local-space relative to this RigidBody2D
+		Vector2f GetRelativePoint(const Vector2f& localPoint) const;																// Returns a local-space point converted to world-space relative to this RigidBody2D
+		Vector2f GetVector(const Vector2f& worldVector) const;																		// Returns a world-space vector converted to local-space relative to this RigidBody2D
+		Vector2f GetRelativeVector(const Vector2f& localVector) const;																// Returns a local-space vector converted to world-space relative to this RigidBody2D
+		Vector2f GetPointVelocity(const Vector2f& worldPoint) const;																// Returns the velocity of a point in world space on this RigidBody2D
+		Vector2f GetRelativePointVelocity(const Vector2f& localPoint) const;														// Returns the velocity of a point in local space on this RigidBody2D
 
 		SlideResults2D Slide(const Vector2f& velocity, float deltaTime, const SlideConfig2D& config);								// Slide this RigidBody2D using the specified velocity and configuration integrated over deltaTime
 
+		void MovePosition(const Vector2f& position);																				// Moves this RigidBody2D to the specified position
+		void MoveRotation(float angle);																								// Rotates this RigidBody2D to the specified angle
+		void MovePositionAndRotation(const Vector2f& position, float angle);														// Moves this RigidBody2D to the specified position and rotation angle
+
+		Vector2f ClosestPoint(const Vector2f& position) const;																		// Returns a point on the perimeter of all enabled Colliders attached to this RigidBody2D closest to the specified position
+		ColliderDistance2D Distance(const Collider2D& collider) const;																// Calculates the minimum distance of this collider against all Collider2D attached to this RigidBody2D
+		bool IsTouching(const Collider2D& collider) const;																			// Returns whether this RigidBody2D is touching the specified Collider2D or not
+		bool OverlapPoint(const Vector2f& point) const;																				// Checks if any of the attached colliders overlap a point in space
+		int Overlap(const Vector2f& position, float angle, std::vector<Collider2D*>& results) const;								// Returns a list of all colliders that overlap all attached colliders of this RigidBody2D
+
 		bool IsAwake() const;																										// Returns whether this RigidBody2D is awake or not
 		bool IsSleeping() const;																									// Returns whether this RigidBody2D is sleeping or not
-		void Sleep();																												// Puts this RigidBody2D to sleep
-		void WakeUp();																												// Wakes this RigidBody2D
-
-		// Public Methods:
-		// Vec2 ClosestPoint(Vec2 pos)																:				returns a point on the perimeter of all enabled Colliders attached to this RigidBody2D that is closest to the specified position
-		// ColliderDistance2D Distance(Collider2D collider)											:				calculates the minimum distance of this collider against all Collider2D attached to this RigidBody2D
-		// void MovePosition(Vec2 pos)																:				moves the RigidBody2D to position
-		// void MovePositionAndRotation(Vec2 pos, float angle)										:				moves the RigidBody2D to position and rotates by angle
-		// void MoveRotation(float angle)															:				rotates the RigidBody2D to the specified angle
-		// int Overlap(Vec2 pos, float angle, List<Collider2D> results)								:				get a list of all Colliders that overlap all Colliders attached to this RigidBody2D
-		// bool OverlapPoint(Vec2 point)															:				check if any of the RigidBody2D colliders overlap a point in space
+		void Sleep();																												// Puts this RigidBody2D to sleep, stopping all motion and forces
+		void WakeUp();																												// Wakes this RigidBody2D, allowing it to be simulated again
 	};
 }

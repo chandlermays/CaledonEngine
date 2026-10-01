@@ -22,6 +22,7 @@ namespace CE
 
 		Vector2f ClosestPoint(const Vector2f& point) const override;			// Returns the closest point on the box collider's surface to a given point in world space
 		bool Overlaps(const Collider2D& other) const override;					// Returns true if this box collider overlaps with another collider
+		bool IsAxisAlignedBox() const override { return true; }					// Returns true since this collider is an axis-aligned box (AABB)
 
 		void SetSize(const Vector2f& size);										// Sets the size of the box collider and recalculates the bounds
 		const Vector2f& GetSize() const;										// Returns the size of the box collider

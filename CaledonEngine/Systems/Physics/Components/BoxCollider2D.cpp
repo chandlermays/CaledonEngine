@@ -35,6 +35,9 @@ CE::Vector2f CE::BoxCollider2D::ClosestPoint(const Vector2f& point) const
 ------------------------------------------------------------------------------------*/
 bool CE::BoxCollider2D::Overlaps(const Collider2D& other) const
 {
+	if (!other.IsAxisAlignedBox())
+		return other.Overlaps(*this);
+
 	return m_bounds.Overlaps(other.GetBounds());
 }
 

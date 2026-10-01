@@ -14,7 +14,12 @@
 #include "Systems/Rendering/Shapes/Capsule.h"
 #include "Systems/Rendering/Sprite.h"
 #include "Systems/Physics/Components/BoxCollider2D.h"
+#include "Systems/Physics/Components/CircleCollider2D.h"
+#include "Systems/Physics/Components/RigidBody2D.h"
 #include "Utilities/ThirdParty/tinyxml2.h"
+
+#include <algorithm>
+#include <string>
 
 using namespace tinyxml2;
 
@@ -27,6 +32,9 @@ using namespace tinyxml2;
 void CE::BuiltInComponents::RegisterAll()
 {
 	// TODO: Register other built-in components here as needed
+
+	// Components are allowed to have multiple instances on the same GameObject by default.
+	// Explicitly set flag to 'false' for components that should not allow multiple instances.
 
 	ComponentFactory::RegisterComponent("SpriteComponent", "Engine",
 		CreateSpriteComponentFromXml,
@@ -61,8 +69,48 @@ void CE::BuiltInComponents::RegisterAll()
 				[](BoxCollider2D* p, const PropertyValue& v) { p->SetTrigger(std::get<bool>(v)); })
 		});
 
-		// Components are allowed to have multiple instances on the same GameObject by default.
-		// Explicitly set flag to 'false' for components that should not allow multiple instances.
+		ComponentFactory::RegisterComponent("CircleCollider2D", "Engine",
+			CreateCircleCollider2DFromXml,
+			[]() -> std::unique_ptr<Component> { return std::make_unique<CircleCollider2D>(); },
+		{
+			MakeProperty<CircleCollider2D>("Radius",
+				[](const CircleCollider2D* p) -> PropertyValue { return p->GetRadius(); },
+				[](CircleCollider2D* p, const PropertyValue& v) { p->SetRadius(std::get<float>(v)); }),
+			MakeProperty<CircleCollider2D>("Offset",
+				[](const CircleCollider2D* p) -> PropertyValue { return p->GetOffset(); },
+				[](CircleCollider2D* p, const PropertyValue& v) { p->SetOffset(std::get<Vector2f>(v)); }),
+			MakeProperty<CircleCollider2D>("Is Trigger",
+				[](const CircleCollider2D* p) -> PropertyValue { return p->IsTrigger(); },
+				[](CircleCollider2D* p, const PropertyValue& v) { p->SetTrigger(std::get<bool>(v)); })
+		});
+
+		ComponentFactory::RegisterComponent("RigidBody2D", "Engine",
+			CreateRigidBody2DFromXml,
+			[]() -> std::unique_ptr<Component> { return std::make_unique<RigidBody2D>(); },
+		{
+			MakeProperty<RigidBody2D>("Body Type",		// 0 = Dynamic, 1 = Kinematic, 2 = Static
+				[](const RigidBody2D* p) -> PropertyValue { return static_cast<int>(p->GetBodyType()); },
+				[](RigidBody2D* p, const PropertyValue& v) { p->SetBodyType(static_cast<BodyType2D>(std::clamp(std::get<int>(v), 0, 2))); }),
+			MakeProperty<RigidBody2D>("Mass",
+				[](const RigidBody2D* p) -> PropertyValue { return p->GetMass(); },
+				[](RigidBody2D* p, const PropertyValue& v) { p->SetMass(std::get<float>(v)); }),
+			MakeProperty<RigidBody2D>("Linear Damping",
+				[](const RigidBody2D* p) -> PropertyValue { return p->GetLinearDamping(); },
+				[](RigidBody2D* p, const PropertyValue& v) { p->SetLinearDamping(std::get<float>(v)); }),
+			MakeProperty<RigidBody2D>("Angular Damping",
+				[](const RigidBody2D* p) -> PropertyValue { return p->GetAngularDamping(); },
+				[](RigidBody2D* p, const PropertyValue& v) { p->SetAngularDamping(std::get<float>(v)); }),
+			MakeProperty<RigidBody2D>("Gravity Scale",
+				[](const RigidBody2D* p) -> PropertyValue { return p->GetGravityScale(); },
+				[](RigidBody2D* p, const PropertyValue& v) { p->SetGravityScale(std::get<float>(v)); }),
+			MakeProperty<RigidBody2D>("Simulated",
+				[](const RigidBody2D* p) -> PropertyValue { return p->IsSimulated(); },
+				[](RigidBody2D* p, const PropertyValue& v) { p->SetSimulated(std::get<bool>(v)); }),
+			MakeProperty<RigidBody2D>("Freeze Rotation",
+				[](const RigidBody2D* p) -> PropertyValue { return p->GetFreezeRotation(); },
+				[](RigidBody2D* p, const PropertyValue& v) { p->SetFreezeRotation(std::get<bool>(v)); })
+		},
+			false);	// Only one RigidBody2D per GameObject
 
 		//---------------------------------------------------------------------------------------
 		// Transform is never looked up via CreateComponent — GameObject's own constructor always
@@ -83,6 +131,7 @@ void CE::BuiltInComponents::RegisterAll()
 					[](Transform* p, const PropertyValue& v) { p->SetScale(std::get<Vector2f>(v)); })
 			});
 }
+
 
 
 /*------------------------------------
@@ -193,4 +242,63 @@ std::unique_ptr<CE::Component> CE::BuiltInComponents::CreateBoxCollider2DFromXml
 	pCollider->SetTrigger(pElement->BoolAttribute("isTrigger", false));
 
 	return pCollider;
+}
+
+/*---------------------------------------------------------------------------------------
+| --- CreateCircleCollider2DFromXml: Creates a CircleCollider2D from an XML element --- |
+---------------------------------------------------------------------------------------*/
+std::unique_ptr<CE::Component> CE::BuiltInComponents::CreateCircleCollider2DFromXml(GameObject*, tinyxml2::XMLElement* pElement)
+{
+	auto pCollider = std::make_unique<CircleCollider2D>();
+
+	pCollider->SetRadius(pElement->FloatAttribute("radius", pCollider->GetRadius()));
+
+	const char* pOffset = pElement->Attribute("offset");
+	if (pOffset)
+	{
+		Vector2f offset = Vector2f::Zero();
+		sscanf_s(pOffset, "%f,%f", &offset.x, &offset.y);
+		pCollider->SetOffset(offset);
+	}
+
+	pCollider->SetTrigger(pElement->BoolAttribute("isTrigger", false));
+
+	return pCollider;
+}
+
+/*-----------------------------------------------------------------------------
+| --- CreateRigidBody2DFromXml: Creates a RigidBody2D from an XML element --- |
+-----------------------------------------------------------------------------*/
+std::unique_ptr<CE::Component> CE::BuiltInComponents::CreateRigidBody2DFromXml(GameObject*, tinyxml2::XMLElement* pElement)
+{
+	auto pBody = std::make_unique<RigidBody2D>();
+
+	const char* pBodyType = pElement->Attribute("bodyType");
+	if (pBodyType)
+	{
+		std::string bodyType = pBodyType;
+
+		if (bodyType == "Kinematic")
+		{
+			pBody->SetBodyType(BodyType2D::Kinematic);
+		}
+		else if (bodyType == "Static")
+		{
+			pBody->SetBodyType(BodyType2D::Static);
+		}
+		else
+		{
+			pBody->SetBodyType(BodyType2D::Dynamic);
+		}
+	}
+
+	// Attributes that aren't specified keep the component's own defaults
+	pBody->SetMass(pElement->FloatAttribute("mass", pBody->GetMass()));
+	pBody->SetLinearDamping(pElement->FloatAttribute("linearDamping", pBody->GetLinearDamping()));
+	pBody->SetAngularDamping(pElement->FloatAttribute("angularDamping", pBody->GetAngularDamping()));
+	pBody->SetGravityScale(pElement->FloatAttribute("gravityScale", pBody->GetGravityScale()));
+	pBody->SetSimulated(pElement->BoolAttribute("simulated", pBody->IsSimulated()));
+	pBody->SetFreezeRotation(pElement->BoolAttribute("freezeRotation", pBody->GetFreezeRotation()));
+
+	return pBody;
 }

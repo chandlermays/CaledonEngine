@@ -3,6 +3,7 @@
 | Author: Chandler Mays
 ------------------------------*/
 #include "CollisionManager.h"
+
 #include "Core/GameObject.h"
 
 #include <algorithm>
@@ -36,9 +37,9 @@ void CE::CollisionManager::Shutdown()
 	m_previousOverlaps.clear();
 }
 
-/*------------------------------------------------------------------------------------------------
+/*--------------------------------------------------------------------------------------------------
 | --- RefreshAllBounds: Recalculates every active collider's bounds from its current Transform --- |
-------------------------------------------------------------------------------------------------*/
+--------------------------------------------------------------------------------------------------*/
 void CE::CollisionManager::RefreshAllBounds() const
 {
 	for (Collider2D* pCollider : m_activeColliders)
@@ -50,11 +51,9 @@ void CE::CollisionManager::RefreshAllBounds() const
 	}
 }
 
-/*--------------------------------------------------------------------------------------------------------
-| --- QueryContacts: Contacts of one collider against every other active collider. The normal points --- |
-| --- from the other collider toward pCollider, so GetMTV() moves pCollider out. Does not refresh    --- |
-| --- bounds: the caller refreshes pCollider after moving it (and calls RefreshAllBounds once).      --- |
---------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------------------
+| --- QueryContacts: Contacts of ONE collider against all others (normal points toward pCollider); does not refresh bounds --- |
+------------------------------------------------------------------------------------------------------------------------------*/
 std::vector<CE::Contact2D> CE::CollisionManager::QueryContacts(Collider2D* pCollider) const
 {
 	std::vector<Contact2D> contacts;
@@ -77,9 +76,9 @@ std::vector<CE::Contact2D> CE::CollisionManager::QueryContacts(Collider2D* pColl
 	return contacts;
 }
 
-/*------------------------------------------------------------------------------------------------------
+/*-----------------------------------------------------------------------------------------------------
 | --- DetectContacts: Refreshes bounds, then returns every overlapping collider pair as a contact --- |
-------------------------------------------------------------------------------------------------------*/
+-----------------------------------------------------------------------------------------------------*/
 std::vector<CE::Contact2D> CE::CollisionManager::DetectContacts() const
 {
 	// Bounds follow Transforms, and Transforms move during the physics step (and in gameplay Update),
@@ -111,9 +110,9 @@ std::vector<CE::Contact2D> CE::CollisionManager::DetectContacts() const
 	return contacts;
 }
 
-/*------------------------------------------------------------------------------------------------------
+/*----------------------------------------------------------------------------------------------------
 | --- DispatchContactEvents: Invokes Enter / Update / Exit callbacks from the given contact list --- |
-------------------------------------------------------------------------------------------------------*/
+----------------------------------------------------------------------------------------------------*/
 void CE::CollisionManager::DispatchContactEvents(const std::vector<Contact2D>& contacts)
 {
 	m_currentOverlaps.clear();
@@ -191,6 +190,7 @@ void CE::CollisionManager::RemoveActiveCollider(Collider2D* pCollider)
 }
 
 
+
 /*------------------------------------
 | --- Private Method Definitions --- |
 ------------------------------------*/
@@ -202,9 +202,9 @@ CE::CollisionManager::ColliderPair CE::CollisionManager::MakePair(Collider2D* pA
 	return (pA < pB) ? ColliderPair(pA, pB) : ColliderPair(pB, pA);
 }
 
-/*----------------------------------------------------------------------------------------------
+/*-------------------------------------------------------------------------------------------------------
 | --- TryBuildContact: Broad-phase AABB test, then narrow-phase shape test, then builds the contact --- |
-----------------------------------------------------------------------------------------------*/
+-------------------------------------------------------------------------------------------------------*/
 bool CE::CollisionManager::TryBuildContact(Collider2D* pA, Collider2D* pB, Contact2D& out)
 {
 	if (!pA->GetBounds().Overlaps(pB->GetBounds()))
@@ -216,12 +216,9 @@ bool CE::CollisionManager::TryBuildContact(Collider2D* pA, Collider2D* pB, Conta
 	return BuildContact(pA, pB, out);
 }
 
-/*------------------------------------------------------------------------------------------------------
-| --- BuildContact: Minimum-translation contact for an overlapping pair. Normal points from B to A, --- |
-| --- depth is the penetration along the axis of least overlap.                                     --- |
-| --- AABB-based, so exact for box-vs-box only; switch to Collider2D::Distance(other) once the      --- |
-| --- shape-aware overlap distance is finished (needed for CircleCollider2D).                       --- |
-------------------------------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------
+| --- BuildContact: Builds the contact (normal from B to A, depth) for an overlapping pair --- |
+----------------------------------------------------------------------------------------------*/
 bool CE::CollisionManager::BuildContact(Collider2D* pA, Collider2D* pB, Contact2D& out)
 {
 	const AABB2D& boundsA = pA->GetBounds();
