@@ -152,9 +152,17 @@ int CE::SceneManager::GetSceneIndex(Scene* pScene) const
 	return -1;
 }
 
-/*----------------------------------------------------------------------------------
-| --- SetRenderTarget: Redirects scene rendering to the given texture, or null --- |
-----------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------
+| --- GetRenderTarget: Returns the current render target texture --- |
+--------------------------------------------------------------------*/
+CE::Texture* CE::SceneManager::GetRenderTarget() const
+{
+	return m_pRenderTarget;
+}
+
+/*-----------------------------------------------------------------
+| --- SetRenderTarget: Sets the current render target texture --- |
+-----------------------------------------------------------------*/
 void CE::SceneManager::SetRenderTarget(Texture* pTarget)
 {
 	m_pRenderTarget = pTarget;

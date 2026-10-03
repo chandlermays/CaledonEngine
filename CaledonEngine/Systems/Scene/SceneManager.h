@@ -38,13 +38,14 @@ namespace CE
 		void Render() override;													// Render the current scene
 		void Shutdown() override;												// Shutdown the SceneManager and clean up resources
 	
-		void UnloadAllScenes();
+		void UnloadAllScenes();													// Unloads all loaded scenes and resets states
 
 		void AddScene(std::unique_ptr<Scene> pScene);							// Add a scene to the list of scenes
 		void SetCurrentScene(Scene* pScene);									// Sets the provided scene as the current scene
 		Scene* GetCurrentScene() const;											// Returns the current scene
 		int GetSceneIndex(Scene* pScene) const;									// Returns the index of the provided scene
 
-		void SetRenderTarget(Texture* pTarget);									// Sets the render target texture
+		Texture* GetRenderTarget() const;										// Returns the current render target texture
+		void SetRenderTarget(Texture* pTarget);									// Sets the current render target texture
 	};
 }

@@ -11,26 +11,30 @@
 namespace CE
 {
 	class InputManager;
+	class Renderer;
+	class Texture;
 
 	class ToolsManager : public Manager, public IRenderable, public IUpdatable
 	{
 	private:
-		InputManager* m_pInputManager;
-		DebugOverlay m_debugOverlay;
+		InputManager* m_pInputManager;																// Pointer reference to the InputManager
+		DebugOverlay m_debugOverlay;																// Instance of the DebugOverlay tool
+		Renderer* m_pRenderer;																		// Pointer reference to the renderer
+		Texture* m_pSceneRenderTarget;																// Pointer reference to the current scene's render target
 
 	public:
-		ToolsManager();
-		~ToolsManager();
-		ToolsManager(const ToolsManager&) = delete;
-		ToolsManager& operator=(const ToolsManager&) = delete;
-		ToolsManager(ToolsManager&&) = delete;
-		ToolsManager& operator=(ToolsManager&&) = delete;
+		ToolsManager();																				// Constructor
+		~ToolsManager();																			// Destructor
+		ToolsManager(const ToolsManager&) = delete;													// Prevent copy-construction
+		ToolsManager& operator=(const ToolsManager&) = delete;										// Prevent copy-assignment
+		ToolsManager(ToolsManager&&) = delete;														// Prevent move-construction
+		ToolsManager& operator=(ToolsManager&&) = delete;											// Prevent move-assignment
 
-		bool Initialize() override;
-		void Update(float) override;
-		void Render() override;
-		void Shutdown() override;
+		bool Initialize() override;																	// Prepares the ToolsManager for use
+		void Update(float) override;																// Checks for input to toggle the debug overlay
+		void Render() override;																		// Renders the debug overlay using the current scene's render target
+		void Shutdown() override;																	// Shutdown the ToolsManager and clean up resources
 
-		DebugOverlay& GetDebugOverlay() { return m_debugOverlay; }
+		DebugOverlay& GetDebugOverlay() { return m_debugOverlay; }									// Returns a reference to the DebugOverlay tool
 	};
 }
