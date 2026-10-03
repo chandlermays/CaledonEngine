@@ -196,6 +196,9 @@
     <ClCompile Include="Systems\Physics\PhysicsManager.cpp">
       <Filter>Source Files\Systems\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Systems\Rendering\Components\Camera2D.cpp">
+      <Filter>Source Files\Systems\Rendering\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\GameObject.h">
@@ -416,6 +419,9 @@
     </ClInclude>
     <ClInclude Include="Systems\Physics\Types\Contact2D.h">
       <Filter>Source Files\Systems\Physics\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Rendering\Components\Camera2D.h">
+      <Filter>Source Files\Systems\Rendering\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -77,6 +77,7 @@
     <ClCompile Include="Systems\Physics\Components\RigidBody2D.cpp" />
     <ClCompile Include="Systems\Physics\Materials\PhysicsMaterial2D.cpp" />
     <ClCompile Include="Systems\Physics\PhysicsManager.cpp" />
+    <ClCompile Include="Systems\Rendering\Components\Camera2D.cpp" />
     <ClCompile Include="Systems\Rendering\Components\SpriteComponent.cpp" />
     <ClCompile Include="Systems\Rendering\GraphicsManager.cpp" />
     <ClCompile Include="Systems\Rendering\Shapes\Capsule.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="Systems\Physics\Types\SlideConfig2D.h" />
     <ClInclude Include="Systems\Physics\Types\SlideResults2D.h" />
     <ClInclude Include="Systems\Rendering\Color.h" />
+    <ClInclude Include="Systems\Rendering\Components\Camera2D.h" />
     <ClInclude Include="Systems\Rendering\Components\SpriteComponent.h" />
     <ClInclude Include="Systems\Rendering\GraphicsManager.h" />
     <ClInclude Include="Systems\Rendering\Image.h" />
