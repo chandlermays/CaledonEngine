@@ -7,6 +7,7 @@
 #include "Project.h"
 
 #include "Editor/EditorGUI.h"
+#include "Windows/EditorToolbar.h"
 #include "Windows/HierarchyPanel.h"
 #include "Windows/InspectorPanel.h"
 #include "Windows/ViewportPanel.h"
@@ -26,6 +27,7 @@ private:
 	EditorContext m_editorContext;																	// The context for the Editor, managing the selected GameObject
 
 	EditorGUI m_editorGUI;																			// Handles GUI rendering and event management for the Editor
+	EditorToolbar m_toolbar;																		// 
 	HierarchyPanel m_hierarchyPanel;																// The Hierarchy panel for managing GameObjects in the current scene
 	InspectorPanel m_inspectorPanel;																// The Inspector panel for viewing and editing properties of the selected GameObject
 	ViewportPanel m_viewportPanel;																	// The Viewport panel for rendering the current scene

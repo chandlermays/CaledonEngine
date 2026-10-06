@@ -1,3 +1,0 @@
-Error loading the XML file: C:\Users\chand\OneDrive\Documents\Github Projects\CaledonEngine\CaledonEditor\TestProjects\TestGame01\TestGame01.ceproj
-Project::Load - Could not open 'C:\Users\chand\OneDrive\Documents\Github Projects\CaledonEngine\CaledonEditor\TestProjects\TestGame01\TestGame01.ceproj'
-Editor::OpenProject - Failed to load project file 'C:\Users\chand\OneDrive\Documents\Github Projects\CaledonEngine\CaledonEditor\TestProjects\TestGame01\TestGame01.ceproj'

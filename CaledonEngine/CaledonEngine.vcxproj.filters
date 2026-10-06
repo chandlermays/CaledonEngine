@@ -199,6 +199,9 @@
     <ClCompile Include="Systems\Rendering\Components\Camera2D.cpp">
       <Filter>Source Files\Systems\Rendering\Components</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjectSerializer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\GameObject.h">
@@ -422,6 +425,12 @@
     </ClInclude>
     <ClInclude Include="Systems\Rendering\Components\Camera2D.h">
       <Filter>Source Files\Systems\Rendering\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentTraits.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectSerializer.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -17,6 +17,7 @@ CE::Scene::Scene()
 	, m_isActive{ true }
 	, m_isDirty{ false }
 	, m_isLoaded{ false }
+	, m_filePath{ "" }
 {}
 
 /*-------------------------------------------------------
@@ -104,12 +105,37 @@ void CE::Scene::SetActive(bool isActive)
 	m_isActive = isActive;
 }
 
+bool CE::Scene::IsDirty() const
+{
+	return m_isDirty;
+}
+
+void CE::Scene::SetDirty(bool dirty)
+{
+	m_isDirty = dirty;
+}
+
+void CE::Scene::MarkClean()
+{
+	m_isDirty = false;
+}
+
 /*------------------------------------------------
 | --- IsValid: Checks if this Scene is valid --- |
 ------------------------------------------------*/
 bool CE::Scene::IsValid() const
 {
 	return m_isLoaded && !m_gameObjects.empty();
+}
+
+const std::string& CE::Scene::GetFilePath() const
+{
+	return m_filePath;
+}
+
+void CE::Scene::SetFilePath(const std::string& filePath)
+{
+	m_filePath = filePath;
 }
 
 /*--------------------------------------------------------
@@ -119,6 +145,7 @@ void CE::Scene::AddGameObject(std::unique_ptr<GameObject> pGameObject)
 {
 	if (pGameObject)
 	{
+		pGameObject->SetScene(this);
 		m_gameObjects.emplace_back(std::move(pGameObject));
 	}
 }

@@ -112,6 +112,17 @@ void CE::GameObject::Render()
 	}
 }
 
+CE::Scene* CE::GameObject::GetScene() const
+{
+	return m_pScene;
+}
+
+void CE::GameObject::SetScene(Scene* pScene)
+{
+	m_pScene = pScene;
+}
+
+
 /*---------------------------------------------------------------
 | --- GetParent: Gets a pointer to this GameObject's parent --- |
 ---------------------------------------------------------------*/

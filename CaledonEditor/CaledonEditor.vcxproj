@@ -893,6 +893,7 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
     <ClCompile Include="Editor\Project.cpp" />
     <ClCompile Include="Editor\EditorGUI.cpp" />
     <ClCompile Include="FileDialog.cpp" />
+    <ClCompile Include="SceneSaver.cpp" />
     <ClCompile Include="ThirdParty\imgui.cpp" />
     <ClCompile Include="ThirdParty\imgui_demo.cpp" />
     <ClCompile Include="ThirdParty\imgui_draw.cpp" />
@@ -900,6 +901,7 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
     <ClCompile Include="ThirdParty\imgui_impl_sdlrenderer3.cpp" />
     <ClCompile Include="ThirdParty\imgui_tables.cpp" />
     <ClCompile Include="ThirdParty\imgui_widgets.cpp" />
+    <ClCompile Include="Windows\EditorToolbar.cpp" />
     <ClCompile Include="Windows\HierarchyPanel.cpp" />
     <ClCompile Include="Windows\InspectorPanel.cpp" />
     <ClCompile Include="Windows\ProjectMenu.cpp" />
@@ -912,6 +914,8 @@ xcopy "$(SolutionDir)CaledonEngine\lib\SDL_TTF\lib\$(Platform)\libfreetype-6.dll
     <ClInclude Include="Editor\Project.h" />
     <ClInclude Include="Editor\EditorGUI.h" />
     <ClInclude Include="FileDialog.h" />
+    <ClInclude Include="SceneSaver.h" />
+    <ClInclude Include="Windows\EditorToolbar.h" />
     <ClInclude Include="Windows\HierarchyPanel.h" />
     <ClInclude Include="Windows\InspectorPanel.h" />
     <ClInclude Include="Windows\ProjectMenu.h" />

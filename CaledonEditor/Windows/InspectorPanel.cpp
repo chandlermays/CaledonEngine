@@ -5,8 +5,9 @@
 #include "InspectorPanel.h"
 #include "Editor/EditorContext.h"
 
-#include "CaledonEngine/Core/GameObject.h"
 #include "CaledonEngine/Core/Component.h"
+#include "CaledonEngine/Core/GameObject.h"
+#include "CaledonEngine/Core/Scene.h"
 #include "CaledonEngine/ComponentFactory.h"
 #include "CaledonEngine/ComponentTypeInfo.h"
 
@@ -102,6 +103,13 @@ void InspectorPanel::DrawProperty(CE::Component* pComponent, const CE::PropertyD
 		if (ImGui::DragFloat(property.name.c_str(), &v))
 		{
 			property.setter(pComponent, v);
+
+			// Mark scene as dirty
+			CE::GameObject* pGameObject = pComponent->GetOwner();
+			if (pGameObject && pGameObject->GetScene())
+			{
+				pGameObject->GetScene()->SetDirty(true);
+			}
 		}
 	}
 	else if (std::holds_alternative<int>(value))
@@ -110,6 +118,13 @@ void InspectorPanel::DrawProperty(CE::Component* pComponent, const CE::PropertyD
 		if (ImGui::DragInt(property.name.c_str(), &v))
 		{
 			property.setter(pComponent, v);
+
+			// Mark scene as dirty
+			CE::GameObject* pGameObject = pComponent->GetOwner();
+			if (pGameObject && pGameObject->GetScene())
+			{
+				pGameObject->GetScene()->SetDirty(true);
+			}
 		}
 	}
 	else if (std::holds_alternative<bool>(value))
@@ -118,6 +133,13 @@ void InspectorPanel::DrawProperty(CE::Component* pComponent, const CE::PropertyD
 		if (ImGui::Checkbox(property.name.c_str(), &v))
 		{
 			property.setter(pComponent, v);
+
+			// Mark scene as dirty
+			CE::GameObject* pGameObject = pComponent->GetOwner();
+			if (pGameObject && pGameObject->GetScene())
+			{
+				pGameObject->GetScene()->SetDirty(true);
+			}
 		}
 	}
 	else if (std::holds_alternative<CE::Vector2f>(value))
@@ -127,6 +149,13 @@ void InspectorPanel::DrawProperty(CE::Component* pComponent, const CE::PropertyD
 		if (ImGui::DragFloat2(property.name.c_str(), components))
 		{
 			property.setter(pComponent, CE::Vector2f(components[0], components[1]));
+
+			// Mark scene as dirty
+			CE::GameObject* pGameObject = pComponent->GetOwner();
+			if (pGameObject && pGameObject->GetScene())
+			{
+				pGameObject->GetScene()->SetDirty(true);
+			}
 		}
 	}
 	else if (std::holds_alternative<CE::Color>(value))
@@ -142,6 +171,13 @@ void InspectorPanel::DrawProperty(CE::Component* pComponent, const CE::PropertyD
 				static_cast<std::uint8_t>(components[3] * 255.0f));
 
 			property.setter(pComponent, newColor);
+
+			// Mark scene as dirty
+			CE::GameObject* pGameObject = pComponent->GetOwner();
+			if (pGameObject && pGameObject->GetScene())
+			{
+				pGameObject->GetScene()->SetDirty(true);
+			}
 		}
 	}
 	else if (std::holds_alternative<std::string>(value))
@@ -152,6 +188,13 @@ void InspectorPanel::DrawProperty(CE::Component* pComponent, const CE::PropertyD
 		if (ImGui::InputText(property.name.c_str(), buffer, sizeof(buffer)))
 		{
 			property.setter(pComponent, std::string(buffer));
+
+			// Mark scene as dirty
+			CE::GameObject* pGameObject = pComponent->GetOwner();
+			if (pGameObject && pGameObject->GetScene())
+			{
+				pGameObject->GetScene()->SetDirty(true);
+			}
 		}
 	}
 }

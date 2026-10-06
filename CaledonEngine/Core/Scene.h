@@ -17,8 +17,9 @@ namespace CE
 		std::string m_name;															// The name of this Scene
 		std::vector<std::unique_ptr<GameObject>> m_gameObjects;						// The GameObjects in this Scene
 		bool m_isActive;															// Whether this Scene is active or not
-		bool m_isDirty;																// Whether this Scene has unsaved changes (needs to be updated/rendered)
+		bool m_isDirty;																// Whether this Scene has unsaved changes (needs to be saved)
 		bool m_isLoaded;															// Whether this Scene has completed loading and objects have been initialized/enabled
+		std::string m_filePath;														// The file path this Scene was loaded from
 
 	public:
 		Scene();																	// Constructor
@@ -38,7 +39,13 @@ namespace CE
 		bool IsActive() const;														// Returns whether this Scene is active or not
 		void SetActive(bool isActive);												// Sets whether this Scene is active or not
 
+		bool IsDirty() const;														//
+		void SetDirty(bool dirty);													//
+		void MarkClean();															// 
 		bool IsValid() const;														// Checks if this Scene is valid
+
+		const std::string& GetFilePath() const;										//
+		void SetFilePath(const std::string& filePath);								// 
 
 		void AddGameObject(std::unique_ptr<GameObject> pGameObject);				// Adds a GameObject to this Scene
 		void RemoveGameObject(GameObject* pGameObject);								// Removes a GameObject from this Scene

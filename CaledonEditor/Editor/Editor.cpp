@@ -72,6 +72,10 @@ bool Editor::Initialize(const std::string& initialProjectPath)
 		{
 			m_editorGUI.BeginFrame();
 
+			// Draw toolbar first (controls)
+			m_toolbar.Draw(*this);
+
+			// Draw menu bar for project management
 			m_projectMenu.DrawMenuBar(
 				[this](const std::string& path) { OpenProject(path); },
 				[this](const std::string& root, const std::string& name) { CreateNewProject(root, name); });
@@ -109,6 +113,7 @@ void Editor::Run()
 {
 	m_pEngineManager->Run();
 }
+
 
 
 /*------------------------------------
@@ -301,6 +306,11 @@ void Editor::LoadProject()
 
 		CE::Scene* pSceneRef = pScene.get();
 		pSceneManager->AddScene(std::move(pScene));
+
+		// Set the file path so saving knows where to write
+		pSceneRef->SetFilePath(path);
+		pSceneRef->MarkClean();
+
 		pSceneManager->SetCurrentScene(pSceneRef);
 		pSceneRef->Initialize();
 	}

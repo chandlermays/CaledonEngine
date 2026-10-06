@@ -63,6 +63,7 @@
     <ClCompile Include="Core\Scene.cpp" />
     <ClCompile Include="Core\Transform.cpp" />
     <ClCompile Include="GameObjectCreator.cpp" />
+    <ClCompile Include="GameObjectSerializer.cpp" />
     <ClCompile Include="Systems\Engine\EngineManager.cpp" />
     <ClCompile Include="Systems\Engine\LoggingManager.cpp" />
     <ClCompile Include="Systems\Input\Input.cpp" />
@@ -104,6 +105,7 @@
     <ClInclude Include="API\SDL\SDLWindow.h" />
     <ClInclude Include="BuiltInComponents.h" />
     <ClInclude Include="ComponentFactory.h" />
+    <ClInclude Include="ComponentTraits.h" />
     <ClInclude Include="ComponentTypeInfo.h" />
     <ClInclude Include="Core\Component.h" />
     <ClInclude Include="Core\GameObject.h" />
@@ -116,6 +118,7 @@
     <ClInclude Include="DataStructures\Stack.h" />
     <ClInclude Include="DynamicLibraryInterface.h" />
     <ClInclude Include="GameObjectCreator.h" />
+    <ClInclude Include="GameObjectSerializer.h" />
     <ClInclude Include="Systems\Engine\EngineManager.h" />
     <ClInclude Include="Systems\Engine\IRenderable.h" />
     <ClInclude Include="Systems\Engine\IUpdatable.h" />

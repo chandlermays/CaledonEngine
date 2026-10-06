@@ -9,12 +9,14 @@
 
 namespace CE
 {
+	class Scene;
 	class Transform;
 	class Component;
 
 	class GameObject
 	{
 	private:
+		Scene* m_pScene;																		// Pointer to the Scene this GameObject is in
 		GameObject* m_pParent;																	// Pointer to this GameObject's parent
 		std::vector<std::unique_ptr<GameObject>> m_children;									// Vector of pointers to this GameObject's children
 
@@ -36,6 +38,9 @@ namespace CE
 		bool Initialize();																		// Initializes this GameObject and its components
 		void Update(float);																		// Updates this GameObject and its components
 		void Render();																			// Renders this GameObject and its components
+
+		Scene* GetScene() const;																// Returns a pointer to the Scene this GameObject is in
+		void SetScene(Scene* pScene);															// Sets the Scene this GameObject is in
 
 		GameObject* GetParent() const;															// Returns a pointer to this GameObject's parent
 		void SetParent(GameObject* pParent);													// Sets the parent of this GameObject
