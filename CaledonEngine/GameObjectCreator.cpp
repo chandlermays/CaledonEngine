@@ -95,7 +95,7 @@ std::unique_ptr<CE::GameObject> CE::GameObjectCreator::ParseGameObject(XMLElemen
 	}
 
 	Vector2f position = Vector2f::Zero();
-	Vector2f size = Vector2f::One();
+	Vector2f scale = Vector2f::One();
 
 	const char* pPosition = pElement->Attribute("position");
 	if (pPosition)
@@ -103,14 +103,20 @@ std::unique_ptr<CE::GameObject> CE::GameObjectCreator::ParseGameObject(XMLElemen
 		sscanf_s(pPosition, "%f,%f", &position.x, &position.y);
 	}
 
-	const char* pSize = pElement->Attribute("size");
-	if (pSize)
+	const char* pScale = pElement->Attribute("scale");
+	if (!pScale)
 	{
-		sscanf_s(pSize, "%f,%f", &size.x, &size.y);
+		pScale = pElement->Attribute("size");
+	}
+	if (pScale)
+	{
+		sscanf_s(pScale, "%f,%f", &scale.x, &scale.y);
 	}
 
 	pGameObject->GetTransform().SetPosition(position);
-	pGameObject->GetTransform().SetScale(size);
+	pGameObject->GetTransform().SetScale(scale);
+	pGameObject->GetTransform().SetRotation(pElement->FloatAttribute("rotation", 0.0f));
+	pGameObject->SetActive(pElement->BoolAttribute("active", true));
 
 	for (XMLElement* pComponent = pElement->FirstChildElement(); pComponent != nullptr; pComponent = pComponent->NextSiblingElement())
 	{

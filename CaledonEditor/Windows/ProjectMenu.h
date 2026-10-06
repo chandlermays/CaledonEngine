@@ -19,6 +19,9 @@ private:
 	std::string m_moduleStatusMessage;															// Status message for the module of the currently loaded project
 	bool m_isModuleLoaded;																		// Flag indicating whether the module of the currently loaded project is loaded
 
+	bool m_requestNewProjectPopup = false;														// 
+	bool m_requestOpenProjectPopup = false;														// 
+
 	void DrawNewProjectPopup(std::function<void(const std::string&,
 		const std::string&)> onCreateRequested);												// Draws the new project creation pop-up dialog, invoking the callback to create a new project
 
@@ -39,4 +42,7 @@ public:
 
 	void DrawMenuBar(std::function<void(const std::string&)> onOpenRequested, 
 		std::function<void(const std::string&, const std::string&)> onCreateRequested);			// Draws the top main menu bar and handles user interactions for project actions
+
+	void RequestNewProjectPopup() { m_requestNewProjectPopup = true; }							//
+	void RequestOpenProjectPopup() { m_requestOpenProjectPopup = true; }						//
 };

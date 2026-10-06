@@ -7,6 +7,7 @@
 #include "Project.h"
 
 #include "Editor/EditorGUI.h"
+#include "Windows/ProjectHub.h"
 #include "Windows/EditorToolbar.h"
 #include "Windows/HierarchyPanel.h"
 #include "Windows/InspectorPanel.h"
@@ -24,15 +25,23 @@ namespace CE
 class Editor
 {
 private:
-	EditorContext m_editorContext;																	// The context for the Editor, managing the selected GameObject
+	enum class State
+	{
+		Hub,
+		Workspace
+	};
+
+	State m_state;																					//
 
 	EditorGUI m_editorGUI;																			// Handles GUI rendering and event management for the Editor
+	ProjectHub m_projectHub;																		//
 	EditorToolbar m_toolbar;																		// 
 	HierarchyPanel m_hierarchyPanel;																// The Hierarchy panel for managing GameObjects in the current scene
 	InspectorPanel m_inspectorPanel;																// The Inspector panel for viewing and editing properties of the selected GameObject
 	ViewportPanel m_viewportPanel;																	// The Viewport panel for rendering the current scene
 	ProjectMenu m_projectMenu;																		// The Project menu for managing project opening, creation, and module status
 
+	EditorContext m_editorContext;																	// The context for the Editor, managing the selected GameObject
 	Project m_project;																				// The currently loaded project
 	CE::EngineManager* m_pEngineManager;															// Pointer to the EngineManager
 	CE::InputActions* m_pInputActions;																// Pointer to the InputActions for the game module
@@ -57,4 +66,6 @@ public:
 
 	bool Initialize(const std::string& initialProjectPath);											// Prepares the Editor for use
 	void Run();																						// Runs the main loop of the Editor
+
+	const Project& GetProject() const { return m_project; }											// Returns the currenty loaded project
 };

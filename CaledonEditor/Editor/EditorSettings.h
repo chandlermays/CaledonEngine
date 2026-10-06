@@ -1,8 +1,15 @@
+/*------------------------------
+| File: EditorSettings.h
+| Author: Chandler Mays
+------------------------------*/
 #pragma once
+
 #include <string>
+#include <vector>
 
 namespace EditorSettings
 {
-	void SetLastProjectPath(const std::string& projectFilePath);
-	std::string GetLastProjectPath();
+	std::vector<std::string> GetRecentProjects();											//
+	void AddRecentProject(const std::string& projectFilePath);								//
+	std::string GetLastProjectPath();														//
 }

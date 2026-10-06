@@ -212,6 +212,16 @@ std::unique_ptr<CE::Component> CE::BuiltInComponents::CreateSpriteComponentFromX
 		pSpriteCmp = std::make_unique<SpriteComponent>();
 	}
 
+	// <Tint> is the component's color (separate from the shape's own <Color>)
+	if (XMLElement* pTint = pElement->FirstChildElement("Tint"))
+	{
+		pSpriteCmp->SetColor(
+			static_cast<unsigned char>(pTint->UnsignedAttribute("r", 255)),
+			static_cast<unsigned char>(pTint->UnsignedAttribute("g", 255)),
+			static_cast<unsigned char>(pTint->UnsignedAttribute("b", 255)),
+			static_cast<unsigned char>(pTint->UnsignedAttribute("a", 255)));
+	}
+
 	return pSpriteCmp;
 }
 

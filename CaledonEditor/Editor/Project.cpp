@@ -116,6 +116,47 @@ bool Project::CreateNew(const std::string& location, const std::string& projectN
 	return Load(projectFilePath);
 }
 
+/*--------------------------------------------------------------------------------------------
+| --- RegisterScene:
+--------------------------------------------------------------------------------------------*/
+bool Project::RegisterScene(const std::string& sceneName, const std::string& scenePath) const
+{
+	if (m_masterAssetsPath.empty())
+	{
+		CE_LOG("Project::RegisterScene - No project is loaded; '{}' was not registered", scenePath);
+		return false;
+	}
+
+	// Paths are relative to the project root, which Load() already made the working directory
+	tinyxml2::XMLDocument doc;
+	if (doc.LoadFile(m_masterAssetsPath.c_str()) != tinyxml2::XML_SUCCESS)
+	{
+		CE_LOG("Project::RegisterScene - Could not open '{}'", m_masterAssetsPath);
+		return false;
+	}
+
+	tinyxml2::XMLElement* pRoot = doc.FirstChildElement("MasterAssets");
+	if (!pRoot)
+	{
+		CE_LOG("Project::RegisterScene - '{}' is missing the <MasterAssets> root", m_masterAssetsPath);
+		return false;
+	}
+
+	for (tinyxml2::XMLElement* pFile = pRoot->FirstChildElement("File"); pFile; pFile = pFile->NextSiblingElement("File"))
+	{
+		const char* pExisting = pFile->Attribute("path");
+		if (pExisting && scenePath == pExisting)
+			return true;		// Already registered (re-saving the same scene)
+	}
+
+	tinyxml2::XMLElement* pNewFile = doc.NewElement("File");
+	pNewFile->SetAttribute("name", sceneName.c_str());
+	pNewFile->SetAttribute("path", scenePath.c_str());
+	pRoot->InsertEndChild(pNewFile);
+
+	return doc.SaveFile(m_masterAssetsPath.c_str()) == tinyxml2::XML_SUCCESS;
+}
+
 
 /*------------------------------------
 | --- Private Method Definitions --- |

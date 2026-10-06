@@ -73,6 +73,9 @@
     <ClCompile Include="Windows\EditorToolbar.cpp">
       <Filter>Source Files\Windows</Filter>
     </ClCompile>
+    <ClCompile Include="Windows\ProjectHub.cpp">
+      <Filter>Source Files\Windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor\Editor.h">
@@ -109,6 +112,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Windows\EditorToolbar.h">
+      <Filter>Source Files\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Windows\ProjectHub.h">
       <Filter>Source Files\Windows</Filter>
     </ClInclude>
   </ItemGroup>

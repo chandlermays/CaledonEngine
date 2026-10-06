@@ -5,12 +5,15 @@
 #pragma once
 
 #include "ComponentTypeInfo.h"
+
 #include "Core/Component.h"
-#include "Systems/Rendering/Components/SpriteComponent.h"
+#include "Core/Transform.h"
 #include "Systems/Physics/Components/BoxCollider2D.h"
 #include "Systems/Physics/Components/CircleCollider2D.h"
 #include "Systems/Physics/Components/RigidBody2D.h"
-#include "Core/Transform.h"
+#include "Systems/Rendering/Sprite.h"
+#include "Systems/Rendering/Components/SpriteComponent.h"
+#include "Systems/Rendering/Shapes/Shape.h"
 #include "Utilities/ThirdParty/tinyxml2.h"
 
 #include <memory>
@@ -57,14 +60,48 @@ namespace CE
 	template<>
 	inline tinyxml2::XMLElement* ComponentTraits<SpriteComponent>::SerializeComponent(tinyxml2::XMLDocument* pDoc, const Component* pComponent)
 	{
-		const auto* pSprite = static_cast<const SpriteComponent*>(pComponent);
+		const auto* pSpriteCmp = static_cast<const SpriteComponent*>(pComponent);
 		auto* pElement = pDoc->NewElement("SpriteComponent");
 
-		Color color = pSprite->GetColor();
-		pElement->SetAttribute("r", color.r);
-		pElement->SetAttribute("g", color.g);
-		pElement->SetAttribute("b", color.b);
-		pElement->SetAttribute("a", color.a);
+		// Shape sprites: written in the format CreateSpriteComponentFromXml already reads
+		// (spritesheet-based sprites don't store their source path yet, so they aren't written)
+		const Sprite* pSprite = pSpriteCmp->GetSprite();
+		if (pSprite && pSprite->GetType() == SpriteType::kPrimitive && pSprite->GetShape())
+		{
+			const Shape* pShape = pSprite->GetShape();
+
+			const char* shapeName = "Square";
+			switch (pShape->GetShapeType())
+			{
+			case ShapeType::kSquare:	shapeName = "Square";	break;
+			case ShapeType::kCircle:	shapeName = "Circle";	break;
+			case ShapeType::kTriangle:	shapeName = "Triangle";	break;
+			case ShapeType::kCapsule:	shapeName = "Capsule";	break;
+			}
+
+			pElement->SetAttribute("shape", shapeName);
+			pElement->SetAttribute("width", pShape->GetWidth());
+			pElement->SetAttribute("height", pShape->GetHeight());
+			pElement->SetAttribute("filled", pShape->IsFilled());
+
+			// <Color> = the shape's own color (matches the loader)
+			const Color& shapeColor = pShape->GetColor();
+			auto* pColor = pDoc->NewElement("Color");
+			pColor->SetAttribute("r", static_cast<unsigned>(shapeColor.r));
+			pColor->SetAttribute("g", static_cast<unsigned>(shapeColor.g));
+			pColor->SetAttribute("b", static_cast<unsigned>(shapeColor.b));
+			pColor->SetAttribute("a", static_cast<unsigned>(shapeColor.a));
+			pElement->InsertEndChild(pColor);
+		}
+
+		// <Tint> = the component's color, which is what the Inspector edits
+		const Color& tint = pSpriteCmp->GetColor();
+		auto* pTint = pDoc->NewElement("Tint");
+		pTint->SetAttribute("r", static_cast<unsigned>(tint.r));
+		pTint->SetAttribute("g", static_cast<unsigned>(tint.g));
+		pTint->SetAttribute("b", static_cast<unsigned>(tint.b));
+		pTint->SetAttribute("a", static_cast<unsigned>(tint.a));
+		pElement->InsertEndChild(pTint);
 
 		return pElement;
 	}

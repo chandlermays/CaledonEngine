@@ -59,15 +59,12 @@ void ProjectMenu::SetModuleStatus(bool isLoaded, const std::string & statusMessa
 void ProjectMenu::DrawMenuBar(std::function<void(const std::string&)> onOpenRequested,
 	std::function<void(const std::string&, const std::string&)> onCreateRequested)
 {
-	bool requestNewProjectPopup = false;
-	bool requestOpenProjectPopup = false;
-
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			if (ImGui::MenuItem("New Project...")) { requestNewProjectPopup = true; }
-			if (ImGui::MenuItem("Open Project...")) { requestOpenProjectPopup = true; }
+			if (ImGui::MenuItem("New Project...")) { m_requestNewProjectPopup = true; }
+			if (ImGui::MenuItem("Open Project...")) { m_requestOpenProjectPopup = true; }
 			ImGui::EndMenu();
 		}
 
@@ -91,15 +88,17 @@ void ProjectMenu::DrawMenuBar(std::function<void(const std::string&)> onOpenRequ
 		ImGui::EndMainMenuBar();
 	}
 
-	if (requestNewProjectPopup)
+	if (m_requestNewProjectPopup)
 	{
+		m_requestNewProjectPopup = false;
 		m_newLocationBuffer[0] = '\0';
 		m_newNameBuffer[0] = '\0';
 		ImGui::OpenPopup("New Project");
 	}
 
-	if (requestOpenProjectPopup)
+	if (m_requestOpenProjectPopup)
 	{
+		m_requestOpenProjectPopup = false;
 		std::string lastPath = EditorSettings::GetLastProjectPath();
 		strncpy_s(m_openPathBuffer, lastPath.c_str(), sizeof(m_openPathBuffer) - 1);
 		ImGui::OpenPopup("Open Project");

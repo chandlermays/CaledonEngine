@@ -163,6 +163,10 @@ void CE::GameObjectSerializer::SerializeComponents(XMLDocument* pDocument, XMLEl
 
 		XMLElement* pComponentElement = nullptr;
 
+		// ------------------------
+		// TODO: DO NOT CONTINUE WITH THIS IF/ELSE-IF BRANCH. String comparisons are terrible and nasty. This will get very long. Perform an alternative search.
+		// ------------------------
+
 		// Dispatch to component-specific serialization
 		// (This uses a macro-like pattern that gets specialized per component)
 		if (typeName == "Transform")

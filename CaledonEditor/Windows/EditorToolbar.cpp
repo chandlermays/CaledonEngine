@@ -14,6 +14,8 @@
 
 #include <ImGUI/imgui.h>
 
+#include <filesystem>
+
 /*-----------------------------------
 | --- Public Method Definitions --- |
 -----------------------------------*/
@@ -148,10 +150,12 @@ void EditorToolbar::DrawSaveControls(Editor& editor)
 		ImGui::OpenPopup("Save Scene As");
 	}
 
-	// Handle "Save As" dialog
 	DrawSaveAsDialog(editor);
 }
 
+/*------------------------------------------------------------------------------
+| --- DrawSaveAsDialog:
+------------------------------------------------------------------------------*/
 void EditorToolbar::DrawSaveAsDialog(Editor& editor)
 {
 	CE::SceneManager* pSceneManager = CE::EngineManager::GetInstance().GetSceneManager();
@@ -190,8 +194,13 @@ void EditorToolbar::DrawSaveAsDialog(Editor& editor)
 
 			if (SceneSaver::SaveSceneAs(*pCurrentScene, fullPath))
 			{
+				const std::string sceneName = std::filesystem::path(fileName).stem().string();
+
+				pCurrentScene->SetName(sceneName);
+				editor.GetProject().RegisterScene(sceneName, fullPath);
+
 				CE_LOG("EditorToolbar: Scene saved as '{}'", fullPath);
-				fileNameBuffer[0] = '\0';  // Clear buffer
+				fileNameBuffer[0] = '\0';
 				ImGui::CloseCurrentPopup();
 			}
 			else

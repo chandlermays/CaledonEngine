@@ -25,7 +25,8 @@
 | --- Constructor: Constructs the Editor with default values --- |
 ----------------------------------------------------------------*/
 Editor::Editor()
-	: m_pEngineManager{ nullptr }
+	: m_state{ State::Hub }
+	, m_pEngineManager{ nullptr }
 	, m_pInputActions{ nullptr }
 { }
 
@@ -72,35 +73,34 @@ bool Editor::Initialize(const std::string& initialProjectPath)
 		{
 			m_editorGUI.BeginFrame();
 
-			// Draw toolbar first (controls)
-			m_toolbar.Draw(*this);
+			if (m_state == State::Workspace)
+			{
+				m_toolbar.Draw(*this);
+			}
 
-			// Draw menu bar for project management
 			m_projectMenu.DrawMenuBar(
 				[this](const std::string& path) { OpenProject(path); },
 				[this](const std::string& root, const std::string& name) { CreateNewProject(root, name); });
 
-			m_editorGUI.BeginDockspace();
+			if (m_state == State::Workspace)
+			{
+				m_editorGUI.BeginDockspace();
+				m_hierarchyPanel.Draw(m_editorContext);
+				m_inspectorPanel.Draw(m_editorContext);
+				m_viewportPanel.Draw(m_editorContext);
+				m_editorGUI.EndDockspace();
+			}
+			else
+			{
+				m_projectHub.Draw(m_projectMenu, [this](const std::string& path) { OpenProject(path); });
+			}
 
-			m_hierarchyPanel.Draw(m_editorContext);
-			m_inspectorPanel.Draw(m_editorContext);
-			m_viewportPanel.Draw(m_editorContext);
-
-			m_editorGUI.EndDockspace();
 			m_editorGUI.EndFrame();
 		});
 
-	std::string effectiveProjectPath = initialProjectPath.empty()
-		? EditorSettings::GetLastProjectPath()
-		: initialProjectPath;
-
-	if (!effectiveProjectPath.empty())
+	if (!initialProjectPath.empty())
 	{
-		OpenProject(effectiveProjectPath);
-	}
-	else
-	{
-		CreateEmptyScene();
+		OpenProject(initialProjectPath);
 	}
 
 	return true;
@@ -130,7 +130,7 @@ bool Editor::OpenProject(const std::string& projectFilePath)
 	if (!newProject.Load(projectFilePath))
 	{
 		CE_LOG("Editor::OpenProject - Failed to load project file '{}'", projectFilePath);
-		CreateEmptyScene();
+		m_projectHub.SetError("Failed to open project: " + projectFilePath);
 		return false;
 	}
 
@@ -148,7 +148,7 @@ bool Editor::CreateNewProject(const std::string& location, const std::string& pr
 	if (!newProject.CreateNew(location, projectName))
 	{
 		CE_LOG("Editor::CreateNewProject - Failed to create project '{}' at '{}'", projectName, location);
-		CreateEmptyScene();
+		m_projectHub.SetError("Failed to open project: " + projectName);
 		return false;
 	}
 
@@ -200,7 +200,9 @@ bool Editor::FinishLoadingProject(const Project& newProject)
 
 	LoadProject();
 	m_projectMenu.SetLoadedProject(m_project.GetName());
-	EditorSettings::SetLastProjectPath(m_project.GetProjectPath());
+	EditorSettings::AddRecentProject(m_project.GetProjectPath());
+	m_projectHub.ClearError();
+	m_state = State::Workspace;
 
 	return true;
 }
@@ -261,6 +263,7 @@ void Editor::UnloadProject()
 	// 5. Reset project state
 	m_project = Project();
 	m_projectMenu.ClearLoadedProject();
+	m_state = State::Hub;
 }
 
 /*------------------------------------------------------------------------------------------------------
